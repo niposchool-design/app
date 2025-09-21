@@ -1,194 +1,270 @@
-# 🌳 Árvore Completa de Arquivos - Nipo School
+# 🌳 Estrutura Completa do Projeto - Nipo School System
 
 ```
-nipo-school-app/
+📁 nipo-school/
 ├── 📁 app/
-│   ├── App.jsx
-│   ├── main.jsx
+│   ├── 📄 App.jsx
+│   ├── 📄 main.jsx
 │   └── 📁 router/
-│       └── AppRouter.jsx                    🎯 ROTEADOR PRINCIPAL
+│       └── 📄 AppRouter.jsx
 │
 ├── 📁 assets/
 │   └── (arquivos estáticos)
 │
-├── 📁 features/                             📦 FUNCIONALIDADES
+├── 📁 features/
 │   ├── 📁 admin/
 │   │   ├── 📁 components/
-│   │   │   ├── AdminQuickAccess.jsx
-│   │   │   ├── AulaCard.jsx
-│   │   │   └── KanbanBoard.jsx
+│   │   │   ├── 📄 AdminQRManager.jsx
+│   │   │   ├── 📄 AdminQuickAccess.jsx
+│   │   │   ├── 📄 AulaCard.jsx
+│   │   │   ├── 📄 KanbanBoard.jsx
+│   │   │   ├── 📄 QRDisplay.jsx
+│   │   │   ├── 📁 cards/
+│   │   │   │   ├── 📄 CessaoCard.jsx
+│   │   │   │   ├── 📄 InstrumentoCard.jsx
+│   │   │   │   ├── 📄 InstrumentoConteudoCard.jsx
+│   │   │   │   ├── 📄 InstrumentoFisicoCard.jsx
+│   │   │   │   └── 📄 ManutencaoCard.jsx
+│   │   │   ├── 📁 modals/
+│   │   │   │   ├── 📄 ModalCriarCessao.jsx
+│   │   │   │   ├── 📄 ModalCriarInstrumento.jsx
+│   │   │   │   ├── 📄 ModalCriarInstrumentoFisico.jsx
+│   │   │   │   └── 📄 ModalCriarManutencao.jsx
+│   │   │   └── 📁 sections/
+│   │   │       ├── 📄 CessoesSection.jsx
+│   │   │       ├── 📄 ManutencoesSection.jsx
+│   │   │       ├── 📄 OverviewSection.jsx
+│   │   │       ├── 📄 PatrimonioSection.jsx
+│   │   │       ├── 📄 PedagogicoSection.jsx
+│   │   │       └── 📄 TiposSection.jsx
 │   │   ├── 📁 hooks/
-│   │   │   └── useAulas.js
+│   │   │   ├── 📄 useAulas.js
+│   │   │   ├── 📄 usePresenca.js
+│   │   │   └── 📄 useQRCode.js
 │   │   ├── 📁 pages/
-│   │   │   ├── AdminInstrumentDetails.jsx
-│   │   │   ├── AdminInstruments.jsx
-│   │   │   ├── AulaDetail.jsx
-│   │   │   ├── dashboard.jsx
-│   │   │   └── Kanban.jsx
+│   │   │   ├── 📄 AdminAlunos.jsx
+│   │   │   ├── 📄 AdminAlunosTest.jsx
+│   │   │   ├── 📄 AdminConfiguracoes.jsx
+│   │   │   ├── 📄 AdminDashboard.jsx
+│   │   │   ├── 📄 AdminInstrumentDetails.jsx
+│   │   │   ├── 📄 AdminInstruments.jsx
+│   │   │   ├── 📄 AdminInstruments copy.jsx
+│   │   │   ├── 📄 AdminProfessores.jsx
+│   │   │   ├── 📄 AdminRelatorios.jsx
+│   │   │   ├── 📄 AdminTeste.jsx
+│   │   │   ├── 📄 AulaDetail.jsx
+│   │   │   ├── 📄 Kanban.jsx
+│   │   │   ├── 📄 QRCodeManager.jsx
+│   │   │   └── 📄 QRDisplay.jsx
 │   │   └── 📁 services/
-│   │       └── adminService.js
+│   │       ├── 📄 adminService.js
+│   │       ├── 📄 presencaService.js
+│   │       └── 📄 qrCodeService.js
 │   │
 │   ├── 📁 alunos/
 │   │   ├── 📁 components/
-│   │   │   ├── AlunoDashboard.jsx
-│   │   │   ├── AlunoProgress.jsx
-│   │   │   ├── AlunoStats.jsx
-│   │   │   ├── MinhasConquistas.jsx
-│   │   │   └── ProximasAulas.jsx
+│   │   │   ├── 📄 AlunoDashboard.jsx
+│   │   │   ├── 📄 AlunoProgress.jsx
+│   │   │   ├── 📄 AlunoStats.jsx
+│   │   │   ├── 📄 MinhasConquistas.jsx
+│   │   │   ├── 📄 ProximasAulas.jsx
+│   │   │   └── 📄 QRScanner.jsx
 │   │   ├── 📁 hooks/
-│   │   │   ├── useAlunoProgress.js
-│   │   │   └── useAlunoStats.js
+│   │   │   ├── 📄 useAlunoProgress.js
+│   │   │   └── 📄 useAlunoStats.js
 │   │   ├── 📁 pages/
-│   │   │   └── AlunoDashboard.jsx
+│   │   │   ├── 📄 AlunoDashboardPage.jsx
+│   │   │   ├── 📄 MeuInstrumento.jsx
+│   │   │   └── 📄 QRScannerPage.jsx
 │   │   └── 📁 services/
+│   │       └── (vazio)
 │   │
-│   ├── 📁 auth/                             🔐 AUTENTICAÇÃO
+│   ├── 📁 auth/
 │   │   ├── 📁 components/
-│   │   │   ├── CompleteProfile.jsx
-│   │   │   ├── ConfirmEmail.jsx
-│   │   │   └── LoginForm.jsx
+│   │   │   ├── 📄 CompleteProfile.jsx
+│   │   │   ├── 📄 ConfirmEmail.jsx
+│   │   │   └── 📄 LoginForm.jsx
 │   │   ├── 📁 hooks/
-│   │   │   └── useAuthFlow.js               🎯 FLUXO DE AUTH
+│   │   │   └── 📄 useAuthFlow.js
 │   │   ├── 📁 pages/
-│   │   │   ├── Login.jsx
-│   │   │   ├── Register.jsx                 📝 REGISTRO
-│   │   │   └── Vote.jsx                     🗳️ VOTAÇÃO
+│   │   │   ├── 📄 Login.jsx
+│   │   │   ├── 📄 Register.jsx
+│   │   │   ├── 📄 VerifyEmail.jsx
+│   │   │   └── 📄 Vote.jsx
 │   │   └── 📁 services/
+│   │       └── (vazio)
 │   │
 │   ├── 📁 devocional/
 │   │   ├── 📁 components/
+│   │   │   └── (vazio)
 │   │   ├── 📁 hooks/
-│   │   │   └── useDevotionals.js
+│   │   │   └── 📄 useDevotionals.js
 │   │   ├── 📁 pages/
+│   │   │   └── (vazio)
 │   │   └── 📁 services/
+│   │       └── (vazio)
 │   │
 │   ├── 📁 gamificacao/
 │   │   ├── 📁 components/
+│   │   │   └── (vazio)
 │   │   ├── 📁 hooks/
-│   │   │   └── useAchievements.js
+│   │   │   └── 📄 useAchievements.js
 │   │   ├── 📁 pages/
+│   │   │   └── (vazio)
 │   │   └── 📁 services/
+│   │       └── (vazio)
 │   │
 │   ├── 📁 instrumentos/
 │   │   ├── 📁 components/
+│   │   │   └── (vazio)
 │   │   ├── 📁 hooks/
-│   │   │   ├── useInstrumentPage.js
-│   │   │   └── useInstruments.js
+│   │   │   ├── 📄 useInstrumentContent.js
+│   │   │   ├── 📄 useInstrumentPage.js
+│   │   │   └── 📄 useInstruments.js
 │   │   ├── 📁 pages/
-│   │   │   ├── InstrumentoPagina.jsx
-│   │   │   ├── InstrumentosLayout.jsx
-│   │   │   └── InstrumentosList.jsx
+│   │   │   ├── 📄 InstrumentoPagina.jsx
+│   │   │   ├── 📄 InstrumentosLayout.jsx
+│   │   │   └── 📄 InstrumentosList.jsx
 │   │   └── 📁 services/
-│   │       ├── instrumentPageService.js
-│   │       └── instrumentsService.js
+│   │       ├── 📄 instrumentContentService.js
+│   │       ├── 📄 instrumentDetailService.js
+│   │       ├── 📄 instrumentPageService.js
+│   │       └── 📄 instrumentsService.js
 │   │
 │   ├── 📁 modulos/
 │   │   ├── 📁 components/
+│   │   │   └── (vazio)
 │   │   ├── 📁 hooks/
-│   │   │   └── useModules.js
+│   │   │   └── 📄 useModules.js
 │   │   ├── 📁 pages/
+│   │   │   └── (vazio)
 │   │   └── 📁 services/
+│   │       └── (vazio)
 │   │
 │   ├── 📁 professores/
 │   │   ├── 📁 components/
-│   │   │   ├── AdminAccessBanner.jsx
-│   │   │   ├── CategorySelector.jsx
-│   │   │   ├── ConteudoCard.jsx
-│   │   │   ├── ConteudoGrid.jsx
-│   │   │   ├── DebugAdminPanel.jsx
-│   │   │   ├── FileUpload.jsx
-│   │   │   ├── FilterBar.jsx
-│   │   │   ├── FormConteudo.jsx
-│   │   │   ├── ListaConteudos.jsx
-│   │   │   ├── PreviewModal.jsx
-│   │   │   ├── ProfessorAccessBanner.jsx
-│   │   │   ├── ProfessorSidebar.jsx
-│   │   │   ├── QuickSwitch.jsx
-│   │   │   ├── SearchBar.jsx
-│   │   │   ├── StatsCard.jsx
-│   │   │   └── VideoUpload.jsx
+│   │   │   ├── 📄 AdminAccessBanner.jsx
+│   │   │   ├── 📄 CategorySelector.jsx
+│   │   │   ├── 📄 ConteudoCard.jsx
+│   │   │   ├── 📄 ConteudoGrid.jsx
+│   │   │   ├── 📄 DebugAdminPanel.jsx
+│   │   │   ├── 📄 FileUpload.jsx
+│   │   │   ├── 📄 FilterBar.jsx
+│   │   │   ├── 📄 FormConteudo.jsx
+│   │   │   ├── 📄 ListaConteudos.jsx
+│   │   │   ├── 📄 PreviewModal.jsx
+│   │   │   ├── 📄 ProfessorAccessBanner.jsx
+│   │   │   ├── 📄 ProfessorSidebar.jsx
+│   │   │   ├── 📄 QuickSwitch.jsx
+│   │   │   ├── 📄 SearchBar.jsx
+│   │   │   ├── 📄 StatsCard.jsx
+│   │   │   └── 📄 VideoUpload.jsx
 │   │   ├── 📁 hooks/
-│   │   │   ├── useFileUpload.js
-│   │   │   ├── useProfessoresConteudos.js
-│   │   │   └── useProfessoresStats.js
+│   │   │   ├── 📄 useFileUpload.js
+│   │   │   ├── 📄 useProfessoresConteudos.js
+│   │   │   └── 📄 useProfessoresStats.js
 │   │   ├── 📁 pages/
-│   │   │   ├── ConteudoDetalhes.jsx
-│   │   │   ├── ProfessorAccessModal.jsx
-│   │   │   ├── ProfessoresConteudos.jsx
-│   │   │   ├── ProfessoresDashboard.jsx
-│   │   │   ├── ProfessoresEstatisticas.jsx
-│   │   │   ├── ProfessoresLayout.jsx
-│   │   │   ├── ProfessoresMinhaArea.jsx
-│   │   │   └── ProfessoresNovo.jsx
+│   │   │   ├── 📄 ConteudoDetalhes.jsx
+│   │   │   ├── 📄 ProfessorAccessModal.jsx
+│   │   │   ├── 📄 ProfessoresConteudos.jsx
+│   │   │   ├── 📄 ProfessoresDashboard.jsx
+│   │   │   ├── 📄 ProfessoresEstatisticas.jsx
+│   │   │   ├── 📄 ProfessoresLayout.jsx
+│   │   │   ├── 📄 ProfessoresMinhaArea.jsx
+│   │   │   └── 📄 ProfessoresNovo.jsx
 │   │   └── 📁 services/
-│   │       └── professoresService.js
+│   │       └── 📄 professoresService.js
 │   │
 │   └── 📁 turmas/
 │       ├── 📁 components/
+│       │   └── (vazio)
 │       ├── 📁 hooks/
-│       │   ├── useAulasAvancado.js
-│       │   └── useTurmas.js
+│       │   ├── 📄 useAulasAvancado.js
+│       │   └── 📄 useTurmas.js
 │       ├── 📁 pages/
+│       │   └── (vazio)
 │       └── 📁 services/
-│           └── turmasService.js
+│           └── 📄 turmasService.js
 │
 ├── 📁 pages/
-│   └── Dashboard.jsx                        🏠 DASHBOARD PRINCIPAL
+│   └── 📄 Dashboard.jsx
 │
-├── 📁 shared/                               🛠️ RECURSOS COMPARTILHADOS
+├── 📁 shared/
 │   ├── 📁 components/
 │   │   ├── 📁 Audio/
+│   │   │   └── (componentes de áudio)
 │   │   ├── 📁 Common/
+│   │   │   └── (componentes comuns)
 │   │   ├── 📁 Layout/
+│   │   │   └── (componentes de layout)
 │   │   └── 📁 UI/
+│   │       ├── 📄 CameraScanner.jsx
+│   │       ├── 📄 EnhancedComponents.jsx
+│   │       └── 📄 QRCodeGenerator.jsx
 │   ├── 📁 contexts/
-│   │   ├── AudioContext.js
-│   │   ├── AuthContext.tsx                  🎯 CONTEXT DE AUTH
-│   │   └── ProgressoContext.js
+│   │   ├── 📄 AudioContext.js
+│   │   ├── 📄 AuthContext.tsx
+│   │   └── 📄 ProgressoContext.js
 │   ├── 📁 hooks/
-│   │   ├── index.js
-│   │   └── useSmartRedirect.ts              🎯 HOOK DE REDIRECIONAMENTO
+│   │   ├── 📄 index.js
+│   │   ├── 📄 useAlunos.js
+│   │   ├── 📄 useProfessores.js
+│   │   └── 📄 useSmartRedirect.ts
 │   ├── 📁 lib/
 │   │   ├── 📁 audio/
+│   │   │   └── (bibliotecas de áudio)
 │   │   ├── 📁 constants/
+│   │   │   └── (constantes)
 │   │   ├── 📁 supabase/
-│   │   │   └── supabaseClient.ts           🔗 CLIENTE SUPABASE
+│   │   │   └── 📄 supabaseClient.ts
 │   │   └── 📁 utils/
+│   │       └── (utilitários)
 │   ├── 📁 services/
-│   │   └── redirectService.js               🎯 SERVIÇO DE REDIRECIONAMENTO
+│   │   └── 📄 redirectService.js
 │   └── 📁 utils/
-│       └── accessControl.js
+│       ├── 📄 accessControl.js
+│       └── 📄 qrCodeUtils.js
 │
 ├── 📁 styles/
-│   ├── components.css
-│   ├── globals.css
-│   ├── nipo-design-system.css
-│   └── professores.css
+│   ├── 📄 components.css
+│   ├── 📄 globals.css
+│   ├── 📄 nipo-design-system.css
+│   └── 📄 professores.css
 │
 └── 📁 types/
-    ├── auth.ts                              📝 TIPOS DE AUTH
-    ├── supabase.ts
-    └── vite-env.d.ts
-
-## 🎯 ARQUIVOS CHAVE PARA REDIRECIONAMENTO:
-
-### Fluxo de Redirecionamento:
-1. **Register.jsx** → signup() → **AuthContext.tsx**
-2. **AuthContext.tsx** → redirectByVote() → **redirectService.js**
-3. **redirectService.js** → getSmartRedirect() → retorna rota
-4. **AppRouter.jsx** → define rotas disponíveis
-
-### Arquivos Críticos:
-- 🔥 **shared/services/redirectService.js** - Lógica principal
-- 🔥 **shared/contexts/AuthContext.tsx** - Orquestra o redirect
-- 🔥 **shared/hooks/useSmartRedirect.ts** - Hook auxiliar
-- 🔥 **app/router/AppRouter.jsx** - Definição das rotas
-- 🔥 **features/auth/pages/Vote.jsx** - Página de votação
-- 🔥 **features/auth/hooks/useAuthFlow.js** - Fluxo de autenticação
-
-## 🚨 PRIORIDADE DE INVESTIGAÇÃO:
-1. **redirectService.js** (lógica de direcionamento)
-2. **Vote.jsx** (destino do redirect)
-3. **AppRouter.jsx** (rotas válidas)
-4. **useAuthFlow.js** (fluxo de auth)
+    ├── 📄 auth.ts
+    ├── 📄 supabase.ts
+    └── 📄 vite-env.d.ts
 ```
+
+## 📊 Análise da Estrutura Atual
+
+### ✅ **Pontos Fortes**
+- **Arquitetura Feature-Based**: Organização excelente por domínios
+- **Admin Bem Desenvolvido**: Sistema completo de QR Code, presença e gerenciamento
+- **Professores Avançado**: Upload de vídeos, categorização, estatísticas
+- **TypeScript**: Tipagem presente em arquivos críticos
+- **Shared Components**: Reutilização inteligente de código
+
+### 🔍 **Áreas de Desenvolvimento**
+- **Features Vazias**: `devocional`, `gamificacao`, `modulos` precisam de implementação
+- **Services Incompletos**: Alguns services estão vazios
+- **Componentes Shared**: Pastas Audio, Common e Layout precisam ser populadas
+
+### 🎯 **Funcionalidades Identificadas**
+1. **Sistema de QR Code** - ✅ Implementado (admin)
+2. **Upload de Vídeos** - ✅ Implementado (professores)
+3. **Dashboard de Instrumentos** - ✅ Implementado (admin)
+4. **Scanner QR** - ✅ Implementado (alunos)
+5. **Sistema de Presença** - ✅ Implementado
+6. **Gamificação** - 🔄 Em desenvolvimento
+7. **Módulos/Lessons** - 🔄 Estrutura criada
+
+### 🚀 **Próximos Passos Baseados na Estrutura**
+1. Implementar features vazias (gamificacao, devocional)
+2. Completar services faltantes
+3. Popular componentes shared
+4. Integrar fluxo completo Kanban
+5. Automatizar liberação de conteúdo
+
+**A estrutura está sólida e bem organizada para implementar o modelo Alpha School! 🎵**

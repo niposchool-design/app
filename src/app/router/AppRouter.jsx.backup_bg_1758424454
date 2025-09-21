@@ -2,7 +2,6 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../../shared/contexts/AuthContext';
 import { hasRoutePermission } from '../../shared/services/redirectService';
-import { OrientalNavigationProvider } from '../../shared/components/oriental/OrientalNavigationContext';
 
 // Import das páginas existentes
 import Dashboard from '../../pages/Dashboard';
@@ -45,7 +44,6 @@ import AdminAlunos from '../../features/admin/pages/AdminAlunos';
 import AdminTeste from '../../features/admin/pages/AdminTeste';
 import AdminRelatorios from '../../features/admin/pages/AdminRelatorios';
 import AdminConfiguracoes from '../../features/admin/pages/AdminConfiguracoes';
-import BancoDadosStatus from '../../features/admin/pages/BancoDadosStatus';
 
 // 🚀 IMPORTS DO SISTEMA QR CODE
 import { QRCodeManager } from '../../features/admin/pages/QRCodeManager';
@@ -173,8 +171,7 @@ const PublicRoute = ({ children }) => {
 
 const AppRouter = () => {
   return (
-    <OrientalNavigationProvider>
-      <Routes>
+    <Routes>
       {/* ==========================================
           🌐 ROTA RAIZ - REDIRECIONAMENTO INTELIGENTE
           ========================================== */}
@@ -242,7 +239,7 @@ const AppRouter = () => {
         path="/perfil" 
         element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">👤 Perfil</h1>
                 <p className="text-gray-600">Em desenvolvimento...</p>
@@ -290,7 +287,7 @@ const AppRouter = () => {
       <Route 
         path="/scanner-publico" 
         element={
-          <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 p-4">
+          <div className="min-h-screen bg-gray-50 p-4">
             <div className="max-w-md mx-auto">
               <QRScanner />
             </div>
@@ -353,7 +350,7 @@ const AppRouter = () => {
         path="/admin/aulas" 
         element={
           <AdminRoute>
-            <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">📚 Gerenciar Aulas</h1>
                 <p className="text-gray-600">Lista de todas as aulas - Em desenvolvimento...</p>
@@ -378,7 +375,7 @@ const AppRouter = () => {
         path="/admin/aulas/editar/:id" 
         element={
           <AdminRoute>
-            <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">✏️ Editar Aula</h1>
                 <p className="text-gray-600">Formulário de edição - Em desenvolvimento...</p>
@@ -407,7 +404,7 @@ const AppRouter = () => {
         path="/admin/professores/:id" 
         element={
           <AdminRoute>
-            <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">👨‍🏫 Detalhes do Professor</h1>
                 <p className="text-gray-600">Em desenvolvimento...</p>
@@ -436,7 +433,7 @@ const AppRouter = () => {
         path="/admin/alunos/:id" 
         element={
           <AdminRoute>
-            <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">👨‍🎓 Detalhes do Aluno</h1>
                 <p className="text-gray-600">Em desenvolvimento...</p>
@@ -494,16 +491,6 @@ const AppRouter = () => {
         } 
       />
 
-      {/* Status do Banco de Dados */}
-      <Route 
-        path="/admin/banco-dados" 
-        element={
-          <AdminRoute>
-            <BancoDadosStatus />
-          </AdminRoute>
-        } 
-      />
-
       {/* ==========================================
           🔵 ÁREA DOS ALUNOS - TODOS PODEM ACESSAR ✅ ATUALIZADA
           ========================================== */}
@@ -542,7 +529,7 @@ const AppRouter = () => {
         path="/alunos/progresso" 
         element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">📈 Meu Progresso</h1>
                 <p className="text-gray-600">Acompanhe sua evolução - Em desenvolvimento...</p>
@@ -556,7 +543,7 @@ const AppRouter = () => {
         path="/alunos/aulas" 
         element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">📚 Minhas Aulas</h1>
                 <p className="text-gray-600">Próximas aulas e histórico - Em desenvolvimento...</p>
@@ -570,7 +557,7 @@ const AppRouter = () => {
         path="/alunos/conquistas" 
         element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">🏆 Minhas Conquistas</h1>
                 <p className="text-gray-600">Badges e realizações - Em desenvolvimento...</p>
@@ -724,7 +711,7 @@ const AppRouter = () => {
         path="/modulos" 
         element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">📚 Módulos</h1>
                 <p className="text-gray-600">Em desenvolvimento...</p>
@@ -738,7 +725,7 @@ const AppRouter = () => {
         path="/conquistas" 
         element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">🏆 Conquistas</h1>
                 <p className="text-gray-600">Em desenvolvimento...</p>
@@ -752,7 +739,7 @@ const AppRouter = () => {
         path="/devocional" 
         element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">📖 Devocional</h1>
                 <p className="text-gray-600">Em desenvolvimento...</p>
@@ -768,7 +755,7 @@ const AppRouter = () => {
       <Route 
         path="*" 
         element={
-          <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+          <div className="min-h-screen bg-gray-50 flex items-center justify-center">
             <div className="text-center">
               <div className="text-6xl mb-4">😵</div>
               <h1 className="text-4xl font-bold text-gray-800 mb-4">404</h1>
@@ -776,7 +763,7 @@ const AppRouter = () => {
               <div className="space-x-4">
                 <button 
                   onClick={() => window.history.back()}
-                  className="bg-gradient-to-br from-pink-50 to-red-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+                  className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
                 >
                   ← Voltar
                 </button>
@@ -792,7 +779,6 @@ const AppRouter = () => {
         }  
       /> 
     </Routes>
-    </OrientalNavigationProvider>
   );
 };
 
