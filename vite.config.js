@@ -51,7 +51,12 @@ export default defineConfig({
       '@/pages': path.resolve(__dirname, './src/pages'),
       '@/shared': path.resolve(__dirname, './src/shared'),
       '@/types': path.resolve(__dirname, './src/types'),
-      '@/styles': path.resolve(__dirname, './src/styles')
+      '@/styles': path.resolve(__dirname, './src/styles'),
+      '@/components': path.resolve(__dirname, './src/shared/components'),
+      '@/services': path.resolve(__dirname, './src/shared/services'),
+      '@/contexts': path.resolve(__dirname, './src/shared/contexts'),
+      '@/hooks': path.resolve(__dirname, './src/shared/hooks'),
+      '@/utils': path.resolve(__dirname, './src/shared/utils')
     }
   },
   server: {

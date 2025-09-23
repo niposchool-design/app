@@ -29,11 +29,11 @@ const AlunoDashboard = () => {
   const [greeting, setGreeting] = useState('');
   
   // Estados para votação 
-  const [votingData, setVotingData] = useState([]);
-  const [userVotedLogo, setUserVotedLogo] = useState(null);
+  const [_votingData, _setVotingData] = useState([]);
+  const [_userVotedLogo, _setUserVotedLogo] = useState(null);
 
   // Hooks do Supabase
-  const { modules, loading: modulesLoading, getModuleStats } = useModules();
+  const { loading: modulesLoading, getModuleStats } = useModules();
   const { loading: achievementsLoading, getAchievementStats } = useAchievements();
   const { loading: progressLoading, getProgressStats } = useProgress();
   const { loading: devotionalsLoading, getTodayDevotional } = useDevotionals();
@@ -48,11 +48,11 @@ const AlunoDashboard = () => {
 
       if (votosError) throw votosError;
       
-      setVotingData(votosData || []);
+      _setVotingData(votosData || []);
       
       if (userProfile?.voted_logo) {
         const logoVotado = votosData?.find(logo => logo.id === userProfile.voted_logo);
-        setUserVotedLogo(logoVotado);
+        _setUserVotedLogo(logoVotado);
       }
     } catch (error) {
       console.error('Erro ao carregar dados de votação:', error);
@@ -222,7 +222,7 @@ const AlunoDashboard = () => {
         // Encontre a seção "Action Buttons Grid" no seu AlunoDashboard.jsx e SUBSTITUA por esta versão:
 
         {/* Action Buttons Grid - Específico para Alunos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           
           {/* 🚀 NOVO: Scanner QR Code - PRIORIDADE MÁXIMA */}
           <button 
@@ -238,6 +238,23 @@ const AlunoDashboard = () => {
             </p>
             <div className="mt-2 text-xs text-red-500 bg-red-100 px-2 py-1 rounded-full inline-block">
               ✨ Sistema Alpha School
+            </div>
+          </button>
+
+          {/* 🌸 CENTRO DE ESTUDOS - NOVO DESTAQUE */}
+          <button 
+            onClick={() => navigate('/alunos/centro-estudos')}
+            className="group bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-center p-6 border-2 border-indigo-200 hover:border-indigo-400 hover:-translate-y-1 bg-gradient-to-br from-indigo-50 to-purple-50"
+          >
+            <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-3xl mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <BookOpen className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="font-bold text-indigo-800 mb-2 text-lg">🌸 Centro de Estudos</h3>
+            <p className="text-indigo-600 text-sm leading-relaxed font-medium">
+              Bibliotecas, vídeos, metodologias e muito mais
+            </p>
+            <div className="mt-2 text-xs text-indigo-500 bg-indigo-100 px-2 py-1 rounded-full inline-block">
+              ✨ Área Principal de Estudos
             </div>
           </button>
 

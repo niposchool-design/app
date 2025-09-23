@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../../shared/lib/supabase/supabaseClient';
+import { NavigationBar } from '@/shared/components/navigation/NavigationBar';
 import {
   Music, ArrowLeft, BookOpen, Play, Award, Users, Clock,
   Volume2, FileText, Camera, Heart, Share2, Download,
@@ -847,9 +848,10 @@ const MeuInstrumento = () => {
         }
       `}</style>
 
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-yellow-50">
+        <NavigationBar />
         {/* Header do Aluno */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-700 text-white">
+        <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white">
           <div className="max-w-6xl mx-auto px-6 py-8">
             <div className="flex items-center gap-4 mb-6 animate-fade-in">
               <button
@@ -860,7 +862,7 @@ const MeuInstrumento = () => {
               </button>
               <div>
                 <h1 className="text-2xl font-bold">Meu Instrumento</h1>
-                <p className="text-blue-100">Tudo sobre o {instrumento.nome}</p>
+                <p className="text-yellow-100">Tudo sobre o {instrumento.nome}</p>
               </div>
               <div className="ml-auto flex items-center gap-3">
                 <button 

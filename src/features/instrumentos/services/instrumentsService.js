@@ -68,6 +68,38 @@ export const instrumentsService = {
     }
   },
 
+  // ==========================================
+  // BUSCA POR ID
+  // ==========================================
+
+  async getById(instrumentoId) {
+    try {
+      console.log('🔍 Buscando instrumento por ID:', instrumentoId);
+      
+      const { data: instrumento, error } = await supabase
+        .from('instrumentos')
+        .select('*')
+        .eq('id', instrumentoId)
+        .eq('ativo', true)
+        .single();
+
+      if (error) {
+        if (error.code === 'PGRST116') {
+          console.log('ℹ️ Instrumento não encontrado:', instrumentoId);
+          return null;
+        }
+        throw error;
+      }
+
+      console.log('✅ Instrumento encontrado:', instrumento?.nome);
+      return instrumento;
+
+    } catch (error) {
+      console.error('❌ Erro ao buscar instrumento por ID:', error);
+      throw error;
+    }
+  },
+
   async getInstrumentsByCategory(categoria) {
     try {
       console.log('🔍 Buscando instrumentos da categoria:', categoria);

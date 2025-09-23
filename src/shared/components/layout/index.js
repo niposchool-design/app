@@ -1,0 +1,1 @@
+export { AlunoPageLayout } from './AlunoPageLayout';
