@@ -2,6 +2,12 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '@/shared/contexts/AuthContext';
 
+// 🏠 Import da Landing Page
+import LandingPage from '@/pages/LandingPage';
+
+// 🎯 Import do Dashboard Inteligente que redireciona por tipo de usuário
+import SmartDashboard from '@/pages/SmartDashboard';
+
 // Import das páginas existentes
 import Dashboard from '@/pages/Dashboard';
 import Login from '@/features/auth/pages/Login';
@@ -41,7 +47,10 @@ import ProgressoAluno from '@/features/alunos/pages/ProgressoAluno';
 import SistemaDuvidas from '@/features/alunos/pages/SistemaDuvidas';
 import NovaPergunta from '@/features/alunos/pages/NovaPergunta';
 
-// 📋 Import das páginas do Kanban Admin - NOVO MÓDULO
+// � Import do Scanner QR
+import { QRScannerPage } from '@/features/alunos/pages/QRScannerPage';
+
+// �📋 Import das páginas do Kanban Admin - NOVO MÓDULO
 import Kanban from '@/features/admin/pages/Kanban';
 import AulaDetail from '@/features/admin/pages/AulaDetail';
 
@@ -88,6 +97,33 @@ const ProfessorRoute = ({ children }) => {
   return children;
 };
 
+// 🔴 Componente de Proteção para Admins - NOVO
+const AdminRoute = ({ children }) => {
+  const { user, userProfile, loading } = useAuth();
+  
+  if (loading) return <LoadingScreen />;
+  
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Verificar se é admin
+  if (!userProfile || userProfile.tipo_usuario !== 'admin') {
+    return <Navigate to="/dashboard" replace />;
+  }
+  
+  return children;
+};
+
+// Componente de Rota para Landing (pública, mas não redireciona)
+const LandingRoute = ({ children }) => {
+  const { loading } = useAuth();
+  
+  if (loading) return <LoadingScreen />;
+  
+  return children;
+};
+
 // Componente de Rota Pública (redireciona se logado)
 const PublicRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -104,10 +140,14 @@ const PublicRoute = ({ children }) => {
 const AppRouter = () => {
   return (
     <Routes>
-      {/* Rota raiz - redireciona baseado no auth */}
+      {/* 🏠 Landing Page - Rota inicial */}
       <Route 
         path="/" 
-        element={<Navigate to="/dashboard" replace />} 
+        element={
+          <LandingRoute>
+            <LandingPage />
+          </LandingRoute>
+        } 
       />
       
       {/* Rotas públicas (só acessíveis se não logado) */}
@@ -129,9 +169,19 @@ const AppRouter = () => {
         } 
       />
       
-      {/* Rotas protegidas (só acessíveis se logado) */}
+      {/* 🎯 DASHBOARD INTELIGENTE - Redireciona automaticamente baseado no tipo de usuário */}
       <Route 
         path="/dashboard" 
+        element={
+          <ProtectedRoute>
+            <SmartDashboard />
+          </ProtectedRoute>
+        } 
+      />
+      
+      {/* 📊 Dashboard genérico (mantido para casos específicos) */}
+      <Route 
+        path="/dashboard/generic" 
         element={
           <ProtectedRoute>
             <Dashboard />
@@ -146,6 +196,11 @@ const AppRouter = () => {
             <Vote />
           </ProtectedRoute>
         } 
+      />
+
+      <Route 
+        path="/confirm-email" 
+        element={<ConfirmEmail />} 
       />
 
       <Route 
@@ -391,6 +446,183 @@ const AppRouter = () => {
           <ProtectedRoute>
             <DetalheInstrumento />
           </ProtectedRoute>
+        } 
+      />
+      
+      {/* 🆕 NOVAS ROTAS QUE ESTAVAM FALTANDO */}
+      
+      {/* 📱 Scanner QR Code - COMPONENTE REAL */}
+      <Route 
+        path="/scanner" 
+        element={
+          <ProtectedRoute>
+            <QRScannerPage />
+          </ProtectedRoute>
+        } 
+      />
+      
+      {/* Páginas específicas do Centro de Estudos */}
+      <Route 
+        path="/alunos/teoria-musical" 
+        element={
+          <ProtectedRoute>
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-gray-800 mb-4">🎼 Teoria Musical</h1>
+                <p className="text-gray-600">Em desenvolvimento...</p>
+              </div>
+            </div>
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/alunos/repertorio" 
+        element={
+          <ProtectedRoute>
+            <BibliotecaRepertorio />
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/alunos/tecnica-vocal" 
+        element={
+          <ProtectedRoute>
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-gray-800 mb-4">🎤 Técnica Vocal</h1>
+                <p className="text-gray-600">Em desenvolvimento...</p>
+              </div>
+            </div>
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/alunos/instrumentos" 
+        element={
+          <ProtectedRoute>
+            <BibliotecaInstrumentos />
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/alunos/aulas-grupo" 
+        element={
+          <ProtectedRoute>
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-gray-800 mb-4">👥 Aulas em Grupo</h1>
+                <p className="text-gray-600">Em desenvolvimento...</p>
+              </div>
+            </div>
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/alunos/biblioteca" 
+        element={
+          <ProtectedRoute>
+            <BibliotecaVideos />
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/alunos/agenda" 
+        element={
+          <ProtectedRoute>
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-gray-800 mb-4">📅 Agenda</h1>
+                <p className="text-gray-600">Em desenvolvimento...</p>
+              </div>
+            </div>
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/alunos/metas" 
+        element={
+          <ProtectedRoute>
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-gray-800 mb-4">🎯 Metas</h1>
+                <p className="text-gray-600">Em desenvolvimento...</p>
+              </div>
+            </div>
+          </ProtectedRoute>
+        } 
+      />
+      
+      {/* Metodologias de Ensino */}
+      <Route 
+        path="/alunos/metodologia/orff" 
+        element={
+          <ProtectedRoute>
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-gray-800 mb-4">🎵 Método Orff</h1>
+                <p className="text-gray-600">Em desenvolvimento...</p>
+              </div>
+            </div>
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/alunos/metodologia/suzuki" 
+        element={
+          <ProtectedRoute>
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-gray-800 mb-4">🎻 Método Suzuki</h1>
+                <p className="text-gray-600">Em desenvolvimento...</p>
+              </div>
+            </div>
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/alunos/metodologia/musical-futures" 
+        element={
+          <ProtectedRoute>
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-gray-800 mb-4">🚀 Musical Futures</h1>
+                <p className="text-gray-600">Em desenvolvimento...</p>
+              </div>
+            </div>
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/alunos/metodologia/kodaly" 
+        element={
+          <ProtectedRoute>
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-gray-800 mb-4">🎶 Método Kodály</h1>
+                <p className="text-gray-600">Em desenvolvimento...</p>
+              </div>
+            </div>
+          </ProtectedRoute>
+        } 
+      />
+
+      {/* 🔴 ROTA ADMIN INDEPENDENTE - Dashboard administrativo */}
+      <Route 
+        path="/admin" 
+        element={
+          <AdminRoute>
+            <ProfessoresAdminPanel />
+          </AdminRoute>
         } 
       />
       

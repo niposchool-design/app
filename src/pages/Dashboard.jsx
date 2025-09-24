@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../shared/contexts/AuthContext';
+import { NipoLandingLogo, LogoVencedor } from '../shared/components/ui/NipoLogo';
+import LogoVencedorDestaque from '../shared/components/ui/LogoVencedorDestaque';
 
 const Dashboard = () => {
   const { user, userProfile, loading } = useAuth();
@@ -78,13 +80,10 @@ const Dashboard = () => {
       <div className="max-w-4xl mx-auto px-4 py-12">
         
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-red-600 rounded-3xl mx-auto mb-6 flex items-center justify-center shadow-lg">
-            <span className="text-white text-4xl font-bold">鳥</span>
+        <div className="text-center mb-8">
+          <div className="mb-6">
+            <NipoLandingLogo size={80} />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Nipo School
-          </h1>
           <p className="text-xl text-gray-600 mb-4">
             Bem-vindo, {userProfile.full_name || user.email}!
           </p>
@@ -93,6 +92,11 @@ const Dashboard = () => {
               {dashboardInfo.title}
             </span>
           </div>
+        </div>
+
+        {/* Logo Vencedor - Destaque Especial */}
+        <div className="mb-8">
+          <LogoVencedor />
         </div>
 
         {/* Main Content */}
@@ -190,8 +194,8 @@ const Dashboard = () => {
             <button
               onClick={() => {
                 if (window.confirm('Tem certeza que deseja sair?')) {
-                  // O logout será implementado no AuthContext
-                  window.location.href = '/login';
+                  // Redirecionar para a landing page após logout
+                  window.location.href = '/';
                 }
               }}
               className="text-gray-500 hover:text-gray-700 text-sm transition-colors"

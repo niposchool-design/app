@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../shared/contexts/AuthContext';
+import { NipoHeaderLogo } from '../../../shared/components/ui/NipoLogo';
 import {
   Plus,
   Eye,
@@ -190,7 +191,7 @@ const ProfessorDashboard = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/login');
+      navigate('/'); // Redireciona para a landing page
     } catch (error) {
       console.error('Erro ao fazer logout:', error);
     }
@@ -269,11 +270,8 @@ const ProfessorDashboard = () => {
       <nav className="bg-white/90 backdrop-blur-md shadow-sm border-b border-orange-100 sticky top-0 z-50">
         <div className="flex items-center justify-between px-4 sm:px-6 py-4">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center shadow-md">
-              <span className="text-white text-sm sm:text-lg font-bold">先</span>
-            </div>
+            <NipoHeaderLogo />
             <div>
-              <span className="font-bold text-gray-800 text-base sm:text-lg">Nipo School</span>
               <p className="text-xs text-orange-500 font-medium hidden sm:block">Área do Professor</p>
             </div>
           </div>

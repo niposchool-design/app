@@ -35,7 +35,7 @@ import {
 } from '../../../shared/components/ui/NipoAdvanced';
 
 const AlunoDashboard = () => {
-  const { userProfile } = useAuth();
+  const { user, userProfile } = useAuth();
   const navigate = useNavigate();
   const [mounted, setMounted] = useState(false);
   const [greeting, setGreeting] = useState('');

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../../shared/lib/supabase/supabaseClient';
+import { NipoHeaderLogo } from '../../../shared/components/ui/NipoLogo';
 
 import {  
   BarChart3,
@@ -62,7 +63,7 @@ const AdminDashboard = () => {
     if (window.confirm('Tem certeza que deseja sair da conta de administrador?')) {
       try {
         await logout();
-        navigate('/login', { replace: true });
+        navigate('/', { replace: true });
       } catch (err) {
         console.error('Erro ao fazer logout:', err);
         alert('Erro ao sair da conta: ' + err.message);

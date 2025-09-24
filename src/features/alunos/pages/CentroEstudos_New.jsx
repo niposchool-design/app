@@ -8,7 +8,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/shared/lib/supabase/supabaseClient';
 import { useAuth } from '@/shared/contexts/AuthContext';
-import { instrumentsService } from '@/features/instrumentos/services/instrumentsService';
 
 // Componentes padronizados Nipo School
 import NipoHeader from '@/shared/components/ui/NipoHeader';
@@ -32,7 +31,6 @@ import {
 const CentroEstudos = () => {
   const { userProfile } = useAuth();
   const [loading, setLoading] = useState(true);
-  const [instrumentos, setInstrumentos] = useState([]);
   const [resumoAprendizado, setResumoAprendizado] = useState({
     instrumentoAtual: null,
     progressoGeral: 0,
@@ -46,7 +44,7 @@ const CentroEstudos = () => {
 
   useEffect(() => {
     carregarDados();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const carregarDados = async () => {
     try {
@@ -56,7 +54,6 @@ const CentroEstudos = () => {
 
       if (session?.user) {
         await Promise.all([
-          carregarInstrumentos(),
           carregarResumoAprendizado(session.user.id),
           carregarAtividades(session.user.id)
         ]);
@@ -65,17 +62,6 @@ const CentroEstudos = () => {
       console.error('Erro ao carregar dados:', error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const carregarInstrumentos = async () => {
-    try {
-      const response = await instrumentsService.getAllInstruments();
-      if (response.success) {
-        setInstrumentos(response.data);
-      }
-    } catch (error) {
-      console.error('Erro ao carregar instrumentos:', error);
     }
   };
 
@@ -118,7 +104,7 @@ const CentroEstudos = () => {
         progressoGeral: Math.round(progressoMedio),
         proximas_aulas: aulasData || [],
         duvidas_pendentes: duvidasData?.length || 0,
-        repertorio_disponivel: instrumentos.length || repertorioData?.length || 0,
+        repertorio_disponivel: repertorioData?.length || 0,
         videos_nao_vistos: 5
       });
     } catch (error) {
@@ -257,7 +243,7 @@ const CentroEstudos = () => {
             <NipoActionCard
               emoji="🎹"
               title="Instrumentos"
-              subtitle={`${instrumentos.length} instrumentos disponíveis`}
+              subtitle="Técnicas específicas por instrumento"
               onClick={() => navigate('/alunos/instrumentos')}
             />
 
@@ -380,53 +366,6 @@ const CentroEstudos = () => {
             />
           </NipoGrid>
         </NipoSection>
-
-        {/* Instrumentos Populares */}
-        {instrumentos.length > 0 && (
-          <NipoSection>
-            <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
-              <Music className="w-6 h-6 text-red-500 mr-2" />
-              Instrumentos Populares
-            </h2>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {instrumentos.slice(0, 6).map((instrumento) => (
-                <NipoCard key={instrumento.id} className="p-4 hover:shadow-lg transition-all cursor-pointer">
-                  <div 
-                    onClick={() => navigate(`/alunos/instrumento/${instrumento.id}`)}
-                    className="text-center"
-                  >
-                    <div className="text-3xl mb-2">
-                      {instrumento.emoji || '🎵'}
-                    </div>
-                    <h3 className="font-semibold text-gray-900 mb-1">
-                      {instrumento.nome}
-                    </h3>
-                    <p className="text-sm text-gray-600 mb-2">
-                      {instrumento.categoria || 'Instrumento'}
-                    </p>
-                    {instrumento.stats && (
-                      <div className="text-xs text-gray-500">
-                        {instrumento.stats.total_alunos} alunos estudando
-                      </div>
-                    )}
-                  </div>
-                </NipoCard>
-              ))}
-            </div>
-
-            {instrumentos.length > 6 && (
-              <div className="text-center mt-4">
-                <NipoButton 
-                  variant="outline"
-                  onClick={() => navigate('/alunos/instrumentos')}
-                >
-                  Ver Todos os Instrumentos ({instrumentos.length})
-                </NipoButton>
-              </div>
-            )}
-          </NipoSection>
-        )}
       </NipoContainer>
       
       {/* Floating Musical Notes */}

@@ -121,7 +121,7 @@ const Vote = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/login');
+      navigate('/'); // Redireciona para a landing page
     } catch (error) {
       console.error('Erro ao fazer logout:', error);
     }
