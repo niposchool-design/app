@@ -11,7 +11,7 @@ import { useAuth } from '@/shared/contexts/AuthContext';
 import { instrumentsService } from '@/features/instrumentos/services/instrumentsService';
 
 // Componentes padronizados Nipo School
-import NipoHeader from '@/shared/components/ui/NipoHeader';
+import NipoHeader from '@/shared/components/UI/NipoHeader';
 import { 
   NipoBackground, 
   NipoContainer, 
@@ -21,13 +21,13 @@ import {
   NipoCard,
   NipoButton,
   NipoLoading
-} from '@/shared/components/ui/NipoUI';
+} from '@/shared/components/UI/NipoUI';
 import { 
   NipoGreeting, 
   NipoActionCard,
   NipoQuickAction,
   NipoProgressRing
-} from '@/shared/components/ui/NipoAdvanced';
+} from '@/shared/components/UI/NipoAdvanced';
 
 const CentroEstudos = () => {
   const { userProfile } = useAuth();

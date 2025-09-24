@@ -18,7 +18,7 @@ import { useDevotionals } from '../../devocional/hooks/useDevotionals';
 import { supabase } from '../../../shared/lib/supabase/supabaseClient';
 
 // Componentes padronizados Nipo School
-import NipoHeader from '../../../shared/components/ui/NipoHeader';
+import NipoHeader from '../../../shared/components/UI/NipoHeader';
 import { 
   NipoBackground, 
   NipoContainer, 
@@ -27,12 +27,12 @@ import {
   NipoStatsCard,
   NipoFooter,
   NipoLoading
-} from '../../../shared/components/ui/NipoUI';
+} from '../../../shared/components/UI/NipoUI';
 import { 
   NipoGreeting, 
   NipoActionCard,
   NipoProgressRing
-} from '../../../shared/components/ui/NipoAdvanced';
+} from '../../../shared/components/UI/NipoAdvanced';
 
 const AlunoDashboard = () => {
   const { userProfile } = useAuth();
