@@ -34,6 +34,17 @@ import InstrumentoPagina from '@/features/instrumentos/pages/InstrumentoPagina';
 import AdminInstruments from '@/features/admin/pages/AdminInstruments';
 import AdminInstrumentDetails from '@/features/admin/pages/AdminInstrumentDetails';
 
+// 👥 Import da página de gestão de alunos
+import AdminAlunos from '@/features/admin/pages/AdminAlunos';
+
+// 👨‍🏫 Import da página de gestão de professores
+import AdminProfessores from '@/features/admin/pages/AdminProfessores';
+
+// 📊 Import das páginas administrativas adicionais
+import AdminRelatorios from '@/features/admin/pages/AdminRelatorios';
+import AdminConfiguracoes from '@/features/admin/pages/AdminConfiguracoes';
+import QRCodeManager from '@/features/admin/pages/QRCodeManager';
+
 // 🎓 Import das páginas dos alunos
 import DetalheInstrumento from '@/features/alunos/instrumentos/pages/DetalheInstrumento';
 import AlunoDashboard from '@/features/alunos/pages/AlunoDashboard';
@@ -269,7 +280,10 @@ const AppRouter = () => {
         <Route path="admin/instruments" element={<AdminInstruments />} />
         <Route path="admin/instruments/:instrumentoId" element={<AdminInstrumentDetails />} />
         
-        {/* 📋 KANBAN ADMIN - ROTAS INTEGRADAS */}
+        {/* � GESTÃO DE ALUNOS (ADMIN) - NOVA ROTA */}
+        <Route path="admin/alunos" element={<AdminAlunos />} />
+        
+        {/* �📋 KANBAN ADMIN - ROTAS INTEGRADAS */}
         <Route path="admin/kanban" element={<Kanban />} />
         <Route path="admin/aulas/:id" element={<AulaDetail />} />
         
@@ -622,6 +636,76 @@ const AppRouter = () => {
         element={
           <AdminRoute>
             <ProfessoresAdminPanel />
+          </AdminRoute>
+        } 
+      />
+      
+      {/* 👥 GESTÃO DE ALUNOS - Rota independente para admin */}
+      <Route 
+        path="/admin/alunos" 
+        element={
+          <AdminRoute>
+            <AdminAlunos />
+          </AdminRoute>
+        } 
+      />
+      
+      {/* 👨‍🏫 GESTÃO DE PROFESSORES - Rota independente para admin */}
+      <Route 
+        path="/admin/professores" 
+        element={
+          <AdminRoute>
+            <AdminProfessores />
+          </AdminRoute>
+        } 
+      />
+      
+      {/* 📋 KANBAN DE AULAS - Rota independente para admin */}
+      <Route 
+        path="/admin/kanban" 
+        element={
+          <AdminRoute>
+            <Kanban />
+          </AdminRoute>
+        } 
+      />
+      
+      {/* 📝 DETALHES DA AULA - Rota independente para admin */}
+      <Route 
+        path="/admin/aulas/:id" 
+        element={
+          <AdminRoute>
+            <AulaDetail />
+          </AdminRoute>
+        } 
+      />
+      
+      {/* 📊 RELATÓRIOS - Rota independente para admin */}
+      <Route 
+        path="/admin/relatorios" 
+        element={
+          <AdminRoute>
+            <AdminRelatorios />
+          </AdminRoute>
+        } 
+      />
+      
+      {/* ⚙️ CONFIGURAÇÕES - Rota independente para admin */}
+      <Route 
+        path="/admin/configuracoes" 
+        element={
+          <AdminRoute>
+            <AdminConfiguracoes />
+          </AdminRoute>
+        } 
+      />
+      
+      {/* 📱 GERENCIADOR QR CODE - Rota independente para admin */}
+      <Route 
+        path="/admin/qr-manager" 
+        element={
+          <AdminRoute>
+            <QRCodeManager />
           </AdminRoute>
         } 
       />
