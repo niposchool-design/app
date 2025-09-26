@@ -63,10 +63,10 @@ import AdminProfessores from '@/features/admin/pages/AdminProfessores';
 // 📊 Import das páginas administrativas adicionais
 import AdminRelatorios from '@/features/admin/pages/AdminRelatorios';
 import AdminConfiguracoes from '@/features/admin/pages/AdminConfiguracoes';
-// 📚 Import da página de curriculum
-import AdminCurriculumNew from '@/features/admin/pages/AdminCurriculum';
-import AdminMethodologyEditor from '@/features/admin/pages/AdminMethodologyEditor';
-import AdminMethodologyView from '@/features/admin/pages/AdminMethodologyView';
+// 📚 Import da página de curriculum - COMENTADO PARA BUILD
+// import AdminCurriculumNew from '@/features/admin/pages/AdminCurriculum';
+// import AdminMethodologyEditor from '@/features/admin/pages/AdminMethodologyEditor';
+// import AdminMethodologyView from '@/features/admin/pages/AdminMethodologyView';
 import AdminInstrumentView from '@/features/admin/pages/AdminInstrumentView';
 import { QRCodeManager } from '@/features/admin/pages/QRCodeManager';
 
@@ -732,6 +732,7 @@ const AppRouter = () => {
       />
       
       {/* 📚 SISTEMA DE CURRICULUM - Rota independente para admin */}
+      {/* ROTA CURRICULUM COMENTADA PARA BUILD
       <Route 
         path="/admin/curriculum" 
         element={
@@ -740,6 +741,8 @@ const AppRouter = () => {
           </AdminRoute>
         } 
       />
+      */}
+      {/* ROTAS CURRICULUM COMENTADAS PARA BUILD
       <Route 
         path="/admin/curriculum/edit/:chapterId" 
         element={
@@ -756,6 +759,7 @@ const AppRouter = () => {
           </AdminRoute>
         } 
       />
+      */}
       <Route 
         path="/admin/instruments/view/:instrumentId" 
         element={
