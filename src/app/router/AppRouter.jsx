@@ -18,8 +18,8 @@ import Register from '@/features/auth/pages/Register';
 import ConfirmEmail from '@/features/auth/components/ConfirmEmail';
 import Vote from '@/features/auth/pages/Vote';
 
-// 📱 Import do Scanner QR
-import { QRScannerPage } from '@/features/alunos/pages/QRScannerPage';
+// 📱 Import do Scanner QR - COMENTADO PARA BUILD
+// import { QRScannerPage } from '@/features/alunos/pages/QRScannerPage';
 
 // 📚 Import das páginas de alunos - PÁGINAS TEMPORÁRIAS PARA BUILD
 // import ModulosPage from '@/features/modulos/pages/ModulosPage';
@@ -31,53 +31,54 @@ import { QRScannerPage } from '@/features/alunos/pages/QRScannerPage';
 // import CurriculumMethodologyPageSimple from '@/features/curriculum/pages/CurriculumMethodologyPageSimple';
 // import TestCurriculumPage from '@/features/curriculum/pages/TestCurriculumPage';
 
-// 📋 Import das páginas do Kanban Admin - NOVO MÓDULO
-import Kanban from '@/features/admin/pages/Kanban';
-import AulaDetail from '@/features/admin/pages/AulaDetail';
+// 📋 Import das páginas do Kanban Admin - COMENTADO PARA BUILD
+// import Kanban from '@/features/admin/pages/Kanban';
+// import AulaDetail from '@/features/admin/pages/AulaDetail';
 
-// 🎯 Import das páginas dos professores - MÓDULO COMPLETO
-import ProfessoresLayout from '@/features/professores/pages/ProfessoresLayout';
-import ProfessoresDashboard from '@/features/professores/pages/ProfessoresDashboard';
-import ProfessoresConteudos from '@/features/professores/pages/ProfessoresConteudos';
-import ProfessoresMinhaArea from '@/features/professores/pages/ProfessoresMinhaArea';
-import ProfessoresEstatisticas from '@/features/professores/pages/ProfessoresEstatisticas';
-import ProfessoresAdminPanel from '@/features/admin/pages/AdminDashboard';
-import ConteudoDetalhes from '@/features/professores/pages/ConteudoDetalhes';
-import FormConteudo from '@/features/professores/components/FormConteudo';
+// 🎯 Import das páginas dos professores - COMENTADO PARA BUILD
+// import ProfessoresLayout from '@/features/professores/pages/ProfessoresLayout';
+// import ProfessoresDashboard from '@/features/professores/pages/ProfessoresDashboard';
+// import ProfessoresConteudos from '@/features/professores/pages/ProfessoresConteudos';
+// import ProfessoresMinhaArea from '@/features/professores/pages/ProfessoresMinhaArea';
+// import ProfessoresEstatisticas from '@/features/professores/pages/ProfessoresEstatisticas';
+// import ProfessoresAdminPanel from '@/features/admin/pages/AdminDashboard';
+// import ConteudoDetalhes from '@/features/professores/pages/ConteudoDetalhes';
+// import FormConteudo from '@/features/professores/components/FormConteudo';
 
-// 🎵 Import das páginas de instrumentos - NOVO MÓDULO
-import InstrumentosLayout from '@/features/instrumentos/pages/InstrumentosLayout';
-import InstrumentosList from '@/features/instrumentos/pages/InstrumentosList';
-import InstrumentoPagina from '@/features/instrumentos/pages/InstrumentoPagina';
+// 🎵 Import das páginas de instrumentos - COMENTADO PARA BUILD
+// import InstrumentosLayout from '@/features/instrumentos/pages/InstrumentosLayout';
+// import InstrumentosList from '@/features/instrumentos/pages/InstrumentosList';
+// import InstrumentoPagina from '@/features/instrumentos/pages/InstrumentoPagina';
 
 // 🆕 Import das páginas de ADMIN DE INSTRUMENTOS - NOVOS
 import AdminInstruments from '@/features/admin/pages/AdminInstruments';
 // import AdminInstrumentDetails from '@/features/admin/pages/AdminInstrumentDetails'; // COMENTADO PARA USAR AdminInstrumentView
 
-// 👥 Import da página de gestão de alunos
-import AdminAlunos from '@/features/admin/pages/AdminAlunos';
+// 👥 Import da página de gestão de alunos - COMENTADO PARA BUILD
+// import AdminAlunos from '@/features/admin/pages/AdminAlunos';
 
-// 👨‍🏫 Import da página de gestão de professores
-import AdminProfessores from '@/features/admin/pages/AdminProfessores';
+// 👨‍🏫 Import da página de gestão de professores - COMENTADO PARA BUILD
+// import AdminProfessores from '@/features/admin/pages/AdminProfessores';
 
-// 📊 Import das páginas administrativas adicionais
-import AdminRelatorios from '@/features/admin/pages/AdminRelatorios';
-import AdminConfiguracoes from '@/features/admin/pages/AdminConfiguracoes';
+// 📊 Import das páginas administrativas adicionais - COMENTADO PARA BUILD
+// import AdminRelatorios from '@/features/admin/pages/AdminRelatorios';
+// import AdminConfiguracoes from '@/features/admin/pages/AdminConfiguracoes';
 // 📚 Import da página de curriculum - COMENTADO PARA BUILD
 // import AdminCurriculumNew from '@/features/admin/pages/AdminCurriculum';
 // import AdminMethodologyEditor from '@/features/admin/pages/AdminMethodologyEditor';
 // import AdminMethodologyView from '@/features/admin/pages/AdminMethodologyView';
 import AdminInstrumentView from '@/features/admin/pages/AdminInstrumentView';
-import { QRCodeManager } from '@/features/admin/pages/QRCodeManager';
+// 🆕 Import das páginas QR - COMENTADO PARA BUILD
+// import { QRCodeManager } from '@/features/admin/pages/QRCodeManager';
 
-// 🎓 Import da página de gestão de turmas
-import AdminTurmas from '@/features/turmas/pages/AdminTurmas';
+// 🎓 Import da página de gestão de turmas - COMENTADO PARA BUILD
+// import AdminTurmas from '@/features/turmas/pages/AdminTurmas';
 
-// 🎓 Import das páginas dos alunos
-import DetalheInstrumento from '@/features/alunos/instrumentos/pages/DetalheInstrumento';
-import AlunoDashboard from '@/features/alunos/pages/AlunoDashboard';
-import BibliotecaInstrumentos from '@/features/alunos/pages/BibliotecaInstrumentos';
-import BibliotecaRepertorio from '@/features/alunos/pages/BibliotecaRepertorio';
+// 🎓 Import das páginas dos alunos - COMENTADO PARA BUILD
+// import DetalheInstrumento from '@/features/alunos/instrumentos/pages/DetalheInstrumento';
+// import AlunoDashboard from '@/features/alunos/pages/AlunoDashboard';
+// import BibliotecaInstrumentos from '@/features/alunos/pages/BibliotecaInstrumentos';
+// import BibliotecaRepertorio from '@/features/alunos/pages/BibliotecaRepertorio';
 import BibliotecaVideos from '@/features/alunos/pages/BibliotecaVideos';
 import CentroEstudos from '@/features/alunos/pages/CentroEstudos';
 import MetodologiasEnsino from '@/features/alunos/pages/MetodologiasEnsino';
