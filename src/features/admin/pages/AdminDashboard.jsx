@@ -3,6 +3,7 @@ import { useAuth } from '../../../shared/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../../shared/lib/supabase/supabaseClient';
 import { NipoHeaderLogo } from '../../../shared/components/UI/NipoLogo';
+import { executarAnaliseCompleta } from '../../../utils/testeTabelas';
 
 import {  
   BarChart3,
@@ -366,11 +367,11 @@ const AdminDashboard = () => {
         featured={true}
       />
       <ActionButton
-        title="Sistema de Aulas"
-        description={`${dadosReais.estatisticas.total_aulas || 0} aulas • ${dadosReais.estatisticas.aulas_concluidas || 0} concluídas`}
+        title="Sistema de Curriculum"
+        description="Metodologias mundiais • Capítulos estruturados • Diferencial único"
         icon={BookOpen}
         color="border-2 border-purple-200 bg-purple-50 hover:bg-purple-100"
-        onClick={() => navigate('/admin/kanban')}
+        onClick={() => navigate('/admin/curriculum')}
         featured={true}
       />
       <ActionButton
@@ -394,7 +395,7 @@ const AdminDashboard = () => {
       
       <ActionButton
         title="Kanban de Aulas"
-        description="Gestão visual"
+        description="Gestão operacional • Presença e horários"
         icon={LayoutGrid}
         color="border-2 border-indigo-200 bg-indigo-50 hover:bg-indigo-100"
         onClick={() => navigate('/admin/kanban')}
@@ -647,6 +648,21 @@ const AdminDashboard = () => {
               icon={Activity}
               color="border border-gray-200 hover:bg-gray-50"
               onClick={() => navigate('/admin/logs')}
+            />
+            <ActionButton
+              title="🔍 Teste BD" 
+              description="Verificar tabelas"
+              icon={Database}
+              color="border border-red-200 hover:bg-red-50"
+              onClick={async () => {
+                console.clear();
+                console.log('🔍 INICIANDO ANÁLISE DAS TABELAS...');
+                try {
+                  await executarAnaliseCompleta();
+                } catch (err) {
+                  console.error('Erro na análise:', err);
+                }
+              }}
             />
           </div>
         </div>

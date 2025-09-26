@@ -1,4 +1,4 @@
-import { supabase } from '../shared/lib/supabase/supabaseClient';
+import { supabase } from '../../../shared/lib/supabase/supabaseClient';
 
 /**
  * Service para gerenciamento de turmas e matrículas
