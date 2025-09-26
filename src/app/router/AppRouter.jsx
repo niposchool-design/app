@@ -26,10 +26,10 @@ import { QRScannerPage } from '@/features/alunos/pages/QRScannerPage';
 // import ConquistasPage from '@/features/conquistas/pages/ConquistasPage';
 // import DevocionalPage from '@/features/devocional/pages/DevocionalPage';
 
-// 📖 Import das páginas de curriculum - METODOLOGIAS INDIVIDUAIS
-import CurriculumMethodologyPage from '@/features/curriculum/pages/CurriculumMethodologyPage';
-import CurriculumMethodologyPageSimple from '@/features/curriculum/pages/CurriculumMethodologyPageSimple';
-import TestCurriculumPage from '@/features/curriculum/pages/TestCurriculumPage';
+// 📖 Import das páginas de curriculum - METODOLOGIAS INDIVIDUAIS - COMENTADO PARA BUILD
+// import CurriculumMethodologyPage from '@/features/curriculum/pages/CurriculumMethodologyPage';
+// import CurriculumMethodologyPageSimple from '@/features/curriculum/pages/CurriculumMethodologyPageSimple';
+// import TestCurriculumPage from '@/features/curriculum/pages/TestCurriculumPage';
 
 // 📋 Import das páginas do Kanban Admin - NOVO MÓDULO
 import Kanban from '@/features/admin/pages/Kanban';
@@ -349,7 +349,8 @@ const AppRouter = () => {
       />
       */}
 
-      {/* 📖 Rotas do Curriculum - Metodologias Individuais */}
+      {/* 📖 Rotas do Curriculum - Metodologias Individuais - COMENTADO PARA BUILD */}
+      {/*
       <Route 
         path="/curriculum/metodologia/:methodId" 
         element={
@@ -358,6 +359,7 @@ const AppRouter = () => {
           </ProtectedRoute>
         } 
       />
+      */}
       
       <Route 
         path="/perfil" 
