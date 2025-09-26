@@ -5,7 +5,10 @@ import { useAuth } from '@/shared/contexts/AuthContext';
 // 🏠 Import da Landing Page
 import LandingPage from '@/pages/LandingPage';
 
-// 🎯 Import do Dashboard Inteligente que redireciona por tipo de usuário
+// 🎯 Import do Dashboard Inteligente que redireciona por tipo d        {/* Painel Administrativo (apenas para admins) */}
+        <Route path="admin" element={<ProfessoresAdminPanel />} />
+        
+        {/* 👥 GESTÃO DE ALUNOS (ADMIN) - NOVA ROTA */}
 import SmartDashboard from '@/pages/SmartDashboard';
 
 // Import das páginas existentes
@@ -14,6 +17,23 @@ import Login from '@/features/auth/pages/Login';
 import Register from '@/features/auth/pages/Register';
 import ConfirmEmail from '@/features/auth/components/ConfirmEmail';
 import Vote from '@/features/auth/pages/Vote';
+
+// 📱 Import do Scanner QR
+import { QRScannerPage } from '@/features/alunos/pages/QRScannerPage';
+
+// 📚 Import das páginas de alunos - NOVAS PÁGINAS REAIS
+import ModulosPage from '@/features/modulos/pages/ModulosPage';
+import ConquistasPage from '@/features/conquistas/pages/ConquistasPage';
+import DevocionalPage from '@/features/devocional/pages/DevocionalPage';
+
+// 📖 Import das páginas de curriculum - METODOLOGIAS INDIVIDUAIS
+import CurriculumMethodologyPage from '@/features/curriculum/pages/CurriculumMethodologyPage';
+import CurriculumMethodologyPageSimple from '@/features/curriculum/pages/CurriculumMethodologyPageSimple';
+import TestCurriculumPage from '@/features/curriculum/pages/TestCurriculumPage';
+
+// 📋 Import das páginas do Kanban Admin - NOVO MÓDULO
+import Kanban from '@/features/admin/pages/Kanban';
+import AulaDetail from '@/features/admin/pages/AulaDetail';
 
 // 🎯 Import das páginas dos professores - MÓDULO COMPLETO
 import ProfessoresLayout from '@/features/professores/pages/ProfessoresLayout';
@@ -43,7 +63,15 @@ import AdminProfessores from '@/features/admin/pages/AdminProfessores';
 // 📊 Import das páginas administrativas adicionais
 import AdminRelatorios from '@/features/admin/pages/AdminRelatorios';
 import AdminConfiguracoes from '@/features/admin/pages/AdminConfiguracoes';
-import QRCodeManager from '@/features/admin/pages/QRCodeManager';
+// 📚 Import da página de curriculum
+import AdminCurriculumNew from '@/features/admin/pages/AdminCurriculum';
+import AdminMethodologyEditor from '@/features/admin/pages/AdminMethodologyEditor';
+import AdminMethodologyView from '@/features/admin/pages/AdminMethodologyView';
+import AdminInstrumentView from '@/features/admin/pages/AdminInstrumentView';
+import { QRCodeManager } from '@/features/admin/pages/QRCodeManager';
+
+// 🎓 Import da página de gestão de turmas
+import AdminTurmas from '@/features/turmas/pages/AdminTurmas';
 
 // 🎓 Import das páginas dos alunos
 import DetalheInstrumento from '@/features/alunos/instrumentos/pages/DetalheInstrumento';
@@ -58,12 +86,6 @@ import ProgressoAluno from '@/features/alunos/pages/ProgressoAluno';
 import SistemaDuvidas from '@/features/alunos/pages/SistemaDuvidas';
 import NovaPergunta from '@/features/alunos/pages/NovaPergunta';
 
-// � Import do Scanner QR
-import { QRScannerPage } from '@/features/alunos/pages/QRScannerPage';
-
-// �📋 Import das páginas do Kanban Admin - NOVO MÓDULO
-import Kanban from '@/features/admin/pages/Kanban';
-import AulaDetail from '@/features/admin/pages/AulaDetail';
 
 // Componente de Loading
 const LoadingScreen = () => (
@@ -302,12 +324,7 @@ const AppRouter = () => {
         path="/modulos" 
         element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">📚 Módulos</h1>
-                <p className="text-gray-600">Em desenvolvimento...</p>
-              </div>
-            </div>
+            <ModulosPage />
           </ProtectedRoute>
         } 
       />
@@ -316,12 +333,7 @@ const AppRouter = () => {
         path="/conquistas" 
         element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">🏆 Conquistas</h1>
-                <p className="text-gray-600">Em desenvolvimento...</p>
-              </div>
-            </div>
+            <ConquistasPage />
           </ProtectedRoute>
         } 
       />
@@ -330,12 +342,17 @@ const AppRouter = () => {
         path="/devocional" 
         element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">📖 Devocional</h1>
-                <p className="text-gray-600">Em desenvolvimento...</p>
-              </div>
-            </div>
+            <DevocionalPage />
+          </ProtectedRoute>
+        } 
+      />
+
+      {/* 📖 Rotas do Curriculum - Metodologias Individuais */}
+      <Route 
+        path="/curriculum/metodologia/:methodId" 
+        element={
+          <ProtectedRoute>
+            <CurriculumMethodologyPageSimple />
           </ProtectedRoute>
         } 
       />
@@ -706,6 +723,69 @@ const AppRouter = () => {
         element={
           <AdminRoute>
             <QRCodeManager />
+          </AdminRoute>
+        } 
+      />
+      
+      {/* 📚 SISTEMA DE CURRICULUM - Rota independente para admin */}
+      <Route 
+        path="/admin/curriculum" 
+        element={
+          <AdminRoute>
+            <AdminCurriculumNew />
+          </AdminRoute>
+        } 
+      />
+      <Route 
+        path="/admin/curriculum/edit/:chapterId" 
+        element={
+          <AdminRoute>
+            <AdminMethodologyEditor />
+          </AdminRoute>
+        } 
+      />
+      <Route 
+        path="/admin/curriculum/view/:chapterId" 
+        element={
+          <AdminRoute>
+            <AdminMethodologyView />
+          </AdminRoute>
+        } 
+      />
+      <Route 
+        path="/admin/instruments/view/:instrumentId" 
+        element={
+          <AdminRoute>
+            <AdminInstrumentView />
+          </AdminRoute>
+        } 
+      />
+      
+      {/* 🎓 GESTÃO DE TURMAS - Rota independente para admin */}
+      <Route 
+        path="/admin/turmas" 
+        element={
+          <AdminRoute>
+            <AdminTurmas />
+          </AdminRoute>
+        } 
+      />
+      
+      {/* 🎵 GESTÃO DE INSTRUMENTOS - Rotas independentes para admin */}
+      <Route 
+        path="/admin/instruments" 
+        element={
+          <AdminRoute>
+            <AdminInstruments />
+          </AdminRoute>
+        } 
+      />
+      
+      <Route 
+        path="/admin/instruments/:instrumentoId" 
+        element={
+          <AdminRoute>
+            <AdminInstrumentDetails />
           </AdminRoute>
         } 
       />
