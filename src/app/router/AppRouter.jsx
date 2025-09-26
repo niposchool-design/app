@@ -21,10 +21,10 @@ import Vote from '@/features/auth/pages/Vote';
 // 📱 Import do Scanner QR
 import { QRScannerPage } from '@/features/alunos/pages/QRScannerPage';
 
-// 📚 Import das páginas de alunos - NOVAS PÁGINAS REAIS
-import ModulosPage from '@/features/modulos/pages/ModulosPage';
-import ConquistasPage from '@/features/conquistas/pages/ConquistasPage';
-import DevocionalPage from '@/features/devocional/pages/DevocionalPage';
+// 📚 Import das páginas de alunos - PÁGINAS TEMPORÁRIAS PARA BUILD
+// import ModulosPage from '@/features/modulos/pages/ModulosPage';
+// import ConquistasPage from '@/features/conquistas/pages/ConquistasPage';
+// import DevocionalPage from '@/features/devocional/pages/DevocionalPage';
 
 // 📖 Import das páginas de curriculum - METODOLOGIAS INDIVIDUAIS
 import CurriculumMethodologyPage from '@/features/curriculum/pages/CurriculumMethodologyPage';
@@ -319,7 +319,8 @@ const AppRouter = () => {
         <Route path="tipo/:tipo" element={<ProfessoresConteudos />} />
       </Route>
 
-      {/* Outras rotas protegidas existentes */}
+      {/* Outras rotas protegidas existentes - TEMPORARIAMENTE COMENTADAS PARA BUILD */}
+      {/*
       <Route 
         path="/modulos" 
         element={
@@ -346,6 +347,7 @@ const AppRouter = () => {
           </ProtectedRoute>
         } 
       />
+      */}
 
       {/* 📖 Rotas do Curriculum - Metodologias Individuais */}
       <Route 
