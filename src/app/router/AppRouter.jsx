@@ -52,7 +52,7 @@ import InstrumentoPagina from '@/features/instrumentos/pages/InstrumentoPagina';
 
 // 🆕 Import das páginas de ADMIN DE INSTRUMENTOS - NOVOS
 import AdminInstruments from '@/features/admin/pages/AdminInstruments';
-import AdminInstrumentDetails from '@/features/admin/pages/AdminInstrumentDetails';
+// import AdminInstrumentDetails from '@/features/admin/pages/AdminInstrumentDetails'; // COMENTADO PARA USAR AdminInstrumentView
 
 // 👥 Import da página de gestão de alunos
 import AdminAlunos from '@/features/admin/pages/AdminAlunos';
@@ -300,7 +300,7 @@ const AppRouter = () => {
         
         {/* 🆕 GESTÃO DE INSTRUMENTOS (ADMIN) - NOVAS ROTAS */}
         <Route path="admin/instruments" element={<AdminInstruments />} />
-        <Route path="admin/instruments/:instrumentoId" element={<AdminInstrumentDetails />} />
+        <Route path="admin/instruments/view/:instrumentId" element={<AdminInstrumentView />} />
         
         {/* � GESTÃO DE ALUNOS (ADMIN) - NOVA ROTA */}
         <Route path="admin/alunos" element={<AdminAlunos />} />
@@ -786,10 +786,10 @@ const AppRouter = () => {
       />
       
       <Route 
-        path="/admin/instruments/:instrumentoId" 
+        path="/admin/instruments/view/:instrumentId" 
         element={
           <AdminRoute>
-            <AdminInstrumentDetails />
+            <AdminInstrumentView />
           </AdminRoute>
         } 
       />
