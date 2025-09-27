@@ -8,7 +8,7 @@ import {
   Download, RefreshCw, Settings, AlertTriangle, GraduationCap,
   Music, Clock, BarChart3, CheckCircle, XCircle, AlertCircle
 } from 'lucide-react';
-import { supabase } from '../../../shared/lib/supabase/supabaseClient';
+import { supabase } from '../../../shared/lib/supabase/supabaseClient'; // Cliente REAL, não mock
 import { useAuth } from '../../../shared/contexts/AuthContext';
 
 const AdminAlunos = () => {
@@ -75,13 +75,57 @@ const AdminAlunos = () => {
 
       console.log('📈 Contagem por tipo:', tipoContagem);
 
-      // 🧪 TESTE 3: Buscar especificamente alunos (consulta completa)
-      console.log('🧪 TESTE 3: Buscando alunos especificamente...');
-      const { data: alunosRaw, error: alunosError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('tipo_usuario', 'aluno')
-        .order('joined_at', { ascending: false });
+      // 🧪 TESTE 3: Buscar alunos (com fallback)
+      console.log('🧪 TESTE 3: Buscando alunos da view admin_alunos...');
+      let alunosRaw = [];
+      let alunosError = null;
+
+      try {
+        // TENTAR usar a view admin_alunos primeiro
+        console.log('🔍 Tentando view admin_alunos...');
+        const result = await supabase
+          .from('admin_alunos')
+          .select('*')
+          .order('criado_em', { ascending: false });
+        
+        console.log('🔍 VIEW Debug:', {
+          data_length: result.data?.length || 0,
+          error: result.error?.message || 'nenhum',
+          error_code: result.error?.code || 'nenhum'
+        });
+        
+        if (result.error || !result.data || result.data.length === 0) {
+          console.log('⚠️ View admin_alunos falhou ou vazia, usando fallback...');
+          throw result.error || new Error('View vazia');
+        }
+        
+        alunosRaw = result.data;
+        alunosError = result.error;
+        console.log('✅ Dados carregados da view admin_alunos!');
+      } catch (fallbackError) {
+        // FALLBACK: usar tabela profiles
+        console.log('🔄 FALLBACK: Buscando da tabela profiles...');
+        const fallbackResult = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('tipo_usuario', 'aluno')
+          .order('joined_at', { ascending: false });
+        
+        alunosRaw = fallbackResult.data || [];
+        alunosError = fallbackResult.error;
+        
+        console.log('🔍 FALLBACK Debug:', {
+          data_length: fallbackResult.data?.length || 0,
+          error: fallbackResult.error?.message || 'nenhum',
+          first_item: fallbackResult.data?.[0] || 'vazio'
+        });
+        
+        if (!alunosError && alunosRaw.length > 0) {
+          console.log('✅ Dados carregados da tabela profiles (fallback)!');
+        } else {
+          console.log('❌ Fallback também falhou:', alunosError?.message || 'dados vazios');
+        }
+      }
 
       console.log('🎯 Resultado busca de alunos:', {
         quantidade_encontrada: alunosRaw?.length || 0,
@@ -116,99 +160,50 @@ const AdminAlunos = () => {
 
       console.log(`✅ ${alunosRaw.length} alunos encontrados! Processando...`);
 
-      // ✅ PROCESSAR DADOS DOS ALUNOS
-      const alunosProcessados = alunosRaw.map((profile, index) => {
+      // ✅ PROCESSAR DADOS (view admin_alunos ou fallback profiles)
+      const alunosProcessados = alunosRaw.map((item, index) => {
         console.log(`🔄 Processando aluno ${index + 1}:`, {
-          id: profile.id,
-          nome: profile.nome || profile.full_name,
-          email: profile.email
+          id: item.id,
+          nome: item.nome || item.full_name,
+          email: item.email
         });
 
-        // Calcular status baseado na atividade
-        const calcularStatus = (lastActive) => {
-          if (!lastActive) return 'nunca_ativo';
-          
-          const agora = new Date();
-          const ultimaAtividade = new Date(lastActive);
-          const diasSemAcesso = (agora - ultimaAtividade) / (1000 * 60 * 60 * 24);
-          
-          if (diasSemAcesso <= 3) return 'ativo';
-          if (diasSemAcesso <= 14) return 'moderado';
-          return 'inativo';
-        };
-
         // Calcular tempo como aluno
-        const calcularTempoComoAluno = (joinedAt) => {
-          if (!joinedAt) return 0;
+        const calcularTempoComoAluno = (criadoEm) => {
+          if (!criadoEm) return 0;
           const agora = new Date();
-          const dataIngresso = new Date(joinedAt);
+          const dataIngresso = new Date(criadoEm);
           return Math.floor((agora - dataIngresso) / (1000 * 60 * 60 * 24));
         };
 
-        // Verificar completude do perfil
-        const calcularCompletudePerfi = (profile) => {
-          const camposObrigatorios = ['nome', 'instrument', 'phone', 'city'];
-          const camposPreenchidos = camposObrigatorios.filter(campo => 
-            profile[campo] && profile[campo].trim() !== ''
-          ).length;
-          return Math.round((camposPreenchidos / camposObrigatorios.length) * 100);
+        return {
+          id: item.id,
+          nome: item.nome || item.full_name || 'Aluno',
+          email: item.email || 'Email não informado',
+          avatar: null, // Campo não existe na view
+          instrumento: item.instrumento || item.instrument || 'Não especificado',
+          nivel: item.nivel || item.user_level || 'beginner',
+          turma: item.turma || 'Sem turma',
+          status: item.status_atividade || 'inativo',
+          ativo: item.ativo || true,
+          telefone: item.phone || 'Não informado',
+          endereco: item.city && item.state ? `${item.city}, ${item.state}` : 'Não informado',
+          idade: item.idade || null,
+          data_nascimento: item.dob,
+          pontos: item.total_points || 0,
+          nivel_usuario: item.user_level || 'beginner',
+          streak_atual: item.current_streak || 0,
+          melhor_streak: item.best_streak || 0,
+          aulas_completadas: item.lessons_completed || 0,
+          modulos_completados: item.modules_completed || 0,
+          ultimo_acesso: item.last_active,
+          membro_desde: item.joined_at || item.criado_em,
+          data_ingresso: item.data_ingresso,
+          profile_completo: item.perfil_completo || false,
+          ja_votou: item.has_voted || false,
+          tempo_como_aluno: calcularTempoComoAluno(item.criado_em || item.joined_at),
+          criado_em: item.criado_em || item.joined_at
         };
-
-        const aluno = {
-          // Identificação
-          id: profile.id,
-          nome: profile.nome || profile.full_name || profile.email?.split('@')[0] || 'Sem nome',
-          email: profile.email || 'Email não informado',
-          avatar: profile.avatar_url,
-          
-          // Informações pessoais
-          telefone: profile.phone || 'Não informado',
-          cidade: profile.city || 'Não informado',
-          estado: profile.state || 'Não informado',
-          endereco: (profile.city && profile.state) 
-            ? `${profile.city}, ${profile.state}` 
-            : 'Não informado',
-          bio: profile.bio || 'Biografia não preenchida',
-          igreja: profile.church_name || 'Não informado',
-          
-          // Dados musicais
-          instrumento: profile.instrument || 'Não especificado',
-          nivel: profile.user_level || 'beginner',
-          
-          // Status e atividade
-          status: calcularStatus(profile.last_active),
-          ativo: true, // Todos na tabela como 'aluno' estão ativos
-          ultimo_acesso: profile.last_active,
-          membro_desde: profile.joined_at,
-          tempo_como_aluno: calcularTempoComoAluno(profile.joined_at),
-          
-          // Progresso e gamificação
-          pontos_total: profile.total_points || 0,
-          aulas_completadas: profile.lessons_completed || 0,
-          modulos_completados: profile.modules_completed || 0,
-          streak_atual: profile.current_streak || 0,
-          melhor_streak: profile.best_streak || 0,
-          
-          // Perfil e configurações
-          completude_perfil: calcularCompletudePerfi(profile),
-          tema_preferido: profile.theme_preference || 'light',
-          notificacoes_ativas: profile.notification_enabled || false,
-          som_ativo: profile.sound_enabled || false,
-          
-          // Dados de votação (específico da Nipo School)
-          ja_votou: profile.has_voted || false,
-          logo_votado: profile.voted_logo || null,
-          
-          // Campos calculados para interface
-          profile_completo: calcularCompletudePerfi(profile) >= 80,
-          precisa_atualizacao: calcularCompletudePerfi(profile) < 50,
-          usuario_engajado: (profile.current_streak || 0) >= 7,
-          
-          // Dados brutos para debug
-          _raw: profile
-        };
-
-        return aluno;
       });
 
       console.log(`🎯 ${alunosProcessados.length} alunos processados com sucesso!`);
@@ -613,6 +608,27 @@ const AdminAlunos = () => {
           </div>
         </div>
       </div>
+
+      {/* Banner de Aviso - Dados Mock */}
+      {supabase.isUsingMock && supabase.isUsingMock() && (
+        <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-l-4 border-amber-400 shadow-sm">
+          <div className="max-w-7xl mx-auto px-6 py-3">
+            <div className="flex items-center gap-3">
+              <div className="flex-shrink-0">
+                <AlertTriangle className="w-5 h-5 text-amber-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-amber-800">
+                  🎭 Modo de Demonstração Ativo
+                </p>
+                <p className="text-xs text-amber-700 mt-1">
+                  Os dados exibidos são simulados para demonstração. Conectividade com Supabase será restaurada automaticamente quando disponível.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section com Estatísticas */}
       <div className="relative overflow-hidden">

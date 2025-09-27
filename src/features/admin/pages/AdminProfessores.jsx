@@ -7,7 +7,7 @@ import {
   Star, Activity, Mail, Phone, MapPin, Award, TrendingUp,
   Download, RefreshCw, Settings, AlertTriangle
 } from 'lucide-react';
-import { supabase } from '../../../shared/lib/supabase/supabaseClient';
+import { supabase } from '../../../shared/lib/supabase/supabaseClient'; // Cliente REAL, não mock
 
 const AdminProfessores = () => {
   const navigate = useNavigate();
@@ -26,14 +26,13 @@ const AdminProfessores = () => {
       setLoading(true);
       setError(null);
 
-      console.log('🔍 Buscando professores na tabela profiles...');
+      console.log('🔍 Buscando professores na view admin_professores...');
 
-      // ✅ BUSCAR APENAS OS PROFESSORES DA TABELA PROFILES
+      // ✅ BUSCAR PROFESSORES DA VIEW ADMIN_PROFESSORES (QUE VOCÊ CRIOU)
       const { data: professoresData, error: profError } = await supabase
-        .from('profiles')
+        .from('admin_professores')
         .select('*')
-        .eq('tipo_usuario', 'professor')
-        .order('joined_at', { ascending: false });
+        .order('criado_em', { ascending: false });
 
       if (profError) {
         console.error('❌ Erro ao buscar professores:', profError);
@@ -43,75 +42,45 @@ const AdminProfessores = () => {
       console.log('👨‍🏫 Professores encontrados:', professoresData?.length || 0);
       console.log('📋 Dados dos professores:', professoresData);
 
-      // ✅ VERIFICAR SE EXISTEM REGISTROS COMPLEMENTARES NA TABELA PROFESSORES
-      let professoresComplementares = [];
-      try {
-        const { data: profComplementarData, error: profCompError } = await supabase
-          .from('professores')
-          .select('*');
+      // ✅ DADOS JÁ VÊM COMPLETOS DA VIEW (não precisa buscar tabela complementar)
+      console.log('📊 Processando dados dos professores da view...');
 
-        if (!profCompError && profComplementarData) {
-          professoresComplementares = profComplementarData;
-          console.log('📝 Dados complementares encontrados:', professoresComplementares.length);
-        }
-      } catch (err) {
-        console.log('ℹ️ Tabela professores não encontrada ou vazia (normal)');
-      }
-
-      // ✅ PROCESSAR OS 3 PROFESSORES REAIS
-      const processedData = professoresData.map(profile => {
-        // Buscar dados complementares se existirem
-        const dadosComplementares = professoresComplementares.find(pc => pc.id === profile.id) || {};
-        
-        // Nome: usar 'nome' primeiro, depois 'full_name'
-        let nomeExibicao = profile.nome || profile.full_name || profile.email?.split('@')[0] || 'Professor';
-
-        // Status baseado na atividade
-        let status = 'inativo';
-        if (profile.last_active) {
-          const ultimoAcesso = new Date(profile.last_active);
-          const agora = new Date();
-          const diasSemAcesso = (agora - ultimoAcesso) / (1000 * 60 * 60 * 24);
-          
-          if (diasSemAcesso <= 7) status = 'ativo';
-          else if (diasSemAcesso <= 30) status = 'moderado';
-          else status = 'inativo';
-        }
-
-        const professorProcessado = {
-          id: profile.id,
-          nome: nomeExibicao,
-          email: profile.email || 'Email não informado',
-          avatar: profile.avatar_url || null,
-          instrumento: profile.instrument || 'Não especificado',
-          especialidade: dadosComplementares.especialidades?.join(', ') || profile.instrument || 'Geral',
-          formacao: dadosComplementares.formacao || 'Não informado',
-          biografia: dadosComplementares.biografia || profile.bio || 'Não informado',
-          status: status,
-          ativo: dadosComplementares.ativo !== undefined ? dadosComplementares.ativo : true,
-          telefone: profile.phone || 'Não informado',
-          endereco: profile.city && profile.state ? `${profile.city}, ${profile.state}` : 'Não informado',
-          total_conteudos: 0, // Será implementado quando houver sistema de conteúdos
-          total_visualizacoes: 0,
-          total_downloads: 0,
+      // ✅ PROCESSAR DADOS DA VIEW ADMIN_PROFESSORES (já vem completo)
+      const processedData = professoresData.map(professor => {
+        console.log(`✅ Professor da view: ${professor.nome} (${professor.email})`);
+        return {
+          id: professor.id,
+          nome: professor.nome || professor.full_name || 'Professor',
+          email: professor.email || 'Email não informado',
+          avatar: null, // Campo não existe na view
+          instrumento: professor.especialidades?.join(', ') || 'Não especificado',
+          especialidade: professor.especialidades?.join(', ') || 'Geral',
+          formacao: professor.formacao || 'Não informado',
+          biografia: professor.biografia || 'Não informado',
+          status: professor.status_atividade || 'inativo',
+          ativo: professor.ativo,
+          telefone: professor.phone || 'Não informado',
+          endereco: 'Não informado', // Campo não existe na view
+          total_conteudos: professor.total_conteudos || 0,
+          total_visualizacoes: 0, // Campo não existe na view
+          total_downloads: 0, // Campo não existe na view
           media_visualizacoes: 0,
-          ultimo_acesso: profile.last_active || null,
-          membro_desde: profile.joined_at,
-          profile_completo: !!(profile.nome && profile.instrument && profile.bio),
-          pontos: profile.total_points || 0,
-          nivel_usuario: profile.user_level || 'beginner',
-          criado_em: dadosComplementares.criado_em || profile.joined_at
+          ultimo_acesso: professor.last_active,
+          membro_desde: professor.joined_at,
+          profile_completo: !!(professor.nome && professor.especialidades?.length),
+          pontos: professor.total_points || 0,
+          nivel_usuario: professor.user_level || 'beginner',
+          criado_em: professor.criado_em,
+          total_turmas: professor.total_turmas || 0,
+          total_alunos: professor.total_alunos || 0
         };
-
-        console.log(`✅ Professor processado: ${professorProcessado.nome} (${professorProcessado.email})`);
-        return professorProcessado;
       });
 
       console.log('🎯 Total processados:', processedData.length);
 
       setProfessores(processedData);
 
-      // Calcular estatísticas baseadas nos dados reais
+      // Calcular estatísticas baseadas nos dados reais da view
       const totalProfessores = processedData.length;
       const professoresAtivos = processedData.filter(p => p.status === 'ativo').length;
       const professoresModerados = processedData.filter(p => p.status === 'moderado').length;
@@ -369,6 +338,27 @@ const AdminProfessores = () => {
           </div>
         </div>
       </div>
+
+      {/* Banner de Aviso - Dados Mock */}
+      {supabase.isUsingMock && supabase.isUsingMock() && (
+        <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-l-4 border-amber-400 shadow-sm">
+          <div className="max-w-7xl mx-auto px-6 py-3">
+            <div className="flex items-center gap-3">
+              <div className="flex-shrink-0">
+                <AlertTriangle className="w-5 h-5 text-amber-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-amber-800">
+                  🎭 Modo de Demonstração Ativo
+                </p>
+                <p className="text-xs text-amber-700 mt-1">
+                  Os dados exibidos são simulados para demonstração. Conectividade com Supabase será restaurada automaticamente quando disponível.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <div className="relative overflow-hidden">
