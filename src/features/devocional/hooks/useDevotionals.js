@@ -57,11 +57,22 @@ export const useDevotionals = () => {
     if (!user) throw new Error('Usuário não autenticado');
 
     try {
+      // Verificar se já foi lido antes (para pontuação)
+      const { data: existingProgress } = await supabase
+        .from('user_devotional_progress')
+        .select('is_read')
+        .eq('user_id', user.id)
+        .eq('devotional_id', devotionalId)
+        .single();
+
+      const wasAlreadyRead = existingProgress?.is_read || false;
+
       const { data, error } = await supabase
         .from('user_devotional_progress')
         .upsert({
           user_id: user.id,
           devotional_id: devotionalId,
+          is_read: true,
           read_at: new Date().toISOString(),
           personal_notes: personalNotes
         }, {
@@ -76,6 +87,11 @@ export const useDevotionals = () => {
       await supabase.rpc('increment_devotional_view_count', {
         devotional_id: devotionalId
       });
+
+      // 🎮 INTEGRAÇÃO GAMIFICAÇÃO: Atribuir pontos apenas na primeira leitura
+      if (!wasAlreadyRead) {
+        await awardDevotionalPoints(user.id);
+      }
 
       // Atualizar estado local
       setDevotionals(prev => prev.map(d => 
@@ -94,6 +110,129 @@ export const useDevotionals = () => {
     } catch (err) {
       console.error('Erro ao marcar como lido:', err);
       throw err;
+    }
+  };
+
+  // Função para atribuir pontos pela leitura do devocional
+  const awardDevotionalPoints = async (userId) => {
+    try {
+      // Buscar progresso de devocionais dos últimos 30 dias para calcular streak
+      const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+      
+      const { data: recentProgress } = await supabase
+        .from('user_devotional_progress')
+        .select('read_at')
+        .eq('user_id', userId)
+        .eq('is_read', true)
+        .gte('read_at', thirtyDaysAgo)
+        .order('read_at', { ascending: false });
+
+      // Calcular streak de leitura consecutiva
+      let currentStreak = 1; // Hoje conta como 1
+      const today = new Date();
+      const readDates = recentProgress?.map(p => new Date(p.read_at).toDateString()) || [];
+      
+      // Verificar dias consecutivos
+      for (let i = 1; i <= 30; i++) {
+        const checkDate = new Date(today);
+        checkDate.setDate(today.getDate() - i);
+        
+        if (readDates.includes(checkDate.toDateString())) {
+          currentStreak++;
+        } else {
+          break;
+        }
+      }
+
+      // Pontuação base: 10 pontos por devocional
+      let points = 10;
+      
+      // Bônus por streak
+      if (currentStreak >= 3) points += 5;   // 3+ dias: +5 pontos
+      if (currentStreak >= 7) points += 15;  // 7+ dias: +20 pontos total
+      if (currentStreak >= 30) points += 30; // 30+ dias: +50 pontos total
+
+      // Buscar perfil atual
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('total_points, current_devotional_streak, best_devotional_streak, devotional_count')
+        .eq('id', userId)
+        .single();
+
+      if (profile) {
+        const newTotalPoints = (profile.total_points || 0) + points;
+        const newDevotionalCount = (profile.devotional_count || 0) + 1;
+        const bestStreak = Math.max(profile.best_devotional_streak || 0, currentStreak);
+
+        // Atualizar perfil
+        await supabase
+          .from('profiles')
+          .update({
+            total_points: newTotalPoints,
+            current_devotional_streak: currentStreak,
+            best_devotional_streak: bestStreak,
+            devotional_count: newDevotionalCount,
+            last_devotional_read: new Date().toISOString().split('T')[0]
+          })
+          .eq('id', userId);
+
+        // Verificar conquistas
+        await checkDevotionalAchievements(userId, {
+          devotional_count: newDevotionalCount,
+          current_streak: currentStreak,
+          best_streak: bestStreak
+        });
+
+        console.log(`✨ Devocional: +${points} pontos (Streak: ${currentStreak} dias)`);
+      }
+
+    } catch (error) {
+      console.error('Erro ao atribuir pontos do devocional:', error);
+    }
+  };
+
+  // Verificar conquistas relacionadas a devocionais
+  const checkDevotionalAchievements = async (userId, stats) => {
+    try {
+      // Conquistas disponíveis para devocionais
+      const achievementsToCheck = [
+        { id: 'first_devotional', condition: stats.devotional_count === 1 },
+        { id: 'devotional_streak_3', condition: stats.current_streak === 3 },
+        { id: 'devotional_streak_7', condition: stats.current_streak === 7 },
+        { id: 'devotional_streak_30', condition: stats.current_streak === 30 },
+        { id: 'devotional_reader_10', condition: stats.devotional_count === 10 },
+        { id: 'devotional_reader_50', condition: stats.devotional_count === 50 },
+        { id: 'devotional_champion', condition: stats.best_streak >= 14 }
+      ];
+
+      for (const achievement of achievementsToCheck) {
+        if (achievement.condition) {
+          // Verificar se já tem a conquista
+          const { data: existing } = await supabase
+            .from('user_achievements')
+            .select('id')
+            .eq('user_id', userId)
+            .eq('achievement_id', achievement.id)
+            .single();
+
+          if (!existing) {
+            // Atribuir nova conquista
+            const { error } = await supabase
+              .from('user_achievements')
+              .insert([{
+                user_id: userId,
+                achievement_id: achievement.id,
+                earned_at: new Date().toISOString()
+              }]);
+
+            if (!error) {
+              console.log(`🏆 Nova conquista: ${achievement.id}`);
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao verificar conquistas:', error);
     }
   };
 
@@ -272,8 +411,10 @@ export const useDevotionals = () => {
   };
 
   useEffect(() => {
-    fetchDevotionals();
-  }, [user]);
+    if (user) {
+      fetchDevotionals();
+    }
+  }, [user, fetchDevotionals]);
 
   return {
     devotionals,

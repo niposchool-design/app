@@ -26,36 +26,94 @@ import {
 const DevocionalPage = () => {
   const { userProfile } = useAuth();
   const navigate = useNavigate();
-  const { loading, getTodayDevotional } = useDevotionals();
+  const { devotionals, loading, getTodayDevotional, markAsRead } = useDevotionals();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [devotional, setDevotional] = useState(null);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
-    // Devocionais simulados baseados em temas musicais e espirituais
-    const mockDevotional = {
-      id: 1,
-      date: currentDate.toISOString().split('T')[0],
-      title: 'A Melodia da Gratidão',
-      verse: 'Cantai ao Senhor com ações de graças; entoai louvores com harpa ao nosso Deus.',
-      reference: 'Salmos 147:7',
-      content: `A música tem o poder único de expressar aquilo que as palavras sozinhas não conseguem transmitir. Quando cantamos ou tocamos com gratidão no coração, nossa música se torna uma ponte entre o terreno e o celestial.
+    // Usar dados reais do banco de dados
+    if (devotionals.length > 0) {
+      const todayDevotional = getTodayDevotional();
+      if (todayDevotional) {
+        setDevotional(todayDevotional);
+        setIsBookmarked(todayDevotional.is_favorite || false);
+      } else {
+        // Fallback para primeiro devocional disponível
+        setDevotional(devotionals[0]);
+        setIsBookmarked(devotionals[0]?.is_favorite || false);
+      }
+    } else if (!loading) {
+      // Fallback para dados simulados se não houver devocionais
+      const mockDevotional = {
+        id: 'mock-1',
+        date: currentDate.toISOString().split('T')[0],
+        title: 'A Melodia da Gratidão',
+        bible_verse: 'Cantai ao Senhor com ações de graças; entoai louvores com harpa ao nosso Deus.',
+        bible_reference: 'Salmos 147:7',
+        content: `A música tem o poder único de expressar aquilo que as palavras sozinhas não conseguem transmitir. Quando cantamos ou tocamos com gratidão no coração, nossa música se torna uma ponte entre o terreno e o celestial.
 
 Hoje, ao praticar seu instrumento ou estudar música, lembre-se de que cada nota pode ser uma oração, cada melodia pode ser um louvor. A disciplina musical que desenvolvemos reflete nossa dedicação não apenas à arte, mas também ao crescimento pessoal e espiritual.
 
 Assim como cada instrumento tem sua função única em uma orquestra, cada pessoa tem seu papel especial no grande concerto da vida. Sua música, seja ela qual for, é importante e valiosa.
 
 Que possamos hoje encontrar motivos para sermos gratos e expressar essa gratidão através da música que criamos e compartilhamos.`,
-      reflection: 'Como posso usar minha música para expressar gratidão hoje?',
-      prayer: 'Senhor, que minha música seja sempre um reflexo da gratidão que sinto em meu coração. Ajuda-me a ver cada lição, cada prática, cada apresentação como uma oportunidade de crescer e de servir. Amém.',
-      musicTheme: '🎵 Tema Musical',
-      musicContent: 'Experimente tocar ou cantar uma música que expresse gratidão. Observe como isso afeta seu coração e sua perspectiva do dia.',
-      category: 'gratidao',
-      readTime: '3 min'
-    };
-    
-    setDevotional(mockDevotional);
-  }, [currentDate]);
+        reflection: 'Como posso usar minha música para expressar gratidão hoje?',
+        prayer: 'Senhor, que minha música seja sempre um reflexo da gratidão que sinto em meu coração. Ajuda-me a ver cada lição, cada prática, cada apresentação como uma oportunidade de crescer e de servir. Amém.',
+        musicTheme: '🎵 Tema Musical',
+        musicContent: 'Experimente tocar ou cantar uma música que expresse gratidão. Observe como isso afeta seu coração e sua perspectiva do dia.',
+        category: 'gratidao',
+        readTime: '3 min',
+        is_read: false,
+        is_favorite: false
+      };
+      
+      setDevotional(mockDevotional);
+    }
+  }, [devotionals, loading, getTodayDevotional, currentDate]);
+
+  // Marcar como lido ao abrir
+  useEffect(() => {
+    if (devotional && devotional.id !== 'mock-1' && !devotional.is_read && userProfile) {
+      markAsRead(devotional.id);
+    }
+  }, [devotional, userProfile, markAsRead]);
+
+  // Função para favoritar/desfavoritar
+  const toggleBookmark = async () => {
+    if (devotional && devotional.id !== 'mock-1') {
+      try {
+        // Atualizar no banco de dados através do hook
+        await markAsRead(devotional.id, { is_favorite: !isBookmarked });
+        setIsBookmarked(!isBookmarked);
+      } catch (error) {
+        console.error('Erro ao atualizar favorito:', error);
+      }
+    } else {
+      // Para dados simulados
+      setIsBookmarked(!isBookmarked);
+    }
+  };
+
+  // Função para navegar para próximo/anterior
+  const navigateDevotional = (direction) => {
+    if (devotionals.length > 0) {
+      const currentIndex = devotionals.findIndex(d => d.id === devotional.id);
+      let nextIndex;
+      
+      if (direction === 'next') {
+        nextIndex = currentIndex < devotionals.length - 1 ? currentIndex + 1 : 0;
+      } else {
+        nextIndex = currentIndex > 0 ? currentIndex - 1 : devotionals.length - 1;
+      }
+      
+      if (nextIndex >= 0) {
+        const nextDevotional = devotionals[nextIndex];
+        setDevotional(nextDevotional);
+        setIsBookmarked(nextDevotional.is_favorite || false);
+      }
+    }
+  };
 
   const getTimeOfDayIcon = () => {
     const hour = new Date().getHours();
@@ -183,7 +241,7 @@ Que possamos hoje encontrar motivos para sermos gratos e expressar essa gratidã
                     </div>
                     <div className="flex gap-2">
                       <button
-                        onClick={() => setIsBookmarked(!isBookmarked)}
+                        onClick={toggleBookmark}
                         className={`p-2 rounded-full transition-colors duration-200 ${
                           isBookmarked ? 'bg-yellow-400 text-yellow-800' : 'bg-white bg-opacity-20 text-white hover:bg-opacity-30'
                         }`}
@@ -199,10 +257,10 @@ Que possamos hoje encontrar motivos para sermos gratos e expressar essa gratidã
                   {/* Verse */}
                   <div className="bg-white bg-opacity-10 rounded-lg p-4">
                     <p className="text-lg italic text-center mb-2">
-                      "{devotional.verse}"
+                      "{devotional.bible_verse}"
                     </p>
                     <p className="text-center text-red-100 font-medium">
-                      {devotional.reference}
+                      {devotional.bible_reference}
                     </p>
                   </div>
                 </div>

@@ -26,6 +26,9 @@ import ModulosPage from '@/features/modulos/pages/ModulosPage';
 import ConquistasPage from '@/features/conquistas/pages/ConquistasPage';
 // import DevocionalPage from '@/features/devocional/pages/DevocionalPage';
 
+// 🧪 Import do teste simples
+import TesteSimples from '@/pages/TesteSimples';
+
 // 📖 Import das páginas de curriculum - METODOLOGIAS INDIVIDUAIS - REATIVANDO
 import CurriculumMethodologyPage from '@/features/curriculum/pages/CurriculumMethodologyPage';
 import CurriculumMethodologyPageSimple from '@/features/curriculum/pages/CurriculumMethodologyPageSimple';
@@ -56,11 +59,19 @@ import AdminInstruments from '@/features/admin/pages/AdminInstruments';
 
 // 👥 Import da página de gestão de alunos - REATIVANDO
 import AdminAlunos from '@/features/admin/pages/AdminAlunos';
+import AdminAlunoDetalhe from '@/features/admin/pages/AdminAlunoDetalhe';
+
+// 🧪 Import do componente de teste temporário
+import TesteVisualizacaoDados from '@/components/TesteVisualizacaoDados';
 
 // 👨‍🏫 Import da página de gestão de professores - COMENTADO PARA BUILD
 import AdminProfessores from '@/features/admin/pages/AdminProfessores';
+import AdminProfessorDetalhe from '@/features/admin/pages/AdminProfessorDetalhe';
 
-// 📊 Import das páginas administrativas adicionais - COMENTADO PARA BUILD
+// � Import da página de gestão de devocionais
+import AdminDevocionais from '@/features/admin/pages/AdminDevocionais';
+
+// �📊 Import das páginas administrativas adicionais - COMENTADO PARA BUILD
 import AdminRelatorios from '@/features/admin/pages/AdminRelatorios';
 import AdminConfiguracoes from '@/features/admin/pages/AdminConfiguracoes';
 // 📚 Import da página de curriculum - REATIVANDO
@@ -223,6 +234,12 @@ const AppRouter = () => {
         } 
       />
       
+      {/* 🧪 TESTE DE DADOS - ROTA TEMPORÁRIA */}
+      <Route 
+        path="/teste-dados" 
+        element={<TesteSimples />} 
+      />
+      
       <Route 
         path="/vote" 
         element={
@@ -305,6 +322,12 @@ const AppRouter = () => {
         
         {/* � GESTÃO DE ALUNOS (ADMIN) - NOVA ROTA */}
         <Route path="admin/alunos" element={<AdminAlunos />} />
+        
+        {/* 📖 GESTÃO DE DEVOCIONAIS (ADMIN) - NOVA ROTA */}
+        <Route path="admin/devocionais" element={<AdminDevocionais />} />
+        
+        {/* 🧪 TESTE DE DADOS DO BANCO - ROTA TEMPORÁRIA */}
+        <Route path="admin/teste-dados" element={<TesteVisualizacaoDados />} />
         
         {/* �📋 KANBAN ADMIN - ROTAS INTEGRADAS */}
         <Route path="admin/kanban" element={<Kanban />} />
@@ -671,7 +694,27 @@ const AppRouter = () => {
         } 
       />
       
-      {/* 📋 KANBAN DE AULAS - Rota independente para admin */}
+      {/* � DETALHES DO ALUNO - Rota para admin */}
+      <Route 
+        path="/admin/alunos/:id" 
+        element={
+          <AdminRoute>
+            <AdminAlunoDetalhe />
+          </AdminRoute>
+        } 
+      />
+      
+      {/* 👨‍🏫 DETALHES DO PROFESSOR - Rota para admin */}
+      <Route 
+        path="/admin/professores/:id" 
+        element={
+          <AdminRoute>
+            <AdminProfessorDetalhe />
+          </AdminRoute>
+        } 
+      />
+      
+      {/* �📋 KANBAN DE AULAS - Rota independente para admin */}
       <Route 
         path="/admin/kanban" 
         element={

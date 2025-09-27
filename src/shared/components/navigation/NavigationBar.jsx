@@ -168,6 +168,7 @@ export const QuickNavMenu = ({ currentArea = 'alunos' }) => {
         { name: 'Dashboard', path: '/dashboard/admin', icon: Home },
         { name: 'Instrumentos', path: '/admin/instrumentos', icon: Music },
         { name: 'Professores', path: '/admin/professores', icon: Users },
+        { name: 'Devocionais', path: '/admin/devocionais', icon: BookOpen },
         { name: 'Relatórios', path: '/admin/relatorios', icon: BookOpen }
       ]
     }
