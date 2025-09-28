@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../../shared/lib/supabase/supabaseClient';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 
@@ -9,7 +9,7 @@ export const useDevotionals = () => {
   const { user } = useAuth();
 
   // Buscar devocionais publicados
-  const fetchDevotionals = async () => {
+  const fetchDevotionals = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -50,7 +50,7 @@ export const useDevotionals = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   // Marcar devocional como lido
   const markAsRead = async (devotionalId, personalNotes = null) => {

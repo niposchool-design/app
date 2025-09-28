@@ -48,6 +48,22 @@ import InstrumentoPagina from '@/features/instrumentos/pages/InstrumentoPagina';
 // 📱 Import do Scanner QR
 import { QRScannerPage } from '@/features/alunos/pages/QRScannerPage';
 
+// 🧪 Import para debug/teste
+import TestDevotionalQuery from '@/components/debug/TestDevotionalQuery';
+
+// 👨‍🎓 Import das páginas dos alunos
+import AlunoDashboard from '@/features/alunos/pages/AlunoDashboard';
+import BibliotecaInstrumentos from '@/features/alunos/pages/BibliotecaInstrumentos';
+import BibliotecaRepertorio from '@/features/alunos/pages/BibliotecaRepertorio';
+import BibliotecaVideos from '@/features/alunos/pages/BibliotecaVideos';
+import CentroEstudos from '@/features/alunos/pages/CentroEstudos';
+import DetalheInstrumento from '@/features/alunos/pages/DetalheInstrumento';
+import MetodologiasEnsino from '@/features/alunos/pages/MetodologiasEnsino';
+import MeuInstrumento from '@/features/alunos/pages/MeuInstrumento';
+import NovaPergunta from '@/features/alunos/pages/NovaPergunta';
+import ProgressoAluno from '@/features/alunos/pages/ProgressoAluno';
+import SistemaDuvidas from '@/features/alunos/pages/SistemaDuvidas';
+
 // Componente de rota protegida
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -118,6 +134,16 @@ const AppRouter = () => {
         } 
       />
 
+      {/* Rota principal dos admins */}
+      <Route 
+        path="/admin" 
+        element={
+          <ProtectedRoute>
+            <ProfessoresAdminPanel />
+          </ProtectedRoute>
+        } 
+      />
+
       {/* Rotas dos professores */}
       <Route 
         path="/professores" 
@@ -144,6 +170,28 @@ const AppRouter = () => {
         <Route path="estatisticas" element={<ProfessoresEstatisticas />} />
         <Route path="categoria/:categoriaId" element={<ProfessoresConteudos />} />
         <Route path="tipo/:tipo" element={<ProfessoresConteudos />} />
+      </Route>
+
+      {/* Rota principal dos alunos */}
+      <Route 
+        path="/alunos" 
+        element={
+          <ProtectedRoute>
+            <AlunoDashboard />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<AlunoDashboard />} />
+        <Route path="biblioteca/instrumentos" element={<BibliotecaInstrumentos />} />
+        <Route path="biblioteca/repertorio" element={<BibliotecaRepertorio />} />
+        <Route path="biblioteca/videos" element={<BibliotecaVideos />} />
+        <Route path="centro-estudos" element={<CentroEstudos />} />
+        <Route path="instrumento/:id" element={<DetalheInstrumento />} />
+        <Route path="metodologias-ensino" element={<MetodologiasEnsino />} />
+        <Route path="meu-instrumento" element={<MeuInstrumento />} />
+        <Route path="progresso" element={<ProgressoAluno />} />
+        <Route path="duvidas" element={<SistemaDuvidas />} />
+        <Route path="duvidas/nova" element={<NovaPergunta />} />
       </Route>
 
       {/* Rotas diretas de admin */}
@@ -193,6 +241,34 @@ const AppRouter = () => {
         } 
       />
 
+      {/* Rotas diretas dos alunos (alternativas) */}
+      <Route 
+        path="/meu-instrumento" 
+        element={
+          <ProtectedRoute>
+            <MeuInstrumento />
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/biblioteca-instrumentos" 
+        element={
+          <ProtectedRoute>
+            <BibliotecaInstrumentos />
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/biblioteca-videos" 
+        element={
+          <ProtectedRoute>
+            <BibliotecaVideos />
+          </ProtectedRoute>
+        } 
+      />
+
       {/* Rotas de instrumentos */}
       <Route 
         path="/instrumentos" 
@@ -212,6 +288,16 @@ const AppRouter = () => {
         element={
           <ProtectedRoute>
             <QRScannerPage />
+          </ProtectedRoute>
+        } 
+      />
+
+      {/* 🧪 Teste Debug (temporário) */}
+      <Route 
+        path="/test-devotional" 
+        element={
+          <ProtectedRoute>
+            <TestDevotionalQuery />
           </ProtectedRoute>
         } 
       />
