@@ -1,5 +1,10 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } // 👨‍🏫 Import da página de gestão de professores - COMENTADO PARA BUILD
+import AdminProfessores from '@/features/admin/pages/AdminProfessores';
+import AdminProfessorDetalhe from '@/features/admin/pages/AdminProfessorDetalhe';
+
+// 📖 Import da página de gestão de devocionais
+import AdminDevocionais from '@/features/admin/pages/AdminDevocionais';ct-router-dom';
 import { useAuth } from '@/shared/contexts/AuthContext';
 
 // 🏠 Import da Landing Page
@@ -325,9 +330,6 @@ const AppRouter = () => {
         
         {/* 📖 GESTÃO DE DEVOCIONAIS (ADMIN) - NOVA ROTA */}
         <Route path="admin/devocionais" element={<AdminDevocionais />} />
-        
-        {/* 🧪 TESTE DE DADOS DO BANCO - ROTA TEMPORÁRIA */}
-        <Route path="admin/teste-dados" element={<TesteVisualizacaoDados />} />
         
         {/* �📋 KANBAN ADMIN - ROTAS INTEGRADAS */}
         <Route path="admin/kanban" element={<Kanban />} />
