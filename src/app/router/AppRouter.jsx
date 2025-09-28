@@ -1,49 +1,20 @@
 import React from 'react';
-import { Routes, Route, Navigate } // 👨‍🏫 Import da página de gestão de professores - COMENTADO PARA BUILD
-import AdminProfessores from '@/features/admin/pages/AdminProfessores';
-import AdminProfessorDetalhe from '@/features/admin/pages/AdminProfessorDetalhe';
-
-// 📖 Import da página de gestão de devocionais
-import AdminDevocionais from '@/features/admin/pages/AdminDevocionais';ct-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '@/shared/contexts/AuthContext';
 
 // 🏠 Import da Landing Page
 import LandingPage from '@/pages/LandingPage';
 
-// 🎯 Import do Dashboard Inteligente que redireciona por tipo d        {/* Painel Administrativo (apenas para admins) */}
-        <Route path="admin" element={<ProfessoresAdminPanel />} />
-        
-        {/* 👥 GESTÃO DE ALUNOS (ADMIN) - NOVA ROTA */}
+// 🎯 Import do Dashboard Inteligente
 import SmartDashboard from '@/pages/SmartDashboard';
 
-// Import das páginas existentes
-import Dashboard from '@/pages/Dashboard';
+// Import das páginas de autenticação
 import Login from '@/features/auth/pages/Login';
 import Register from '@/features/auth/pages/Register';
 import ConfirmEmail from '@/features/auth/components/ConfirmEmail';
 import Vote from '@/features/auth/pages/Vote';
 
-// 📱 Import do Scanner QR - REATIVANDO
-import { QRScannerPage } from '@/features/alunos/pages/QRScannerPage';
-
-// 📚 Import das páginas de alunos - REATIVANDO ESSENCIAIS
-import ModulosPage from '@/features/modulos/pages/ModulosPage';
-import ConquistasPage from '@/features/conquistas/pages/ConquistasPage';
-// import DevocionalPage from '@/features/devocional/pages/DevocionalPage';
-
-// 🧪 Import do teste simples
-import TesteSimples from '@/pages/TesteSimples';
-
-// 📖 Import das páginas de curriculum - METODOLOGIAS INDIVIDUAIS - REATIVANDO
-import CurriculumMethodologyPage from '@/features/curriculum/pages/CurriculumMethodologyPage';
-import CurriculumMethodologyPageSimple from '@/features/curriculum/pages/CurriculumMethodologyPageSimple';
-import TestCurriculumPage from '@/features/curriculum/pages/TestCurriculumPage';
-
-// 📋 Import das páginas do Kanban Admin - COMENTADO PARA BUILD
-import Kanban from '@/features/admin/pages/Kanban';
-import AulaDetail from '@/features/admin/pages/AulaDetail';
-
-// 🎯 Import das páginas dos professores - REATIVANDO AS ESSENCIAIS
+// 🎯 Import das páginas dos professores
 import ProfessoresAdminPanel from '@/features/admin/pages/AdminDashboard';
 import ProfessoresLayout from '@/features/professores/pages/ProfessoresLayout';
 import ProfessoresDashboard from '@/features/professores/pages/ProfessoresDashboard';
@@ -53,173 +24,91 @@ import ProfessoresEstatisticas from '@/features/professores/pages/ProfessoresEst
 import ConteudoDetalhes from '@/features/professores/pages/ConteudoDetalhes';
 import FormConteudo from '@/features/professores/components/FormConteudo';
 
-// 🎵 Import das páginas de instrumentos - COMENTADO PARA BUILD
+// 👥 Import das páginas de admin
+import AdminAlunos from '@/features/admin/pages/AdminAlunos';
+import AdminAlunoDetalhe from '@/features/admin/pages/AdminAlunoDetalhe';
+import AdminProfessores from '@/features/admin/pages/AdminProfessores';
+import AdminProfessorDetalhe from '@/features/admin/pages/AdminProfessorDetalhe';
+import AdminDevocionais from '@/features/admin/pages/AdminDevocionais';
+import AdminInstruments from '@/features/admin/pages/AdminInstruments';
+import AdminInstrumentView from '@/features/admin/pages/AdminInstrumentView';
+import Kanban from '@/features/admin/pages/Kanban';
+import AulaDetail from '@/features/admin/pages/AulaDetail';
+
+// 📚 Import das páginas de conteúdo
+import ModulosPage from '@/features/modulos/pages/ModulosPage';
+import ConquistasPage from '@/features/conquistas/pages/ConquistasPage';
+import DevocionalPage from '@/features/devocional/pages/DevocionalPage';
+
+// 🎵 Import das páginas de instrumentos
 import InstrumentosLayout from '@/features/instrumentos/pages/InstrumentosLayout';
 import InstrumentosList from '@/features/instrumentos/pages/InstrumentosList';
 import InstrumentoPagina from '@/features/instrumentos/pages/InstrumentoPagina';
 
-// 🆕 Import das páginas de ADMIN DE INSTRUMENTOS - NOVOS
-import AdminInstruments from '@/features/admin/pages/AdminInstruments';
-// import AdminInstrumentDetails from '@/features/admin/pages/AdminInstrumentDetails'; // COMENTADO PARA USAR AdminInstrumentView
+// 📱 Import do Scanner QR
+import { QRScannerPage } from '@/features/alunos/pages/QRScannerPage';
 
-// 👥 Import da página de gestão de alunos - REATIVANDO
-import AdminAlunos from '@/features/admin/pages/AdminAlunos';
-import AdminAlunoDetalhe from '@/features/admin/pages/AdminAlunoDetalhe';
-
-// 🧪 Import do componente de teste temporário
-import TesteVisualizacaoDados from '@/components/TesteVisualizacaoDados';
-
-// 👨‍🏫 Import da página de gestão de professores - COMENTADO PARA BUILD
-import AdminProfessores from '@/features/admin/pages/AdminProfessores';
-import AdminProfessorDetalhe from '@/features/admin/pages/AdminProfessorDetalhe';
-
-// � Import da página de gestão de devocionais
-import AdminDevocionais from '@/features/admin/pages/AdminDevocionais';
-
-// �📊 Import das páginas administrativas adicionais - COMENTADO PARA BUILD
-import AdminRelatorios from '@/features/admin/pages/AdminRelatorios';
-import AdminConfiguracoes from '@/features/admin/pages/AdminConfiguracoes';
-// 📚 Import da página de curriculum - REATIVANDO
-import AdminCurriculumNew from '@/features/admin/pages/AdminCurriculum';
-import AdminMethodologyEditor from '@/features/admin/pages/AdminMethodologyEditor';
-import AdminMethodologyView from '@/features/admin/pages/AdminMethodologyView';
-import AdminInstrumentView from '@/features/admin/pages/AdminInstrumentView';
-// 🆕 Import das páginas QR - COMENTADO PARA BUILD
-import { QRCodeManager } from '@/features/admin/pages/QRCodeManager';
-
-// 🎓 Import da página de gestão de turmas - COMENTADO PARA BUILD
-import AdminTurmas from '@/features/turmas/pages/AdminTurmas';
-
-// 🎓 Import das páginas dos alunos - REATIVANDO AS ESSENCIAIS
-import DetalheInstrumento from '@/features/alunos/instrumentos/pages/DetalheInstrumento';
-import AlunoDashboard from '@/features/alunos/pages/AlunoDashboard';
-import BibliotecaInstrumentos from '@/features/alunos/pages/BibliotecaInstrumentos';
-import BibliotecaRepertorio from '@/features/alunos/pages/BibliotecaRepertorio';
-import BibliotecaVideos from '@/features/alunos/pages/BibliotecaVideos';
-import CentroEstudos from '@/features/alunos/pages/CentroEstudos';
-import MetodologiasEnsino from '@/features/alunos/pages/MetodologiasEnsino';
-import MeuInstrumento from '@/features/alunos/pages/MeuInstrumento';
-import ProgressoAluno from '@/features/alunos/pages/ProgressoAluno';
-import SistemaDuvidas from '@/features/alunos/pages/SistemaDuvidas';
-import NovaPergunta from '@/features/alunos/pages/NovaPergunta';
-
-
-// Componente de Loading
-const LoadingScreen = () => (
-  <div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-pink-50 flex items-center justify-center">
-    <div className="text-center">
-      <div className="w-16 h-16 bg-red-500 rounded-full mx-auto mb-4 flex items-center justify-center animate-pulse">
-        <span className="text-white text-2xl">🎵</span>
-      </div>
-      <p className="text-gray-600">Carregando Nipo School...</p>
-    </div>
-  </div>
-);
-
-// Componente de Proteção de Rota
+// Componente de rota protegida
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
   
-  if (loading) return <LoadingScreen />;
-  
-  if (!user) {
-    return <Navigate to="/login" replace />;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-pink-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+      </div>
+    );
   }
   
-  return children;
+  return user ? children : <Navigate to="/login" replace />;
 };
 
-// 🎯 Componente de Proteção para Professores - ATUALIZADO
+// Componente de rota apenas para professores
 const ProfessorRoute = ({ children }) => {
-  const { user, userProfile, loading } = useAuth();
+  const { userProfile, loading } = useAuth();
   
-  if (loading) return <LoadingScreen />;
-  
-  if (!user) {
-    return <Navigate to="/login" replace />;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-pink-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+      </div>
+    );
   }
-
-  // Verificar se é professor, pastor ou admin
-  if (!userProfile || !['professor', 'pastor', 'admin'].includes(userProfile.tipo_usuario)) {
+  
+  if (!userProfile || (userProfile.user_type !== 'professor' && userProfile.user_type !== 'admin')) {
     return <Navigate to="/dashboard" replace />;
   }
   
   return children;
 };
 
-// 🔴 Componente de Proteção para Admins - NOVO
-const AdminRoute = ({ children }) => {
-  const { user, userProfile, loading } = useAuth();
-  
-  if (loading) return <LoadingScreen />;
-  
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  // Verificar se é admin
-  if (!userProfile || userProfile.tipo_usuario !== 'admin') {
-    return <Navigate to="/dashboard" replace />;
-  }
-  
-  return children;
-};
-
-// Componente de Rota para Landing (pública, mas não redireciona)
-const LandingRoute = ({ children }) => {
-  const { loading } = useAuth();
-  
-  if (loading) return <LoadingScreen />;
-  
-  return children;
-};
-
-// Componente de Rota Pública (redireciona se logado)
-const PublicRoute = ({ children }) => {
-  const { user, loading } = useAuth();
-  
-  if (loading) return <LoadingScreen />;
-  
-  if (user) {
-    return <Navigate to="/dashboard" replace />;
-  }
-  
-  return children;
-};
-
+// Componente principal do roteador
 const AppRouter = () => {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-pink-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+      </div>
+    );
+  }
+
   return (
     <Routes>
-      {/* 🏠 Landing Page - Rota inicial */}
+      {/* Rota inicial - redireciona baseado no estado de autenticação */}
       <Route 
         path="/" 
-        element={
-          <LandingRoute>
-            <LandingPage />
-          </LandingRoute>
-        } 
+        element={user ? <Navigate to="/dashboard" replace /> : <LandingPage />} 
       />
       
-      {/* Rotas públicas (só acessíveis se não logado) */}
-      <Route 
-        path="/login" 
-        element={
-          <PublicRoute>
-            <Login />
-          </PublicRoute>
-        } 
-      />
+      {/* Rotas públicas de autenticação */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/confirm-email" element={<ConfirmEmail />} />
+      <Route path="/vote" element={<Vote />} />
       
-      <Route 
-        path="/register" 
-        element={
-          <PublicRoute>
-            <Register />
-          </PublicRoute>
-        } 
-      />
-      
-      {/* 🎯 DASHBOARD INTELIGENTE - Redireciona automaticamente baseado no tipo de usuário */}
+      {/* Dashboard inteligente que redireciona por tipo de usuário */}
       <Route 
         path="/dashboard" 
         element={
@@ -228,70 +117,8 @@ const AppRouter = () => {
           </ProtectedRoute>
         } 
       />
-      
-      {/* 📊 Dashboard genérico (mantido para casos específicos) */}
-      <Route 
-        path="/dashboard/generic" 
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        } 
-      />
-      
-      {/* 🧪 TESTE DE DADOS - ROTA TEMPORÁRIA */}
-      <Route 
-        path="/teste-dados" 
-        element={<TesteSimples />} 
-      />
-      
-      <Route 
-        path="/vote" 
-        element={
-          <ProtectedRoute>
-            <Vote />
-          </ProtectedRoute>
-        } 
-      />
 
-      <Route 
-        path="/confirm-email" 
-        element={<ConfirmEmail />} 
-      />
-
-      <Route 
-        path="/confirmacao" 
-        element={
-          <PublicRoute>
-            <ConfirmEmail />
-          </PublicRoute>
-        }
-      />
-
-      {/* ==========================================
-          🎵 ÁREA DOS INSTRUMENTOS - NOVO MÓDULO
-          ========================================== */}
-      <Route 
-        path="/instrumentos" 
-        element={
-          <ProtectedRoute>
-            <InstrumentosLayout />
-          </ProtectedRoute>
-        }
-      >
-        {/* Lista de todos os instrumentos */}
-        <Route index element={<InstrumentosList />} />
-        
-        {/* Página específica do instrumento */}
-        <Route path=":instrumentoId" element={<InstrumentoPagina />} />
-        
-        {/* Filtros por categoria (futuro) */}
-        <Route path="categoria/:categoria" element={<InstrumentosList />} />
-      </Route>
-
-      {/* ==========================================
-          🎯 ÁREA DOS PROFESSORES - MÓDULO COMPLETO
-          ========================================== */}
+      {/* Rotas dos professores */}
       <Route 
         path="/professores" 
         element={
@@ -300,54 +127,45 @@ const AppRouter = () => {
           </ProfessorRoute>
         }
       >
-        {/* Dashboard dos professores */}
         <Route index element={<ProfessoresDashboard />} />
-        
-        {/* Lista de todos os conteúdos */}
         <Route path="conteudos" element={<ProfessoresConteudos />} />
-        
-        {/* Visualizar conteúdo específico */}
         <Route path="conteudos/:id" element={<ConteudoDetalhes />} />
-        
-        {/* Criar novo conteúdo */}
         <Route path="novo" element={<FormConteudo />} />
-        
-        {/* Editar conteúdo específico */}
         <Route path="editar/:id" element={<FormConteudo />} />
-        
-        {/* Área pessoal do professor */}
         <Route path="minha-area" element={<ProfessoresMinhaArea />} />
-        
-        {/* Painel Administrativo (apenas para admins) */}
         <Route path="admin" element={<ProfessoresAdminPanel />} />
-        
-        {/* 🆕 GESTÃO DE INSTRUMENTOS (ADMIN) - NOVAS ROTAS */}
         <Route path="admin/instruments" element={<AdminInstruments />} />
         <Route path="admin/instruments/view/:instrumentId" element={<AdminInstrumentView />} />
-        
-        {/* � GESTÃO DE ALUNOS (ADMIN) - NOVA ROTA */}
         <Route path="admin/alunos" element={<AdminAlunos />} />
-        
-        {/* 📖 GESTÃO DE DEVOCIONAIS (ADMIN) - NOVA ROTA */}
+        <Route path="admin/professores" element={<AdminProfessores />} />
         <Route path="admin/devocionais" element={<AdminDevocionais />} />
-        
-        {/* �📋 KANBAN ADMIN - ROTAS INTEGRADAS */}
         <Route path="admin/kanban" element={<Kanban />} />
         <Route path="admin/aulas/:id" element={<AulaDetail />} />
-        
-        {/* Estatísticas e analytics */}
         <Route path="estatisticas" element={<ProfessoresEstatisticas />} />
-        
-        {/* Filtros por categoria */}
         <Route path="categoria/:categoriaId" element={<ProfessoresConteudos />} />
-        
-        {/* Filtros por tipo */}
         <Route path="tipo/:tipo" element={<ProfessoresConteudos />} />
       </Route>
 
-      {/* Outras rotas protegidas existentes - TEMPORARIAMENTE COMENTADAS PARA BUILD */}
-      {/*
-      {/* ROTA MÓDULOS - REATIVADA */}
+      {/* Rotas diretas de admin */}
+      <Route 
+        path="/admin/alunos/:id" 
+        element={
+          <ProtectedRoute>
+            <AdminAlunoDetalhe />
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/admin/professores/:id" 
+        element={
+          <ProtectedRoute>
+            <AdminProfessorDetalhe />
+          </ProtectedRoute>
+        } 
+      />
+
+      {/* Rotas dos alunos */}
       <Route 
         path="/modulos" 
         element={
@@ -366,142 +184,29 @@ const AppRouter = () => {
         } 
       />
 
-      {/* 📖 Rotas do Curriculum - Metodologias Individuais - REATIVADO */}
       <Route 
-        path="/curriculum/metodologia/:methodId" 
+        path="/devocional" 
         element={
           <ProtectedRoute>
-            <CurriculumMethodologyPageSimple />
+            <DevocionalPage />
           </ProtectedRoute>
         } 
       />
-      
+
+      {/* Rotas de instrumentos */}
       <Route 
-        path="/perfil" 
+        path="/instrumentos" 
         element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">👤 Perfil</h1>
-                <p className="text-gray-600">Em desenvolvimento...</p>
-              </div>
-            </div>
+            <InstrumentosLayout />
           </ProtectedRoute>
-        } 
-      />
-      
-      {/* 🎓 Rotas específicas para alunos */}
-      <Route 
-        path="/alunos" 
-        element={
-          <ProtectedRoute>
-            <AlunoDashboard />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/dashboard" 
-        element={
-          <ProtectedRoute>
-            <AlunoDashboard />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/biblioteca-instrumentos" 
-        element={
-          <ProtectedRoute>
-            <BibliotecaInstrumentos />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/biblioteca-repertorio" 
-        element={
-          <ProtectedRoute>
-            <BibliotecaRepertorio />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/biblioteca-videos" 
-        element={
-          <ProtectedRoute>
-            <BibliotecaVideos />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/centro-estudos" 
-        element={
-          <ProtectedRoute>
-            <CentroEstudos />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/metodologias" 
-        element={
-          <ProtectedRoute>
-            <MetodologiasEnsino />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/meu-instrumento" 
-        element={
-          <ProtectedRoute>
-            <MeuInstrumento />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/progresso" 
-        element={
-          <ProtectedRoute>
-            <ProgressoAluno />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/duvidas" 
-        element={
-          <ProtectedRoute>
-            <SistemaDuvidas />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/nova-pergunta" 
-        element={
-          <ProtectedRoute>
-            <NovaPergunta />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/instrumento/:instrumentoId" 
-        element={
-          <ProtectedRoute>
-            <DetalheInstrumento />
-          </ProtectedRoute>
-        } 
-      />
-      
-      {/* 🆕 NOVAS ROTAS QUE ESTAVAM FALTANDO */}
-      
-      {/* 📱 Scanner QR Code - COMPONENTE REAL */}
+        }
+      >
+        <Route index element={<InstrumentosList />} />
+        <Route path=":instrumentId" element={<InstrumentoPagina />} />
+      </Route>
+
+      {/* Scanner QR */}
       <Route 
         path="/scanner" 
         element={
@@ -510,342 +215,24 @@ const AppRouter = () => {
           </ProtectedRoute>
         } 
       />
-      
-      {/* Páginas específicas do Centro de Estudos */}
-      <Route 
-        path="/alunos/teoria-musical" 
-        element={
-          <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">🎼 Teoria Musical</h1>
-                <p className="text-gray-600">Em desenvolvimento...</p>
-              </div>
-            </div>
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/repertorio" 
-        element={
-          <ProtectedRoute>
-            <BibliotecaRepertorio />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/tecnica-vocal" 
-        element={
-          <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">🎤 Técnica Vocal</h1>
-                <p className="text-gray-600">Em desenvolvimento...</p>
-              </div>
-            </div>
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/instrumentos" 
-        element={
-          <ProtectedRoute>
-            <BibliotecaInstrumentos />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/aulas-grupo" 
-        element={
-          <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">👥 Aulas em Grupo</h1>
-                <p className="text-gray-600">Em desenvolvimento...</p>
-              </div>
-            </div>
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/biblioteca" 
-        element={
-          <ProtectedRoute>
-            <BibliotecaVideos />
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/agenda" 
-        element={
-          <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">📅 Agenda</h1>
-                <p className="text-gray-600">Em desenvolvimento...</p>
-              </div>
-            </div>
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/metas" 
-        element={
-          <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">🎯 Metas</h1>
-                <p className="text-gray-600">Em desenvolvimento...</p>
-              </div>
-            </div>
-          </ProtectedRoute>
-        } 
-      />
-      
-      {/* Metodologias de Ensino */}
-      <Route 
-        path="/alunos/metodologia/orff" 
-        element={
-          <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">🎵 Método Orff</h1>
-                <p className="text-gray-600">Em desenvolvimento...</p>
-              </div>
-            </div>
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/metodologia/suzuki" 
-        element={
-          <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">🎻 Método Suzuki</h1>
-                <p className="text-gray-600">Em desenvolvimento...</p>
-              </div>
-            </div>
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/metodologia/musical-futures" 
-        element={
-          <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">🚀 Musical Futures</h1>
-                <p className="text-gray-600">Em desenvolvimento...</p>
-              </div>
-            </div>
-          </ProtectedRoute>
-        } 
-      />
-      
-      <Route 
-        path="/alunos/metodologia/kodaly" 
-        element={
-          <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">🎶 Método Kodály</h1>
-                <p className="text-gray-600">Em desenvolvimento...</p>
-              </div>
-            </div>
-          </ProtectedRoute>
-        } 
-      />
 
-      {/* 🔴 ROTA ADMIN INDEPENDENTE - Dashboard administrativo */}
-      <Route 
-        path="/admin" 
-        element={
-          <AdminRoute>
-            <ProfessoresAdminPanel />
-          </AdminRoute>
-        } 
-      />
-      
-      {/* 👥 GESTÃO DE ALUNOS - Rota independente para admin */}
-      <Route 
-        path="/admin/alunos" 
-        element={
-          <AdminRoute>
-            <AdminAlunos />
-          </AdminRoute>
-        } 
-      />
-      
-      {/* 👨‍🏫 GESTÃO DE PROFESSORES - Rota independente para admin */}
-      <Route 
-        path="/admin/professores" 
-        element={
-          <AdminRoute>
-            <AdminProfessores />
-          </AdminRoute>
-        } 
-      />
-      
-      {/* � DETALHES DO ALUNO - Rota para admin */}
-      <Route 
-        path="/admin/alunos/:id" 
-        element={
-          <AdminRoute>
-            <AdminAlunoDetalhe />
-          </AdminRoute>
-        } 
-      />
-      
-      {/* 👨‍🏫 DETALHES DO PROFESSOR - Rota para admin */}
-      <Route 
-        path="/admin/professores/:id" 
-        element={
-          <AdminRoute>
-            <AdminProfessorDetalhe />
-          </AdminRoute>
-        } 
-      />
-      
-      {/* �📋 KANBAN DE AULAS - Rota independente para admin */}
-      <Route 
-        path="/admin/kanban" 
-        element={
-          <AdminRoute>
-            <Kanban />
-          </AdminRoute>
-        } 
-      />
-      
-      {/* 📝 DETALHES DA AULA - Rota independente para admin */}
-      <Route 
-        path="/admin/aulas/:id" 
-        element={
-          <AdminRoute>
-            <AulaDetail />
-          </AdminRoute>
-        } 
-      />
-      
-      {/* 📊 RELATÓRIOS - Rota independente para admin */}
-      <Route 
-        path="/admin/relatorios" 
-        element={
-          <AdminRoute>
-            <AdminRelatorios />
-          </AdminRoute>
-        } 
-      />
-      
-      {/* ⚙️ CONFIGURAÇÕES - Rota independente para admin */}
-      <Route 
-        path="/admin/configuracoes" 
-        element={
-          <AdminRoute>
-            <AdminConfiguracoes />
-          </AdminRoute>
-        } 
-      />
-      
-      {/* 📱 GERENCIADOR QR CODE - Rota independente para admin */}
-      <Route 
-        path="/admin/qr-manager" 
-        element={
-          <AdminRoute>
-            <QRCodeManager />
-          </AdminRoute>
-        } 
-      />
-      
-      {/* 📚 SISTEMA DE CURRICULUM - Rota independente para admin */}
-      <Route 
-        path="/admin/curriculum" 
-        element={
-          <AdminRoute>
-            <AdminCurriculumNew />
-          </AdminRoute>
-        } 
-      />
-      <Route 
-        path="/admin/curriculum/edit/:chapterId" 
-        element={
-          <AdminRoute>
-            <AdminMethodologyEditor />
-          </AdminRoute>
-        } 
-      />
-      <Route 
-        path="/admin/curriculum/view/:chapterId" 
-        element={
-          <AdminRoute>
-            <AdminMethodologyView />
-          </AdminRoute>
-        } 
-      />
-      <Route 
-        path="/admin/instruments/view/:instrumentId" 
-        element={
-          <AdminRoute>
-            <AdminInstrumentView />
-          </AdminRoute>
-        } 
-      />
-      
-      {/* 🎓 GESTÃO DE TURMAS - Rota independente para admin */}
-      <Route 
-        path="/admin/turmas" 
-        element={
-          <AdminRoute>
-            <AdminTurmas />
-          </AdminRoute>
-        } 
-      />
-      
-      {/* 🎵 GESTÃO DE INSTRUMENTOS - Rotas independentes para admin */}
-      <Route 
-        path="/admin/instruments" 
-        element={
-          <AdminRoute>
-            <AdminInstruments />
-          </AdminRoute>
-        } 
-      />
-      
-      <Route 
-        path="/admin/instruments/view/:instrumentId" 
-        element={
-          <AdminRoute>
-            <AdminInstrumentView />
-          </AdminRoute>
-        } 
-      />
-      
-      {/* Rota 404 */}
+      {/* Rota catch-all */}
       <Route 
         path="*" 
         element={
           <div className="min-h-screen bg-gray-50 flex items-center justify-center">
             <div className="text-center">
               <h1 className="text-4xl font-bold text-gray-800 mb-4">404</h1>
-              <p className="text-gray-600 mb-4">Página não encontrada</p>
+              <p className="text-gray-600 mb-6">Página não encontrada</p>
               <button 
-                onClick={() => window.history.back()}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                onClick={() => window.history.back()} 
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
               >
                 Voltar
               </button>
             </div>
           </div>
-        }  
+        } 
       />
     </Routes>
   );

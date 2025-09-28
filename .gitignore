@@ -22,3 +22,36 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# 🧹 ARQUIVOS DE LIMPEZA - NÃO COMMITAR
+# Arquivos temporários de teste
+teste-*.js
+testar-*.js
+testar-*.cjs
+*test-temp*
+*debug-temp*
+
+# Arquivos de backup
+*.backup
+*.backup_*
+*.bak
+
+# Documentação temporária de debug
+DEBUG_*.md
+CORRECAO_*.md
+URGENTE_*.md
+SOLUCAO_*.md
+TESTE_*.md
+VIEWS_*.md
+QUERY_*.md
+INSPECAO_*.md
+CONSULTAS_*.md
+CRIAR_*.md
+STATUS_TEMP.md
+
+# Arquivos de desenvolvimento temporário
+src/pages/*Test*.jsx
+src/components/*Test*.jsx
+src/components/*Debug*.jsx
+src/utils/teste*.js
+src/utils/debug*.js

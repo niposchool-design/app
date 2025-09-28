@@ -3,7 +3,6 @@ import { useAuth } from '../../../shared/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../../shared/lib/supabase/supabaseClient';
 import { NipoHeaderLogo } from '../../../shared/components/UI/NipoLogo';
-import { executarAnaliseCompleta } from '../../../utils/testeTabelas';
 
 import {  
   BarChart3,
@@ -656,11 +655,13 @@ const AdminDashboard = () => {
               color="border border-red-200 hover:bg-red-50"
               onClick={async () => {
                 console.clear();
-                console.log('🔍 INICIANDO ANÁLISE DAS TABELAS...');
+                console.log('🔍 VERIFICANDO CONEXÃO COM BANCO...');
                 try {
-                  await executarAnaliseCompleta();
+                  const { data, error } = await supabase.from('profiles').select('count(*)', { count: 'exact' });
+                  if (error) throw error;
+                  console.log('✅ Conexão OK! Usuários cadastrados:', data);
                 } catch (err) {
-                  console.error('Erro na análise:', err);
+                  console.error('❌ Erro na conexão:', err);
                 }
               }}
             />
