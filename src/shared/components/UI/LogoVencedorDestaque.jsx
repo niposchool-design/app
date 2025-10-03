@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trophy, Users, Sparkles, Crown } from 'lucide-react';
-import { useWinningLogo } from '../../hooks/useWinningLogo';
+import { useWinningLogo } from '@/shared/hooks/useWinningLogo';
 
 /**
  * 🏆 Componente para destacar o logo vencedor da votação

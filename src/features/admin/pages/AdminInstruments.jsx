@@ -1,29 +1,136 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Music, Zap, Target, Mic, Volume2, Headphones,
-  Edit, Eye, Share2, Search, Star, Package,
-  DollarSign, AlertTriangle, Plus, Settings,
-  ArrowLeft, Filter, Clock, Users, Loader2
+  Music, Search, Filter, Download, Plus, Edit, Eye, Trash2,
+  ArrowLeft, RefreshCw, Settings, Users, BarChart3, Calendar,
+  DollarSign, Star, AlertTriangle, CheckCircle, XCircle, 
+  Clock, Target, Package, Database, FileText, Activity
 } from 'lucide-react';
-import { useInstrumentosReal } from '../../../shared/hooks/useInstrumentosReal';
-import NipoHeader from '../../../shared/components/UI/NipoHeader';
+import { supabase } from '@/shared/lib/supabase';
+import NipoHeader from '@/shared/components/UI/NipoHeader';
+
+// Função auxiliar para obter nome da categoria
+const getCategoryName = (categoria) => {
+  const categoriaMap = {
+    'corda': 'Instrumentos de Corda',
+    'sopro': 'Instrumentos de Sopro',
+    'percussao': 'Instrumentos de Percussão',
+    'teclado': 'Instrumentos de Teclado',
+    'vocal': 'Técnica Vocal',
+    'teoria': 'Teoria Musical',
+    'outros': 'Outros Instrumentos'
+  };
+  return categoriaMap[categoria] || categoria || 'Não definida';
+};
 
 const AdminInstruments = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('todos');
-  const [selectedStatus, setSelectedStatus] = useState('todos');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [sortBy, setSortBy] = useState('nome');
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(20);
+  
+  // Estados dos dados
+  const [instrumentos, setInstrumentos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [stats, setStats] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedItems, setSelectedItems] = useState([]);
 
-  // Buscar dados reais do banco
-  const { 
-    instrumentos: instrumentosData, 
-    categorias: categoriasData, 
-    stats: statsData,
-    isLoading, 
-    error,
-    refreshData 
-  } = useInstrumentosReal();
+  // Buscar dados completos do banco
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      // 1. Buscar todos os instrumentos conforme estrutura real do banco
+      const { data: instrumentosData, error: instrumentosError } = await supabase
+        .from('instrumentos')
+        .select(`
+          *,
+          professor_instrumentos (
+            professor_id,
+            nivel_especialidade,
+            anos_experiencia,
+            professores:professor_id (
+              nome_completo,
+              email,
+              telefone
+            )
+          ),
+          aluno_instrumentos (
+            aluno_id,
+            nivel_atual,
+            data_inicio,
+            alunos:aluno_id (
+              nome_completo,
+              email
+            )
+          ),
+          aulas (
+            id,
+            titulo,
+            data_aula,
+            status
+          )
+        `)
+        .order(sortBy, { ascending: sortOrder === 'asc' });
+
+      if (instrumentosError) throw instrumentosError;
+
+      // 2. As categorias são strings diretas, não tabela separada
+      const categorias = [
+        { id: 'corda', nome: 'Instrumentos de Corda' },
+        { id: 'sopro', nome: 'Instrumentos de Sopro' },
+        { id: 'percussao', nome: 'Instrumentos de Percussão' },
+        { id: 'teclado', nome: 'Instrumentos de Teclado' },
+        { id: 'vocal', nome: 'Técnica Vocal' },
+        { id: 'teoria', nome: 'Teoria Musical' },
+        { id: 'outros', nome: 'Outros Instrumentos' }
+      ];
+
+      if (categoriasError) throw categoriasError;
+
+      // 3. Calcular estatísticas
+      const totalInstrumentos = instrumentosData?.length || 0;
+      const instrumentosAtivos = instrumentosData?.filter(i => i.ativo)?.length || 0;
+      const totalProfessores = new Set(
+        instrumentosData?.flatMap(i => 
+          i.professor_instrumentos?.map(pi => pi.professor_id) || []
+        )
+      ).size;
+      const totalAlunos = new Set(
+        instrumentosData?.flatMap(i => 
+          i.aluno_instrumentos?.map(ai => ai.aluno_id) || []
+        )
+      ).size;
+
+      setInstrumentos(instrumentosData || []);
+      setCategorias(categorias || []);
+      setStats({
+        total: totalInstrumentos,
+        ativos: instrumentosAtivos,
+        inativos: totalInstrumentos - instrumentosAtivos,
+        professores: totalProfessores,
+        alunos: totalAlunos,
+        aulas: instrumentosData?.reduce((acc, i) => acc + (i.aulas?.length || 0), 0) || 0
+      });
+
+    } catch (err) {
+      console.error('❌ Erro ao carregar dados:', err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [sortBy, sortOrder]);
 
   // Mapeamento de ícones para categorias
   const getCategoryIcon = (categoryId) => {
@@ -64,19 +171,19 @@ const AdminInstruments = () => {
     return emojiMap[categoryId] || emojiMap.default;
   };
 
-  // Transformar dados das categorias do banco para o formato necessário
-  const categories = categoriasData.map(categoria => ({
+  // Transformar dados das categorias locais para o formato necessário
+  const categories = categorias.map(categoria => ({
     id: categoria.id,
     title: `Instrumentos de ${categoria.nome}`,
     icon: getCategoryIcon(categoria.id),
     color: getCategoryColor(categoria.id),
     description: `Categoria: ${categoria.nome}`,
-    instrumentsCount: categoria.count,
+    instrumentsCount: instrumentos?.filter(i => i.categoria === categoria.id).length || 0,
     emoji: getCategoryEmoji(categoria.id)
   }));
 
   // Transformar dados dos instrumentos do banco para o formato necessário
-  const instruments = instrumentosData.map(instrumento => {
+  const instruments = instrumentos.map(instrumento => {
     // Determinar status baseado na disponibilidade
     const status = instrumento.disponivel_escola ? 
       (instrumento.stats?.total_turmas > 0 ? 'Em Uso' : 'Disponível') : 
@@ -108,7 +215,7 @@ const AdminInstruments = () => {
   });
 
   // Filtrar instrumentos
-  const filteredInstruments = instruments.filter(instrument => {
+  const filteredInstruments = instrumentos.filter(instrument => {
     const matchesSearch = instrument.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          instrument.location.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'todos' || instrument.category === selectedCategory;
@@ -131,6 +238,47 @@ const AdminInstruments = () => {
   const shareInstrument = (instrumentId) => {
     // Lógica de compartilhamento
     alert(`Compartilhar informações do instrumento ${instrumentId}`);
+  };
+
+  // Função para exportar dados para CSV
+  const exportToCSV = () => {
+    if (!instrumentos || instrumentos.length === 0) {
+      alert('Nenhum dado para exportar');
+      return;
+    }
+
+    // Preparar dados para exportação
+    const csvData = instrumentos.map(instrument => ({
+      'ID': instrument.id,
+      'Nome': instrument.name || '',
+      'Categoria': getCategoryName(instrument.category) || '',
+      'Marca': instrument.brand || '',
+      'Modelo': instrument.model || '',
+      'Status': instrument.status || '',
+      'Disponível': instrument.available ? 'Sim' : 'Não',
+      'Valor': instrument.price ? `R$ ${instrument.price.toFixed(2)}` : '',
+      'Localização': instrument.location || '',
+      'Data de Criação': instrument.created_at ? new Date(instrument.created_at).toLocaleDateString('pt-BR') : ''
+    }));
+
+    // Criar CSV
+    const headers = Object.keys(csvData[0]).join(',');
+    const rows = csvData.map(row => 
+      Object.values(row).map(value => `"${value}"`).join(',')
+    ).join('\n');
+    
+    const csvContent = headers + '\n' + rows;
+
+    // Download do arquivo
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `instrumentos-admin-${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   // Função para obter cor do status
@@ -165,16 +313,6 @@ const AdminInstruments = () => {
       default:
         return 'bg-gray-100 text-gray-800';
     }
-  };
-
-  // Calcular estatísticas usando dados reais
-  const stats = {
-    total: statsData.totalInstruments || 0,
-    disponivel: instruments.filter(inst => inst.status === 'Disponível' || inst.status === 'Em Uso').length,
-    manutencao: instruments.filter(inst => inst.status === 'Em Manutenção').length,
-    totalStudents: statsData.totalAlunos || 0,
-    totalValue: instruments.reduce((acc, inst) => acc + (inst.value || 0), 0),
-    categorias: categories.length
   };
 
   return (
@@ -235,13 +373,23 @@ const AdminInstruments = () => {
               </div>
             </div>
             
-            <button
-              onClick={() => navigate('/admin/instruments/create')}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              <Plus className="w-4 h-4" />
-              <span className="text-sm font-medium">Novo Instrumento</span>
-            </button>
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={exportToCSV}
+                className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              >
+                <Download className="w-4 h-4" />
+                <span className="text-sm font-medium">Exportar CSV</span>
+              </button>
+              
+              <button
+                onClick={() => navigate('/admin/instruments/new')}
+                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                <span className="text-sm font-medium">Novo Instrumento</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -324,9 +472,9 @@ const AdminInstruments = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
           <h2 className="text-lg font-bold text-gray-800 mb-4">Categorias de Instrumentos</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {categories.map((category) => {
+            {categorias.map((category) => {
               const IconComponent = category.icon;
-              const categoryInstruments = instruments.filter(inst => inst.category === category.id);
+              const categoryInstruments = instrumentos.filter(inst => inst.category === category.id);
               
               return (
                 <button
@@ -404,7 +552,7 @@ const AdminInstruments = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
           {filteredInstruments.map((instrument) => {
             const IconComponent = instrument.icon;
-            const categoryInfo = categories.find(cat => cat.id === instrument.category);
+            const categoryInfo = categorias.find(cat => cat.id === instrument.category);
             
             return (
               <div key={instrument.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-lg transition-all duration-300 group">

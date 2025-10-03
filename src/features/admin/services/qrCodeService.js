@@ -1,5 +1,5 @@
 // features/admin/services/qrCodeService.js
-import { supabase } from '../../../shared/lib/supabase/supabaseClient';
+import { supabase } from '@/shared/lib/supabase/supabaseClient';
 
 class QRCodeService {
   

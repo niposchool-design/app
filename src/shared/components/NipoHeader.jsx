@@ -1,0 +1,1 @@
+export { default as NipoHeader } from './UI/NipoHeader';

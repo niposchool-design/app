@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { turmasService } from '../services/turmasService';
-import { useAuth } from '../../../shared/contexts/AuthContext';
+import { useAuth } from '@/shared/contexts/AuthContext';
 
 /**
  * Hook principal para gerenciar turmas

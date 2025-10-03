@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useOrientalNavigation } from '../../hooks/useOrientalNavigation';
+import { useOrientalNavigation } from '@/shared/hooks/useOrientalNavigation';
 
 // Re-exportar provider do contexto
 export { OrientalNavigationProvider } from './OrientalNavigationContext';

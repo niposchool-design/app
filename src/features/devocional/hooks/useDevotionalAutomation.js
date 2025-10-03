@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '../../../shared/lib/supabase/supabase';
+import { supabase } from '@/shared/lib/supabase/supabase';
 
 /**
  * Hook para gerenciar a automação dos devocionais semanais

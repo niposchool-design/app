@@ -1,4 +1,4 @@
-import { supabase } from '../../../shared/lib/supabase/supabaseClient';
+import { supabase } from '@/shared/lib/supabase/supabaseClient';
 
 export const instrumentDetailService = {
 

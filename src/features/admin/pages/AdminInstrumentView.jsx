@@ -37,8 +37,8 @@ import {
   Camera,
   Square
 } from 'lucide-react';
-import NipoHeader from '../../../shared/components/UI/NipoHeader';
-import { instrumentDetailService } from '../../instrumentos/services/instrumentDetailService';
+import NipoHeader from '@/shared/components/UI/NipoHeader';
+import { supabase } from '@/shared/lib/supabase';
 
 const AdminInstrumentView = () => {
   const { instrumentId } = useParams();

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../../../shared/lib/supabase/supabaseClient';
-import { useAuth } from '../../../shared/contexts/AuthContext';
+import { supabase } from '@/shared/lib/supabase/supabaseClient';
+import { useAuth } from '@/shared/contexts/AuthContext';
 
 export const useAchievements = () => {
   const [achievements, setAchievements] = useState([]);

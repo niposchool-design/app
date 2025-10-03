@@ -1,0 +1,43 @@
+{
+  "projectName": "nipo_school",
+  "developmentRules": {
+    "serverManagement": {
+      "neverRunDevServer": true,
+      "reason": "Servidor sempre rodando em terminal separado",
+      "allowedCommands": [
+        "git",
+        "npm install",
+        "npm test", 
+        "scripts personalizados"
+      ],
+      "forbiddenCommands": [
+        "npm run dev",
+        "npm start",
+        "vite",
+        "yarn dev"
+      ]
+    },
+    "terminalUsage": {
+      "dedicatedDevTerminal": "Terminal bash separado para servidor",
+      "workingTerminal": "Sempre usar outro terminal para comandos",
+      "neverInterrupt": true
+    },
+    "workflow": {
+      "assumeServerRunning": true,
+      "hotReloadActive": true,
+      "testInBrowser": true,
+      "fileChangesAutoReload": true
+    }
+  },
+  "technicalSpecs": {
+    "server": "Vite dev server",
+    "port": 3000,
+    "environment": "Windows com bash",
+    "hotReload": true
+  },
+  "compliance": {
+    "mandatory": true,
+    "createdDate": "2025-10-01",
+    "status": "ACTIVE"
+  }
+}

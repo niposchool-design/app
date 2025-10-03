@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { instrumentPageService } from '../services/instrumentPageService';
-import { useAuth } from '../../../shared/contexts/AuthContext';
+import { useAuth } from '@/shared/contexts/AuthContext';
 
 /**
  * Hook principal para página do instrumento

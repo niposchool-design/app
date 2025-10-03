@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom'; 
 import { Mail, Lock, Eye, EyeOff, LogIn, RefreshCw } from 'lucide-react';
-import { useAuth } from '../../../shared/contexts/AuthContext';
+import { useAuth } from '../../../shared/contexts/AuthContext.tsx';
 import { supabase } from '../../../shared/lib/supabase/supabaseClient';
 
 const LoginForm = () => {

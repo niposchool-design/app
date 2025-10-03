@@ -1,5 +1,5 @@
 // instrumentsService.js - Service completo para sistema de instrumentos
-import { supabase } from '../../../shared/lib/supabase/supabaseClient';
+import { supabase } from '@/shared/lib/supabase/supabaseClient';
 
 // Cache simples para performance
 const cache = new Map();

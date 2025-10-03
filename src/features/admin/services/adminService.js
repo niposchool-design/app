@@ -1,5 +1,5 @@
 // adminService.js - Versão com proteção contra loops
-import { supabase } from '../../../shared/lib/supabase/supabaseClient';
+import { supabase } from '@/shared/lib/supabase/supabaseClient';
 
 // Cache simples para evitar requests repetitivos
 const cache = new Map();
