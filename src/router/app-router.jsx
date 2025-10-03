@@ -16,14 +16,10 @@ import ComponentShowcase from '../pages/component-showcase';
 // 🔍 Página de diagnóstico de banco de dados
 import DatabaseDiagnostic from '../pages/database-diagnostic';
 
-// 🧪 Página de testes de autenticação
-import AuthTesting from '../pages/auth-testing.jsx';
-
-// 🔄 Página de testes de redirecionamento
-import RedirectTesting from '../pages/redirect-testing.jsx';
-
-// 🎭 Página de testes de usuários por níveis
-import UserLevelTesting from '../pages/user-level-testing.jsx';
+// 🧪 PÁGINAS DE TESTE - TEMPORARIAMENTE DESABILITADAS PARA PRODUÇÃO
+// import AuthTesting from '../pages/auth-testing.jsx';
+// import RedirectTesting from '../pages/redirect-testing.jsx';
+// import UserLevelTesting from '../pages/user-level-testing.jsx';
 
 // 🚫 Página de acesso negado
 import UnauthorizedPage from '../pages/unauthorized';
@@ -82,23 +78,12 @@ const AppRouterNew = () => {
         element={<DatabaseDiagnostic />} 
       />
 
-      {/* 🧪 Testes de Autenticação */}
-      <Route 
-        path="/auth-testing" 
-        element={<AuthTesting />} 
-      />
-
-      {/* 🔄 Testes de Redirecionamento */}
-      <Route 
-        path="/redirect-testing" 
-        element={<RedirectTesting />} 
-      />
-
-      {/* 🎭 Testes de Usuários por Níveis */}
-      <Route 
-        path="/user-testing" 
-        element={<UserLevelTesting />} 
-      />
+      {/* 🧪 ROTAS DE TESTE - TEMPORARIAMENTE DESABILITADAS PARA PRODUÇÃO */}
+      {/* 
+      <Route path="/auth-testing" element={<AuthTesting />} />
+      <Route path="/redirect-testing" element={<RedirectTesting />} />
+      <Route path="/user-testing" element={<UserLevelTesting />} />
+      */}
 
       {/* 🚫 Página de Acesso Negado */}
       <Route 
