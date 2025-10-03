@@ -17,13 +17,13 @@ import ComponentShowcase from '../pages/component-showcase';
 import DatabaseDiagnostic from '../pages/database-diagnostic';
 
 // 🧪 Página de testes de autenticação
-import AuthTesting from '../pages/auth-testing';
+import AuthTesting from '../pages/auth-testing.jsx';
 
 // 🔄 Página de testes de redirecionamento
-import RedirectTesting from '../pages/redirect-testing';
+import RedirectTesting from '../pages/redirect-testing.jsx';
 
 // 🎭 Página de testes de usuários por níveis
-import UserLevelTesting from '../pages/user-level-testing';
+import UserLevelTesting from '../pages/user-level-testing.jsx';
 
 // 🚫 Página de acesso negado
 import UnauthorizedPage from '../pages/unauthorized';
