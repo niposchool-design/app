@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Camera, CheckCircle, AlertCircle, RefreshCw, X, Trophy, BookOpen } from 'lucide-react';
 import jsQR from 'jsqr';
 import { qrCodeService } from '../../admin/services/qrCodeService';
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 
 export const QRScanner = ({ onClose = null }) => {
   const { user } = useAuth();

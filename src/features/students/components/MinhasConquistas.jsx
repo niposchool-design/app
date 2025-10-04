@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Trophy, Star, Award, Target, Clock, Zap } from 'lucide-react';
 import { supabase } from '../../shared/lib/supabase/supabaseClient';
-import { useAuth } from '../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 
 const MinhasConquistas = () => {
   const { user } = useAuth();

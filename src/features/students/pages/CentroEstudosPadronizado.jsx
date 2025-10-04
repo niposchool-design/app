@@ -6,7 +6,7 @@ import {
   Star, Trophy
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/auth-context.tsx';
+import { useAuth } from '../../../contexts/working-auth-context';
 
 // Componentes padronizados Nipo School
 import NipoHeader from '@/shared/components/UI/NipoHeader';

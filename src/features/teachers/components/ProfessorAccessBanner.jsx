@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 import { 
   BookOpen, 
   X, 

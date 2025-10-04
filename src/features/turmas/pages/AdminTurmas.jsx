@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { useTurmas } from '../hooks/useTurmas';
 import { turmasService } from '../services/turmasService';
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 
 const AdminTurmas = () => {
   const navigate = useNavigate();

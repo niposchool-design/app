@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, Home, BookOpen, Users } from 'lucide-react';
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 
 const QuickSwitch = () => {
   const { userProfile } = useAuth();

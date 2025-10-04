@@ -8,7 +8,7 @@ import {
   useProximasAtividades,
   useTurmasInstrumento
 } from '../hooks/useInstrumentPage'; 
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 import { supabase } from '../../../shared/lib/supabase/supabaseClient';
 
 const InstrumentoPagina = () => {

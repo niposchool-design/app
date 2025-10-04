@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 
 // --- CONTEXTOS E HOOKS ---
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 
 // --- SERVIÇOS ---
 import { instrumentsService } from '../../instrumentos/services/instrumentsService';

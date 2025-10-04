@@ -1,6 +1,6 @@
 // features/alunos/pages/MeuInstrumento.jsx
 import React, { useState, useEffect, useCallback } from 'react';
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../../shared/lib/supabase/supabaseClient';
 import { NavigationBar } from '@/shared/components/navigation/NavigationBar';

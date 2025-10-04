@@ -10,7 +10,7 @@ import {
   Camera,
   Star
 } from 'lucide-react';
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 import { useModules } from '../../modulos/hooks/useModules';
 import { useAchievements } from '../../gamificacao/hooks/useAchievements';
 import { useProgress } from '../../alunos/hooks/useAlunoProgress';

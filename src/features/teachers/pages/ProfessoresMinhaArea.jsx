@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 import { professoresService } from '../services/professoresService';
 import ConteudoCard from '../components/ConteudoCard';
 import FormConteudo from '../components/FormConteudo';

@@ -10,7 +10,7 @@ import {
   Lock,
   CheckCircle
 } from 'lucide-react';
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 import { useAchievements } from '../hooks/useAchievements';
 import NipoHeader from '../../../shared/components/UI/NipoHeader';
 import { 

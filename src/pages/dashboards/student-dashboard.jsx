@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSimpleAuth as useAuth } from '@new/contexts/simple-auth-context';
+import { useSimpleAuth as useAuth } from '@new/contexts/simple-working-auth-context';
 
 /**
  * StudentDashboard - Dashboard do Aluno

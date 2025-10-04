@@ -9,7 +9,7 @@ import {
   Music, Clock, BarChart3, CheckCircle, XCircle, AlertCircle
 } from 'lucide-react';
 import { supabase } from '../../../shared/lib/supabase/supabaseClient'; // Cliente REAL, não mock
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 
 const AdminAlunos = () => {
   const navigate = useNavigate();

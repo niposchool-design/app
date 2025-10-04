@@ -2,7 +2,7 @@
 // Integração dos dashboards orientais com hierarquia de usuário
 
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 import { useEffect, useState } from 'react';
 
 // Dashboards Orientais

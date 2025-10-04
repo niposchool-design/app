@@ -27,7 +27,7 @@ import {
   Coffee
 } from 'lucide-react';
 import { supabase } from '../../../shared/lib/supabase/supabaseClient';
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 
 const AdminProfessorDetalhe = () => {
   const { id } = useParams();

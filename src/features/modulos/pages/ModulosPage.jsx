@@ -9,7 +9,7 @@ import {
   ArrowLeft,
   ChevronRight
 } from 'lucide-react';
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 import { useModules } from '../hooks/useModules';
 import NipoHeader from '../../../shared/components/UI/NipoHeader';
 import { 

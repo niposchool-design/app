@@ -13,7 +13,7 @@ import {
   Moon,
   Sunset
 } from 'lucide-react';
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 import { useDevotionals } from '../hooks/useDevotionals';
 import NipoHeader from '../../../shared/components/UI/NipoHeader';
 import { 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '@/contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 import { Shield, AlertCircle, ArrowLeft, Home, RefreshCw } from 'lucide-react';
 
 // 🛡️ MIDDLEWARE DE PROTEÇÃO ORIENTAL AVANÇADO

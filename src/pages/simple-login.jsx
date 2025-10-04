@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSimpleAuth } from '@new/contexts/simple-auth-context';
+import { useSimpleAuth } from '@new/contexts/simple-working-auth-context';
 
 /**
  * SimpleLoginPage - Página de login simplificada com debug

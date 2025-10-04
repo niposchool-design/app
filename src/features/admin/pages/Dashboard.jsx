@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../../contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 import { useNavigate } from 'react-router-dom';
 
 // 🎌 MIGRAÇÃO COMPLETA PARA SISTEMA ORIENTAL ENTERPRISE

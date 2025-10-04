@@ -13,7 +13,7 @@ import DashboardPage from '@new/pages/dashboard-page';
 import { ProtectedRoute } from '@new/components/auth/protected-route';
 
 // ✅ Hook de autenticação nova estrutura
-import { useAuth } from '@new/contexts/working-auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 
 /**
  * SimpleRouter - Router simplificado da nova estrutura

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '@new/contexts/auth-context';
+import { useAuth } from '../../../contexts/working-auth-context';
 
 /**
  * LoginPage - Página de autenticação

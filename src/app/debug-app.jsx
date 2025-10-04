@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { SimpleAuthProvider } from '@new/contexts/simple-auth-context';
+import { SimpleAuthProvider } from '@new/contexts/simple-working-auth-context';
 import DebugRouter from '@new/router/debug-router';
 
 /**
