@@ -1,1 +1,1 @@
-export { PortfolioDetailPage } from './_EmConstrucao'
+export { EmConstrucao as PortfolioDetailPage } from './_EmConstrucao'

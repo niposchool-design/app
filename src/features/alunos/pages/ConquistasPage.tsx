@@ -9,6 +9,9 @@ import {
   Search
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { NipoCard, NipoCardBody, NipoCardStat } from '../../../components/shared/NipoCard'
+import { NipoButton } from '../../../components/shared/NipoButton'
+import { NipoInput } from '../../../components/shared/NipoInput'
 
 type Achievement = {
   id: string
@@ -35,7 +38,7 @@ export function ConquistasPage() {
       id: '1',
       titulo: 'Primeiro Passo',
       descricao: 'Complete seu primeiro desafio',
-      icone: 'í¾¯',
+      icone: 'ï¿½ï¿½ï¿½',
       categoria: 'iniciante',
       pontos: 10,
       progresso: 100,
@@ -49,7 +52,7 @@ export function ConquistasPage() {
       id: '2',
       titulo: 'SequÃªncia de 7 Dias',
       descricao: 'Acesse a plataforma por 7 dias seguidos',
-      icone: 'í´¥',
+      icone: 'ï¿½ï¿½ï¿½',
       categoria: 'social',
       pontos: 50,
       progresso: 57,
@@ -62,7 +65,7 @@ export function ConquistasPage() {
       id: '3',
       titulo: 'Mestre do Piano',
       descricao: 'Complete 10 desafios de piano',
-      icone: 'í¾¹',
+      icone: 'ï¿½ï¿½ï¿½',
       categoria: 'intermediario',
       pontos: 100,
       progresso: 30,
@@ -75,7 +78,7 @@ export function ConquistasPage() {
       id: '4',
       titulo: 'ProdÃ­gio Musical',
       descricao: 'Atinja 1000 pontos totais',
-      icone: 'í±‘',
+      icone: 'ï¿½ï¿½ï¿½',
       categoria: 'especial',
       pontos: 200,
       progresso: 15,
@@ -88,7 +91,7 @@ export function ConquistasPage() {
       id: '5',
       titulo: 'Compositor Iniciante',
       descricao: 'Crie sua primeira composiÃ§Ã£o',
-      icone: 'í¾¼',
+      icone: 'ï¿½ï¿½ï¿½',
       categoria: 'iniciante',
       pontos: 25,
       progresso: 0,
@@ -147,70 +150,71 @@ export function ConquistasPage() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <p className="text-sm text-yellow-100 mb-1">Desbloqueadas</p>
-                <p className="text-2xl font-bold">{desbloqueadas}/{totalConquistas}</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <p className="text-sm text-yellow-100 mb-1">Progresso</p>
-                <p className="text-2xl font-bold">{percentualCompleto}%</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <p className="text-sm text-yellow-100 mb-1">Pontos Ganhos</p>
-                <p className="text-2xl font-bold">{pontosGanhos}</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <p className="text-sm text-yellow-100 mb-1">PrÃ³xima</p>
-                <p className="text-2xl font-bold">
-                  {conquistas.find((c) => !c.desbloqueado)?.progresso || 0}%
-                </p>
-              </div>
+              <NipoCardStat
+                label="Desbloqueadas"
+                value={`${desbloqueadas}/${totalConquistas}`}
+                className="bg-white/10 backdrop-blur-sm border-white/20 text-white"
+              />
+              <NipoCardStat
+                label="Progresso"
+                value={`${percentualCompleto}%`}
+                className="bg-white/10 backdrop-blur-sm border-white/20 text-white"
+              />
+              <NipoCardStat
+                label="Pontos Ganhos"
+                value={pontosGanhos}
+                className="bg-white/10 backdrop-blur-sm border-white/20 text-white"
+              />
+              <NipoCardStat
+                label="PrÃ³xima"
+                value={`${conquistas.find((c) => !c.desbloqueado)?.progresso || 0}%`}
+                className="bg-white/10 backdrop-blur-sm border-white/20 text-white"
+              />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-          <div className="flex items-center gap-2 mb-4">
-            <Filter className="w-5 h-5 text-gray-600" />
-            <h2 className="text-lg font-semibold text-gray-900">Filtros</h2>
-          </div>
+        <NipoCard>
+          <NipoCardBody>
+            <div className="flex items-center gap-2 mb-4">
+              <Filter className="w-5 h-5 text-gray-600" />
+              <h2 className="text-lg font-semibold text-gray-900">Filtros</h2>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <NipoInput
                 type="text"
                 placeholder="Buscar conquista..."
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none"
+                leftIcon={<Search className="w-5 h-5" />}
               />
+
+              <select
+                value={filtroStatus}
+                onChange={(e) => setFiltroStatus(e.target.value as 'todas' | 'desbloqueadas' | 'bloqueadas')}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none cursor-pointer"
+              >
+                <option value="todas">Todas as conquistas</option>
+                <option value="desbloqueadas">Desbloqueadas</option>
+                <option value="bloqueadas">Bloqueadas</option>
+              </select>
+
+              <select
+                value={filtroCategoria}
+                onChange={(e) => setFiltroCategoria(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none cursor-pointer"
+              >
+                <option value="todas">Todas as categorias</option>
+                <option value="iniciante">Iniciante</option>
+                <option value="intermediario">IntermediÃ¡rio</option>
+                <option value="avancado">AvanÃ§ado</option>
+                <option value="social">Social</option>
+                <option value="especial">Especial</option>
+              </select>
             </div>
-
-            <select
-              value={filtroStatus}
-              onChange={(e) => setFiltroStatus(e.target.value as 'todas' | 'desbloqueadas' | 'bloqueadas')}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none cursor-pointer"
-            >
-              <option value="todas">Todas as conquistas</option>
-              <option value="desbloqueadas">Desbloqueadas</option>
-              <option value="bloqueadas">Bloqueadas</option>
-            </select>
-
-            <select
-              value={filtroCategoria}
-              onChange={(e) => setFiltroCategoria(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none cursor-pointer"
-            >
-              <option value="todas">Todas as categorias</option>
-              <option value="iniciante">Iniciante</option>
-              <option value="intermediario">IntermediÃ¡rio</option>
-              <option value="avancado">AvanÃ§ado</option>
-              <option value="social">Social</option>
-              <option value="especial">Especial</option>
-            </select>
-          </div>
-        </div>
+          </NipoCardBody>
+        </NipoCard>
 
         {conquistasFiltradas.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -219,11 +223,13 @@ export function ConquistasPage() {
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-sm p-12 text-center border border-gray-100">
-            <Trophy className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Nenhuma conquista encontrada</h3>
-            <p className="text-gray-600">Tente ajustar os filtros ou limpar a busca</p>
-          </div>
+          <NipoCard>
+            <NipoCardBody className="text-center py-12">
+              <Trophy className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Nenhuma conquista encontrada</h3>
+              <p className="text-gray-600">Tente ajustar os filtros ou limpar a busca</p>
+            </NipoCardBody>
+          </NipoCard>
         )}
       </div>
     </div>

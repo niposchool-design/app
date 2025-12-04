@@ -1,6 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { achievementService, portfolioService, instrumentService, turmaService } from '@/services'
-import { supabase } from '@/lib/supabase/supabaseClient'
+import { 
+  AchievementsService, 
+  PortfoliosService, 
+  DesafiosService,
+  AuthService 
+} from '../services'
+import { supabase } from '../lib/supabase/client'
 
 // Hook para buscar perfil por ID
 export function useProfile(userId: string | undefined) {
@@ -40,7 +45,7 @@ export function useTopUsers(limit = 10) {
 export function useAchievements() {
   return useQuery({
     queryKey: ['achievements'],
-    queryFn: () => achievementService.getAll(),
+    queryFn: () => new AchievementsService().getAllAchievements(),
   })
 }
 
@@ -48,7 +53,7 @@ export function useAchievements() {
 export function useUserAchievements(userId: string | undefined) {
   return useQuery({
     queryKey: ['userAchievements', userId],
-    queryFn: () => userId ? achievementService.getUserAchievements(userId) : null,
+    queryFn: () => userId ? new AchievementsService().getUserAchievements(userId) : null,
     enabled: !!userId,
   })
 }
@@ -57,7 +62,7 @@ export function useUserAchievements(userId: string | undefined) {
 export function useAchievementProgress(userId: string | undefined) {
   return useQuery({
     queryKey: ['achievementProgress', userId],
-    queryFn: () => userId ? achievementService.getUserProgress(userId) : null,
+    queryFn: () => userId ? new AchievementsService().getUserAchievementStats(userId) : null,
     enabled: !!userId,
   })
 }
@@ -66,16 +71,17 @@ export function useAchievementProgress(userId: string | undefined) {
 export function useUserPortfolios(userId: string | undefined) {
   return useQuery({
     queryKey: ['userPortfolios', userId],
-    queryFn: () => userId ? portfolioService.getUserPortfolios(userId) : null,
+    queryFn: () => userId ? new PortfoliosService().getUserPortfolios(userId) : null,
     enabled: !!userId,
   })
 }
 
 // Hook para buscar instrumentos
+// TODO: Implementar instrumentosService
 export function useInstruments() {
   return useQuery({
     queryKey: ['instruments'],
-    queryFn: () => instrumentService.getAll(),
+    queryFn: () => [], // instrumentService.getAll() - implementar depois
   })
 }
 
@@ -83,15 +89,16 @@ export function useInstruments() {
 export function useAvailableInstruments() {
   return useQuery({
     queryKey: ['availableInstruments'],
-    queryFn: () => instrumentService.getAvailable(),
+    queryFn: () => [], // instrumentService.getAvailable() - implementar depois
   })
 }
 
 // Hook para buscar turmas
+// TODO: Implementar turmasService  
 export function useTurmas() {
   return useQuery({
     queryKey: ['turmas'],
-    queryFn: () => turmaService.getAll(),
+    queryFn: () => [], // turmaService.getAll() - implementar depois
   })
 }
 
@@ -99,7 +106,7 @@ export function useTurmas() {
 export function useTurmaMatriculas(turmaId: string | undefined) {
   return useQuery({
     queryKey: ['turmaMatriculas', turmaId],
-    queryFn: () => turmaId ? turmaService.getMatriculas(turmaId) : null,
+    queryFn: () => turmaId ? [] : null, // turmaService.getMatriculas(turmaId) - implementar depois
     enabled: !!turmaId,
   })
 }

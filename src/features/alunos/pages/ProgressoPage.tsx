@@ -1,1 +1,1 @@
-export { ProgressoPage } from './_EmConstrucao'
+export { EmConstrucao as ProgressoPage } from './_EmConstrucao'

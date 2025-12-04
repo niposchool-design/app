@@ -1,0 +1,13 @@
+<svg width="120" height="30" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg">
+  <!-- Text only -->
+  <text x="0" y="20" font-family="Arial, sans-serif" font-size="18" font-weight="300" fill="#1F2937">
+    Nipo School
+  </text>
+  
+  <!-- Cherry blossom accent -->
+  <g transform="translate(100, 15)">
+    <circle cx="0" cy="0" r="2" fill="#FF6B9D" fill-opacity="0.6"/>
+    <circle cx="6" cy="-1" r="1.5" fill="#FF6B9D" fill-opacity="0.4"/>
+    <circle cx="4" cy="4" r="1.8" fill="#FF6B9D" fill-opacity="0.5"/>
+  </g>
+</svg>

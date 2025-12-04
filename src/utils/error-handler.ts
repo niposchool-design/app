@@ -1,101 +1,77 @@
-// src/utils/error-handler.ts
-// Sistema centralizado de tratamento de erros
-
-import { formatSupabaseError } from './supabase-helpers';
-
-export interface ErrorResponse {
-  message: string;
-  code?: string;
-  details?: any;
-}
-
 /**
- * Classe para erros customizados da aplicação
+ * 🚨 ERROR HANDLER - NIPO SCHOOL
+ * 
+ * Sistema de tratamento de erros conforme documento backend
  */
+
 export class AppError extends Error {
-  code: string;
-  details?: any;
+  public readonly statusCode: number
+  public readonly isOperational: boolean
 
-  constructor(message: string, code: string = 'APP_ERROR', details?: any) {
-    super(message);
-    this.name = 'AppError';
-    this.code = code;
-    this.details = details;
+  constructor(message: string, statusCode: number = 500, isOperational: boolean = true) {
+    super(message)
+    this.statusCode = statusCode
+    this.isOperational = isOperational
+
+    Error.captureStackTrace(this, this.constructor)
   }
 }
 
-/**
- * Handler global de erros
- */
-export const handleError = (error: unknown): ErrorResponse => {
-  console.error('❌ Error:', error);
-
-  // Erro customizado da aplicação
-  if (error instanceof AppError) {
-    return {
-      message: error.message,
-      code: error.code,
-      details: error.details
-    };
-  }
-
-  // Erro do Supabase
-  const supabaseMessage = formatSupabaseError(error);
-  if (supabaseMessage) {
-    return {
-      message: supabaseMessage,
-      code: 'SUPABASE_ERROR'
-    };
-  }
-
-  // Erro genérico
-  if (error instanceof Error) {
-    return {
-      message: error.message,
-      code: 'UNKNOWN_ERROR'
-    };
-  }
-
-  // Fallback
-  return {
-    message: 'Ocorreu um erro inesperado',
-    code: 'UNKNOWN_ERROR'
-  };
-};
-
-/**
- * Wrapper para funções assíncronas com tratamento de erro
- */
-export const withErrorHandling = <T>(
-  fn: () => Promise<T>
-): Promise<T> => {
-  return fn().catch((error) => {
-    const errorResponse = handleError(error);
-    throw new AppError(
-      errorResponse.message,
-      errorResponse.code || 'UNKNOWN_ERROR',
-      errorResponse.details
-    );
-  });
-};
-
-/**
- * Toast de erro (para ser usado com biblioteca de toast)
- */
-export const showErrorToast = (error: unknown) => {
-  const errorResponse = handleError(error);
-  console.error('🔴 Toast Error:', errorResponse.message);
-  // Aqui você pode integrar com react-toastify, sonner, etc
-  // toast.error(errorResponse.message);
-};
-
-/**
- * Erros comuns pré-definidos
- */
 export const CommonErrors = {
-  AUTH_REQUIRED: new AppError('Autenticação necessária', 'AUTH_REQUIRED'),
-  PERMISSION_DENIED: new AppError('Permissão negada', 'PERMISSION_DENIED'),
-  NOT_FOUND: new AppError('Recurso não encontrado', 'NOT_FOUND'),
-  INVALID_INPUT: new AppError('Dados inválidos', 'INVALID_INPUT'),
-  NETWORK_ERROR: new AppError('Erro de conexão', 'NETWORK_ERROR'),
-};
+  // Auth errors
+  UNAUTHORIZED: 'Usuário não autenticado',
+  FORBIDDEN: 'Acesso negado',
+  INVALID_CREDENTIALS: 'Credenciais inválidas',
+  AUTH_REQUIRED: 'Autenticação necessária',
+  
+  // User errors
+  USER_NOT_FOUND: 'Usuário não encontrado',
+  EMAIL_ALREADY_EXISTS: 'Email já está em uso',
+  
+  // Achievement errors
+  ACHIEVEMENT_NOT_FOUND: 'Conquista não encontrada',
+  ACHIEVEMENT_ALREADY_UNLOCKED: 'Conquista já desbloqueada',
+  
+  // Portfolio errors
+  PORTFOLIO_NOT_FOUND: 'Portfólio não encontrado',
+  PORTFOLIO_ACCESS_DENIED: 'Acesso ao portfólio negado',
+  
+  // Desafio errors
+  DESAFIO_NOT_FOUND: 'Desafio não encontrado',
+  DESAFIO_ALREADY_SUBMITTED: 'Desafio já submetido',
+  DESAFIO_INACTIVE: 'Desafio não está ativo',
+  
+  // Generic errors
+  INTERNAL_ERROR: 'Erro interno do servidor',
+  VALIDATION_ERROR: 'Erro de validação',
+  NOT_FOUND: 'Recurso não encontrado'
+}
+
+export function handleError(error: any): { message: string; code: string } {
+  console.error('Error occurred:', error)
+
+  // Supabase errors
+  if (error?.code) {
+    switch (error.code) {
+      case 'PGRST116':
+        return { message: CommonErrors.NOT_FOUND, code: 'NOT_FOUND' }
+      case '23505':
+        return { message: CommonErrors.EMAIL_ALREADY_EXISTS, code: 'DUPLICATE_KEY' }
+      case '42501':
+        return { message: CommonErrors.FORBIDDEN, code: 'FORBIDDEN' }
+      default:
+        return { message: error.message || CommonErrors.INTERNAL_ERROR, code: error.code }
+    }
+  }
+
+  // Custom AppError
+  if (error instanceof AppError) {
+    return { message: error.message, code: 'APP_ERROR' }
+  }
+
+  // Generic error
+  return { 
+    message: error?.message || CommonErrors.INTERNAL_ERROR, 
+    code: 'UNKNOWN_ERROR' 
+  }
+}

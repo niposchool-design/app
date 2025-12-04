@@ -2,7 +2,7 @@
 // Redirecionamento inteligente baseado no tipo de usuário
 
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../../features/auth/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { LoadingScreen } from '../shared/LoadingScreen';
 import { getDashboardRoute } from '../../lib/utils/navigation';
 

@@ -4,7 +4,7 @@
  * Funções para buscar dados da tabela 'instrumentos' (SCHEMA REAL)
  */
 
-import { supabase } from '../supabaseClient'
+import { supabase } from '../client'
 
 // ============================================
 // TYPES - BASEADOS NO SCHEMA REAL DO SUPABASE

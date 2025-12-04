@@ -10,7 +10,7 @@ import {
   updateDesafio,
   deactivateDesafio
 } from '../lib/supabase/queries/alpha-desafios';
-import { handleError, CommonErrors } from '../utils/error-handler';
+import { CommonErrors } from '../utils/error-handler'
 import { useCurrentUser } from './useAuth';
 
 /**

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Teste Banco Nipo School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen">
+    <div class="container mx-auto p-6">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">
+                🔍 Teste de Conexão - Nipo School
+            </h1>
+            <p class="text-gray-600">Validação completa do banco de dados Supabase</p>
+        </div>
+
+        <!-- Status Cards -->
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <!-- Conexão -->
+            <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">🔗 Conexão</h3>
+                    <div id="connection-status" class="w-4 h-4 rounded-full bg-gray-300"></div>
+                </div>
+                <p id="connection-message" class="text-sm text-gray-600">Testando...</p>
+            </div>
+
+            <!-- Tabelas -->
+            <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">📋 Tabelas</h3>
+                    <div id="tables-status" class="w-4 h-4 rounded-full bg-gray-300"></div>
+                </div>
+                <p id="tables-message" class="text-sm text-gray-600">Testando...</p>
+            </div>
+
+            <!-- Dados -->
+            <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">💾 Dados</h3>
+                    <div id="data-status" class="w-4 h-4 rounded-full bg-gray-300"></div>
+                </div>
+                <p id="data-message" class="text-sm text-gray-600">Testando...</p>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">🎛️ Controles</h3>
+            <div class="flex flex-wrap gap-4">
+                <button onclick="testConnection()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors">
+                    Testar Conexão
+                </button>
+                <button onclick="testTables()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+                    Verificar Tabelas
+                </button>
+                <button onclick="populateData()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
+                    Popular Dados
+                </button>
+                <button onclick="testInstruments()" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg transition-colors">
+                    Testar Instrumentos
+                </button>
+                <button onclick="runFullTest()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors">
+                    Teste Completo
+                </button>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">📊 Resultados</h3>
+            <div id="results" class="bg-gray-50 p-4 rounded-lg">
+                <p class="text-gray-600">Clique em um botão para executar os testes...</p>
+            </div>
+        </div>
+
+        <!-- SQL Schema Info -->
+        <div class="bg-white rounded-lg shadow-md p-6 mt-8">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">🗄️ Informações do Schema</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-medium text-gray-900 mb-2">Tabelas Principais</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• profiles (Usuários)</li>
+                        <li>• categorias_instrumentos</li>
+                        <li>• biblioteca_instrumentos</li>
+                        <li>• turmas</li>
+                        <li>• matriculas</li>
+                        <li>• presencas</li>
+                        <li>• conquistas</li>
+                        <li>• portfolios</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-900 mb-2">Configuração</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• URL: https://eehidnwlwrzqzgytbfsd.supabase.co</li>
+                        <li>• RLS: Habilitado</li>
+                        <li>• Auth: Configurado</li>
+                        <li>• Real-time: Disponível</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuração do Supabase
+        const SUPABASE_URL = 'https://eehidnwlwrzqzgytbfsd.supabase.co'
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVlaGlkbndsd3J6cXpneXRiZnNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgyMzA1MjQsImV4cCI6MjA2MzgwNjUyNH0.SawTk_G0H8CYFEQ7h62Wsv35uNqZz0Q5rsLNT5wCcUM'
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+        // Função para atualizar status
+        function updateStatus(elementId, success, message) {
+            const statusEl = document.getElementById(elementId + '-status')
+            const messageEl = document.getElementById(elementId + '-message')
+            
+            statusEl.className = `w-4 h-4 rounded-full ${success ? 'bg-green-500' : 'bg-red-500'}`
+            messageEl.textContent = message
+            messageEl.className = `text-sm ${success ? 'text-green-600' : 'text-red-600'}`
+        }
+
+        // Função para log de resultados
+        function logResult(title, result) {
+            const resultsEl = document.getElementById('results')
+            const timestamp = new Date().toLocaleTimeString()
+            
+            resultsEl.innerHTML += `
+                <div class="border-b border-gray-200 pb-3 mb-3">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-medium text-gray-900">${title}</h4>
+                        <span class="text-xs text-gray-500">${timestamp}</span>
+                    </div>
+                    <pre class="text-xs text-gray-700 bg-white p-2 rounded overflow-auto max-h-32">${JSON.stringify(result, null, 2)}</pre>
+                </div>
+            `
+            resultsEl.scrollTop = resultsEl.scrollHeight
+        }
+
+        // Teste de conexão básica
+        async function testConnection() {
+            try {
+                updateStatus('connection', false, 'Testando conexão...')
+                
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .select('count')
+                    .limit(1)
+
+                if (error) {
+                    updateStatus('connection', false, `Erro: ${error.message}`)
+                    logResult('❌ Teste de Conexão', { error: error.message })
+                } else {
+                    updateStatus('connection', true, 'Conexão estabelecida!')
+                    logResult('✅ Teste de Conexão', { success: true, data })
+                }
+            } catch (err) {
+                updateStatus('connection', false, `Falha: ${err.message}`)
+                logResult('❌ Teste de Conexão', { error: err.message })
+            }
+        }
+
+        // Teste de tabelas
+        async function testTables() {
+            try {
+                updateStatus('tables', false, 'Verificando tabelas...')
+                
+                const tables = [
+                    'profiles',
+                    'categorias_instrumentos', 
+                    'biblioteca_instrumentos',
+                    'turmas',
+                    'matriculas',
+                    'presencas'
+                ]
+
+                const results = {}
+                let allSuccess = true
+
+                for (const table of tables) {
+                    try {
+                        const { count, error } = await supabase
+                            .from(table)
+                            .select('*', { count: 'exact', head: true })
+
+                        if (error) {
+                            results[table] = { error: error.message }
+                            allSuccess = false
+                        } else {
+                            results[table] = { count: count || 0 }
+                        }
+                    } catch (err) {
+                        results[table] = { error: err.message }
+                        allSuccess = false
+                    }
+                }
+
+                updateStatus('tables', allSuccess, allSuccess ? 'Todas as tabelas OK' : 'Algumas tabelas com erro')
+                logResult(allSuccess ? '✅ Teste de Tabelas' : '⚠️ Teste de Tabelas', results)
+
+            } catch (err) {
+                updateStatus('tables', false, `Falha: ${err.message}`)
+                logResult('❌ Teste de Tabelas', { error: err.message })
+            }
+        }
+
+        // Popular dados de teste
+        async function populateData() {
+            try {
+                updateStatus('data', false, 'Populando dados...')
+                
+                // Criar categorias de instrumentos
+                const { data: categorias, error: categoriasError } = await supabase
+                    .from('categorias_instrumentos')
+                    .upsert([
+                        {
+                            nome: 'Cordas',
+                            descricao: 'Instrumentos de corda tradicionais e modernos',
+                            icone: 'Music',
+                            ordem_exibicao: 1
+                        },
+                        {
+                            nome: 'Percussão',
+                            descricao: 'Instrumentos de percussão japoneses e ocidentais',
+                            icone: 'Drum',
+                            ordem_exibicao: 2
+                        },
+                        {
+                            nome: 'Sopro',
+                            descricao: 'Instrumentos de sopro e flautas',
+                            icone: 'Wind',
+                            ordem_exibicao: 3
+                        }
+                    ], { 
+                        onConflict: 'nome',
+                        ignoreDuplicates: false 
+                    })
+                    .select()
+
+                if (categoriasError) {
+                    updateStatus('data', false, `Erro: ${categoriasError.message}`)
+                    logResult('❌ Popular Dados', { error: categoriasError.message })
+                } else {
+                    updateStatus('data', true, `${categorias.length} categorias criadas`)
+                    logResult('✅ Popular Dados', { categorias })
+                }
+
+            } catch (err) {
+                updateStatus('data', false, `Falha: ${err.message}`)
+                logResult('❌ Popular Dados', { error: err.message })
+            }
+        }
+
+        // Teste específico de instrumentos
+        async function testInstruments() {
+            try {
+                // Buscar categorias
+                const { data: categorias, error: categoriasError } = await supabase
+                    .from('categorias_instrumentos')
+                    .select('*')
+
+                if (categoriasError) {
+                    logResult('❌ Teste Instrumentos', { error: categoriasError.message })
+                    return
+                }
+
+                // Buscar instrumentos
+                const { data: instrumentos, error: instrumentosError } = await supabase
+                    .from('biblioteca_instrumentos')
+                    .select(`
+                        *,
+                        categoria:categorias_instrumentos(nome, icone)
+                    `)
+                    .limit(10)
+
+                const result = {
+                    categorias: {
+                        count: categorias?.length || 0,
+                        data: categorias
+                    },
+                    instrumentos: {
+                        count: instrumentos?.length || 0,
+                        error: instrumentosError?.message,
+                        data: instrumentos
+                    }
+                }
+
+                logResult('🎵 Teste Instrumentos', result)
+
+            } catch (err) {
+                logResult('❌ Teste Instrumentos', { error: err.message })
+            }
+        }
+
+        // Teste completo
+        async function runFullTest() {
+            console.log('🚀 Iniciando teste completo...')
+            
+            // Limpar resultados
+            document.getElementById('results').innerHTML = '<p class="text-gray-600">Executando teste completo...</p>'
+            
+            await testConnection()
+            await new Promise(resolve => setTimeout(resolve, 1000))
+            
+            await testTables()
+            await new Promise(resolve => setTimeout(resolve, 1000))
+            
+            await populateData()
+            await new Promise(resolve => setTimeout(resolve, 1000))
+            
+            await testInstruments()
+            
+            logResult('🎊 Teste Completo', { 
+                status: 'Finalizado',
+                timestamp: new Date().toISOString()
+            })
+        }
+
+        // Executar teste inicial
+        window.addEventListener('load', () => {
+            console.log('🌸 Nipo School - Sistema de teste carregado')
+            testConnection()
+        })
+    </script>
+</body>
+</html>

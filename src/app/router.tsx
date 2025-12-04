@@ -1,48 +1,46 @@
-/**
- * 🛣️ ROUTER - Configuração de Rotas da Aplicação
- * 
- * Todas as 46+ rotas configuradas com:
- * - Guards de autenticação (ProtectedRoute)
- * - Redirect inteligente por role (SmartRedirect)
- * - Layouts (PublicLayout, ProtectedLayout)
- * - Error boundaries
- */
-
 import React from 'react'
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { ROUTES } from '../lib/constants/routes'
-import { useAuth } from '../features/auth/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 
 // Layouts
 import { PublicLayout } from '../components/layout/PublicLayout'
 import { ProtectedLayout } from '../components/layout/ProtectedLayout'
 
 // Public Pages
-import LandingPage from '../pages/LandingPage'
-import { SobrePage } from '../pages/public/SobrePage'
-import { ContatoPage } from '../pages/public/ContatoPage'
-import { NotFoundPage } from '../pages/public/NotFoundPage'
-import { ForbiddenPage } from '../pages/public/ForbiddenPage'
+import NavigationPage from '../features/shared/pages/NavigationPage'
+import { NotFoundPage } from '../features/shared/pages/NotFoundPage'
+import ComponentShowcase from '../features/shared/pages/ComponentShowcase' // 🎌 NOVO
 
 // Auth Pages
-import { LoginPage } from '../pages/auth/LoginPage'
-import { SignUpPage } from '../pages/auth/SignUpPage'
+import { LoginPage } from '../features/shared/pages/auth/LoginPage'
+import { SignUpPage } from '../features/shared/pages/auth/SignUpPage'
+import { PasswordResetPage } from '../features/shared/pages/auth/PasswordResetPage'
+import { RoleBasedRedirect } from '../components/auth/RoleBasedRedirect'
+import { RoleProtectedRoute } from '../components/auth/RoleProtectedRoute' // 🛡️ NOVO
+
+// Admin Pages
+import DatabaseAdminPage from '../features/admin/pages/DatabaseAdminPage'
+import SystemDiagnosticPage from '../features/admin/pages/SystemDiagnosticPage'
+import DebugAuthPage from '../features/shared/pages/debug/DebugAuthPage'
+
+// Instrumentos Pages
+import InstrumentosPage from '../features/shared/pages/instrumentos/InstrumentosPage'
+
+// Dashboard Pages
+import SystemDashboardPage from '../features/shared/pages/dashboard/SystemDashboardPage'
 
 // Dashboards
 import { AlunoDashboard } from '../features/alunos/pages/AlunoDashboard'
 import { ProfessorDashboard } from '../features/professores/pages/ProfessorDashboard'
 import { AdminDashboard } from '../features/admin/pages/AdminDashboard'
 
-// Páginas de Aluno (named exports)
+// Páginas de Aluno
 import { ConquistasPage } from '../features/alunos/pages/ConquistasPage'
 import { ConquistaDetailPage } from '../features/alunos/pages/ConquistaDetailPage'
 import { PortfolioListPage } from '../features/alunos/pages/PortfolioListPage'
 import { DesafiosListPage } from '../features/alunos/pages/DesafiosListPage'
-import { BibliotecaInstrumentosPage } from '../features/alunos/pages/BibliotecaInstrumentosPage'
-import { InstrumentoDetalhadoPage } from '../features/alunos/pages/InstrumentoDetalhadoPage'
-import { MeuInstrumentoPage } from '../features/alunos/pages/MeuInstrumentoPage'
-import { VideosPage } from '../features/alunos/pages/VideosPage'
-import { InstrumentosPage } from '../features/alunos/pages/InstrumentosPage'
+// import { InstrumentosPage } from '../features/alunos/pages/InstrumentosPage' // REMOVIDO - duplicado
 import { InstrumentoDetailPage } from '../features/alunos/pages/InstrumentoDetailPage'
 import { MinhasAulasPage } from '../features/alunos/pages/MinhasAulasPage'
 import { PerfilPage } from '../features/alunos/pages/PerfilPage'
@@ -51,394 +49,253 @@ import { PortfolioDetailPage } from '../features/alunos/pages/PortfolioDetailPag
 import { PortfolioCreatePage } from '../features/alunos/pages/PortfolioCreatePage'
 import { DesafioDetailPage } from '../features/alunos/pages/DesafioDetailPage'
 
-// História da Música
-import HistoriaHomePage from '../features/historia-musica/pages/HistoriaHomePage'
-import PeriodosPage from '../features/historia-musica/pages/PeriodosPage'
-import CompositoresPage from '../features/historia-musica/pages/CompositoresPage'
-import ObrasPage from '../features/historia-musica/pages/ObrasPage'
-import TimelinePage from '../features/historia-musica/pages/TimelinePage'
-import {
-  GenerosMusicaisPage,
-  TeoriaMusicPage,
-} from '../features/historia-musica/pages/_EmConstrucao'
+// Páginas Gerais
+import { ConfiguracoesPage } from '../features/shared/pages/ConfiguracoesPage'
+import { NotificacoesPage } from '../features/shared/pages/NotificacoesPage'
+import { AjudaPage } from '../features/shared/pages/AjudaPage'
+import { TestePage } from '../features/shared/pages/TestePage' // 🧪 NOVA PÁGINA DE TESTE
 
-/**
- * PROTECTED ROUTE - Guard de autenticação
- * Verifica se usuário está autenticado antes de permitir acesso
- */
 interface ProtectedRouteProps {
   children: React.ReactNode
-  requiredRoles?: string[]
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
-  children, 
-  requiredRoles 
-}) => {
-  const { isAuthenticated, user, isLoading } = useAuth()
+function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const { user, loading } = useAuth()
 
-  // Mostrar loading enquanto carrega usuário
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Carregando...</p>
-        </div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     )
   }
 
-  // Se não autenticado, redireciona para login
-  if (!isAuthenticated) {
+  if (!user) {
     return <Navigate to={ROUTES.LOGIN} replace />
   }
 
-  // Se autenticado mas sem permissão, redireciona para forbidden
-  if (requiredRoles && user && !requiredRoles.includes(user.role)) {
-    return <Navigate to={ROUTES.FORBIDDEN} replace />
-  }
-
-  // Se tudo OK, renderiza o conteúdo
   return <>{children}</>
 }
 
-/**
- * SMART REDIRECT - Redireciona para dashboard correto baseado no role
- */
-const SmartRedirect: React.FC = () => {
-  const { isAuthenticated, user, isLoading } = useAuth()
-
-  // Mostrar loading enquanto carrega usuário
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Carregando...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (!isAuthenticated || !user) {
-    return <Navigate to={ROUTES.LOGIN} replace />
-  }
-
-  // Redireciona baseado no role
-  switch (user.role) {
-    case 'aluno':
-      return <Navigate to={ROUTES.ALUNO.INDEX} replace />
-    case 'professor':
-      return <Navigate to={ROUTES.PROFESSOR.INDEX} replace />
-    case 'admin':
-      return <Navigate to={ROUTES.ADMIN.INDEX} replace />
-    case 'pastor':
-      // Pastor tem as mesmas permissões que professor
-      return <Navigate to={ROUTES.PROFESSOR.INDEX} replace />
-    default:
-      return <Navigate to={ROUTES.HOME} replace />
-  }
-}
-
-/**
- * ROUTER CONFIGURATION
- */
 export const router = createBrowserRouter([
-  // ========================================
-  // ROTAS PÚBLICAS (com PublicLayout)
-  // ========================================
   {
     element: <PublicLayout />,
     children: [
       {
         path: ROUTES.HOME,
-        element: <LandingPage />,
+        element: <NavigationPage />,
       },
       {
-        path: ROUTES.SOBRE,
-        element: <SobrePage />,
+        path: '/showcase', // 🎌 NOVA ROTA
+        element: <ComponentShowcase />,
       },
       {
-        path: ROUTES.CONTATO,
-        element: <ContatoPage />,
+        path: '/teste', // 🧪 NOVA ROTA DE TESTE
+        element: <TestePage />,
+      },
+      {
+        path: ROUTES.LOGIN,
+        element: <LoginPage />,
+      },
+      {
+        path: ROUTES.SIGNUP,
+        element: <SignUpPage />,
+      },
+      {
+        path: ROUTES.PASSWORD_RESET,
+        element: <PasswordResetPage />,
       },
     ],
   },
-
-  // ========================================
-  // AUTH ROUTES (sem layout - full screen)
-  // ========================================
   {
-    path: ROUTES.LOGIN,
-    element: <LoginPage />,
-  },
-  {
-    path: ROUTES.SIGNUP,
-    element: <SignUpPage />,
-  },
-
-  // ========================================
-  // ROTAS PROTEGIDAS (com ProtectedLayout)
-  // ========================================
-  {
-    path: ROUTES.APP,
-    element: (
-      <ProtectedRoute>
-        <ProtectedLayout />
-      </ProtectedRoute>
-    ),
+    element: <ProtectedLayout />,
     children: [
-      // Redirect /app -> dashboard correto
       {
-        index: true,
-        element: <SmartRedirect />,
+        path: '/dashboard',
+        element: (
+          <ProtectedRoute>
+            <RoleBasedRedirect />
+          </ProtectedRoute>
+        ),
       },
-
-      // ========================================
-      // ALUNO ROUTES
-      // ========================================
       {
-        path: 'aluno',
-        children: [
-          {
-            index: true,
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <AlunoDashboard />
-              </ProtectedRoute>
-            ),
-          },
-          // Perfil do Aluno
-          {
-            path: 'perfil',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <PerfilPage />
-              </ProtectedRoute>
-            ),
-          },
-          // Conquistas e Badges
-          {
-            path: 'conquistas',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <ConquistasPage />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: 'conquistas/:id',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <ConquistaDetailPage />
-              </ProtectedRoute>
-            ),
-          },
-          // Portfólio
-          {
-            path: 'portfolio',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <PortfolioListPage />
-              </ProtectedRoute>
-            ),
-          },
-          // Desafios
-          {
-            path: 'desafios',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <DesafiosListPage />
-              </ProtectedRoute>
-            ),
-          },
-          // Instrumentos
-          {
-            path: 'instrumentos',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <BibliotecaInstrumentosPage />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: 'instrumentos/:id',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <InstrumentoDetalhadoPage />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: 'instrumentos/meu-instrumento',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <MeuInstrumentoPage />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: 'instrumentos/:slug',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <InstrumentoDetailPage />
-              </ProtectedRoute>
-            ),
-          },
-          // Vídeo-aulas
-          {
-            path: 'videos',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <VideosPage />
-              </ProtectedRoute>
-            ),
-          },
-          // Minhas Aulas
-          {
-            path: 'aulas',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <MinhasAulasPage />
-              </ProtectedRoute>
-            ),
-          },
-        ],
+        path: '/alunos',
+        element: (
+          <RoleProtectedRoute allowedRoles={['aluno']}>
+            <AlunoDashboard />
+          </RoleProtectedRoute>
+        ),
       },
-
-      // ========================================
-      // HISTÓRIA DA MÚSICA ROUTES
-      // ========================================
       {
-        path: 'historia',
-        children: [
-          // Homepage - Visão Geral
-          {
-            index: true,
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <HistoriaHomePage />
-              </ProtectedRoute>
-            ),
-          },
-          // Períodos Musicais
-          {
-            path: 'periodos',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <PeriodosPage />
-              </ProtectedRoute>
-            ),
-          },
-          // Compositores
-          {
-            path: 'compositores',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <CompositoresPage />
-              </ProtectedRoute>
-            ),
-          },
-          // Obras Musicais
-          {
-            path: 'obras',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <ObrasPage />
-              </ProtectedRoute>
-            ),
-          },
-          // Timeline Histórica
-          {
-            path: 'timeline',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <TimelinePage />
-              </ProtectedRoute>
-            ),
-          },
-          // Gêneros Musicais
-          {
-            path: 'generos',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <GenerosMusicaisPage />
-              </ProtectedRoute>
-            ),
-          },
-          // Teoria Musical
-          {
-            path: 'teoria',
-            element: (
-              <ProtectedRoute requiredRoles={['aluno']}>
-                <TeoriaMusicPage />
-              </ProtectedRoute>
-            ),
-          },
-        ],
+        path: '/alunos/conquistas',
+        element: (
+          <RoleProtectedRoute allowedRoles={['aluno']}>
+            <ConquistasPage />
+          </RoleProtectedRoute>
+        ),
       },
-
-      // ========================================
-      // PROFESSOR ROUTES
-      // ========================================
       {
-        path: 'professor',
-        children: [
-          {
-            index: true,
-            element: (
-              <ProtectedRoute requiredRoles={['professor']}>
-                <ProfessorDashboard />
-              </ProtectedRoute>
-            ),
-          },
-          // TODO: Adicionar mais rotas de professor
-          // { path: 'turmas', element: <Classes /> },
-          // { path: 'submissoes', element: <Submissions /> },
-          // etc...
-        ],
+        path: '/alunos/conquistas/:id',
+        element: (
+          <RoleProtectedRoute allowedRoles={['aluno']}>
+            <ConquistaDetailPage />
+          </RoleProtectedRoute>
+        ),
       },
-
-      // ========================================
-      // ADMIN ROUTES
-      // ========================================
       {
-        path: 'admin',
-        children: [
-          {
-            index: true,
-            element: (
-              <ProtectedRoute requiredRoles={['admin']}>
-                <AdminDashboard />
-              </ProtectedRoute>
-            ),
-          },
-          // TODO: Adicionar mais rotas de admin
-          // { path: 'usuarios', element: <Users /> },
-          // { path: 'instrumentos', element: <Instruments /> },
-          // etc...
-        ],
+        path: '/alunos/portfolio',
+        element: (
+          <RoleProtectedRoute allowedRoles={['aluno']}>
+            <PortfolioListPage />
+          </RoleProtectedRoute>
+        ),
       },
-
-      // ========================================
-      // SHARED PROTECTED ROUTES
-      // ========================================
-      // { path: 'configuracoes', element: <Settings /> },
-      // { path: 'notificacoes', element: <Notifications /> },
-      // { path: 'ajuda', element: <Help /> },
+      {
+        path: '/alunos/portfolio/criar',
+        element: (
+          <RoleProtectedRoute allowedRoles={['aluno']}>
+            <PortfolioCreatePage />
+          </RoleProtectedRoute>
+        ),
+      },
+      {
+        path: '/alunos/portfolio/:id',
+        element: (
+          <RoleProtectedRoute allowedRoles={['aluno']}>
+            <PortfolioDetailPage />
+          </RoleProtectedRoute>
+        ),
+      },
+      {
+        path: '/alunos/desafios',
+        element: (
+          <RoleProtectedRoute allowedRoles={['aluno']}>
+            <DesafiosListPage />
+          </RoleProtectedRoute>
+        ),
+      },
+      {
+        path: '/alunos/desafios/:id',
+        element: (
+          <RoleProtectedRoute allowedRoles={['aluno']}>
+            <DesafioDetailPage />
+          </RoleProtectedRoute>
+        ),
+      },
+      {
+        path: '/alunos/instrumentos',
+        element: (
+          <RoleProtectedRoute allowedRoles={['aluno']}>
+            <InstrumentosPage />
+          </RoleProtectedRoute>
+        ),
+      },
+      {
+        path: '/alunos/instrumentos/:id',
+        element: (
+          <RoleProtectedRoute allowedRoles={['aluno']}>
+            <InstrumentoDetailPage />
+          </RoleProtectedRoute>
+        ),
+      },
+      {
+        path: '/alunos/aulas',
+        element: (
+          <RoleProtectedRoute allowedRoles={['aluno']}>
+            <MinhasAulasPage />
+          </RoleProtectedRoute>
+        ),
+      },
+      {
+        path: '/alunos/progresso',
+        element: (
+          <RoleProtectedRoute allowedRoles={['aluno']}>
+            <ProgressoPage />
+          </RoleProtectedRoute>
+        ),
+      },
+      {
+        path: '/alunos/perfil',
+        element: (
+          <RoleProtectedRoute allowedRoles={['aluno']}>
+            <PerfilPage />
+          </RoleProtectedRoute>
+        ),
+      },
+      {
+        path: '/professores',
+        element: (
+          <RoleProtectedRoute allowedRoles={['professor']}>
+            <ProfessorDashboard />
+          </RoleProtectedRoute>
+        ),
+      },
+      {
+        path: '/admin',
+        element: (
+          <RoleProtectedRoute allowedRoles={['admin']}>
+            <AdminDashboard />
+          </RoleProtectedRoute>
+        ),
+      },
+      {
+        path: '/admin/database',
+        element: (
+          <RoleProtectedRoute allowedRoles={['admin']}>
+            <DatabaseAdminPage />
+          </RoleProtectedRoute>
+        ),
+      },
+      {
+        path: '/admin/diagnostic',
+        element: (
+          <RoleProtectedRoute allowedRoles={['admin']}>
+            <SystemDiagnosticPage />
+          </RoleProtectedRoute>
+        ),
+      },
+      {
+        path: '/debug/auth',
+        element: <DebugAuthPage />,
+      },
+      {
+        path: '/instrumentos',
+        element: <InstrumentosPage />,
+      },
+      {
+        path: '/system',
+        element: <SystemDashboardPage />,
+      },
+      {
+        path: '/configuracoes',
+        element: (
+          <ProtectedRoute>
+            <ConfiguracoesPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/notificacoes',
+        element: (
+          <ProtectedRoute>
+            <NotificacoesPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/ajuda',
+        element: (
+          <ProtectedRoute>
+            <AjudaPage />
+          </ProtectedRoute>
+        ),
+      },
     ],
-  },
-
-  // ========================================
-  // ERROR PAGES
-  // ========================================
-  {
-    path: ROUTES.FORBIDDEN,
-    element: <ForbiddenPage />,
   },
   {
     path: '*',
     element: <NotFoundPage />,
   },
 ])
+
+export default router

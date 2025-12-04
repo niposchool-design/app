@@ -1,458 +1,254 @@
-/**
- * 🎓 DASHBOARD DO ALUNO - VERSÃO COMPLETA E PROFISSIONAL
- * 
- * Features:
- * - Stats cards com dados reais
- * - Gráfico de progresso semanal
- * - Próximas aulas
- * - Conquistas recentes
- * - Desafios em andamento
- * - Atividades recentes
- */
+// 🎌 ALUNO DASHBOARD - Sistema Oriental Unificado
+// Implementação gamificada baseada na documentação oficial
 
-import React from 'react'
-import {
-  Trophy,
-  BookOpen,
-  Award,
-  TrendingUp,
-  Loader2,
+import React from 'react';
+import { 
+  BookOpen, 
+  Music, 
+  Trophy, 
   Calendar,
-  Clock,
-  Target,
   Star,
-  CheckCircle,
-  AlertCircle,
-  ArrowRight,
-  Flame
-} from 'lucide-react'
-import { Link } from 'react-router-dom'
-import { useDashboard } from '../hooks/useDashboard'
-import { useAuth } from '../../auth/AuthContext'
+  Target,
+  Clock,
+  Users,
+  TrendingUp,
+  Award,
+  Zap
+} from 'lucide-react';
+import { useAuth } from '../../../contexts/AuthContext';
+import { OrientalContainer } from '../../../components/oriental/OrientalContainer';
+import { NipoCard, NipoGrid, NipoGamifiedCard, NipoStatCard } from '../../../components/ui/NipoCard';
+import { GAMIFICATION } from '../../../lib/constants/design';
+
+// Mock data baseado no sistema de gamificação
+const mockStudentData = {
+  name: 'Akira Tanaka',
+  level: 3,
+  xp: 450,
+  nextLevelXp: 700,
+  weeklyGoal: 5,
+  completedLessons: 3,
+  instruments: ['Piano', 'Violino'],
+  upcomingClass: 'Piano Básico - Hoje às 14:00',
+  achievements: ['Primeira Semana', 'Aluno Dedicado', 'Prática Diária'],
+  stats: {
+    totalLessons: 24,
+    practiceHours: 18,
+    classmates: 12,
+    assignments: 8
+  }
+};
 
 export const AlunoDashboard: React.FC = () => {
-  const { user } = useAuth()
-  const { dashboard, isLoading, error } = useDashboard()
+  const { user } = useAuth();
+  const { name, level, xp, nextLevelXp, weeklyGoal, completedLessons } = mockStudentData;
+  const progress = (xp / nextLevelXp) * 100;
+  const levelTitle = GAMIFICATION.levels.titles[level];
+  const userName = user?.email?.split('@')[0] || name;
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-indigo-600 mx-auto mb-4" />
-          <p className="text-gray-600">Carregando seu progresso...</p>
-        </div>
-      </div>
-    )
-  }
+  return (
+    <OrientalContainer 
+      role="student"
+      showPhilosophy
+      title="Centro de Estudos"
+      subtitle={`こんにちは, ${userName}! 🎌`}
+    >
+      <NipoGrid role="student">
+        {/* Card Principal - Level e XP */}
+        <NipoGamifiedCard
+          role="student"
+          title={`Nível ${level} - ${levelTitle.pt}`}
+          value={`${xp} XP`}
+          subtitle={`${levelTitle.jp} • Próximo nível: ${nextLevelXp} XP`}
+          icon={<Star className="w-16 h-16 text-yellow-500" />}
+        >
+          <div className="space-y-4">
+            {/* Progress Bar */}
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Progresso para Nível {level + 1}</span>
+                <span>{Math.round(progress)}%</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-3">
+                <div 
+                  className="bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full transition-all duration-500"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
 
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md">
-          <div className="flex items-center gap-3 mb-4">
-            <AlertCircle className="w-8 h-8 text-red-500" />
-            <h2 className="text-xl font-bold text-gray-900">Erro ao carregar</h2>
+            {/* Meta Semanal */}
+            <div className="bg-green-50 rounded-lg p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-green-700">Meta Semanal</p>
+                  <p className="text-lg font-semibold text-green-800">
+                    {completedLessons}/{weeklyGoal} aulas
+                  </p>
+                </div>
+                <Target className="w-8 h-8 text-green-600" />
+              </div>
+            </div>
+
+            {/* XP Boost */}
+            <div className="bg-yellow-50 rounded-lg p-3 text-center">
+              <Zap className="w-6 h-6 text-yellow-600 mx-auto mb-1" />
+              <p className="text-xs text-yellow-700">Complete mais uma aula para +25 XP!</p>
+            </div>
           </div>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="w-full bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
-          >
-            Tentar novamente
+        </NipoGamifiedCard>
+
+        {/* Próximas Aulas */}
+        <NipoCard
+          role="student"
+          title="Próximas Aulas"
+          subtitle="Sua jornada musical continua"
+          icon={<Calendar className="w-16 h-16 text-blue-500" />}
+        >
+          <div className="space-y-3">
+            <div className="bg-blue-50 rounded-lg p-3">
+              <p className="font-medium text-blue-800">Piano Básico</p>
+              <div className="flex items-center gap-2 text-sm text-blue-600 mt-1">
+                <Clock className="w-4 h-4" />
+                <span>Hoje às 14:00</span>
+              </div>
+            </div>
+            
+            <div className="bg-purple-50 rounded-lg p-3">
+              <p className="font-medium text-purple-800">Teoria Musical</p>
+              <div className="flex items-center gap-2 text-sm text-purple-600 mt-1">
+                <Clock className="w-4 h-4" />
+                <span>Amanhã às 10:00</span>
+              </div>
+            </div>
+            
+            <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors text-sm">
+              Ver Cronograma Completo
+            </button>
+          </div>
+        </NipoCard>
+
+        {/* Instrumentos */}
+        <NipoCard
+          role="student"
+          title="Meus Instrumentos"
+          icon={<Music className="w-16 h-16 text-purple-500" />}
+        >
+          <div className="space-y-3">
+            {mockStudentData.instruments.map((instrument, index) => (
+              <div key={index} className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
+                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                  <Music className="w-5 h-5 text-purple-600" />
+                </div>
+                <div className="flex-1">
+                  <span className="text-purple-700 font-medium">{instrument}</span>
+                  <div className="text-xs text-purple-600">Nível {index + 2}</div>
+                </div>
+                <TrendingUp className="w-4 h-4 text-purple-500" />
+              </div>
+            ))}
+            
+            <button className="w-full mt-3 text-purple-600 border border-purple-200 py-2 px-4 rounded-lg hover:bg-purple-50 transition-colors text-sm">
+              + Adicionar Instrumento
+            </button>
+          </div>
+        </NipoCard>
+
+        {/* Conquistas */}
+        <NipoCard
+          role="student"
+          title="Conquistas Recentes"
+          icon={<Trophy className="w-16 h-16 text-yellow-500" />}
+        >
+          <div className="space-y-2">
+            {mockStudentData.achievements.slice(0, 3).map((achievement, index) => (
+              <div key={index} className="flex items-center gap-3 p-2 bg-yellow-50 rounded-lg">
+                <Award className="w-6 h-6 text-yellow-600" />
+                <span className="text-yellow-700 font-medium text-sm">{achievement}</span>
+              </div>
+            ))}
+            
+            <div className="text-center mt-4">
+              <button className="text-yellow-600 hover:text-yellow-700 text-sm">
+                Ver Todas ({mockStudentData.achievements.length})
+              </button>
+            </div>
+          </div>
+        </NipoCard>
+      </NipoGrid>
+
+      {/* Stats Row */}
+      <div className="mt-8">
+        <h3 className="text-xl font-semibold text-gray-900 mb-4">📊 Suas Estatísticas</h3>
+        
+        <NipoGrid role="student">
+          <NipoStatCard
+            role="student"
+            title="Aulas Concluídas"
+            value={mockStudentData.stats.totalLessons}
+            subtitle="Total de aulas"
+            icon={<BookOpen className="w-12 h-12 text-blue-500" />}
+          />
+          
+          <NipoStatCard
+            role="student"
+            title="Horas de Prática"
+            value={`${mockStudentData.stats.practiceHours}h`}
+            subtitle="Tempo praticando"
+            icon={<Clock className="w-12 h-12 text-green-500" />}
+          />
+          
+          <NipoStatCard
+            role="student"
+            title="Colegas de Turma"
+            value={mockStudentData.stats.classmates}
+            subtitle="Amigos musicais"
+            icon={<Users className="w-12 h-12 text-purple-500" />}
+          />
+          
+          <NipoStatCard
+            role="student"
+            title="Atividades"
+            value={mockStudentData.stats.assignments}
+            subtitle="Tarefas completas"
+            icon={<Target className="w-12 h-12 text-yellow-500" />}
+          />
+        </NipoGrid>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="mt-8">
+        <h3 className="text-xl font-semibold text-gray-900 mb-4">⚡ Ações Rápidas</h3>
+        
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <button className="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center group hover:scale-105">
+            <BookOpen className="w-8 h-8 text-blue-500 mx-auto mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-sm font-medium text-gray-700">Minhas Aulas</span>
+          </button>
+          
+          <button className="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center group hover:scale-105">
+            <Music className="w-8 h-8 text-purple-500 mx-auto mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-sm font-medium text-gray-700">Praticar</span>
+          </button>
+          
+          <button className="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center group hover:scale-105">
+            <Calendar className="w-8 h-8 text-green-500 mx-auto mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-sm font-medium text-gray-700">Cronograma</span>
+          </button>
+          
+          <button className="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center group hover:scale-105">
+            <Trophy className="w-8 h-8 text-yellow-500 mx-auto mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-sm font-medium text-gray-700">Ranking</span>
           </button>
         </div>
       </div>
-    )
-  }
 
-  if (!dashboard) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="text-center">
-          <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600">Nenhum dado encontrado</p>
-        </div>
+      {/* Motivational Quote */}
+      <div className="mt-8 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 text-center">
+        <div className="text-2xl mb-2">🎌</div>
+        <p className="text-green-800 font-medium mb-1">継続は力なり</p>
+        <p className="text-green-600 text-sm italic">A continuidade é força - Continue praticando!</p>
       </div>
-    )
-  }
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
-        {/* Header com Boas-vindas */}
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl shadow-xl p-8 text-white">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-            <div>
-              <h1 className="text-3xl font-bold mb-2">
-                Olá, {dashboard.full_name}! 👋
-              </h1>
-              <p className="text-indigo-100 text-lg">
-                Continue seu aprendizado musical hoje
-              </p>
-            </div>
-            {dashboard.current_streak > 0 && (
-              <div className="mt-4 md:mt-0 bg-white/20 backdrop-blur-sm rounded-xl px-6 py-4 border border-white/30">
-                <div className="flex items-center gap-3">
-                  <Flame className="w-8 h-8 text-orange-300" />
-                  <div>
-                    <p className="text-2xl font-bold">{dashboard.current_streak}</p>
-                    <p className="text-sm text-indigo-100">dias de sequência</p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Stats Grid - 4 Cards Principais */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Total de Pontos */}
-          <StatsCard
-            title="Total de Pontos"
-            value={dashboard.total_points.toLocaleString()}
-            icon={<TrendingUp className="w-6 h-6" />}
-            color="indigo"
-            subtitle={
-              dashboard.current_streak > 0
-                ? `🔥 ${dashboard.current_streak} dias ativos`
-                : 'Comece sua sequência hoje!'
-            }
-          />
-
-          {/* Conquistas */}
-          <StatsCard
-            title="Conquistas"
-            value={dashboard.total_achievements}
-            icon={<Trophy className="w-6 h-6" />}
-            color="yellow"
-            subtitle={
-              dashboard.achievements_last_week > 0
-                ? `✨ +${dashboard.achievements_last_week} esta semana`
-                : 'Desbloqueie novas conquistas'
-            }
-            linkTo="/aluno/conquistas"
-          />
-
-          {/* Desafios */}
-          <StatsCard
-            title="Desafios"
-            value={`${dashboard.submissoes_avaliadas}/${dashboard.total_submissoes}`}
-            icon={<Award className="w-6 h-6" />}
-            color="green"
-            subtitle="Avaliados"
-            linkTo="/aluno/desafios"
-          />
-
-          {/* Aulas Completadas */}
-          <StatsCard
-            title="Aulas Concluídas"
-            value={dashboard.lessons_completed}
-            icon={<BookOpen className="w-6 h-6" />}
-            color="purple"
-            subtitle={`${dashboard.modules_completed} módulos completos`}
-            linkTo="/aluno/aulas"
-          />
-        </div>
-
-        {/* Grid de Conteúdo - 2 Colunas */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Coluna Esquerda (2/3) */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Progresso Semanal */}
-            <ProgressoSemanalCard />
-
-            {/* Desafios em Andamento */}
-            <DesafiosEmAndamentoCard userId={user?.id} />
-          </div>
-
-          {/* Coluna Direita (1/3) */}
-          <div className="space-y-6">
-            {/* Próximas Aulas */}
-            <ProximasAulasCard userId={user?.id} />
-
-            {/* Conquistas Recentes */}
-            <ConquistasRecentesCard userId={user?.id} />
-          </div>
-        </div>
-
-        {/* Atividades Recentes */}
-        <AtividadesRecentesCard userId={user?.id} />
-
-        {/* Resumo Adicional */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <MiniStatCard
-            label="Portfólios"
-            value={dashboard.total_portfolios}
-            linkTo="/aluno/portfolio"
-          />
-          <MiniStatCard
-            label="Melhor Sequência"
-            value={`${dashboard.best_streak} dias`}
-          />
-          <MiniStatCard
-            label="Pendentes"
-            value={dashboard.total_submissoes - dashboard.submissoes_avaliadas}
-            linkTo="/aluno/desafios"
-          />
-          <MiniStatCard
-            label="Status"
-            value={dashboard.current_streak > 0 ? '🟢 Ativo' : '🟡 Retome'}
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ============================================
-// SUB-COMPONENTES
-// ============================================
-
-interface StatsCardProps {
-  title: string
-  value: string | number
-  icon: React.ReactNode
-  color: 'indigo' | 'yellow' | 'green' | 'purple'
-  subtitle?: string
-  linkTo?: string
-}
-
-function StatsCard({ title, value, icon, color, subtitle, linkTo }: StatsCardProps) {
-  const colorClasses = {
-    indigo: 'bg-indigo-100 text-indigo-600',
-    yellow: 'bg-yellow-100 text-yellow-600',
-    green: 'bg-green-100 text-green-600',
-    purple: 'bg-purple-100 text-purple-600'
-  }
-
-  const Card = (
-    <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-6 border border-gray-100">
-      <div className="flex items-center justify-between mb-4">
-        <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${colorClasses[color]}`}>
-          {icon}
-        </div>
-        {linkTo && (
-          <ArrowRight className="w-5 h-5 text-gray-400" />
-        )}
-      </div>
-      <p className="text-sm font-medium text-gray-600 mb-1">{title}</p>
-      <p className="text-3xl font-bold text-gray-900 mb-2">{value}</p>
-      {subtitle && (
-        <p className="text-sm text-gray-500">{subtitle}</p>
-      )}
-    </div>
-  )
-
-  return linkTo ? <Link to={linkTo}>{Card}</Link> : Card
-}
-
-function MiniStatCard({ label, value, linkTo }: { label: string; value: string | number; linkTo?: string }) {
-  const Card = (
-    <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-100 hover:border-indigo-200 transition-colors">
-      <p className="text-xs font-medium text-gray-600 mb-1">{label}</p>
-      <p className="text-xl font-bold text-gray-900">{value}</p>
-    </div>
-  )
-
-  return linkTo ? <Link to={linkTo}>{Card}</Link> : Card
-}
-
-// Progresso Semanal (placeholder - será implementado com dados reais)
-function ProgressoSemanalCard() {
-  const dias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
-  const dadosFicticios = [65, 85, 45, 90, 70, 95, 60]
-
-  return (
-    <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Progresso Semanal</h2>
-      <div className="flex items-end justify-between h-40 gap-2">
-        {dias.map((dia, index) => (
-          <div key={dia} className="flex-1 flex flex-col items-center gap-2">
-            <div className="w-full bg-gray-100 rounded-t flex-1 relative flex items-end">
-              <div
-                className="w-full bg-gradient-to-t from-indigo-500 to-indigo-400 rounded-t transition-all hover:from-indigo-600 hover:to-indigo-500"
-                style={{ height: `${dadosFicticios[index]}%` }}
-              />
-            </div>
-            <span className="text-xs font-medium text-gray-600">{dia}</span>
-          </div>
-        ))}
-      </div>
-      <p className="text-sm text-gray-500 mt-4 text-center">
-        Média: 73% de conclusão diária
-      </p>
-    </div>
-  )
-}
-
-// Próximas Aulas (placeholder)
-function ProximasAulasCard({ userId: _userId }: { userId?: string }) {
-  // TODO: Buscar aulas reais do banco
-  const proximasAulas = [
-    { id: 1, titulo: 'Harmonia Musical', horario: 'Hoje, 14:00', professor: 'Prof. Silva' },
-    { id: 2, titulo: 'Prática de Piano', horario: 'Amanhã, 10:00', professor: 'Prof. Santos' }
-  ]
-
-  return (
-    <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900">Próximas Aulas</h2>
-        <Calendar className="w-5 h-5 text-gray-400" />
-      </div>
-      
-      {proximasAulas.length > 0 ? (
-        <div className="space-y-3">
-          {proximasAulas.map((aula) => (
-            <div key={aula.id} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-              <Clock className="w-5 h-5 text-indigo-600 mt-0.5 flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <p className="font-medium text-gray-900 text-sm truncate">{aula.titulo}</p>
-                <p className="text-xs text-gray-600">{aula.horario}</p>
-                <p className="text-xs text-gray-500">{aula.professor}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-sm text-gray-500 text-center py-4">
-          Nenhuma aula agendada
-        </p>
-      )}
-
-      <Link
-        to="/aluno/aulas"
-        className="block mt-4 text-sm text-indigo-600 hover:text-indigo-700 font-medium text-center"
-      >
-        Ver todas as aulas →
-      </Link>
-    </div>
-  )
-}
-
-// Conquistas Recentes (placeholder)
-function ConquistasRecentesCard({ userId: _userId }: { userId?: string }) {
-  // TODO: Buscar conquistas reais do banco
-  const conquistas = [
-    { id: 1, nome: 'Primeira Conquista', icone: '🏆', data: 'Há 2 dias' },
-    { id: 2, nome: '7 Dias Seguidos', icone: '🔥', data: 'Ontem' }
-  ]
-
-  return (
-    <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900">Conquistas Recentes</h2>
-        <Star className="w-5 h-5 text-yellow-500" />
-      </div>
-
-      {conquistas.length > 0 ? (
-        <div className="space-y-3">
-          {conquistas.map((conquista) => (
-            <div key={conquista.id} className="flex items-center gap-3 p-3 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg">
-              <span className="text-2xl">{conquista.icone}</span>
-              <div className="flex-1 min-w-0">
-                <p className="font-medium text-gray-900 text-sm">{conquista.nome}</p>
-                <p className="text-xs text-gray-600">{conquista.data}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-sm text-gray-500 text-center py-4">
-          Nenhuma conquista recente
-        </p>
-      )}
-
-      <Link
-        to="/aluno/conquistas"
-        className="block mt-4 text-sm text-indigo-600 hover:text-indigo-700 font-medium text-center"
-      >
-        Ver todas →
-      </Link>
-    </div>
-  )
-}
-
-// Desafios em Andamento (placeholder)
-function DesafiosEmAndamentoCard({ userId: _userId }: { userId?: string }) {
-  // TODO: Buscar desafios reais do banco
-  const desafios = [
-    { id: 1, titulo: 'Escala Maior', progresso: 75, prazo: '3 dias' },
-    { id: 2, titulo: 'Ritmo Básico', progresso: 40, prazo: '5 dias' }
-  ]
-
-  return (
-    <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900">Desafios em Andamento</h2>
-        <Target className="w-5 h-5 text-green-600" />
-      </div>
-
-      {desafios.length > 0 ? (
-        <div className="space-y-4">
-          {desafios.map((desafio) => (
-            <div key={desafio.id} className="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-              <div className="flex items-center justify-between mb-2">
-                <p className="font-medium text-gray-900 text-sm">{desafio.titulo}</p>
-                <span className="text-xs text-gray-600">⏰ {desafio.prazo}</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
-                <div
-                  className="bg-green-500 h-2 rounded-full transition-all"
-                  style={{ width: `${desafio.progresso}%` }}
-                />
-              </div>
-              <p className="text-xs text-gray-600">{desafio.progresso}% completo</p>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-sm text-gray-500 text-center py-4">
-          Nenhum desafio em andamento
-        </p>
-      )}
-
-      <Link
-        to="/aluno/desafios"
-        className="block mt-4 text-sm text-indigo-600 hover:text-indigo-700 font-medium text-center"
-      >
-        Ver todos os desafios →
-      </Link>
-    </div>
-  )
-}
-
-// Atividades Recentes (placeholder)
-function AtividadesRecentesCard({ userId: _userId }: { userId?: string }) {
-  // TODO: Buscar atividades reais do banco
-  const atividades = [
-    { id: 1, tipo: 'conquista', texto: 'Desbloqueou "Primeira Conquista"', tempo: 'Há 2 horas', icone: <Trophy className="w-4 h-4 text-yellow-600" /> },
-    { id: 2, tipo: 'submissao', texto: 'Enviou desafio "Escala Maior"', tempo: 'Há 5 horas', icone: <CheckCircle className="w-4 h-4 text-green-600" /> },
-    { id: 3, tipo: 'aula', texto: 'Completou aula "Harmonia Básica"', tempo: 'Ontem', icone: <BookOpen className="w-4 h-4 text-indigo-600" /> }
-  ]
-
-  return (
-    <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Atividades Recentes</h2>
-
-      {atividades.length > 0 ? (
-        <div className="space-y-3">
-          {atividades.map((atividade) => (
-            <div key={atividade.id} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm flex-shrink-0">
-                {atividade.icone}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm text-gray-900">{atividade.texto}</p>
-                <p className="text-xs text-gray-500 mt-1">{atividade.tempo}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-sm text-gray-500 text-center py-4">
-          Nenhuma atividade recente
-        </p>
-      )}
-    </div>
-  )
-}
+    </OrientalContainer>
+  );
+};

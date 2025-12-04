@@ -8,7 +8,7 @@ import {
   getUserTotalPoints,
   getAchievementsByType
 } from '../lib/supabase/queries/achievements';
-import { handleError, CommonErrors } from '../utils/error-handler';
+import { CommonErrors } from '../utils/error-handler'
 import { useCurrentUser } from './useAuth';
 
 /**

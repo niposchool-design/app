@@ -21,103 +21,103 @@ export const ROUTES = {
   // ========================================
   // BASE AUTENTICADA
   // ========================================
-  APP: '/app',
-  SETTINGS: '/app/configuracoes',
-  NOTIFICATIONS: '/app/notificacoes',
-  HELP: '/app/ajuda',
+  APP: '/dashboard', // Rota que redireciona baseado no papel do usuário
+  DASHBOARD: '/dashboard', // Rota genérica de dashboard com redirecionamento inteligente
+  SETTINGS: '/configuracoes',
+  NOTIFICATIONS: '/notificacoes',
+  HELP: '/ajuda',
 
   // ========================================
   // ALUNO
   // ========================================
   ALUNO: {
-    INDEX: '/app/aluno',
-    PROFILE: '/app/aluno/perfil',
+    INDEX: '/alunos',
+    PROFILE: '/alunos/perfil',
     
     // Conquistas
     ACHIEVEMENTS: {
-      INDEX: '/app/aluno/conquistas',
-      DETAIL: (id: string) => `/app/aluno/conquistas/${id}`,
+      INDEX: '/alunos/conquistas',
+      DETAIL: (id: string) => `/alunos/conquistas/${id}`,
     },
     
     // Portfólio
     PORTFOLIO: {
-      INDEX: '/app/aluno/portfolio',
-      CREATE: '/app/aluno/portfolio/novo',
-      DETAIL: (id: string) => `/app/aluno/portfolio/${id}`,
-      EDIT: (id: string) => `/app/aluno/portfolio/${id}/editar`,
+      INDEX: '/alunos/portfolio',
+      CREATE: '/alunos/portfolio/criar',
+      DETAIL: (id: string) => `/alunos/portfolio/${id}`,
     },
     
     // Desafios Alpha
     CHALLENGES: {
-      INDEX: '/app/aluno/desafios',
-      DETAIL: (id: string) => `/app/aluno/desafios/${id}`,
+      INDEX: '/alunos/desafios',
+      DETAIL: (id: string) => `/alunos/desafios/${id}`,
     },
     
     // Biblioteca de Instrumentos
     INSTRUMENTS: {
-      INDEX: '/app/aluno/instrumentos',
-      DETAIL: (slug: string) => `/app/aluno/instrumentos/${slug}`,
+      INDEX: '/alunos/instrumentos',
+      DETAIL: (id: string) => `/alunos/instrumentos/${id}`,
     },
     
     // Aulas & Progresso
-    CLASSES: '/app/aluno/aulas',
-    PROGRESS: '/app/aluno/progresso',
+    CLASSES: '/alunos/aulas',
+    PROGRESS: '/alunos/progresso',
   },
 
   // ========================================
   // PROFESSOR
   // ========================================
   PROFESSOR: {
-    INDEX: '/app/professor',
-    PROFILE: '/app/professor/perfil',
+    INDEX: '/professores',
+    PROFILE: '/professores/perfil',
     
     // Turmas
-    CLASSES: '/app/professor/turmas',
-    CLASS_DETAIL: (id: string) => `/app/professor/turmas/${id}`,
+    CLASSES: '/professores/turmas',
+    CLASS_DETAIL: (id: string) => `/professores/turmas/${id}`,
     
     // Submissões
-    SUBMISSIONS: '/app/professor/submissoes',
-    SUBMISSION_DETAIL: (id: string) => `/app/professor/submissoes/${id}`,
+    SUBMISSIONS: '/professores/submissoes',
+    SUBMISSION_DETAIL: (id: string) => `/professores/submissoes/${id}`,
     
     // Outros
-    CALENDAR: '/app/professor/calendario',
-    MATERIALS: '/app/professor/materiais',
-    REPORTS: '/app/professor/relatorios',
+    CALENDAR: '/professores/calendario',
+    MATERIALS: '/professores/materiais',
+    REPORTS: '/professores/relatorios',
   },
 
   // ========================================
   // ADMIN
   // ========================================
   ADMIN: {
-    INDEX: '/app/admin',
+    INDEX: '/admin',
     
     // Usuários
-    USERS: '/app/admin/usuarios',
-    USER_NEW: '/app/admin/usuarios/novo',
-    USER_EDIT: (id: string) => `/app/admin/usuarios/${id}`,
+    USERS: '/admin/usuarios',
+    USER_NEW: '/admin/usuarios/novo',
+    USER_EDIT: (id: string) => `/admin/usuarios/${id}`,
     
     // Gestão
-    CLASSES: '/app/admin/turmas',
-    INSTRUMENTS: '/app/admin/instrumentos',
-    ACHIEVEMENTS: '/app/admin/conquistas',
-    CHALLENGES: '/app/admin/desafios',
+    CLASSES: '/admin/turmas',
+    INSTRUMENTS: '/admin/instrumentos',
+    ACHIEVEMENTS: '/admin/conquistas',
+    CHALLENGES: '/admin/desafios',
     
     // Análise
-    REPORTS: '/app/admin/relatorios',
-    AUDIT: '/app/admin/auditoria',
+    REPORTS: '/admin/relatorios',
+    AUDIT: '/admin/auditoria',
   },
 
   // ========================================
   // HISTÓRIA DA MÚSICA
   // ========================================
   HISTORIA: {
-    INDEX: '/app/historia',
-    PERIODOS: '/app/historia/periodos',
-    PERIODO_DETAIL: (id: string) => `/app/historia/periodos/${id}`,
-    COMPOSITORES: '/app/historia/compositores',
-    COMPOSITOR_DETAIL: (id: string) => `/app/historia/compositores/${id}`,
-    OBRAS: '/app/historia/obras',
-    OBRA_DETAIL: (id: string) => `/app/historia/obras/${id}`,
+    INDEX: '/historia',
+    PERIODOS: '/historia/periodos',
+    PERIODO_DETAIL: (id: string) => `/historia/periodos/${id}`,
+    COMPOSITORES: '/historia/compositores',
+    COMPOSITOR_DETAIL: (id: string) => `/historia/compositores/${id}`,
+    OBRAS: '/historia/obras',
+    OBRA_DETAIL: (id: string) => `/historia/obras/${id}`,
     TIMELINE: '/app/historia/timeline',
     GENEROS: '/app/historia/generos',
     QUIZ: '/app/historia/quiz',

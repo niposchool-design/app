@@ -2,7 +2,7 @@
 // Hook de autenticação usando React Query e Supabase
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { supabase, getCurrentUser, getCurrentSession, signOut } from '../lib/supabase/supabaseClient';
+import { supabase, getCurrentUser, getCurrentSession, signOut } from '../lib/supabase/client';
 import { getProfileByEmail, createProfile, updateProfile } from '../lib/supabase/queries/profiles';
 import { handleError, AppError, CommonErrors } from '../utils/error-handler';
 
@@ -56,7 +56,7 @@ export const useSignIn = () => {
       });
 
       if (error) throw error;
-      if (!data.user) throw new AppError('Falha ao fazer login', 'SIGN_IN_FAILED');
+      if (!data.user) throw new AppError('Falha ao fazer login', 401);
 
       return data;
     },
@@ -91,13 +91,13 @@ export const useSignUp = () => {
       });
 
       if (authError) throw authError;
-      if (!authData.user) throw new AppError('Falha ao criar usuário', 'SIGN_UP_FAILED');
+      if (!authData.user) throw new AppError('Falha ao criar usuário', 400);
 
       // 2. Criar perfil no banco de dados
       const profile = await createProfile({
         id: authData.user.id,
         email,
-        nome_completo: full_name,
+        full_name: full_name,
         tipo_usuario: role as 'admin' | 'professor' | 'aluno' | 'pastor',
         avatar_url: null
       });

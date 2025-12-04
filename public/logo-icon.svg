@@ -1,0 +1,12 @@
+<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="30" cy="30" r="25" fill="#FF6B9D" fill-opacity="0.1" stroke="#FF6B9D" stroke-width="2"/>
+  
+  <!-- Japanese character 音 (sound/music) -->
+  <g transform="translate(15, 15)">
+    <rect x="5" y="0" width="20" height="3" fill="#FF6B9D"/>
+    <rect x="0" y="8" width="30" height="3" fill="#FF6B9D"/>
+    <rect x="12" y="15" width="6" height="15" fill="#FF6B9D"/>
+    <rect x="5" y="22" width="20" height="3" fill="#FF6B9D"/>
+  </g>
+</svg>

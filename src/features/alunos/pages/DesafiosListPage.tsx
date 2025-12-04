@@ -1,1 +1,1 @@
-export { DesafiosListPage } from './_EmConstrucao'
+export { EmConstrucao as DesafiosListPage } from './_EmConstrucao'

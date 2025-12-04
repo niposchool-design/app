@@ -10,7 +10,7 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { X, Home, BookOpen, Trophy, Briefcase, Users, Settings, HelpCircle, Music, Calendar, Award, Library } from 'lucide-react'
 import { ROUTES } from '../../lib/constants/routes'
-import { useAuth } from '../../features/auth/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import clsx from 'clsx'
 
 interface SidebarProps {
@@ -22,8 +22,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const location = useLocation()
   const { user } = useAuth()
 
-  // Pegar role do usuário real
-  const userRole = (user as any)?.user_metadata?.tipo_usuario || 'aluno'
+  // 🔧 CORRIGIDO: Usar role do contexto AuthContext
+  const userRole = user?.role || 'aluno'
+  
+  console.log('🗂️ Sidebar - Papel do usuário:', userRole, user)
 
   const isActive = (path: string) => {
     return location.pathname === path || location.pathname.startsWith(path + '/')
@@ -89,14 +91,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b">
           <Link to={ROUTES.HOME} className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-[var(--color-sakura)] to-[var(--color-indigo)] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">N</span>
+            <div className="w-8 h-8 bg-gradient-to-br from-sakura-500 to-cherry-500 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-lg">音</span>
             </div>
-            <span className="text-xl font-bold text-gray-900">Nipo School</span>
+            <span className="text-xl font-zen font-bold text-gray-900">Nipo School</span>
           </Link>
           <button
             onClick={onClose}
-            className="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+            className="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -104,6 +106,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
         {/* Navigation */}
         <nav className="p-4 space-y-1">
+          {/* Debug Info - Apenas para desenvolvimento */}
+          {process.env.NODE_ENV === 'development' && (
+            <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+              <p className="text-xs text-blue-700 font-medium">Debug Info:</p>
+              <p className="text-xs text-blue-600">Role: {userRole}</p>
+              <p className="text-xs text-blue-600">Email: {user?.email}</p>
+              <p className="text-xs text-blue-600">Items: {navigationItems.length}</p>
+            </div>
+          )}
+          
           {navigationItems.map((item) => {
             const Icon = item.icon
             const active = isActive(item.path)

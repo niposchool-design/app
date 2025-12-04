@@ -11,7 +11,7 @@ import {
   getPublicPortfolios,
   getPortfoliosByType
 } from '../lib/supabase/queries/portfolios';
-import { handleError, CommonErrors } from '../utils/error-handler';
+import { CommonErrors } from '../utils/error-handler'
 import { useCurrentUser } from './useAuth';
 
 /**

@@ -1,10 +1,11 @@
 /**
- * 🧭 NAVBAR - Barra de Navegação Pública
+ * 🧭 NAVBAR - Barra de Navegação Pública EVOLUTION
  * 
- * Navbar para páginas públicas
- * - Logo
- * - Links de navegação
- * - CTA Login/Registrar
+ * Navbar japonês para páginas públicas:
+ * - Logo inteligente
+ * - Theme toggle zen
+ * - Mobile-first responsivo
+ * - Filosofia japonesa integrada
  */
 
 import React, { useState } from 'react'
@@ -12,9 +13,13 @@ import { Link } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { ROUTES } from '../../lib/constants/routes'
 import { NipoButton } from '../shared/NipoButton'
+import { NipoLogo, NipoLogoMobile } from '../nipo/NipoLogo' // 🎌 NOVO
+import { ThemeToggle } from '../nipo/ThemeToggle' // 🌙 NOVO
+import { useTheme } from '../../contexts/ThemeContext' // 🎯 NOVO
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { isDark } = useTheme() // 🌙 Dark mode state
 
   const navLinks = [
     { name: 'Início', path: ROUTES.HOME },
@@ -23,15 +28,30 @@ export const Navbar: React.FC = () => {
   ]
 
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
+    <nav className={`
+      sticky top-0 z-50 transition-all duration-300
+      ${isDark 
+        ? 'bg-nipo-zen-900/95 border-nipo-zen-700' 
+        : 'bg-white/95 border-nipo-zen-200'
+      }
+      backdrop-blur-md border-b
+      shadow-zen
+    `}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to={ROUTES.HOME} className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-[var(--color-sakura)] to-[var(--color-indigo)] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">N</span>
+          {/* 🎌 Logo Inteligente */}
+          <Link 
+            to={ROUTES.HOME} 
+            className="flex items-center transition-transform duration-300 hover:scale-105"
+          >
+            {/* Desktop Logo */}
+            <div className="hidden sm:block">
+              <NipoLogo variant="full" size="md" />
             </div>
-            <span className="text-xl font-bold text-gray-900">Nipo School</span>
+            {/* Mobile Logo */}
+            <div className="block sm:hidden">
+              <NipoLogoMobile />
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -40,14 +60,24 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-gray-600 hover:text-[var(--color-indigo)] transition-colors"
+                className={`
+                  font-zen font-medium transition-all duration-300
+                  ${isDark 
+                    ? 'text-nipo-zen-300 hover:text-white' 
+                    : 'text-nipo-zen-600 hover:text-nipo-zen-900'
+                  }
+                  hover:scale-105 active:scale-95
+                  relative after:absolute after:bottom-[-4px] after:left-0 
+                  after:w-0 after:h-0.5 after:bg-nipo-primary 
+                  hover:after:w-full after:transition-all after:duration-300
+                `}
               >
                 {link.name}
               </Link>
             ))}
           </div>
 
-          {/* Desktop CTA */}
+          {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-3">
             <Link to={ROUTES.LOGIN}>
               <NipoButton variant="ghost">Entrar</NipoButton>
