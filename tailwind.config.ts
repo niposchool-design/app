@@ -80,6 +80,9 @@ const config: Config = {
         'slide-up': 'slideUp 0.3s ease-out',
         'zen-breath': 'zenBreath 4s ease-in-out infinite',
         'sakura-float': 'sakuraFloat 6s ease-in-out infinite',
+        'gradient': 'gradient 3s ease infinite',
+        'float-slow': 'floatSlow 6s ease-in-out infinite',
+        'portal-particle': 'portalParticle 4s ease-in-out infinite',
       },
       
       keyframes: {
@@ -99,6 +102,28 @@ const config: Config = {
           '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
           '33%': { transform: 'translateY(-10px) rotate(120deg)' },
           '66%': { transform: 'translateY(5px) rotate(240deg)' },
+        },
+        gradient: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+        floatSlow: {
+          '0%, 100%': { transform: 'translateY(0px) scale(1)' },
+          '50%': { transform: 'translateY(-20px) scale(1.02)' },
+        },
+        portalParticle: {
+          '0%': { 
+            transform: 'translateX(-300px) translateZ(0px) scale(0.5)',
+            opacity: '0'
+          },
+          '50%': { 
+            opacity: '1',
+            transform: 'translateX(0px) translateZ(100px) scale(1)'
+          },
+          '100%': { 
+            transform: 'translateX(300px) translateZ(0px) scale(0.5)',
+            opacity: '0'
+          },
         },
       },
       
