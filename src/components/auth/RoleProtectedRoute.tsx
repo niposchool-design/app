@@ -27,6 +27,13 @@ export function RoleProtectedRoute({
 }: RoleProtectedRouteProps) {
   const { user, loading } = useAuth()
 
+  console.log('🛡️ RoleProtectedRoute EXECUTOU!', { 
+    allowedRoles, 
+    userRole: user?.role, 
+    loading,
+    hasUser: !!user
+  })
+
   // Loading state - mostrar spinner
   if (loading) {
     return (
@@ -48,7 +55,14 @@ export function RoleProtectedRoute({
   const userRole = user.role
   const hasPermission = allowedRoles.includes(userRole)
 
+  console.log('🔐 Verificação de permissão:', { 
+    userRole, 
+    allowedRoles, 
+    hasPermission 
+  })
+
   if (!hasPermission) {
+    console.log('❌ ACESSO NEGADO! Redirecionando...')
     // Se não tem permissão, redirecionar para dashboard correto
     const defaultRedirect = getDefaultDashboardForRole(userRole)
     const finalRedirect = redirectTo || defaultRedirect
@@ -56,6 +70,7 @@ export function RoleProtectedRoute({
     return <Navigate to={finalRedirect} replace />
   }
 
+  console.log('✅ PERMISSÃO CONCEDIDA! Renderizando children...')
   // Usuário tem permissão - renderizar conteúdo
   return <>{children}</>
 }

@@ -7,23 +7,28 @@ export interface Desafio {
   id: string
   titulo: string
   descricao: string
-  tipo: string
-  nivel: 'facil' | 'medio' | 'dificil'
-  pontos: number
+  tipo_desafio: string
+  dificuldade: 'facil' | 'medio' | 'dificil'
+  pontos_max: number
   ativo: boolean
-  created_at: string
+  criado_em: string
+  metodologia_id?: string
 }
 
 export interface SubmissaoDesafio {
   id: string
   user_id: string
   desafio_id: string
-  submission_data: any
-  status: 'pendente' | 'aprovado' | 'rejeitado'
-  feedback: string | null
-  submitted_at: string
-  reviewed_at: string | null
-  score?: number
+  titulo: string
+  descricao?: string
+  evidencia_url?: string
+  evidencia_tipo: 'audio' | 'video' | 'texto'
+  auto_avaliacao?: any
+  status: 'pendente' | 'avaliando' | 'aprovado' | 'revisao' | 'rejeitado'
+  pontos_obtidos: number
+  feedback_professor?: string
+  data_submissao: string
+  data_avaliacao?: string
 }
 
 interface EstatsDesafios {
@@ -40,24 +45,33 @@ export const useDesafios = (userId?: string) => {
   const [error, setError] = useState<string | null>(null)
 
   // Buscar desafios disponíveis
-  const buscarDesafios = async (nivel?: string) => {
+  const buscarDesafios = async (dificuldade?: string) => {
     try {
       setLoading(true)
+      console.log('🔍 useDesafios: Buscando desafios...', { dificuldade })
+      
       let query = supabase
         .from('alpha_desafios')
         .select('*')
         .eq('ativo', true)
 
-      if (nivel) {
-        query = query.eq('nivel', nivel as any)
+      if (dificuldade) {
+        query = query.eq('dificuldade', dificuldade)
       }
 
-      const { data, error } = await query.order('created_at', { ascending: false })
+      const { data, error } = await query.order('criado_em', { ascending: false })
 
-      if (error) throw error
+      if (error) {
+        console.error('❌ Erro ao buscar desafios:', error)
+        throw error
+      }
+      
+      console.log('✅ Desafios carregados:', data?.length || 0)
       setDesafios(data || [])
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao buscar desafios')
+      const errorMsg = err instanceof Error ? err.message : 'Erro ao buscar desafios'
+      console.error('❌ useDesafios error:', errorMsg)
+      setError(errorMsg)
     } finally {
       setLoading(false)
     }
@@ -69,17 +83,17 @@ export const useDesafios = (userId?: string) => {
 
     try {
       const { data, error } = await supabase
-        .from('desafio_submissions')
+        .from('alpha_submissoes')
         .select(`
           *,
           alpha_desafios!inner (
             titulo,
-            tipo,
-            pontos
+            tipo_desafio,
+            pontos_max
           )
         `)
         .eq('user_id', userId)
-        .order('submitted_at', { ascending: false })
+        .order('data_submissao', { ascending: false })
 
       if (error) throw error
       setSubmissoes(data || [])
@@ -94,13 +108,18 @@ export const useDesafios = (userId?: string) => {
 
     try {
       const { data, error } = await supabase
-        .from('desafio_submissions')
+        .from('alpha_submissoes')
         .insert([
           {
             user_id: userId,
             desafio_id: desafioId,
-            submission_data: submissionData,
-            status: 'pendente'
+            titulo: submissionData.titulo,
+            descricao: submissionData.descricao,
+            evidencia_url: submissionData.evidencia_url,
+            evidencia_tipo: submissionData.evidencia_tipo,
+            auto_avaliacao: submissionData.auto_avaliacao,
+            status: 'pendente',
+            pontos_obtidos: 0
           }
         ])
         .select()
@@ -123,24 +142,21 @@ export const useDesafios = (userId?: string) => {
     }
 
     try {
-      const submissoes = await supabase
-        .from('desafio_submissions')
-        .select(`
-          *,
-          alpha_desafios!inner (pontos)
-        `)
+      const { data, error } = await supabase
+        .from('alpha_submissoes')
+        .select('status, pontos_obtidos')
         .eq('user_id', userId)
 
-      if (submissoes.error) throw submissoes.error
+      if (error) throw error
 
-      const data = submissoes.data || []
+      const submissoes = data || []
 
       return {
-        submetidos: data.length,
-        avaliados: data.filter(s => s.status === 'aprovado' || s.status === 'rejeitado').length,
-        aprovados: data.filter(s => s.status === 'aprovado').length,
-        pontosGanhos: data.reduce((total, s) => {
-          return total + (s.status === 'aprovado' ? (s as any).alpha_desafios?.pontos || 0 : 0)
+        submetidos: submissoes.length,
+        avaliados: submissoes.filter(s => s.status === 'aprovado' || s.status === 'rejeitado').length,
+        aprovados: submissoes.filter(s => s.status === 'aprovado').length,
+        pontosGanhos: submissoes.reduce((total, s) => {
+          return total + (s.status === 'aprovado' ? s.pontos_obtidos : 0)
         }, 0)
       }
     } catch (err) {
@@ -152,6 +168,22 @@ export const useDesafios = (userId?: string) => {
   // Verificar se usuário já submeteu um desafio específico
   const verificarSubmissao = (desafioId: string): SubmissaoDesafio | undefined => {
     return submissoes.find(s => s.desafio_id === desafioId)
+  }
+
+  // Buscar desafio por ID
+  const buscarDesafioPorId = async (desafioId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('alpha_desafios')
+        .select('*')
+        .eq('id', desafioId)
+        .single()
+
+      if (error) throw error
+      return data
+    } catch (err) {
+      throw new Error(err instanceof Error ? err.message : 'Erro ao buscar desafio')
+    }
   }
 
   // Carregar dados iniciais
@@ -168,6 +200,7 @@ export const useDesafios = (userId?: string) => {
     loading,
     error,
     buscarDesafios,
+    buscarDesafioPorId,
     buscarSubmissoes,
     submeterDesafio,
     obterEstatisticas,

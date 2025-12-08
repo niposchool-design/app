@@ -11,10 +11,10 @@ interface Desafio {
   id: string
   titulo: string
   descricao: string
-  tipo: string
-  nivel: 'facil' | 'medio' | 'dificil'
-  pontos: number
-  created_at: string
+  tipo_desafio: string
+  dificuldade: 'facil' | 'medio' | 'dificil'
+  pontos_max: number
+  criado_em: string
 }
 
 interface DesafioCardProps {
@@ -61,7 +61,7 @@ export function DesafioCard({
     dificil: 'Difícil'
   }
 
-  const colors = nivelColors[desafio.nivel]
+  const colors = nivelColors[desafio.dificuldade]
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('pt-BR', {
@@ -93,12 +93,12 @@ export function DesafioCard({
             
             <div className="flex items-center gap-3 text-sm text-gray-600 mb-3">
               <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${colors.badge}`}>
-                {nivelLabels[desafio.nivel]}
+                {nivelLabels[desafio.dificuldade]}
               </span>
               
               <div className="flex items-center gap-1">
                 <Star className="w-4 h-4 text-yellow-500" />
-                <span className="font-medium">{desafio.pontos} pts</span>
+                <span className="font-medium">{desafio.pontos_max} pts</span>
               </div>
             </div>
           </div>
@@ -113,12 +113,12 @@ export function DesafioCard({
         <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
           <div className="flex items-center gap-1">
             <Calendar className="w-4 h-4" />
-            <span>Criado em {formatDate(desafio.created_at)}</span>
+            <span>Criado em {formatDate(desafio.criado_em)}</span>
           </div>
           
           <div className="flex items-center gap-1">
             <Trophy className="w-4 h-4" />
-            <span>{desafio.tipo}</span>
+            <span>{desafio.tipo_desafio}</span>
           </div>
         </div>
 

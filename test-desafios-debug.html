@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Debug Desafios - Nipo School</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <h1>Debug: Buscar Desafios Alpha</h1>
+  <div id="output"></div>
+
+  <script>
+    const { createClient } = supabase;
+    
+    const supabaseUrl = 'https://gfjqhnrvccfvfzxypgkd.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmanFobnJ2Y2NmdmZ6eHlwZ2tkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMyNDcyNDQsImV4cCI6MjA0ODgyMzI0NH0.RdViT5T05BdOgjdqZHhf_UuVt11kQaQAWQJPMtRNIjI';
+    
+    const client = createClient(supabaseUrl, supabaseKey);
+    const output = document.getElementById('output');
+
+    async function testarDesafios() {
+      output.innerHTML = '<p>🔍 Testando acesso aos desafios...</p>';
+
+      // 1. Testar sem autenticação (anônimo)
+      const { data: desafiosAnonimo, error: errorAnonimo } = await client
+        .from('alpha_desafios')
+        .select('*')
+        .eq('ativo', true)
+        .limit(5);
+
+      output.innerHTML += `<h2>Teste 1: Acesso Anônimo</h2>`;
+      if (errorAnonimo) {
+        output.innerHTML += `<p style="color: red;">❌ Erro: ${errorAnonimo.message}</p>`;
+        output.innerHTML += `<p>Código: ${errorAnonimo.code}</p>`;
+        output.innerHTML += `<p>Detalhes: ${errorAnonimo.details || 'N/A'}</p>`;
+      } else {
+        output.innerHTML += `<p style="color: green;">✅ Sucesso! ${desafiosAnonimo?.length || 0} desafios encontrados</p>`;
+        if (desafiosAnonimo && desafiosAnonimo.length > 0) {
+          output.innerHTML += '<ul>';
+          desafiosAnonimo.forEach(d => {
+            output.innerHTML += `<li>${d.titulo} - ${d.dificuldade} - ${d.pontos_max}pts</li>`;
+          });
+          output.innerHTML += '</ul>';
+        }
+      }
+
+      // 2. Fazer login e testar
+      output.innerHTML += '<h2>Teste 2: Com Autenticação</h2>';
+      output.innerHTML += '<p>Fazendo login como tgjphotos@gmail.com...</p>';
+      
+      // Verificar se já tem sessão
+      const { data: sessionData } = await client.auth.getSession();
+      
+      if (sessionData.session) {
+        output.innerHTML += `<p style="color: green;">✅ Já autenticado como: ${sessionData.session.user.email}</p>`;
+        
+        // Buscar desafios autenticado
+        const { data: desafiosAuth, error: errorAuth } = await client
+          .from('alpha_desafios')
+          .select('*')
+          .eq('ativo', true)
+          .limit(5);
+
+        if (errorAuth) {
+          output.innerHTML += `<p style="color: red;">❌ Erro: ${errorAuth.message}</p>`;
+        } else {
+          output.innerHTML += `<p style="color: green;">✅ Sucesso! ${desafiosAuth?.length || 0} desafios encontrados</p>`;
+          if (desafiosAuth && desafiosAuth.length > 0) {
+            output.innerHTML += '<ul>';
+            desafiosAuth.forEach(d => {
+              output.innerHTML += `<li>${d.titulo} - ${d.dificuldade} - ${d.pontos_max}pts</li>`;
+            });
+            output.innerHTML += '</ul>';
+          }
+        }
+
+        // Buscar submissões
+        const userId = sessionData.session.user.id;
+        const { data: submissoes, error: errorSub } = await client
+          .from('alpha_submissoes')
+          .select('*')
+          .eq('user_id', userId);
+
+        output.innerHTML += '<h2>Teste 3: Submissões do Usuário</h2>';
+        if (errorSub) {
+          output.innerHTML += `<p style="color: red;">❌ Erro: ${errorSub.message}</p>`;
+        } else {
+          output.innerHTML += `<p style="color: green;">✅ ${submissoes?.length || 0} submissões encontradas</p>`;
+          if (submissoes && submissoes.length > 0) {
+            output.innerHTML += '<ul>';
+            submissoes.forEach(s => {
+              output.innerHTML += `<li>${s.titulo} - ${s.status} - ${s.pontos_obtidos}pts</li>`;
+            });
+            output.innerHTML += '</ul>';
+          }
+        }
+      } else {
+        output.innerHTML += '<p style="color: orange;">⚠️ Não autenticado. Por favor, faça login no app principal primeiro.</p>';
+      }
+    }
+
+    testarDesafios();
+  </script>
+</body>
+</html>
