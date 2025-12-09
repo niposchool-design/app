@@ -1,8 +1,8 @@
 # 🎌 Nipo School - Sistema Oriental de Ensino Musical
 
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![React](https://img.shields.io/badge/React-18.2.0-blue)
-![Vite](https://img.shields.io/badge/Vite-5.4.19-purple)
+![Next.js](https://img.shields.io/badge/Next.js-16.0.8-black)
+![React](https://img.shields.io/badge/React-19-blue)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4.0-cyan)
 
 ## 📋 Sobre o Projeto
@@ -37,32 +37,35 @@ cd nipo_school
 npm install
 
 # Configure as variáveis de ambiente
-cp .env.example .env
-# Edite o .env com suas credenciais Supabase
+cp .env.local.example .env.local
+# Edite o .env.local com suas credenciais Supabase
 
 # Inicie o servidor de desenvolvimento
 npm run dev
 ```
 
-Acesse: `http://localhost:3000`
+Acesse: `http://localhost:4000`
 
 ## 📁 Estrutura do Projeto
 
 ```
 nipo_school/
-├── 📂 src/                    # Código fonte
-│   ├── pages/                 # Páginas da aplicação
-│   ├── components/            # Componentes reutilizáveis
-│   ├── shared/                # Componentes compartilhados
-│   ├── contexts/              # React Contexts
-│   ├── router/                # Sistema de rotas
-│   └── styles/                # Estilos globais
+├── 📂 app/                    # Next.js App Router
+│   ├── (auth)/                # Rotas de autenticação
+│   │   └── login/             # Página de login
+│   ├── (protected)/           # Rotas protegidas
+│   │   ├── admin/             # Área administrativa
+│   │   ├── professores/       # Área dos professores
+│   │   └── alunos/            # Área dos alunos
+│   ├── providers/             # Context providers
+│   ├── layout.tsx             # Layout raiz
+│   └── page.tsx               # Página inicial
+├── 📂 lib/                    # Bibliotecas e utilitários
+│   └── supabase/              # Cliente Supabase
 ├── 📂 docs/                   # Documentação completa
 ├── 📂 scripts/                # Scripts de desenvolvimento
-│   ├── tests/                 # Scripts de teste
-│   └── database/              # Scripts de banco de dados
 ├── 📂 public/                 # Assets públicos
-└── 📄 ESTRUTURA.md            # Documentação detalhada da estrutura
+└── 📄 middleware.ts           # Middleware de autenticação
 ```
 
 📖 **[Ver estrutura completa](./ESTRUTURA.md)**
@@ -71,11 +74,11 @@ nipo_school/
 
 ```bash
 # Desenvolvimento
-npm run dev              # Servidor de desenvolvimento (localhost:3000)
+npm run dev              # Servidor de desenvolvimento (localhost:4000)
 
 # Build
-npm run build            # Build de produção
-npm run preview          # Preview do build
+npm run build            # Build de produção Next.js
+npm run start            # Inicia servidor de produção
 
 # Linting
 npm run lint             # Executar ESLint

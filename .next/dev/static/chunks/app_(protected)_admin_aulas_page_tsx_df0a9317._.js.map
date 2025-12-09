@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///D:/projetos/nipo_school/app/%28protected%29/admin/aulas/page.tsx"],"sourcesContent":["'use client'\r\n\r\nexport default function AdminAulasPage() {\r\n  return (\r\n    <div className=\"p-6 lg:p-8\">\r\n      <h1 className=\"text-3xl font-bold text-gray-900\">Aulas - Kanban</h1>\r\n      <p className=\"text-gray-600 mt-2\">Gerencie as aulas em formato kanban</p>\r\n      \r\n      <div className=\"mt-8 bg-white rounded-xl shadow-sm p-8 border border-gray-200\">\r\n        <p className=\"text-gray-500 text-center\">\r\n          Kanban de aulas será implementado aqui\r\n        </p>\r\n      </div>\r\n    </div>\r\n  )\r\n}\r\n"],"names":[],"mappings":";;;;;AAAA;;AAEe,SAAS;IACtB,qBACE,6LAAC;QAAI,WAAU;;0BACb,6LAAC;gBAAG,WAAU;0BAAmC;;;;;;0BACjD,6LAAC;gBAAE,WAAU;0BAAqB;;;;;;0BAElC,6LAAC;gBAAI,WAAU;0BACb,cAAA,6LAAC;oBAAE,WAAU;8BAA4B;;;;;;;;;;;;;;;;;AAMjD;KAbwB"}}]
+}

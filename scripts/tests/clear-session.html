@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limpar Sessão - Nipo School</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 { color: #333; margin-top: 0; }
+        button {
+            background: #EF4444;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 20px 10px;
+            font-weight: bold;
+        }
+        button:hover { background: #DC2626; }
+        .success { color: #059669; font-weight: bold; margin: 20px 0; }
+        .info { color: #0891B2; margin: 15px 0; }
+        .warning { color: #F59E0B; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🔄 Limpar Sessão do Supabase</h1>
+        <p>Esta ferramenta vai limpar completamente a sessão local e forçar um novo login.</p>
+        
+        <div id="status"></div>
+
+        <button onclick="clearSession()">🗑️ Limpar Tudo e Redirecionar</button>
+    </div>
+
+    <script>
+        function clearSession() {
+            const statusDiv = document.getElementById('status')
+            
+            try {
+                // 1. Limpar localStorage
+                localStorage.clear()
+                statusDiv.innerHTML = '<p class="success">✅ LocalStorage limpo</p>'
+                
+                // 2. Limpar sessionStorage
+                sessionStorage.clear()
+                statusDiv.innerHTML += '<p class="success">✅ SessionStorage limpo</p>'
+                
+                // 3. Limpar cookies
+                document.cookie.split(";").forEach(function(c) {
+                    document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/")
+                })
+                statusDiv.innerHTML += '<p class="success">✅ Cookies limpos</p>'
+                
+                statusDiv.innerHTML += '<p class="info">🔄 Redirecionando para login em 2 segundos...</p>'
+                
+                // 4. Redirecionar para login
+                setTimeout(() => {
+                    window.location.href = 'http://localhost:4000/login'
+                }, 2000)
+                
+            } catch (error) {
+                statusDiv.innerHTML = `<p class="warning">⚠️ Erro: ${error.message}</p>`
+            }
+        }
+    </script>
+</body>
+</html>

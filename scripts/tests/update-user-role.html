@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar Role para Admin</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 { color: #333; margin-top: 0; }
+        button {
+            background: #4F46E5;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover { background: #4338CA; }
+        button.danger { background: #EF4444; }
+        button.danger:hover { background: #DC2626; }
+        button.success { background: #10B981; }
+        button.success:hover { background: #059669; }
+        .output {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+        .success { color: #059669; }
+        .error { color: #DC2626; }
+        .info { color: #0891B2; }
+        .warning { color: #F59E0B; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🔧 Atualizar Role do Usuário</h1>
+        <p>Esta ferramenta permite atualizar o role do usuário <strong>junior.sax@gmail.com</strong> na tabela <code>profiles</code>.</p>
+        
+        <div style="margin: 20px 0;">
+            <button onclick="checkCurrentRole()">1️⃣ Verificar Role Atual</button>
+            <button onclick="updateToAdmin()" class="success">2️⃣ Atualizar para ADMIN</button>
+            <button onclick="updateToProfessor()" class="warning">Atualizar para PROFESSOR</button>
+            <button onclick="updateToAluno()" class="danger">Atualizar para ALUNO</button>
+        </div>
+
+        <div id="output" class="output" style="display: none;"></div>
+    </div>
+
+    <div class="card">
+        <h2>📋 Instruções</h2>
+        <ol>
+            <li><strong>Verificar Role Atual:</strong> Clique no botão para ver qual é o role atual no banco</li>
+            <li><strong>Atualizar para ADMIN:</strong> Clique para mudar o role para 'admin'</li>
+            <li><strong>Fazer Logout/Login:</strong> Após atualizar, faça logout e login novamente na aplicação</li>
+        </ol>
+    </div>
+
+    <script>
+        // Configuração do Supabase
+        const supabaseUrl = 'https://bvmvqddrywipggvuziph.supabase.co'
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2bXZxZGRyeXdpcGdndnV6aXBoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI3NDk4MzYsImV4cCI6MjA0ODMyNTgzNn0.dDkdmpJ8xPLRaIEFTYJgkK9jYyaM9DQ1j4g1qp3I_qQ'
+        
+        const { createClient } = supabase
+        const supabaseClient = createClient(supabaseUrl, supabaseKey)
+
+        const email = 'junior.sax@gmail.com'
+        const outputDiv = document.getElementById('output')
+
+        function showOutput(message, type = 'info') {
+            outputDiv.style.display = 'block'
+            outputDiv.innerHTML += `<div class="${type}">${message}</div>\n`
+            outputDiv.scrollTop = outputDiv.scrollHeight
+        }
+
+        function clearOutput() {
+            outputDiv.innerHTML = ''
+            outputDiv.style.display = 'none'
+        }
+
+        async function checkCurrentRole() {
+            clearOutput()
+            showOutput('🔍 Verificando role atual...', 'info')
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('profiles')
+                    .select('*')
+                    .eq('email', email)
+                    .single()
+
+                if (error) throw error
+
+                if (!data) {
+                    showOutput('❌ Usuário não encontrado na tabela profiles', 'error')
+                    return
+                }
+
+                showOutput('✅ Usuário encontrado!', 'success')
+                showOutput(`📧 Email: ${data.email}`, 'info')
+                showOutput(`👤 Nome: ${data.full_name || '(não definido)'}`, 'info')
+                showOutput(`🎭 Role ATUAL: ${data.tipo_usuario}`, 'warning')
+                showOutput(`🆔 ID: ${data.id}`, 'info')
+                showOutput(`📅 Criado em: ${new Date(data.created_at).toLocaleString('pt-BR')}`, 'info')
+                
+            } catch (error) {
+                showOutput(`❌ Erro: ${error.message}`, 'error')
+            }
+        }
+
+        async function updateRole(newRole) {
+            clearOutput()
+            showOutput(`🔄 Atualizando role para: ${newRole}...`, 'info')
+
+            try {
+                // 1. Verificar role atual
+                const { data: currentData } = await supabaseClient
+                    .from('profiles')
+                    .select('tipo_usuario')
+                    .eq('email', email)
+                    .single()
+
+                if (currentData) {
+                    showOutput(`📊 Role atual: ${currentData.tipo_usuario}`, 'info')
+                }
+
+                // 2. Atualizar role
+                const { data, error } = await supabaseClient
+                    .from('profiles')
+                    .update({ tipo_usuario: newRole })
+                    .eq('email', email)
+                    .select()
+
+                if (error) throw error
+
+                showOutput(`✅ Role atualizado com sucesso!`, 'success')
+                showOutput(`🎭 Novo role: ${newRole}`, 'success')
+                showOutput('', 'info')
+                showOutput('⚠️ IMPORTANTE: Faça logout e login novamente na aplicação!', 'warning')
+                showOutput('', 'info')
+                showOutput('Passos:', 'info')
+                showOutput('1. Acesse http://localhost:3001/', 'info')
+                showOutput('2. Faça logout', 'info')
+                showOutput('3. Faça login novamente', 'info')
+                showOutput('4. Verifique a sidebar - deve mostrar o menu de ' + newRole, 'info')
+
+            } catch (error) {
+                showOutput(`❌ Erro ao atualizar: ${error.message}`, 'error')
+            }
+        }
+
+        function updateToAdmin() {
+            if (confirm('Tem certeza que deseja atualizar o role para ADMIN?')) {
+                updateRole('admin')
+            }
+        }
+
+        function updateToProfessor() {
+            if (confirm('Tem certeza que deseja atualizar o role para PROFESSOR?')) {
+                updateRole('professor')
+            }
+        }
+
+        function updateToAluno() {
+            if (confirm('Tem certeza que deseja atualizar o role para ALUNO?')) {
+                updateRole('aluno')
+            }
+        }
+
+        // Verificar automaticamente ao carregar
+        window.addEventListener('load', () => {
+            setTimeout(checkCurrentRole, 500)
+        })
+    </script>
+</body>
+</html>

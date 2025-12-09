@@ -1,0 +1,3 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["chunks/_4f4d3d3d._.js",12894,e=>{"use strict";var s="undefined"!=typeof self?self:e.g;let t=s.fetch,n=s.fetch.bind(s),h=s.Headers,l=s.Request,r=s.Response;e.s(["Headers",0,h,"Request",0,l,"Response",0,r,"default",0,n,"fetch",0,t])},32442,e=>{"use strict";self._ENTRIES||={};let s=Promise.resolve().then(()=>e.i(42738));s.catch(()=>{}),self._ENTRIES.middleware_middleware=new Proxy(s,{get(e,s){if("then"===s)return(s,t)=>e.then(s,t);let t=(...t)=>e.then(e=>(0,e[s])(...t));return t.then=(t,n)=>e.then(e=>e[s]).then(t,n),t}}),e.s([])}]);
+
+//# sourceMappingURL=_4f4d3d3d._.js.map

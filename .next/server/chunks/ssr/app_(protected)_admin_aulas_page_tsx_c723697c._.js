@@ -1,0 +1,3 @@
+module.exports=[67666,a=>{"use strict";var b=a.i(87924);function c(){return(0,b.jsxs)("div",{className:"p-6 lg:p-8",children:[(0,b.jsx)("h1",{className:"text-3xl font-bold text-gray-900",children:"Aulas - Kanban"}),(0,b.jsx)("p",{className:"text-gray-600 mt-2",children:"Gerencie as aulas em formato kanban"}),(0,b.jsx)("div",{className:"mt-8 bg-white rounded-xl shadow-sm p-8 border border-gray-200",children:(0,b.jsx)("p",{className:"text-gray-500 text-center",children:"Kanban de aulas será implementado aqui"})})]})}a.s(["default",()=>c])}];
+
+//# sourceMappingURL=app_%28protected%29_admin_aulas_page_tsx_c723697c._.js.map
