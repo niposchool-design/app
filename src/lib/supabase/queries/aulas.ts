@@ -17,7 +17,21 @@ export async function getTodasAulas(filtros?: FiltrosAulas): Promise<Aula[]> {
 
   let query = supabase
     .from('aulas')
-    .select('*')
+    .select(`
+      id,
+      numero,
+      titulo,
+      data_programada,
+      objetivo_didatico,
+      resumo_atividades,
+      desafio_alpha,
+      nivel,
+      formato,
+      status,
+      modulo_id,
+      responsavel_id,
+      detalhes_aula
+    `)
     .order('numero', { ascending: true });
 
   if (filtros?.status) {
@@ -29,7 +43,7 @@ export async function getTodasAulas(filtros?: FiltrosAulas): Promise<Aula[]> {
   }
 
   if (filtros?.modulo) {
-    query = query.eq('modulo', filtros.modulo);
+    query = query.eq('modulo_id', filtros.modulo);
   }
 
   if (filtros?.data_inicio) {
@@ -64,7 +78,21 @@ export async function getAulaPorNumero(numero: number): Promise<AulaCompleta | n
 
   const { data: aula, error: aulaError } = await supabase
     .from('aulas')
-    .select('*')
+    .select(`
+      id,
+      numero,
+      titulo,
+      data_programada,
+      objetivo_didatico,
+      resumo_atividades,
+      desafio_alpha,
+      nivel,
+      formato,
+      status,
+      modulo_id,
+      responsavel_id,
+      detalhes_aula
+    `)
     .eq('numero', numero)
     .single();
 

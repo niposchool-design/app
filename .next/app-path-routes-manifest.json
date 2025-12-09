@@ -4,6 +4,7 @@
   "/(protected)/admin/aulas/page": "/admin/aulas",
   "/(protected)/admin/page": "/admin",
   "/(protected)/admin/professores/page": "/admin/professores",
+  "/(protected)/alunos/aulas/page": "/alunos/aulas",
   "/(protected)/alunos/page": "/alunos",
   "/(protected)/professores/page": "/professores",
   "/_global-error/page": "/_global-error",

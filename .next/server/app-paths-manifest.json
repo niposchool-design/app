@@ -4,6 +4,7 @@
   "/(protected)/admin/aulas/page": "app/(protected)/admin/aulas/page.js",
   "/(protected)/admin/page": "app/(protected)/admin/page.js",
   "/(protected)/admin/professores/page": "app/(protected)/admin/professores/page.js",
+  "/(protected)/alunos/aulas/page": "app/(protected)/alunos/aulas/page.js",
   "/(protected)/alunos/page": "app/(protected)/alunos/page.js",
   "/(protected)/professores/page": "app/(protected)/professores/page.js",
   "/_global-error/page": "app/_global-error/page.js",

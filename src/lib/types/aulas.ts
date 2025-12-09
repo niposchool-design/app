@@ -1,6 +1,6 @@
 // Tipos e interfaces para o sistema de aulas - Método Alpha
 
-export type StatusAula = 'a_fazer' | 'em_preparacao' | 'concluida' | 'cancelada';
+export type StatusAula = 'A Fazer' | 'Em Preparação' | 'Concluída' | 'Revisão' | 'Cancelada';
 export type FormatoAula = 'presencial' | 'online' | 'hibrido';
 export type StatusProgresso = 'nao_iniciada' | 'em_andamento' | 'concluida';
 export type TipoMaterial = 'pdf' | 'video' | 'partitura' | 'audio' | 'formulario' | 'slide' | 'link';
@@ -9,19 +9,17 @@ export interface Aula {
   id: string;
   numero: number; // 0-29 (progressão contínua)
   titulo: string;
-  data_programada: string;
+  data_programada: string; // date do banco
   objetivo_didatico: string;
-  modulo?: string; // BLOCO 1-9
-  metodologia_principal?: string;
-  metodologias_secundarias?: string[];
-  status: StatusAula;
+  modulo_id?: string; // UUID do módulo
   resumo_atividades?: string;
   desafio_alpha?: string;
-  formato?: FormatoAula;
-  duracao_minutos?: number;
-  professor_responsavel_id?: string;
-  created_at?: string;
-  updated_at?: string;
+  nivel?: string; // iniciante, intermediario, avancado (legado)
+  formato?: string; // presencial, online, hibrido
+  status: string; // A Fazer, Em Preparação, Concluída, Revisão, Cancelada
+  criado_em?: string;
+  responsavel_id?: string;
+  detalhes_aula?: any; // jsonb
 }
 
 export interface Material {
@@ -139,10 +137,11 @@ export const BLOCOS_PEDAGOGICOS = {
 
 // Ícones por status
 export const STATUS_CONFIG: Record<StatusAula, { label: string; color: string }> = {
-  a_fazer: { label: 'A Fazer', color: 'gray' },
-  em_preparacao: { label: 'Em Preparação', color: 'blue' },
-  concluida: { label: 'Concluída', color: 'green' },
-  cancelada: { label: 'Cancelada', color: 'red' },
+  'A Fazer': { label: 'A Fazer', color: 'gray' },
+  'Em Preparação': { label: 'Em Preparação', color: 'blue' },
+  'Concluída': { label: 'Concluída', color: 'green' },
+  'Revisão': { label: 'Revisão', color: 'orange' },
+  'Cancelada': { label: 'Cancelada', color: 'red' },
 };
 
 // Ícones por tipo de material

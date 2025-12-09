@@ -70,6 +70,12 @@
       "namedRegex": "^/alunos(?:/)?$"
     },
     {
+      "page": "/alunos/aulas",
+      "regex": "^/alunos/aulas(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alunos/aulas(?:/)?$"
+    },
+    {
       "page": "/api/debug/stats",
       "regex": "^/api/debug/stats(?:/)?$",
       "routeKeys": {},
