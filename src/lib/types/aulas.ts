@@ -1,4 +1,5 @@
 // Tipos e interfaces para o sistema de aulas - Método Alpha
+import { CheckCircle, Clock, AlertCircle, XCircle, ListTodo, LucideIcon } from 'lucide-react';
 
 export type StatusAula = 'A Fazer' | 'Em Preparação' | 'Concluída' | 'Revisão' | 'Cancelada';
 export type FormatoAula = 'presencial' | 'online' | 'hibrido';
@@ -136,12 +137,12 @@ export const BLOCOS_PEDAGOGICOS = {
 } as const;
 
 // Ícones por status
-export const STATUS_CONFIG: Record<StatusAula, { label: string; color: string }> = {
-  'A Fazer': { label: 'A Fazer', color: 'gray' },
-  'Em Preparação': { label: 'Em Preparação', color: 'blue' },
-  'Concluída': { label: 'Concluída', color: 'green' },
-  'Revisão': { label: 'Revisão', color: 'orange' },
-  'Cancelada': { label: 'Cancelada', color: 'red' },
+export const STATUS_CONFIG: Record<StatusAula, { label: string; color: string; icon: LucideIcon }> = {
+  'A Fazer': { label: 'A Fazer', color: '#6B7280', icon: ListTodo },
+  'Em Preparação': { label: 'Em Preparação', color: '#3B82F6', icon: Clock },
+  'Concluída': { label: 'Concluída', color: '#10B981', icon: CheckCircle },
+  'Revisão': { label: 'Revisão', color: '#F59E0B', icon: AlertCircle },
+  'Cancelada': { label: 'Cancelada', color: '#EF4444', icon: XCircle },
 };
 
 // Ícones por tipo de material

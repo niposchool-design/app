@@ -1,7 +1,7 @@
 var R=require("../../../../chunks/ssr/[turbopack]_runtime.js")("server/app/(protected)/admin/aulas/page.js")
 R.c("server/chunks/ssr/[root-of-the-server]__769857d9._.js")
 R.c("server/chunks/ssr/_1ee4643e._.js")
-R.c("server/chunks/ssr/_73f3b557._.js")
+R.c("server/chunks/ssr/_ecfbc597._.js")
 R.c("server/chunks/ssr/node_modules_next_dist_cc88faaa._.js")
 R.c("server/chunks/ssr/[root-of-the-server]__815824b4._.js")
 R.c("server/chunks/ssr/[root-of-the-server]__655f8d11._.js")
