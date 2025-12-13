@@ -1,5 +1,50 @@
 {
-  "node": {},
+  "node": {
+    "4066fe6b47f29f239049d705f77649475a135cd6e3": {
+      "workers": {
+        "app/(protected)/admin/aulas/[id]/page": {
+          "moduleId": 81705,
+          "async": false,
+          "exportedName": "createAula",
+          "filename": "src/lib/supabase/mutations/aulas.ts"
+        },
+        "app/(protected)/admin/aulas/nova/page": {
+          "moduleId": 49690,
+          "async": false,
+          "exportedName": "createAula",
+          "filename": "src/lib/supabase/mutations/aulas.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/aulas/[id]/page": "action-browser",
+        "app/(protected)/admin/aulas/nova/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/aulas.ts",
+      "exportedName": "createAula"
+    },
+    "60c9a68de1a61480d14ae3a345993cd2418a2dbb2d": {
+      "workers": {
+        "app/(protected)/admin/aulas/[id]/page": {
+          "moduleId": 81705,
+          "async": false,
+          "exportedName": "updateAula",
+          "filename": "src/lib/supabase/mutations/aulas.ts"
+        },
+        "app/(protected)/admin/aulas/nova/page": {
+          "moduleId": 49690,
+          "async": false,
+          "exportedName": "updateAula",
+          "filename": "src/lib/supabase/mutations/aulas.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/aulas/[id]/page": "action-browser",
+        "app/(protected)/admin/aulas/nova/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/aulas.ts",
+      "exportedName": "updateAula"
+    }
+  },
   "edge": {},
   "encryptionKey": "f0Hrsvu2m5J5PAcpCFad/xrRNm3qPkEyE8YsmfmBsSU="
 }

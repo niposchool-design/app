@@ -14,6 +14,9 @@ const config: Config = {
           dark: '#991b1b',
         },
       },
+      animation: {
+        'bounce-slow': 'bounce 3s infinite',
+      },
     },
   },
   plugins: [],

@@ -32,7 +32,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/x.js [app-ssr] (ecmascript) <export default as X>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$house$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Home$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/house.js [app-ssr] (ecmascript) <export default as Home>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$columns$2d$2$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Columns$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/columns-2.js [app-ssr] (ecmascript) <export default as Columns>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$list$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__List$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/list.js [app-ssr] (ecmascript) <export default as List>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__UserCheck$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user-check.js [app-ssr] (ecmascript) <export default as UserCheck>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$graduation$2d$cap$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__GraduationCap$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/graduation-cap.js [app-ssr] (ecmascript) <export default as GraduationCap>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$qr$2d$code$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__QrCode$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/qr-code.js [app-ssr] (ecmascript) <export default as QrCode>");
@@ -74,14 +73,9 @@ function AdminSidebar({ isOpen, onClose }) {
         },
         // Gestão de Aulas (Admin)
         {
-            name: 'Aulas - Kanban',
+            name: 'Aulas',
             path: '/admin/aulas',
             icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$columns$2d$2$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Columns$3e$__["Columns"]
-        },
-        {
-            name: 'Aulas - Lista',
-            path: '/admin/aulas/lista',
-            icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$list$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__List$3e$__["List"]
         },
         // Gestão de Pessoas
         {
@@ -147,12 +141,12 @@ function AdminSidebar({ isOpen, onClose }) {
                                             children: "NS"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                            lineNumber: 79,
+                                            lineNumber: 78,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                        lineNumber: 78,
+                                        lineNumber: 77,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -162,7 +156,7 @@ function AdminSidebar({ isOpen, onClose }) {
                                                 children: "Nipo School"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                                lineNumber: 82,
+                                                lineNumber: 81,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -170,19 +164,19 @@ function AdminSidebar({ isOpen, onClose }) {
                                                 children: "Admin"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                                lineNumber: 83,
+                                                lineNumber: 82,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                        lineNumber: 81,
+                                        lineNumber: 80,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                lineNumber: 77,
+                                lineNumber: 76,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -192,18 +186,18 @@ function AdminSidebar({ isOpen, onClose }) {
                                     className: "w-5 h-5"
                                 }, void 0, false, {
                                     fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                    lineNumber: 90,
+                                    lineNumber: 89,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                lineNumber: 86,
+                                lineNumber: 85,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                        lineNumber: 76,
+                        lineNumber: 75,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -214,7 +208,7 @@ function AdminSidebar({ isOpen, onClose }) {
                                 children: user?.email
                             }, void 0, false, {
                                 fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                lineNumber: 96,
+                                lineNumber: 95,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -222,13 +216,13 @@ function AdminSidebar({ isOpen, onClose }) {
                                 children: "Administrador"
                             }, void 0, false, {
                                 fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                lineNumber: 97,
+                                lineNumber: 96,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                        lineNumber: 95,
+                        lineNumber: 94,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -248,7 +242,7 @@ function AdminSidebar({ isOpen, onClose }) {
                                                 className: "w-5 h-5 flex-shrink-0"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                                lineNumber: 119,
+                                                lineNumber: 118,
                                                 columnNumber: 23
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -256,29 +250,29 @@ function AdminSidebar({ isOpen, onClose }) {
                                                 children: item.name
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                                lineNumber: 120,
+                                                lineNumber: 119,
                                                 columnNumber: 23
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                        lineNumber: 109,
+                                        lineNumber: 108,
                                         columnNumber: 21
                                     }, this)
                                 }, item.path, false, {
                                     fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                    lineNumber: 108,
+                                    lineNumber: 107,
                                     columnNumber: 19
                                 }, this);
                             })
                         }, void 0, false, {
                             fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                            lineNumber: 102,
+                            lineNumber: 101,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                        lineNumber: 101,
+                        lineNumber: 100,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -291,7 +285,7 @@ function AdminSidebar({ isOpen, onClose }) {
                                     className: "w-5 h-5"
                                 }, void 0, false, {
                                     fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                    lineNumber: 134,
+                                    lineNumber: 133,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -299,29 +293,29 @@ function AdminSidebar({ isOpen, onClose }) {
                                     children: "Sair"
                                 }, void 0, false, {
                                     fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                                    lineNumber: 135,
+                                    lineNumber: 134,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                            lineNumber: 130,
+                            lineNumber: 129,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                        lineNumber: 129,
+                        lineNumber: 128,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-                lineNumber: 74,
+                lineNumber: 73,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/(protected)/admin/components/AdminSidebar.tsx",
-            lineNumber: 67,
+            lineNumber: 66,
             columnNumber: 7
         }, this)
     }, void 0, false);

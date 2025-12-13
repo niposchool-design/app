@@ -6,7 +6,7 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { 
+import {
   X, Home, Users, Library, BarChart3, Award, QrCode,
   Settings, HelpCircle, LogOut, Calendar, Music
 } from 'lucide-react'
@@ -40,14 +40,14 @@ export function ProfessorSidebar({ isOpen, onClose }: ProfessorSidebarProps) {
   const navigationItems = [
     { name: 'Dashboard', path: '/professores', icon: Home },
     { name: 'Turmas', path: '/professores/turmas', icon: Users },
-    { name: 'Conteúdos', path: '/professores/conteudos', icon: Library },
-    { name: 'Aulas (Visualizar)', path: '/alunos/aulas', icon: Calendar },
-    { name: 'Show Final', path: '/alunos/show-final', icon: Music },
-    { name: 'Estatísticas', path: '/professores/estatisticas', icon: BarChart3 },
-    { name: 'Avaliações', path: '/professores/avaliacoes', icon: Award },
-    { name: 'Scanner QR', path: '/professores/scanner', icon: QrCode },
-    { name: 'Ajuda', path: '/professores/ajuda', icon: HelpCircle },
-    { name: 'Configurações', path: '/professores/configuracoes', icon: Settings },
+    { name: 'Conteúdos', path: '/em-construcao', icon: Library },
+    { name: 'Cronograma Aulas', path: '/professores/aulas', icon: Calendar },
+    { name: 'Show Final', path: '/alunos/show-final', icon: Music }, // Professor acessando view de aluno ok
+    { name: 'Estatísticas', path: '/em-construcao', icon: BarChart3 },
+    { name: 'Avaliações', path: '/em-construcao', icon: Award },
+    { name: 'Scanner QR', path: '/em-construcao', icon: QrCode },
+    { name: 'Ajuda', path: '/em-construcao', icon: HelpCircle },
+    { name: 'Configurações', path: '/em-construcao', icon: Settings },
   ]
 
   return (

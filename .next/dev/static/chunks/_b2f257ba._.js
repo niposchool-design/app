@@ -169,7 +169,10 @@ function AuthProvider({ children }) {
     async function signUp(email, password, userData) {
         const { error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["supabase"].auth.signUp({
             email,
-            password
+            password,
+            options: {
+                data: userData
+            }
         });
         if (error) throw error;
     }
@@ -189,7 +192,7 @@ function AuthProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/app/providers/AuthProvider.tsx",
-        lineNumber: 169,
+        lineNumber: 175,
         columnNumber: 5
     }, this);
 }

@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { Calendar, Clock, Trophy, BookOpen } from 'lucide-react'
+import { Calendar, Clock, Trophy, BookOpen, Flower2, Star } from 'lucide-react'
 import { getTodasAulas, getProgressoGeralAluno, getEstatisticasProgresso } from '@/src/lib/supabase/queries/aulas'
 import { AulaCard } from '@/src/components/aulas/AulaCard'
 import { StatsCard } from '@/src/components/aulas/StatsCard'
@@ -22,7 +22,18 @@ async function AulasContent() {
   const estatisticas = await getEstatisticasProgresso('user-id')
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+      {/* Header Section */}
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+          <BookOpen className="w-8 h-8 text-red-600" />
+          Minhas Aulas
+        </h1>
+        <p className="text-gray-600">
+          Seu caminho de aprendizado contínuo. Cada passo é uma vitória.
+        </p>
+      </div>
+
       {/* Estatísticas */}
       <StatsCard
         totalAulas={estatisticas?.totalAulas || 30}
@@ -32,40 +43,50 @@ async function AulasContent() {
       />
 
       {/* Info sobre o Método Alpha */}
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
-            <BookOpen className="w-6 h-6 text-white" />
+      <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-8 border border-red-100 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/40 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+        
+        <div className="relative z-10 flex flex-col md:flex-row items-start gap-6">
+          <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg transform rotate-3">
+            <Flower2 className="w-8 h-8 text-white" />
           </div>
           <div className="flex-1">
-            <h2 className="text-xl font-bold text-gray-900 mb-2">
-              Método Alpha - Aprendizado Progressivo
+            <h2 className="text-2xl font-bold text-gray-900 mb-3">
+              Método Alpha - Jornada Progressiva
             </h2>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              No Método Alpha, você cresce musicalmente de forma contínua e natural. 
-              Cada aula se constrói sobre a anterior, sem divisões artificiais por níveis. 
-              Avance no seu ritmo e desenvolva suas habilidades gradualmente!
+            <p className="text-gray-700 leading-relaxed mb-6 max-w-2xl">
+              No Método Alpha, você cresce musicalmente de forma contínua e natural, como uma árvore que fortalece suas raízes. 
+              Cada aula se constrói sobre a anterior, permitindo que você avance no seu próprio ritmo.
             </p>
+            
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="flex items-center gap-3 bg-white/50 rounded-lg p-3">
-                <Calendar className="w-5 h-5 text-blue-600" />
+              <div className="flex items-center gap-3 bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-red-100/50">
+                <div className="p-2 bg-red-100 rounded-lg">
+                  <Calendar className="w-5 h-5 text-red-600" />
+                </div>
                 <div>
-                  <div className="text-sm font-medium text-gray-900">30 Aulas</div>
-                  <div className="text-xs text-gray-600">Mai - Dez 2025</div>
+                  <div className="text-sm font-bold text-gray-900">30 Aulas</div>
+                  <div className="text-xs text-gray-600">Jornada Completa</div>
                 </div>
               </div>
-              <div className="flex items-center gap-3 bg-white/50 rounded-lg p-3">
-                <Clock className="w-5 h-5 text-blue-600" />
+              
+              <div className="flex items-center gap-3 bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-red-100/50">
+                <div className="p-2 bg-orange-100 rounded-lg">
+                  <Clock className="w-5 h-5 text-orange-600" />
+                </div>
                 <div>
-                  <div className="text-sm font-medium text-gray-900">Progressão Natural</div>
-                  <div className="text-xs text-gray-600">Seu próprio ritmo</div>
+                  <div className="text-sm font-bold text-gray-900">Seu Ritmo</div>
+                  <div className="text-xs text-gray-600">Progressão Natural</div>
                 </div>
               </div>
-              <div className="flex items-center gap-3 bg-white/50 rounded-lg p-3">
-                <Trophy className="w-5 h-5 text-blue-600" />
+              
+              <div className="flex items-center gap-3 bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-red-100/50">
+                <div className="p-2 bg-yellow-100 rounded-lg">
+                  <Trophy className="w-5 h-5 text-yellow-600" />
+                </div>
                 <div>
-                  <div className="text-sm font-medium text-gray-900">Show Final</div>
-                  <div className="text-xs text-gray-600">20 Dezembro</div>
+                  <div className="text-sm font-bold text-gray-900">Show Final</div>
+                  <div className="text-xs text-gray-600">Grande Objetivo</div>
                 </div>
               </div>
             </div>
@@ -75,17 +96,18 @@ async function AulasContent() {
 
       {/* Lista de Aulas */}
       <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold text-gray-900">
-            Todas as Aulas
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <Star className="w-5 h-5 text-red-500 fill-current" />
+            Trilha de Aprendizado
           </h2>
-          <div className="text-sm text-gray-600">
-            {estatisticas?.concluidas || 0} de {estatisticas?.totalAulas || 30} concluídas
+          <div className="px-4 py-2 bg-gray-100 rounded-full text-sm font-medium text-gray-600">
+            {estatisticas?.concluidas || 0} / {estatisticas?.totalAulas || 30} concluídas
           </div>
         </div>
 
         {aulas && aulas.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {aulas.map((aula) => {
               const progressoAula = progresso?.find(p => p.aula_id === aula.id)
               return (
@@ -98,62 +120,27 @@ async function AulasContent() {
             })}
           </div>
         ) : (
-          <div className="text-center py-12 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
-            <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-            <p className="text-gray-600 font-medium">Nenhuma aula disponível ainda</p>
-            <p className="text-sm text-gray-500 mt-1">
-              As aulas serão liberadas em breve. Aguarde!
-            </p>
+          <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-gray-200">
+            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <BookOpen className="w-8 h-8 text-gray-400" />
+            </div>
+            <h3 className="text-lg font-medium text-gray-900">Nenhuma aula encontrada</h3>
+            <p className="text-gray-500 mt-1">As aulas serão liberadas em breve.</p>
           </div>
         )}
       </div>
-
-      {/* Próxima Aula Recomendada */}
-      {estatisticas && estatisticas.proximaAula && (
-        <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
-              <Trophy className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h3 className="font-bold text-gray-900">Próxima Aula Recomendada</h3>
-              <p className="text-sm text-gray-600">Continue sua jornada musical</p>
-            </div>
-          </div>
-          <div className="bg-white/70 rounded-lg p-4">
-            <div className="font-semibold text-gray-900 mb-1">
-              Aula {estatisticas.proximaAula.numero}: {estatisticas.proximaAula.titulo}
-            </div>
-            <div className="text-sm text-gray-600">
-              {estatisticas.proximaAula.descricao_curta}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
 
-export default function AulasPage() {
+export default function MinhasAulasPage() {
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-8 text-white">
-        <h1 className="text-3xl font-bold mb-2">Minhas Aulas 📚</h1>
-        <p className="text-blue-100 text-lg">
-          Sua jornada musical com o Método Alpha
-        </p>
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
       </div>
-
-      {/* Content */}
-      <Suspense fallback={
-        <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="text-gray-600 mt-4">Carregando aulas...</p>
-        </div>
-      }>
-        <AulasContent />
-      </Suspense>
-    </div>
+    }>
+      <AulasContent />
+    </Suspense>
   )
 }

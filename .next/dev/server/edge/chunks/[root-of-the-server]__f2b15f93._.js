@@ -29,7 +29,10 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 // Rotas públicas que não precisam de autenticação
 const publicRoutes = [
     '/',
-    '/login'
+    '/login',
+    '/register',
+    '/esqueci-senha',
+    '/auth/callback'
 ];
 // Mapeamento de roles para suas áreas
 const roleToArea = {
@@ -104,9 +107,10 @@ async function middleware(request) {
         // Fallback para profiles
         if (!role) {
             // @ts-ignore
-            const { data: profile } = await supabase.from('profiles').select('tipo_usuario').eq('id', session.user.id).single();
+            const { data: profile } = await supabase.from('profiles').select('role') // Ajustado para 'role' conforme novo schema
+            .eq('id', session.user.id).single();
             // @ts-ignore
-            role = profile?.tipo_usuario || 'aluno';
+            role = profile?.role || 'aluno';
         }
         const userArea = roleToArea[role] || '/alunos';
         console.log('✅ Sessão válida:', {

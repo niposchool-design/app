@@ -6,9 +6,9 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { 
-  X, Home, Columns, List, UserCheck, GraduationCap, QrCode, 
-  FileText, Music, Settings, HelpCircle, LogOut, Calendar
+import {
+  X, Home, Columns, List, UserCheck, GraduationCap, QrCode,
+  FileText, Music, Settings, HelpCircle, LogOut, Calendar, Users, Trophy
 } from 'lucide-react'
 import { useAuth } from '@/app/providers/AuthProvider'
 import clsx from 'clsx'
@@ -39,26 +39,33 @@ export function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
 
   const navigationItems = [
     { name: 'Dashboard', path: '/admin', icon: Home },
-    
-    // Gestão de Aulas (Admin)
-    { name: 'Aulas - Kanban', path: '/admin/aulas', icon: Columns },
-    { name: 'Aulas - Lista', path: '/admin/aulas/lista', icon: List },
-    
+
+    // Gestão de Aulas e Turmas
+    { name: 'Aulas', path: '/admin/aulas', icon: Columns },
+    { name: 'Turmas', path: '/admin/turmas', icon: Users },
+
+    // Gestão de Conteúdo (Novo)
+    { name: 'Instrumentos', path: '/admin/instrumentos', icon: Music },
+    { name: 'Repertório', path: '/admin/repertorio', icon: FileText },
+
+    // Engajamento (Novo) -- Substituindo placeholder "Diagnóstico"
+    { name: 'Gamificação & XP', path: '/admin/gamificacao', icon: Trophy },
+
     // Gestão de Pessoas
     { name: 'Professores', path: '/admin/professores', icon: UserCheck },
     { name: 'Alunos', path: '/admin/alunos', icon: GraduationCap },
-    
+
     // QR Code
-    { name: 'Gerenciar QR Codes', path: '/admin/qr-codes', icon: QrCode },
-    { name: 'Scanner QR', path: '/admin/scanner', icon: QrCode },
-    
+    { name: 'Gerenciar QR Codes', path: '/em-construcao', icon: QrCode },
+    { name: 'Scanner QR', path: '/em-construcao', icon: QrCode },
+
     // Outras funcionalidades
     { name: 'Banco de Dados', path: '/admin/database', icon: FileText },
-    { name: 'Diagnóstico', path: '/admin/diagnostico', icon: Music },
-    
+    { name: 'Diagnóstico', path: '/em-construcao', icon: Music },
+
     // Comum
-    { name: 'Ajuda', path: '/admin/ajuda', icon: HelpCircle },
-    { name: 'Configurações', path: '/admin/configuracoes', icon: Settings },
+    { name: 'Ajuda', path: '/em-construcao', icon: HelpCircle },
+    { name: 'Configurações', path: '/em-construcao', icon: Settings },
   ]
 
   return (

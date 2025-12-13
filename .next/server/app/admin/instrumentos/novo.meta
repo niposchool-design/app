@@ -1,0 +1,18 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(protected)/layout,_N_T_/(protected)/admin/layout,_N_T_/(protected)/admin/instrumentos/layout,_N_T_/(protected)/admin/instrumentos/novo/layout,_N_T_/(protected)/admin/instrumentos/novo/page,_N_T_/admin/instrumentos/novo"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KHByb3RlY3RlZCk/admin/instrumentos/novo/__PAGE__",
+    "/!KHByb3RlY3RlZCk/admin/instrumentos/novo",
+    "/!KHByb3RlY3RlZCk/admin/instrumentos",
+    "/!KHByb3RlY3RlZCk/admin",
+    "/!KHByb3RlY3RlZCk",
+    "/_index",
+    "/_head"
+  ]
+}

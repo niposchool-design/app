@@ -1,3 +1,0 @@
-module.exports=[45087,a=>{"use strict";var b=a.i(87924);function c(){return(0,b.jsxs)("div",{className:"p-6 lg:p-8",children:[(0,b.jsx)("h1",{className:"text-3xl font-bold text-gray-900",children:"Gestão de Professores"}),(0,b.jsx)("p",{className:"text-gray-600 mt-2",children:"Gerencie os professores do sistema"}),(0,b.jsx)("div",{className:"mt-8 bg-white rounded-xl shadow-sm p-8 border border-gray-200",children:(0,b.jsx)("p",{className:"text-gray-500 text-center",children:"Lista de professores será implementada aqui"})})]})}a.s(["default",()=>c])}];
-
-//# sourceMappingURL=app_%28protected%29_admin_professores_page_tsx_c14ac83f._.js.map

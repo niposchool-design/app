@@ -1,0 +1,3 @@
+{
+  "/(protected)/professores/turmas/[id]/page": "app/(protected)/professores/turmas/[id]/page.js"
+}

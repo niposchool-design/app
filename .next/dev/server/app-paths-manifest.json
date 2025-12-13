@@ -1,4 +1,22 @@
 {
-  "/(protected)/alunos/aulas/[numero]/page": "app/(protected)/alunos/aulas/[numero]/page.js",
-  "/(protected)/alunos/aulas/page": "app/(protected)/alunos/aulas/page.js"
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(auth)/register/page": "app/(auth)/register/page.js",
+  "/(protected)/admin/alunos/page": "app/(protected)/admin/alunos/page.js",
+  "/(protected)/admin/aulas/lista/page": "app/(protected)/admin/aulas/lista/page.js",
+  "/(protected)/admin/aulas/page": "app/(protected)/admin/aulas/page.js",
+  "/(protected)/admin/instrumentos/page": "app/(protected)/admin/instrumentos/page.js",
+  "/(protected)/admin/page": "app/(protected)/admin/page.js",
+  "/(protected)/admin/professores/page": "app/(protected)/admin/professores/page.js",
+  "/(protected)/admin/repertorio/page": "app/(protected)/admin/repertorio/page.js",
+  "/(protected)/admin/turmas/page": "app/(protected)/admin/turmas/page.js",
+  "/(protected)/alunos/aulas/page": "app/(protected)/alunos/aulas/page.js",
+  "/(protected)/alunos/instrumentos/page": "app/(protected)/alunos/instrumentos/page.js",
+  "/(protected)/alunos/page": "app/(protected)/alunos/page.js",
+  "/(protected)/alunos/repertorio/page": "app/(protected)/alunos/repertorio/page.js",
+  "/(protected)/alunos/show-final/page": "app/(protected)/alunos/show-final/page.js",
+  "/(protected)/alunos/videos/page": "app/(protected)/alunos/videos/page.js",
+  "/(protected)/em-construcao/page": "app/(protected)/em-construcao/page.js",
+  "/(protected)/professores/page": "app/(protected)/professores/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js"
 }

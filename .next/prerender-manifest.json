@@ -77,7 +77,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/admin/alunos": {
+    "/register": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -90,8 +90,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/admin/alunos",
-      "dataRoute": "/admin/alunos.rsc",
+      "srcRoute": "/register",
+      "dataRoute": "/register.rsc",
       "prefetchDataRoute": null,
       "allowHeader": [
         "host",
@@ -102,7 +102,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/admin": {
+    "/admin/aulas/nova": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -115,8 +115,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/admin",
-      "dataRoute": "/admin.rsc",
+      "srcRoute": "/admin/aulas/nova",
+      "dataRoute": "/admin/aulas/nova.rsc",
       "prefetchDataRoute": null,
       "allowHeader": [
         "host",
@@ -127,7 +127,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/admin/professores": {
+    "/admin/database": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -140,8 +140,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/admin/professores",
-      "dataRoute": "/admin/professores.rsc",
+      "srcRoute": "/admin/database",
+      "dataRoute": "/admin/database.rsc",
       "prefetchDataRoute": null,
       "allowHeader": [
         "host",
@@ -152,7 +152,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/alunos": {
+    "/admin/gamificacao": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -165,8 +165,83 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/alunos",
-      "dataRoute": "/alunos.rsc",
+      "srcRoute": "/admin/gamificacao",
+      "dataRoute": "/admin/gamificacao.rsc",
+      "prefetchDataRoute": null,
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/admin/instrumentos/novo": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/admin/instrumentos/novo",
+      "dataRoute": "/admin/instrumentos/novo.rsc",
+      "prefetchDataRoute": null,
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/admin/turmas/nova": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/admin/turmas/nova",
+      "dataRoute": "/admin/turmas/nova.rsc",
+      "prefetchDataRoute": null,
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/em-construcao": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/em-construcao",
+      "dataRoute": "/em-construcao.rsc",
       "prefetchDataRoute": null,
       "allowHeader": [
         "host",

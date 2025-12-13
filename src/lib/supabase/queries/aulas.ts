@@ -9,6 +9,39 @@ import type {
 } from '@/lib/types/aulas';
 
 /**
+ * Busca uma aula pelo ID (uuid)
+ */
+export async function getAulaById(id: string): Promise<Aula | null> {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('aulas')
+    .select(`
+      id,
+      numero,
+      titulo,
+      data_programada,
+      objetivo_didatico,
+      resumo_atividades,
+      desafio_alpha,
+      nivel,
+      formato,
+      status,
+      modulo_id,
+      responsavel_id,
+      detalhes_aula
+    `)
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    console.error(`Erro ao buscar aula por ID ${id}:`, error);
+    return null;
+  }
+
+  return data as Aula;
+}
+/**
  * Busca todas as aulas (progressão contínua - Método Alpha)
  * Ordenadas por número (0-29)
  */
@@ -192,13 +225,13 @@ export async function getProgressoGeralAluno(
     // Tabela de progresso ainda não implementada, retornar array vazio
     // Verifica se é erro de tabela não existente (objeto vazio {} ou código PGRST)
     const errorStr = JSON.stringify(error);
-    const isTableNotFound = 
-      errorStr === '{}' || 
-      error.code === 'PGRST116' || 
+    const isTableNotFound =
+      errorStr === '{}' ||
+      error.code === 'PGRST116' ||
       error.code === '42P01' ||
       error.message?.includes('does not exist') ||
       error.message?.includes('relation') && error.message?.includes('does not exist');
-    
+
     if (isTableNotFound) {
       console.log('Tabela aluno_progresso_aula não existe ainda. Retornando array vazio.');
       return [];
@@ -222,7 +255,7 @@ export async function getEstatisticasProgresso(
   const { count: totalAulas, error: errorTotal } = await supabase
     .from('aulas')
     .select('id', { count: 'exact' });
-  
+
   if (errorTotal) {
     console.error('Erro ao contar aulas:', errorTotal);
     return {

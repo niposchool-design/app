@@ -21,12 +21,44 @@
   },
   "dynamicRoutes": [
     {
+      "page": "/admin/aulas/[id]",
+      "regex": "^/admin/aulas/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/aulas/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/admin/professores/[id]",
+      "regex": "^/admin/professores/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/professores/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/alunos/aulas/[numero]",
       "regex": "^/alunos/aulas/([^/]+?)(?:/)?$",
       "routeKeys": {
         "nxtPnumero": "nxtPnumero"
       },
       "namedRegex": "^/alunos/aulas/(?<nxtPnumero>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/alunos/instrumentos/[id]",
+      "regex": "^/alunos/instrumentos/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/alunos/instrumentos/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/professores/turmas/[id]",
+      "regex": "^/professores/turmas/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/professores/turmas/(?<nxtPid>[^/]+?)(?:/)?$"
     }
   ],
   "staticRoutes": [
@@ -73,10 +105,58 @@
       "namedRegex": "^/admin/aulas/lista(?:/)?$"
     },
     {
+      "page": "/admin/aulas/nova",
+      "regex": "^/admin/aulas/nova(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/aulas/nova(?:/)?$"
+    },
+    {
+      "page": "/admin/database",
+      "regex": "^/admin/database(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/database(?:/)?$"
+    },
+    {
+      "page": "/admin/gamificacao",
+      "regex": "^/admin/gamificacao(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/gamificacao(?:/)?$"
+    },
+    {
+      "page": "/admin/instrumentos",
+      "regex": "^/admin/instrumentos(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/instrumentos(?:/)?$"
+    },
+    {
+      "page": "/admin/instrumentos/novo",
+      "regex": "^/admin/instrumentos/novo(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/instrumentos/novo(?:/)?$"
+    },
+    {
       "page": "/admin/professores",
       "regex": "^/admin/professores(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/admin/professores(?:/)?$"
+    },
+    {
+      "page": "/admin/repertorio",
+      "regex": "^/admin/repertorio(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/repertorio(?:/)?$"
+    },
+    {
+      "page": "/admin/turmas",
+      "regex": "^/admin/turmas(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/turmas(?:/)?$"
+    },
+    {
+      "page": "/admin/turmas/nova",
+      "regex": "^/admin/turmas/nova(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/turmas/nova(?:/)?$"
     },
     {
       "page": "/alunos",
@@ -91,10 +171,52 @@
       "namedRegex": "^/alunos/aulas(?:/)?$"
     },
     {
+      "page": "/alunos/conquistas",
+      "regex": "^/alunos/conquistas(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alunos/conquistas(?:/)?$"
+    },
+    {
+      "page": "/alunos/instrumentos",
+      "regex": "^/alunos/instrumentos(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alunos/instrumentos(?:/)?$"
+    },
+    {
+      "page": "/alunos/perfil",
+      "regex": "^/alunos/perfil(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alunos/perfil(?:/)?$"
+    },
+    {
+      "page": "/alunos/repertorio",
+      "regex": "^/alunos/repertorio(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alunos/repertorio(?:/)?$"
+    },
+    {
+      "page": "/alunos/show-final",
+      "regex": "^/alunos/show\\-final(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alunos/show\\-final(?:/)?$"
+    },
+    {
+      "page": "/alunos/videos",
+      "regex": "^/alunos/videos(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alunos/videos(?:/)?$"
+    },
+    {
       "page": "/api/debug/stats",
       "regex": "^/api/debug/stats(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/debug/stats(?:/)?$"
+    },
+    {
+      "page": "/em-construcao",
+      "regex": "^/em\\-construcao(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/em\\-construcao(?:/)?$"
     },
     {
       "page": "/login",
@@ -107,6 +229,24 @@
       "regex": "^/professores(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/professores(?:/)?$"
+    },
+    {
+      "page": "/professores/aulas",
+      "regex": "^/professores/aulas(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/professores/aulas(?:/)?$"
+    },
+    {
+      "page": "/professores/turmas",
+      "regex": "^/professores/turmas(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/professores/turmas(?:/)?$"
+    },
+    {
+      "page": "/register",
+      "regex": "^/register(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/register(?:/)?$"
     }
   ],
   "dataRoutes": [],

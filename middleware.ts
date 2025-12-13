@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import type { Database } from './lib/supabase/database.types'
 
 // Rotas públicas que não precisam de autenticação
-const publicRoutes = ['/', '/login']
+const publicRoutes = ['/', '/login', '/register', '/esqueci-senha', '/auth/callback']
 
 // Mapeamento de roles para suas áreas
 const roleToArea: Record<string, string> = {
@@ -94,12 +94,12 @@ export async function middleware(request: NextRequest) {
       // @ts-ignore
       const { data: profile } = await supabase
         .from('profiles')
-        .select('tipo_usuario')
+        .select('role') // Ajustado para 'role' conforme novo schema
         .eq('id', session.user.id)
         .single()
-      
+
       // @ts-ignore
-      role = profile?.tipo_usuario || 'aluno'
+      role = profile?.role || 'aluno'
     }
 
     const userArea = roleToArea[role] || '/alunos'
