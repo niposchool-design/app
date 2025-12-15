@@ -16,18 +16,12 @@ export async function GET() {
 
     if (error) {
       console.error('Erro ao buscar períodos:', error);
-      return NextResponse.json(
-        { error: 'Erro ao buscar períodos', details: error },
-        { status: 500 }
-      );
+      return NextResponse.json([]);
     }
 
     return NextResponse.json(data || []);
   } catch (error) {
     console.error('Erro ao carregar períodos:', error);
-    return NextResponse.json(
-      { error: 'Erro interno ao carregar períodos' },
-      { status: 500 }
-    );
+    return NextResponse.json([]);
   }
 }

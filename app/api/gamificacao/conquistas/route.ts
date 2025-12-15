@@ -12,18 +12,12 @@ export async function GET() {
 
     if (error) {
       console.error('Erro ao buscar conquistas:', error);
-      return NextResponse.json(
-        { error: 'Erro ao buscar conquistas', details: error },
-        { status: 500 }
-      );
+      return NextResponse.json([]);
     }
 
     return NextResponse.json(data || []);
   } catch (error) {
     console.error('Erro ao carregar conquistas:', error);
-    return NextResponse.json(
-      { error: 'Erro interno ao carregar conquistas' },
-      { status: 500 }
-    );
+    return NextResponse.json([]);
   }
 }

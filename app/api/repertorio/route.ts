@@ -12,18 +12,14 @@ export async function GET() {
 
     if (error) {
       console.error('Erro ao buscar repertório:', error);
-      return NextResponse.json(
-        { error: 'Erro ao buscar repertório', details: error },
-        { status: 500 }
-      );
+      // Retorna array vazio para não quebrar o frontend
+      return NextResponse.json([]);
     }
 
     return NextResponse.json(data || []);
   } catch (error) {
     console.error('Erro ao carregar repertório:', error);
-    return NextResponse.json(
-      { error: 'Erro interno ao carregar repertório' },
-      { status: 500 }
-    );
+    // Retorna array vazio para não quebrar o frontend
+    return NextResponse.json([]);
   }
 }
