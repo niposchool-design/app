@@ -168,6 +168,18 @@ export async function getAulaPorNumero(numero: number): Promise<AulaCompleta | n
     .eq('aula_id', aula.id)
     .order('ordem', { ascending: true });
 
+  // Buscar atividades
+  const { data: atividades } = await supabase
+    .from('aula_atividades')
+    .select('*')
+    .eq('aula_id', aula.id);
+
+  // Buscar desafios
+  const { data: desafios } = await supabase
+    .from('aula_desafios')
+    .select('*')
+    .eq('aula_id', aula.id);
+
   return {
     ...aula,
     materiais: materiais || [],
@@ -175,6 +187,8 @@ export async function getAulaPorNumero(numero: number): Promise<AulaCompleta | n
     feedbacks: feedbacks || [],
     registros: registros || [],
     checklist: checklist || [],
+    atividades: atividades || [],
+    desafios: desafios || [],
   } as AulaCompleta;
 }
 

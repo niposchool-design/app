@@ -1,6 +1,7 @@
 'use client'
 
 import OrientalDashboardLayout from '@/components/layouts/OrientalDashboardLayout'
+import AdminHeader from './_components/AdminHeader'
 
 export default function AdminLayout({
   children,
@@ -9,6 +10,7 @@ export default function AdminLayout({
 }) {
   return (
     <OrientalDashboardLayout role="admin">
+      <AdminHeader />
       {children}
     </OrientalDashboardLayout>
   )

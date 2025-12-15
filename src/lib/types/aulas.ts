@@ -1,3 +1,4 @@
+
 // Tipos e interfaces para o sistema de aulas - Método Alpha
 import { CheckCircle, Clock, AlertCircle, XCircle, ListTodo, LucideIcon } from 'lucide-react';
 
@@ -91,6 +92,26 @@ export interface Checklist {
   created_at?: string;
 }
 
+export interface Atividade {
+  id: string;
+  aula_id: string;
+  titulo: string;
+  descricao: string;
+  tipo: 'quiz' | 'pratica' | 'leitura';
+  obrigatorio: boolean;
+  pontos: number;
+}
+
+export interface Desafio {
+  id: string;
+  aula_id: string;
+  titulo: string;
+  descricao: string;
+  criterios_aceite: string;
+  pontos_xp: number;
+  badge_reward_id?: string;
+}
+
 export interface AulaCompleta extends Aula {
   materiais?: Material[];
   pre_requisitos?: PreRequisito[];
@@ -98,6 +119,8 @@ export interface AulaCompleta extends Aula {
   feedbacks?: Feedback[];
   registros?: Registro[];
   checklist?: Checklist[];
+  atividades?: Atividade[];
+  desafios?: Desafio[];
 }
 
 // Filtros para listagem de aulas
@@ -116,6 +139,7 @@ export interface EstatisticasProgresso {
   concluidas: number;
   emAndamento: number;
   desafiosAprovados: number;
+  porcentagemConclusao: number;
   proximaAula?: {
     numero: number;
     titulo: string;

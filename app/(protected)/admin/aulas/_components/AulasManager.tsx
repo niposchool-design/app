@@ -1,10 +1,11 @@
-
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Aula } from '@/src/lib/types/aulas';
-import { Columns, List, Calendar as CalendarIcon, Plus } from 'lucide-react';
+import { updateAula } from '@/src/lib/supabase/mutations/aulas';
+import { Columns, List, Calendar as CalendarIcon, Plus, MoreHorizontal, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface AulasManagerProps {
     aulasIniciais: Aula[];
@@ -16,7 +17,30 @@ type ViewMode = 'kanban' | 'list' | 'calendar';
 
 export function AulasManager({ aulasIniciais, allowedViews = ['kanban', 'list', 'calendar'], readOnly = false }: AulasManagerProps) {
     const [view, setView] = useState<ViewMode>(allowedViews[0]);
-    const [aulas] = useState<Aula[]>(aulasIniciais);
+    const [aulas, setAulas] = useState<Aula[]>(aulasIniciais);
+    const router = useRouter();
+
+    useEffect(() => {
+        setAulas(aulasIniciais);
+    }, [aulasIniciais]);
+
+    const handleStatusChange = async (aulaId: string, newStatus: string) => {
+        // Optimistic update
+        const previousAulas = [...aulas];
+        setAulas(current => current.map(a =>
+            a.id === aulaId ? { ...a, status: newStatus } : a
+        ));
+
+        try {
+            await updateAula(aulaId, { status: newStatus });
+            router.refresh();
+        } catch (error) {
+            console.error("Falha ao atualizar status", error);
+            // Revert on error
+            setAulas(previousAulas);
+            alert("Erro ao mover aula. Tente novamente.");
+        }
+    };
 
     return (
         <div className="space-y-6">
@@ -71,7 +95,7 @@ export function AulasManager({ aulasIniciais, allowedViews = ['kanban', 'list', 
             </div>
 
             <div className="mt-6">
-                {view === 'kanban' && <AulasKanbanView aulas={aulas} />}
+                {view === 'kanban' && <AulasKanbanView aulas={aulas} onStatusChange={handleStatusChange} />}
                 {view === 'list' && <AulasListView aulas={aulas} />}
                 {view === 'calendar' && <AulasCalendarView aulas={aulas} />}
             </div>
@@ -79,51 +103,83 @@ export function AulasManager({ aulasIniciais, allowedViews = ['kanban', 'list', 
     );
 }
 
-// Sub-componentes (podem ser extraídos depois se crescerem)
+// Sub-componentes
 
-function AulasKanbanView({ aulas }: { aulas: Aula[] }) {
+interface KanbanViewProps {
+    aulas: Aula[];
+    onStatusChange: (id: string, status: string) => void;
+}
+
+function AulasKanbanView({ aulas, onStatusChange }: KanbanViewProps) {
+    // Definindo colunas com os status EXATOS do banco de dados (StatusAula)
     const columns = [
-        { id: 'rascunho', title: 'Rascunho', color: 'bg-gray-100 text-gray-700' },
-        { id: 'agendada', title: 'Agendada', color: 'bg-blue-100 text-blue-700' },
-        { id: 'concluida', title: 'Concluída', color: 'bg-green-100 text-green-700' },
-        { id: 'cancelada', title: 'Cancelada', color: 'bg-red-100 text-red-700' },
+        { id: 'A Fazer', title: 'A Fazer', color: 'bg-gray-100 text-gray-700', border: 'border-t-gray-400' },
+        { id: 'Em Preparação', title: 'Em Preparação', color: 'bg-blue-50 text-blue-700', border: 'border-t-blue-500' },
+        { id: 'Revisão', title: 'Revisão', color: 'bg-yellow-50 text-yellow-700', border: 'border-t-yellow-500' },
+        { id: 'Concluída', title: 'Concluída', color: 'bg-green-50 text-green-700', border: 'border-t-green-500' },
+        { id: 'Cancelada', title: 'Cancelada', color: 'bg-red-50 text-red-700', border: 'border-t-red-500' },
     ];
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto pb-4">
+        <div className="flex gap-6 overflow-x-auto pb-4 items-start h-[calc(100vh-250px)]">
             {columns.map(col => (
-                <div key={col.id} className="min-w-[280px] flex flex-col h-full bg-gray-50 rounded-xl p-4 border border-gray-200/50">
-                    <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-semibold text-gray-700">{col.title}</h3>
-                        <span className={`text-xs font-bold px-2 py-1 rounded-full ${col.color}`}>
-                            {aulas.filter(a => (a.status || 'rascunho') === col.id).length}
+                <div key={col.id} className="min-w-[280px] w-[320px] flex flex-col h-full bg-gray-50/50 rounded-xl p-4 border border-gray-200">
+                    <div className={`flex items-center justify-between mb-4 pb-2 border-b border-gray-100 ${col.border} border-t-4 pt-2 rounded-t-sm`}>
+                        <h3 className="font-bold text-gray-700 text-sm uppercase tracking-wide">{col.title}</h3>
+                        <span className="text-xs font-bold text-gray-400 bg-white px-2 py-1 rounded shadow-sm border border-gray-100">
+                            {aulas.filter(a => (a.status || 'A Fazer') === col.id).length}
                         </span>
                     </div>
 
-                    <div className="space-y-3 flex-1">
-                        {aulas.filter(a => (a.status || 'rascunho') === col.id).map(aula => (
-                            <div key={aula.id} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-all cursor-pointer">
+                    <div className="space-y-3 flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                        {aulas.filter(a => (a.status || 'A Fazer') === col.id).map(aula => (
+                            <div key={aula.id} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-all group relative">
                                 <div className="flex justify-between items-start mb-2">
                                     <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600">
                                         {aula.numero}
                                     </div>
-                                    <Link href={`/admin/aulas/${aula.id}`} className="text-gray-400 hover:text-blue-600">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                                    </Link>
+                                    <div className="relative group/actions">
+                                        <button className="text-gray-400 hover:text-gray-600 p-1 hover:bg-gray-100 rounded">
+                                            <MoreHorizontal size={16} />
+                                        </button>
+                                        <div className="absolute right-0 top-full mt-1 w-40 bg-white rounded-lg shadow-xl border border-gray-100 hidden group-hover/actions:block z-20 p-1">
+                                            <div className="text-xs font-semibold text-gray-400 px-3 py-1 uppercase tracking-wider">Mover para:</div>
+                                            {columns.filter(c => c.id !== col.id).map(targetCol => (
+                                                <button
+                                                    key={targetCol.id}
+                                                    onClick={() => onStatusChange(aula.id, targetCol.id)}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-gray-50 rounded text-gray-700 font-medium"
+                                                >
+                                                    {targetCol.title}
+                                                </button>
+                                            ))}
+                                            <div className="h-px bg-gray-100 my-1"></div>
+                                            <Link href={`/admin/aulas/editar/${aula.id}`} className="block w-full text-left px-3 py-2 text-xs hover:bg-gray-50 rounded text-gray-700 font-medium">
+                                                Editar Aula
+                                            </Link>
+                                        </div>
+                                    </div>
                                 </div>
-                                <h4 className="font-semibold text-gray-900 mb-1">{aula.titulo}</h4>
-                                <p className="text-xs text-gray-500 line-clamp-2 mb-2">{aula.objetivo_didatico}</p>
+                                <Link href={`/admin/aulas/${aula.id}`} className="block">
+                                    <h4 className="font-semibold text-gray-900 mb-1 hover:text-blue-600 transition-colors line-clamp-2 text-sm">{aula.titulo}</h4>
+                                    <p className="text-xs text-gray-500 line-clamp-3 mb-3">{aula.objetivo_didatico || 'Sem descrição.'}</p>
+                                </Link>
 
                                 {aula.data_programada && (
-                                    <div className="flex items-center text-xs text-gray-500 mt-2">
-                                        <CalendarIcon size={12} className="mr-1" />
-                                        {new Date(aula.data_programada).toLocaleDateString()}
+                                    <div className="flex items-center justify-between text-xs text-gray-500 pt-3 border-t border-gray-50 mt-2">
+                                        <div className="flex items-center" title="Data Programada">
+                                            <CalendarIcon size={12} className="mr-1 text-gray-400" />
+                                            {new Date(aula.data_programada).toLocaleDateString()}
+                                        </div>
+                                        <Link href={`/admin/aulas/${aula.id}`} className="text-blue-500 hover:text-blue-700 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity font-medium">
+                                            Ver <ArrowRight size={10} />
+                                        </Link>
                                     </div>
                                 )}
                             </div>
                         ))}
-                        {aulas.filter(a => (a.status || 'rascunho') === col.id).length === 0 && (
-                            <div className="text-center py-6 text-gray-400 text-sm border-2 border-dashed border-gray-200 rounded-lg">
+                        {aulas.filter(a => (a.status || 'A Fazer') === col.id).length === 0 && (
+                            <div className="text-center py-12 text-gray-300 text-sm border-2 border-dashed border-gray-100 rounded-lg">
                                 Vazio
                             </div>
                         )}
@@ -143,6 +199,7 @@ function AulasListView({ aulas }: { aulas: Aula[] }) {
                         <tr>
                             <th className="px-6 py-4 w-20">#</th>
                             <th className="px-6 py-4">Título</th>
+                            <th className="px-6 py-4">Objetivo</th>
                             <th className="px-6 py-4">Data</th>
                             <th className="px-6 py-4">Status</th>
                             <th className="px-6 py-4 text-right">Ações</th>
@@ -150,26 +207,32 @@ function AulasListView({ aulas }: { aulas: Aula[] }) {
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                         {aulas.map((aula) => (
-                            <tr key={aula.id} className="hover:bg-gray-50 transition-colors">
+                            <tr key={aula.id} className="hover:bg-gray-50 transition-colors group">
                                 <td className="px-6 py-4 font-medium text-gray-900">{aula.numero}</td>
-                                <td className="px-6 py-4">
-                                    <div className="font-medium text-gray-900">{aula.titulo}</div>
+                                <td className="px-6 py-4 font-medium text-gray-900 hover:text-purple-600">
+                                    <Link href={`/admin/aulas/${aula.id}`}>
+                                        {aula.titulo}
+                                    </Link>
+                                </td>
+                                <td className="px-6 py-4 max-w-xs">
+                                    <div className="text-xs text-gray-500 truncate" title={aula.objetivo_didatico}>{aula.objetivo_didatico}</div>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                    {aula.data_programada ? new Date(aula.data_programada).toLocaleDateString() : <span className="text-gray-300">-</span>}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {aula.data_programada ? new Date(aula.data_programada).toLocaleDateString() : '-'}
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border capitalize
-                    ${aula.status === 'agendada' ? 'bg-blue-50 text-blue-700 border-blue-100' : ''}
-                    ${aula.status === 'concluida' ? 'bg-green-50 text-green-700 border-green-100' : ''}
-                    ${aula.status === 'rascunho' ? 'bg-gray-100 text-gray-700 border-gray-200' : ''}
-                    ${aula.status === 'cancelada' ? 'bg-red-50 text-red-700 border-red-100' : ''}
+                                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border
+                    ${aula.status === 'Em Preparação' ? 'bg-blue-50 text-blue-700 border-blue-100' : ''}
+                    ${aula.status === 'Concluída' ? 'bg-green-50 text-green-700 border-green-100' : ''}
+                    ${aula.status === 'A Fazer' ? 'bg-gray-100 text-gray-700 border-gray-200' : ''}
+                    ${aula.status === 'Revisão' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' : ''}
+                    ${aula.status === 'Cancelada' ? 'bg-red-50 text-red-700 border-red-100' : ''}
                   `}>
-                                        {aula.status || 'Rascunho'}
+                                        {aula.status || 'A Fazer'}
                                     </span>
                                 </td>
                                 <td className="px-6 py-4 text-right">
-                                    <Link href={`/admin/aulas/${aula.id}`} className="text-blue-600 hover:text-blue-800 font-medium">Editar</Link>
+                                    <Link href={`/admin/aulas/editar/${aula.id}`} className="text-blue-600 hover:text-blue-800 font-medium hover:underline">Editar</Link>
                                 </td>
                             </tr>
                         ))}
@@ -181,34 +244,53 @@ function AulasListView({ aulas }: { aulas: Aula[] }) {
 }
 
 function AulasCalendarView({ aulas }: { aulas: Aula[] }) {
-    // Simplificação: Listar aulas agrupadas por mês/data futura
-    const sortedAulas = [...aulas].sort((a, b) => new Date(a.data_programada || '').getTime() - new Date(b.data_programada || '').getTime());
+    // Ordenar com segurança (evitar crash se data for nula)
+    const sortedAulas = [...aulas].filter(a => a.data_programada).sort((a, b) => {
+        const timeA = new Date(a.data_programada!).getTime();
+        const timeB = new Date(b.data_programada!).getTime();
+        return timeA - timeB;
+    });
 
     return (
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
+            <div className="grid grid-cols-7 gap-y-4 gap-x-2">
                 {/* Header Dias da Semana (Visual Only for now) */}
-                {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map(d => (
-                    <div key={d} className="text-gray-400 text-xs font-semibold uppercase text-center py-2">{d}</div>
+                {['D', 'S', 'T', 'Q', 'Q', 'S', 'S'].map(d => (
+                    <div key={d} className="text-gray-400 text-xs font-bold uppercase text-center">{d}</div>
                 ))}
 
-                {/* Placeholder Simples de Cards em Grid representando dias */}
+                {/* Placeholder Simples de Cards em Grid representando dias - Apenas visual */}
                 {Array.from({ length: 30 }).map((_, i) => (
-                    <div key={i} className="min-h-[100px] bg-gray-50 border border-gray-100 rounded-lg p-2 relative group hover:border-blue-200 transition-colors">
-                        <span className="text-xs text-gray-400 absolute top-2 right-2">{i + 1}</span>
-                        {/* Renderizar aula se houver neste dia (logica ficticia para demo visual) */}
+                    <div key={i} className="min-h-[80px] bg-gray-50/50 border border-gray-100 rounded-lg p-1 relative flex flex-col items-center justify-center opacity-70">
+                        <span className="text-[10px] text-gray-300 absolute top-1 right-2">{i + 1}</span>
                     </div>
                 ))}
             </div>
-            <div className="mt-8 text-center bg-yellow-50 p-4 rounded-lg border border-yellow-200 text-yellow-800 text-sm">
-                <p>Visualização de calendário completa será implementada com biblioteca dedicada (ex: react-calendar) nas próximas iterações.</p>
-                <div className="mt-4 flex flex-wrap gap-2 justify-center">
-                    {sortedAulas.filter(a => a.data_programada).map(aula => (
-                        <div key={aula.id} className="bg-white px-3 py-1 rounded shadow-sm border border-gray-200 text-xs">
-                            <span className="font-bold">{new Date(aula.data_programada!).toLocaleDateString()}</span> - {aula.titulo}
-                        </div>
-                    ))}
-                </div>
+
+            <div className="mt-8">
+                <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <CalendarIcon size={18} className="text-purple-600" />
+                    Próximas Aulas Agendadas
+                </h3>
+                {sortedAulas.length === 0 ? (
+                    <div className="text-gray-500 italic p-4 bg-gray-50 rounded border border-gray-200">
+                        Nenhuma aula com data programada encontrada.
+                    </div>
+                ) : (
+                    <div className="flex flex-wrap gap-3">
+                        {sortedAulas.map(aula => (
+                            <Link key={aula.id} href={`/admin/aulas/${aula.id}`} className="group bg-white pl-3 pr-4 py-2 rounded-lg shadow-sm border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all flex items-center gap-3">
+                                <div className="bg-purple-50 text-purple-700 font-bold text-xs px-2 py-1 rounded">
+                                    {new Date(aula.data_programada!).getDate()}/{new Date(aula.data_programada!).getMonth() + 1}
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="font-medium text-gray-900 text-sm group-hover:text-purple-700">{aula.titulo}</span>
+                                    <span className="text-[10px] text-gray-500">{aula.status}</span>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

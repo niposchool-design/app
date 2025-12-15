@@ -44,3 +44,104 @@ body {
   background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
 }
 
+/* ========================================
+   ADMIN - Paleta Executiva Roxa
+   ======================================== */
+
+/* Cores Principais Admin */
+:root {
+  --admin-primary: #7c3aed;      /* Purple-600 */
+  --admin-dark: #6d28d9;         /* Purple-700 */
+  --admin-darker: #5b21b6;       /* Purple-800 */
+  --admin-darkest: #4c1d95;      /* Purple-900 */
+  --admin-light: #a78bfa;        /* Purple-400 */
+  --admin-lighter: #c4b5fd;      /* Purple-300 */
+  --admin-bg: #faf5ff;           /* Purple-50 */
+  --admin-accent: #818cf8;       /* Indigo-400 */
+}
+
+/* Cards executivos com bordas sutis */
+.admin-card {
+  @apply bg-white rounded-xl shadow-sm border border-slate-200/80 hover:shadow-lg hover:border-purple-200 transition-all duration-300;
+}
+
+/* Gradiente executivo roxo */
+.admin-gradient {
+  @apply bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-950;
+}
+
+/* Badge/Tag profissional */
+.admin-badge {
+  @apply px-3 py-1.5 rounded-lg bg-purple-500/10 border border-purple-400/20 text-purple-200 text-xs font-semibold tracking-wide uppercase backdrop-blur-sm;
+}
+
+/* Botão primário admin */
+.admin-btn-primary {
+  @apply px-5 py-2.5 bg-purple-600 text-white rounded-xl text-sm font-semibold shadow-lg shadow-purple-900/30 hover:bg-purple-500 transition-all;
+}
+
+/* Botão secundário admin */
+.admin-btn-secondary {
+  @apply px-5 py-2.5 bg-white text-purple-900 rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl hover:bg-purple-50 transition-all;
+}
+
+/* Input profissional */
+.admin-input {
+  @apply w-full bg-slate-50 border border-slate-200/50 rounded-lg px-4 py-2.5 text-sm text-slate-700 placeholder:text-slate-400 focus:ring-2 focus:ring-purple-100 focus:border-purple-300 transition-all outline-none;
+}
+
+/* Scrollbar customizada para admin */
+.admin-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.admin-scrollbar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.admin-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.admin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a78bfa;
+}
+
+/* KPI Cards - Design Corporativo */
+.admin-kpi-card {
+  @apply bg-white rounded-xl p-6 shadow-sm border border-slate-200/80 hover:shadow-lg hover:border-purple-200 transition-all duration-300;
+}
+
+/* Header Section Profissional */
+.admin-section-header {
+  @apply flex items-center gap-3 mb-4 pb-3 border-b border-slate-100;
+}
+
+/* Status indicator profissional */
+.admin-status-online {
+  @apply flex items-center gap-1.5 text-emerald-300 text-xs font-semibold bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-400/20;
+}
+
+/* Tabelas executivas */
+.admin-table {
+  @apply w-full text-sm text-left;
+}
+
+.admin-table thead {
+  @apply bg-slate-50 text-slate-600 text-xs font-semibold uppercase tracking-wider;
+}
+
+.admin-table tbody tr {
+  @apply border-b border-slate-100 hover:bg-slate-50/50 transition-colors;
+}
+
+.admin-table th {
+  @apply px-6 py-3;
+}
+
+.admin-table td {
+  @apply px-6 py-4;
+}

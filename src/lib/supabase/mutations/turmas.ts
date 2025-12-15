@@ -1,52 +1,63 @@
+'use server'
 
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/server';
 import { Turma } from '@/src/lib/types/users_turmas';
+import { revalidatePath } from 'next/cache';
 
 // Criar nova turma
 export async function criarTurma(dados: Partial<Turma>) {
-    // @ts-ignore
-    const { data, error } = await (supabase as any)
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
         .from('turmas')
-        .insert([dados])
+        .insert([dados] as any)
         .select()
         .single();
 
     if (error) {
         console.error('Erro ao criar turma:', error);
-        throw error;
+        throw new Error(error.message);
     }
 
+    revalidatePath('/admin/turmas');
     return data;
 }
 
 // Atualizar turma existente
 export async function atualizarTurma(id: string, dados: Partial<Turma>) {
-    // @ts-ignore
-    const { data, error } = await (supabase as any)
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
         .from('turmas')
-        .update(dados)
+        .update(dados as any)
         .eq('id', id)
         .select()
         .single();
 
     if (error) {
         console.error('Erro ao atualizar turma:', error);
-        throw error;
+        throw new Error(error.message);
     }
 
+    revalidatePath('/admin/turmas');
+    revalidatePath(`/admin/turmas/${id}`);
+    revalidatePath(`/admin/turmas/editar/${id}`);
     return data;
 }
 
-// Excluir turma (ou inativar, dependendo da regra de negócio. Aqui vamos deletar fisicamente por enquanto)
+// Excluir turma
 export async function deletarTurma(id: string) {
-    // @ts-ignore
-    const { error } = await (supabase as any)
+    const supabase = await createClient();
+
+    const { error } = await supabase
         .from('turmas')
         .delete()
         .eq('id', id);
 
     if (error) {
         console.error('Erro ao deletar turma:', error);
-        throw error;
+        throw new Error(error.message);
     }
+
+    revalidatePath('/admin/turmas');
 }

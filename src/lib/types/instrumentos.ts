@@ -10,35 +10,69 @@ export interface CategoriaInstrumento {
 export interface Instrumento {
     id: string;
     nome: string;
-    categoria_id: string;
-    categoria?: CategoriaInstrumento;
-
-    // Detalhes Culturais
-    origem?: string;
-    historia?: string;
-    curiosidades?: string;
-    uso_tradicional?: string;
-    uso_moderno?: string;
-
-    // Técnico
-    classificacao?: string;
-    material?: string;
-    afinacao?: string;
-    tecnicas_basicas?: string;
-
-    // Midia
+    categoria?: string; // No banco é uma string (varchar), não FK
+    descricao?: string;
     imagem_url?: string;
-    galeria_imagens?: string[]; // JSONB
-    audio_exemplo_url?: string;
-    video_demonstracao_url?: string;
-
-    // Pedagógico
-    nivel_dificuldade?: 'iniciante' | 'intermediário' | 'avançado';
-    idade_recomendada?: string;
-    pre_requisitos?: string;
-
-    // Logística
-    disponivel_escola: boolean;
-    pode_emprestar: boolean;
     ativo: boolean;
+    nivel_dificuldade?: string;
+    ordem_exibicao?: number;
+    criado_em?: string;
+
+    // Detalhes Ricos (Campos encontrados no banco)
+    historia?: string;
+    origem?: string;
+    familia_instrumental?: string;
+    material_principal?: string;
+    tecnica_producao_som?: string;
+    dificuldade_aprendizado?: string;
+    
+    // Campos JSONB
+    anatomia_partes?: any; 
+    curiosidades?: any; // Pode ser JSONB ou vir da tabela relacionada
+
+    // Campos de compatibilidade (para não quebrar UI existente por enquanto)
+    classificacao?: string; // Mapear de familia_instrumental
+    
+    // Relações (Preenchidas via query)
+    midias?: InstrumentoMidia[];
+    sons?: InstrumentoSom[];
+    curiosidades_lista?: InstrumentoCuriosidade[];
+    tecnicas?: InstrumentoTecnica[];
+}
+
+export interface InstrumentoCuriosidade {
+    id: string;
+    instrumento_id: string;
+    titulo: string;
+    descricao: string;
+    tipo: string;
+}
+
+export interface InstrumentoMidia {
+    id: string;
+    instrumento_id: string;
+    titulo: string;
+    url: string;
+    tipo: 'video' | 'audio' | 'imagem' | 'pdf';
+    descricao?: string;
+}
+
+export interface InstrumentoSom {
+    id: string;
+    instrumento_id: string;
+    titulo: string;
+    descricao: string;
+    audio_url: string;
+    tipo: string;
+    created_at: string;
+}
+
+export interface InstrumentoTecnica {
+    id: string;
+    instrumento_id: string;
+    titulo: string;
+    descricao: string;
+    nivel_dificuldade?: string;
+    video_url?: string;
+    created_at: string;
 }

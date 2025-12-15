@@ -1,197 +1,232 @@
+'use client'
 
-'use client';
-
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { criarTurma } from '@/src/lib/supabase/mutations/turmas';
-import { ArrowLeft, Save, Users, Clock, Calendar, Info } from 'lucide-react';
-import Link from 'next/link';
-import { supabase } from '@/lib/supabase/client';
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { Users, Music, Clock, Calendar, CheckSquare } from 'lucide-react'
+import { supabase } from '@/lib/supabase/client' // Usando Client Component para form
+import Link from 'next/link'
 
 export default function NovaTurmaPage() {
-    const router = useRouter();
-    const [loading, setLoading] = useState(false);
-    const [professores, setProfessores] = useState<any[]>([]);
+    const router = useRouter()
+    const [loading, setLoading] = useState(false)
+    const [professores, setProfessores] = useState<any[]>([])
+    const [instrumentos, setInstrumentos] = useState<any[]>([])
 
     const [formData, setFormData] = useState({
         nome: '',
-        descricao: '',
         professor_id: '',
-        horario_padrao: '',
-        capacidade_maxima: 20,
+        instrumento_id: '',
+        capacidade: 10,
+        horario: '',
+        data_inicio: '',
+        data_fim: '',
         ativo: true
-    });
+    })
 
-    // Buscar professores para o select
     useEffect(() => {
-        async function fetchProfessores() {
-            // @ts-ignore
-            const { data } = await supabase.from('profiles').select('id, full_name').eq('role', 'professor');
-            if (data) setProfessores(data);
+        async function loadData() {
+            // Carregar professores
+            // Assumindo que professores têm role 'professor' na tabela profiles
+            // Se não tiver, pegar todos ou ajustar query
+            const { data: profs } = await supabase
+                .from('profiles')
+                .select('id, full_name')
+                .eq('role', 'professor')
+
+            if (profs) setProfessores(profs)
+
+            // Carregar instrumentos
+            const { data: inst } = await supabase
+                .from('instrumentos')
+                .select('id, nome')
+                .eq('ativo', true)
+                .order('nome')
+
+            if (inst) setInstrumentos(inst)
         }
-        fetchProfessores();
-    }, []);
+        loadData()
+    }, [])
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value, type } = e.target;
-        // @ts-ignore
-        const val = type === 'checkbox' ? e.target.checked : value;
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target
+        setFormData(prev => ({ ...prev, [name]: value }))
+    }
 
-        setFormData(prev => ({ ...prev, [name]: val }));
-    };
+    const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, checked } = e.target
+        setFormData(prev => ({ ...prev, [name]: checked }))
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
+        e.preventDefault()
+        setLoading(true)
 
         try {
-            await criarTurma(formData);
-            router.push('/admin/turmas');
-            router.refresh();
+            await import('@/src/lib/supabase/mutations/turmas').then(m => m.criarTurma({
+                ...formData,
+                professor_id: formData.professor_id || null, // Tratar vazio como null
+                instrumento_id: formData.instrumento_id || null,
+                capacidade: Number(formData.capacidade),
+                ativo: formData.ativo
+            } as any))
+
+            alert('Turma criada com sucesso!')
+            router.push('/admin/turmas')
+            router.refresh()
         } catch (error) {
-            alert('Erro ao criar turma. Tente novamente.');
+            console.error('Erro ao criar turma:', error)
+            alert('Erro ao criar turma, verifique os dados.')
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
+    }
 
     return (
-        <div className="max-w-4xl mx-auto p-6 space-y-8">
-            {/* Header */}
-            <div className="flex items-center gap-4">
-                <Link href="/admin/turmas" className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500">
-                    <ArrowLeft size={24} />
-                </Link>
+        <div className="max-w-3xl mx-auto space-y-6">
+            <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">Nova Turma</h1>
-                    <p className="text-gray-600">Crie uma nova turma e atribua um professor.</p>
+                    <h1 className="text-2xl font-bold text-gray-900">Nova Turma</h1>
+                    <p className="text-gray-600">Crie uma nova turma para agrupar alunos.</p>
                 </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Coluna Principal */}
-                <div className="lg:col-span-2 space-y-6">
-                    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-4">
-                        <h2 className="text-lg font-semibold flex items-center gap-2">
-                            <Info size={20} className="text-red-600" />
-                            Informações Básicas
-                        </h2>
+            <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-6">
 
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Nome da Turma</label>
-                            <input
-                                required
-                                name="nome"
-                                value={formData.nome}
-                                onChange={handleChange}
-                                placeholder="Ex: Turma de Shamisen - Iniciante A"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-shadow"
-                            />
-                        </div>
+                {/* Nome */}
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Nome da Turma *</label>
+                    <input
+                        required
+                        name="nome"
+                        value={formData.nome}
+                        onChange={handleChange}
+                        placeholder="Ex: Violão Iniciante - Terças 19h"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                    />
+                </div>
 
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Descrição</label>
-                            <textarea
-                                name="descricao"
-                                value={formData.descricao}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Professor */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Professor Responsável</label>
+                        <div className="relative">
+                            <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                            <select
+                                name="professor_id"
+                                value={formData.professor_id}
                                 onChange={handleChange}
-                                rows={3}
-                                placeholder="Detalhes sobre o conteúdo ou público-alvo..."
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-shadow"
-                            />
+                                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none bg-white appearance-none"
+                            >
+                                <option value="">Selecione um professor</option>
+                                {professores.map(p => (
+                                    <option key={p.id} value={p.id}>{p.full_name || 'Sem nome'}</option>
+                                ))}
+                            </select>
                         </div>
                     </div>
 
-                    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-4">
-                        <h2 className="text-lg font-semibold flex items-center gap-2">
-                            <Calendar size={20} className="text-red-600" />
-                            Agendamento
-                        </h2>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-700">Horário Padrão</label>
-                                <div className="relative">
-                                    <Clock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                                    <input
-                                        name="horario_padrao"
-                                        value={formData.horario_padrao}
-                                        onChange={handleChange}
-                                        placeholder="Ex: Segundas e Quartas, 19:00"
-                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-shadow"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-700">Professor Responsável</label>
-                                <select
-                                    name="professor_id"
-                                    value={formData.professor_id}
-                                    onChange={handleChange}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-shadow bg-white"
-                                >
-                                    <option value="">Selecione um professor...</option>
-                                    {professores.map(prof => (
-                                        <option key={prof.id} value={prof.id}>{prof.full_name}</option>
-                                    ))}
-                                </select>
-                            </div>
+                    {/* Instrumento */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Instrumento (Opcional)</label>
+                        <div className="relative">
+                            <Music className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                            <select
+                                name="instrumento_id"
+                                value={formData.instrumento_id}
+                                onChange={handleChange}
+                                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none bg-white appearance-none"
+                            >
+                                <option value="">Selecione um instrumento</option>
+                                {instrumentos.map(i => (
+                                    <option key={i.id} value={i.id}>{i.nome}</option>
+                                ))}
+                            </select>
                         </div>
                     </div>
                 </div>
 
-                {/* Sidebar */}
-                <div className="space-y-6">
-                    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-4">
-                        <h2 className="text-lg font-semibold flex items-center gap-2">
-                            <Users size={20} className="text-red-600" />
-                            Configurações
-                        </h2>
-
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Capacidade Máxima</label>
-                            <input
-                                type="number"
-                                name="capacidade_maxima"
-                                value={formData.capacidade_maxima}
-                                onChange={handleChange}
-                                min={1}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-shadow"
-                            />
-                        </div>
-
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
-                            <input
-                                type="checkbox"
-                                id="ativo"
-                                // @ts-ignore
-                                checked={formData.ativo}
-                                onChange={(e) => setFormData(p => ({ ...p, ativo: e.target.checked }))}
-                                className="w-4 h-4 text-red-600 rounded border-gray-300 focus:ring-red-500"
-                            />
-                            <label htmlFor="ativo" className="text-sm font-medium text-gray-900 cursor-pointer">
-                                Turma Ativa
-                            </label>
-                        </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Capacidade */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Capacidade (Alunos)</label>
+                        <input
+                            type="number"
+                            name="capacidade"
+                            value={formData.capacidade}
+                            onChange={handleChange}
+                            min={1}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                        />
                     </div>
 
+                    {/* Horário (Texto Livre por enquanto) */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Horário (Descrição)</label>
+                        <div className="relative">
+                            <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                            <input
+                                name="horario"
+                                value={formData.horario}
+                                onChange={handleChange}
+                                placeholder="Ex: Terças e Quintas, 19:00 - 20:00"
+                                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Data Início */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Data Início</label>
+                        <input
+                            type="date"
+                            name="data_inicio"
+                            value={formData.data_inicio}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                        />
+                    </div>
+                    {/* Data Fim */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Data Fim (Previsão)</label>
+                        <input
+                            type="date"
+                            name="data_fim"
+                            value={formData.data_fim}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                        />
+                    </div>
+                </div>
+
+                {/* Ativo */}
+                <div className="flex items-center gap-2">
+                    <input
+                        type="checkbox"
+                        id="ativo"
+                        name="ativo"
+                        checked={formData.ativo}
+                        onChange={handleCheckbox}
+                        className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                    />
+                    <label htmlFor="ativo" className="text-sm font-medium text-gray-700">Turma Ativa (Aparece para matrículas)</label>
+                </div>
+
+                <div className="pt-4 flex justify-end gap-3 border-t border-gray-100">
+                    <Link href="/admin/turmas" className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                        Cancelar
+                    </Link>
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-red-200 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium disabled:opacity-50"
                     >
-                        {loading ? (
-                            <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                        ) : (
-                            <>
-                                <Save size={20} />
-                                Criar Turma
-                            </>
-                        )}
+                        {loading ? 'Salvando...' : 'Criar Turma'}
                     </button>
                 </div>
+
             </form>
         </div>
-    );
+    )
 }

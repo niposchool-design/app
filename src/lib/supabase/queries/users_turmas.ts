@@ -6,23 +6,23 @@ import { UserProfile, Turma, Matricula } from '@/lib/types/users_turmas';
 
 export async function getProfiles(role?: 'admin' | 'professor' | 'aluno'): Promise<UserProfile[]> {
     const supabase = await createClient();
-
-    let query = supabase.from('profiles').select('*');
+    
+    let query = supabase
+        .from('profiles')
+        .select('*')
+        .order('full_name');
 
     if (role) {
-        query = query.eq('role', role);
+        query = query.eq('tipo_usuario', role);
     }
-
-    query = query.order('full_name');
 
     const { data, error } = await query;
 
     if (error) {
-        console.error('Erro ao buscar perfis:', error);
-        return [];
+        throw error;
     }
 
-    return data as UserProfile[];
+    return data || [];
 }
 
 export async function getCurrentProfile(): Promise<UserProfile | null> {
@@ -45,7 +45,70 @@ export async function getCurrentProfile(): Promise<UserProfile | null> {
     return data as UserProfile;
 }
 
+export async function getProfileById(id: string): Promise<UserProfile | null> {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+    if (error) {
+        console.error('Erro ao buscar perfil:', error);
+        return null;
+    }
+
+    return data as UserProfile;
+}
+
+export async function getMatriculasAluno(alunoId: string) {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+        .from('matriculas')
+        .select(`
+            *,
+            turma:turmas(*)
+        `)
+        .eq('aluno_id', alunoId)
+        .eq('status', 'ativa');
+
+    if (error) {
+        console.error('Erro ao buscar matrículas do aluno:', error);
+        return [];
+    }
+
+    return data;
+}
+
 // === TURMAS ===
+
+// Retorna TODAS as turmas (para admin) com contagem de alunos
+export async function getAllTurmas(): Promise<Turma[]> {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+        .from('turmas')
+        .select(`
+            *,
+            professor:profiles!professor_id(*),
+            matriculas(count)
+        `)
+        .order('ativo', { ascending: false }) // Ativas primeiro
+        .order('nome');
+
+    if (error) {
+        console.error('Erro ao buscar todas as turmas:', error);
+        return [];
+    }
+
+    // Mapear count para qtd_alunos
+    return data.map((t: any) => ({
+        ...t,
+        qtd_alunos: t.matriculas?.[0]?.count || 0
+    })) as Turma[];
+}
 
 export async function getTurmas(professorId?: string): Promise<Turma[]> {
     const supabase = await createClient();

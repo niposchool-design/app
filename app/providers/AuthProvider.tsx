@@ -34,7 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setMounted(true)
-    
+
     if (hasInitialized.current) return
     hasInitialized.current = true
 
@@ -60,12 +60,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function loadUser() {
     if (isLoadingRef.current) return
-    
+
     isLoadingRef.current = true
-    
+
     try {
       const { data: { session } } = await supabase.auth.getSession()
-      
+
       if (!session?.user) {
         setUser(null)
         setLoading(false)
@@ -83,27 +83,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .eq('is_active', true)
         .single()
 
-      // Fallback para profiles.tipo_usuario
+      // Fallback para profiles.role
       let role: UserRole = 'aluno'
-      
+
       // @ts-ignore
       if (userRole?.role_type) {
         // @ts-ignore
         role = userRole.role_type as UserRole
       } else {
-        // @ts-ignore - Supabase types
         const { data: profile } = await supabase
-          // @ts-ignore
           .from('profiles')
-          .select('tipo_usuario')
+          .select('role')
           .eq('id', session.user.id)
           .single()
-        
-        // @ts-ignore
-        if (profile?.tipo_usuario) {
+
+        if (profile) {
           // @ts-ignore
-          role = profile.tipo_usuario as UserRole
+          role = profile.role as UserRole
         }
+      }
+
+      // Normalização de role e tratamento de aliases
+      if (typeof role === 'string') {
+        // @ts-ignore
+        let roleStr = (role as string).toLowerCase().trim()
+        if (roleStr === 'teacher') role = 'professor'
+        if (roleStr === 'student') role = 'aluno'
+        if (roleStr === 'administrator') role = 'admin'
       }
 
       setUser({
@@ -111,7 +117,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         email: session.user.email!,
         role: role
       })
-      
+
     } catch (error) {
       console.error('Auth error:', error)
       setUser(null)
@@ -124,20 +130,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function signIn(email: string, password: string) {
     setLoading(true)
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ 
-        email, 
-        password 
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
       })
-      
+
       if (error) {
         throw error
       }
 
       console.log('✅ Login realizado:', { email, hasSession: !!data.session })
-      
+
       // Aguarda o loadUser completar
       await loadUser()
-      
+
       console.log('✅ User carregado após login')
     } catch (error) {
       setLoading(false)
@@ -151,8 +157,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function signUp(email: string, password: string, userData?: any) {
-    const { error } = await supabase.auth.signUp({ 
-      email, 
+    const { error } = await supabase.auth.signUp({
+      email,
       password,
       options: {
         data: userData
@@ -165,7 +171,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     user,
     loading,
     isAuthenticated: !!user,
-    profile: user ? { tipo_usuario: user.role } : null,
+    profile: user ? { role: user.role } : null,
     signIn,
     signUp,
     signOut

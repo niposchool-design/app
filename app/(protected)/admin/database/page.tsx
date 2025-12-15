@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react';
 import { checkDatabaseHealth, TableStatus } from '@/src/lib/supabase/queries/database_diagnostics';
 import { Database, CheckCircle, XCircle, AlertTriangle, RefreshCw } from 'lucide-react';
+import AdminPageLayout from '../_components/AdminPageLayout';
 
 export default function DatabasePage() {
     const [tables, setTables] = useState<TableStatus[]>([]);
@@ -25,38 +26,35 @@ export default function DatabasePage() {
         runDiagnostics();
     }, []);
 
+    const tabelasSaudaveis = tables.filter(t => t.status === 'ok').length;
+
     return (
-        <div className="p-6 lg:p-10 space-y-8 animate-fade-in">
-            <div className="flex justify-between items-center">
-                <div>
-                    <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
-                        <Database className="text-blue-600" />
-                        Estado do Banco de Dados
-                    </h1>
-                    <p className="text-gray-600 mt-2">
-                        Verificação em tempo real da integridade das tabelas do sistema.
-                    </p>
-                </div>
+        <AdminPageLayout
+            title="Estado do Banco de Dados"
+            subtitle="Verificação em tempo real da integridade das tabelas do sistema"
+            icon={Database}
+            badge={`${tabelasSaudaveis}/${tables.length} OK`}
+            actions={
                 <button
                     onClick={runDiagnostics}
                     disabled={loading}
-                    className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition"
+                    className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition flex items-center gap-2"
                 >
-                    <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
-                    Atualizar Diagnóstico
+                    <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                    Atualizar
                 </button>
-            </div>
-
+            }
+        >
             <div className="grid grid-cols-1 gap-4">
                 {loading && tables.length === 0 ? (
-                    <div className="p-8 text-center text-gray-500">Executando diagnóstico...</div>
+                    <div className="admin-card p-8 text-center text-slate-500">Executando diagnóstico...</div>
                 ) : (
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                        <table className="w-full text-left border-collapse">
-                            <thead className="bg-gray-50 text-gray-700 text-sm font-semibold border-b border-gray-200">
+                    <div className="admin-card overflow-hidden">
+                        <table className="admin-table">
+                            <thead>
                                 <tr>
-                                    <th className="px-6 py-4">Tabela</th>
-                                    <th className="px-6 py-4">Status</th>
+                                    <th>Tabela</th>
+                                    <th>Status</th>
                                     <th className="px-6 py-4">Registros</th>
                                     <th className="px-6 py-4">Observações</th>
                                 </tr>
@@ -108,6 +106,6 @@ export default function DatabasePage() {
                     </p>
                 </div>
             </div>
-        </div>
+        </AdminPageLayout>
     );
 }

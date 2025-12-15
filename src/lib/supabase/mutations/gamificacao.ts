@@ -1,78 +1,62 @@
+'use server'
 
-import { supabase } from '@/lib/supabase/client';
-import { Conquista, Nivel, Desafio } from '@/src/lib/types/gamificacao';
+import { createClient } from '@/lib/supabase/server';
+import { revalidatePath } from 'next/cache';
+import { AchievementRow } from '../queries/gamificacao';
 
-// --- CONQUISTAS ---
+export type AchievementInsert = Omit<AchievementRow, 'id' | 'created_at'>;
+export type AchievementUpdate = Partial<AchievementInsert>;
 
-export async function criarConquista(dados: Partial<Conquista>) {
-    // @ts-ignore
-    const { data, error } = await (supabase as any)
-        .from('gamificacao_conquistas') // Assumindo nome da tabela, ajustar se necessário
-        .insert([dados])
+export async function createAchievement(formData: AchievementInsert) {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+        .from('achievements')
+        .insert([formData])
         .select()
         .single();
 
-    if (error) throw error;
+    if (error) {
+        console.error('Erro ao criar achievement:', error);
+        throw new Error(error.message);
+    }
+
+    revalidatePath('/admin/gamificacao');
     return data;
 }
 
-export async function getConquistas() {
-    // @ts-ignore
-    const { data, error } = await (supabase as any)
-        .from('gamificacao_conquistas')
-        .select('*')
-        .order('xp_recompensa', { ascending: true });
+export async function updateAchievement(id: string, formData: AchievementUpdate) {
+    const supabase = await createClient();
 
-    if (error) return []; // Retornar vazio se erro (ou tabela não existir ainda)
-    return data;
-}
-
-// --- NÍVEIS ---
-
-export async function criarNivel(dados: Partial<Nivel>) {
-    // @ts-ignore
-    const { data, error } = await (supabase as any)
-        .from('gamificacao_niveis')
-        .insert([dados])
+    const { data, error } = await supabase
+        .from('achievements')
+        .update(formData)
+        .eq('id', id)
         .select()
         .single();
 
-    if (error) throw error;
+    if (error) {
+        console.error('Erro ao atualizar achievement:', error);
+        throw new Error(error.message);
+    }
+
+    revalidatePath('/admin/gamificacao');
+    revalidatePath(`/admin/gamificacao/editar/${id}`);
     return data;
 }
 
-export async function getNiveis() {
-    // @ts-ignore
-    const { data, error } = await (supabase as any)
-        .from('gamificacao_niveis')
-        .select('*')
-        .order('numero', { ascending: true });
+export async function deleteAchievement(id: string) {
+    const supabase = await createClient();
 
-    if (error) return [];
-    return data;
-}
+    const { error } = await supabase
+        .from('achievements')
+        .delete()
+        .eq('id', id);
 
-// --- DESAFIOS ---
+    if (error) {
+        console.error('Erro ao deletar achievement:', error);
+        throw new Error(error.message);
+    }
 
-export async function criarDesafio(dados: Partial<Desafio>) {
-    // @ts-ignore
-    const { data, error } = await (supabase as any)
-        .from('gamificacao_desafios')
-        .insert([dados])
-        .select()
-        .single();
-
-    if (error) throw error;
-    return data;
-}
-
-export async function getDesafios() {
-    // @ts-ignore
-    const { data, error } = await (supabase as any)
-        .from('gamificacao_desafios')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-    if (error) return [];
-    return data;
+    revalidatePath('/admin/gamificacao');
 }

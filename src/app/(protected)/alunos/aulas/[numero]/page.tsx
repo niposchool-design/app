@@ -236,7 +236,10 @@ async function AulaDetalhesContent({ numero }: { numero: number }) {
                     </div>
                     <div className="flex-1">
                       <p className={`text-sm ${item.concluido ? 'text-gray-500 line-through' : 'text-gray-900'}`}>
-                        {item.descricao}
+                        {typeof item.descricao === 'string' 
+                          ? item.descricao 
+                          : item.descricao?.texto || item.descricao?.titulo || 'Sem descrição'
+                        }
                       </p>
                       <span className="text-xs text-gray-500 capitalize">
                         {item.tipo.replace('_', ' ')}

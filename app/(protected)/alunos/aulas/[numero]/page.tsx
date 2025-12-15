@@ -1,3 +1,4 @@
+
 import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
 import { 
@@ -10,12 +11,14 @@ import {
   Video, 
   FileText,
   ChevronLeft,
-  ChevronRight,
   CheckCircle,
   PlayCircle,
   Download,
   Sparkles,
-  Star
+  Star,
+  ListTodo,
+  Trophy,
+  ArrowRight
 } from 'lucide-react'
 import Link from 'next/link'
 import { 
@@ -24,20 +27,13 @@ import {
   getInstrumentosAula,
   getRepertorioAula,
   getVideosAula,
-  getPreRequisitosAula,
-  getProximasAulas,
-  getProgressoAula
+  getProximasAulas
 } from '@/src/lib/supabase/queries/aulas'
-import { STATUS_CONFIG } from '@/src/lib/types/aulas'
+import { STATUS_CONFIG, TIPO_MATERIAL_CONFIG } from '@/src/lib/types/aulas'
 
 interface PageProps {
   params: Promise<{ numero: string }>
 }
-
-/**
- * 📖 DETALHES DA AULA - Método Alpha
- * Página completa com todos os recursos de aprendizado
- */
 
 export async function generateMetadata({ params }: PageProps) {
   const resolvedParams = await params
@@ -51,20 +47,19 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 async function AulaDetalhesContent({ numero }: { numero: number }) {
-  // Buscar todos os dados da aula
+  // Buscar todos os dados da aula (inclui materiais, desafios, atividades, checklist)
   const aula = await getAulaPorNumero(numero)
   
   if (!aula) {
     notFound()
   }
 
-  // Buscar recursos complementares
-  const [metodologias, instrumentos, repertorio, videos, preRequisitos, proximasAulas] = await Promise.all([
+  // Buscar recursos complementares (relacionados via tags/FKs externas)
+  const [metodologias, instrumentos, repertorio, videos, proximasAulas] = await Promise.all([
     getMetodologiasAula(aula.id),
     getInstrumentosAula(aula.id),
     getRepertorioAula(aula.id),
     getVideosAula(aula.id),
-    getPreRequisitosAula(aula.id),
     getProximasAulas(numero)
   ])
 
@@ -73,7 +68,7 @@ async function AulaDetalhesContent({ numero }: { numero: number }) {
   const StatusIcon = statusConfig?.icon || CheckCircle
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pb-12">
       {/* Header da Aula */}
       <div className="bg-gradient-to-r from-red-600 to-orange-600 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
@@ -114,14 +109,6 @@ async function AulaDetalhesContent({ numero }: { numero: number }) {
                   </div>
                 )}
                 
-                {/* Duração */}
-                {aula.duracao_minutos && (
-                  <div className="flex items-center gap-2 bg-black/20 backdrop-blur-sm px-4 py-2 rounded-xl border border-white/10">
-                    <Clock className="w-4 h-4 text-orange-200" />
-                    <span className="text-sm font-medium">{aula.duracao_minutos} min</span>
-                  </div>
-                )}
-
                 {/* Status */}
                 <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border backdrop-blur-sm ${
                   aula.status === 'concluida' 
@@ -152,6 +139,114 @@ async function AulaDetalhesContent({ numero }: { numero: number }) {
         {/* Coluna Principal - Conteúdo */}
         <div className="lg:col-span-2 space-y-8">
           
+          {/* Checklist Pré-Aula */}
+          {aula.checklist && aula.checklist.length > 0 && (
+            <section className="bg-yellow-50 rounded-3xl p-6 border border-yellow-100">
+              <h3 className="font-bold text-yellow-900 mb-4 flex items-center gap-2">
+                <ListTodo className="w-5 h-5 text-yellow-600" />
+                Checklist da Aula
+              </h3>
+              <div className="space-y-2">
+                {aula.checklist.map((item) => (
+                  <div key={item.id} className="flex items-start gap-3 p-3 bg-white rounded-xl border border-yellow-100">
+                    <div className={`mt-0.5 w-5 h-5 rounded-full border-2 flex items-center justify-center ${item.concluido ? 'bg-green-500 border-green-500' : 'border-gray-300'}`}>
+                      {item.concluido && <CheckCircle className="w-3 h-3 text-white" />}
+                    </div>
+                    <span className="text-gray-700 text-sm font-medium">{item.descricao}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Materiais de Apoio (LMS Feature) */}
+          {aula.materiais && aula.materiais.length > 0 && (
+            <section className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                <div className="p-2 bg-blue-50 rounded-xl">
+                  <Download className="w-6 h-6 text-blue-600" />
+                </div>
+                Materiais de Apoio
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {aula.materiais.map((material) => (
+                  <a 
+                    key={material.id} 
+                    href={material.url || '#'} 
+                    target="_blank"
+                    className="flex items-center gap-4 p-4 rounded-2xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/50 transition-all group"
+                  >
+                    <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <FileText className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-gray-900 group-hover:text-blue-700">{material.titulo}</h3>
+                      <p className="text-sm text-gray-500 capitalize">{material.tipo}</p>
+                    </div>
+                    <Download className="w-5 h-5 text-gray-300 ml-auto group-hover:text-blue-500" />
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Desafios (Gamification) */}
+          {(aula.desafios && aula.desafios.length > 0) || aula.desafio_alpha ? (
+            <section className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-3xl p-8 border border-purple-100 relative overflow-hidden">
+              <div className="absolute top-0 right-0 opacity-5">
+                <Trophy size={120} />
+              </div>
+              
+              <h2 className="text-2xl font-bold text-purple-900 mb-6 flex items-center gap-3 relative z-10">
+                <div className="p-2 bg-white rounded-xl shadow-sm">
+                  <Trophy className="w-6 h-6 text-purple-600" />
+                </div>
+                Desafio Alpha
+              </h2>
+
+              {/* Desafio Principal (Texto) */}
+              {aula.desafio_alpha && (
+                <div className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-purple-100 mb-6 relative z-10">
+                  <h3 className="font-bold text-purple-800 mb-2">Missão Principal</h3>
+                  <p className="text-gray-700 leading-relaxed">{aula.desafio_alpha}</p>
+                </div>
+              )}
+
+              {/* Lista de Desafios Estruturados */}
+              {aula.desafios && aula.desafios.length > 0 && (
+                <div className="space-y-4 relative z-10">
+                  {aula.desafios.map((desafio) => (
+                    <div key={desafio.id} className="bg-white p-6 rounded-2xl shadow-sm border border-purple-100">
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="font-bold text-gray-900 text-lg">{desafio.titulo}</h3>
+                        <span className="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full uppercase tracking-wider">
+                          +{desafio.pontos_xp} XP
+                        </span>
+                      </div>
+                      <p className="text-gray-600 mb-4">{desafio.descricao}</p>
+                      <div className="bg-gray-50 p-4 rounded-xl text-sm text-gray-600">
+                        <strong className="text-gray-900 block mb-1">Critérios de Aceite:</strong>
+                        {typeof desafio.criterios_aceite === 'string' 
+                          ? desafio.criterios_aceite 
+                          : Array.isArray(desafio.criterios_aceite)
+                            ? desafio.criterios_aceite.map((criterio: any, idx: number) => (
+                                <div key={idx} className="mb-1">
+                                  • {typeof criterio === 'string' ? criterio : criterio.texto || criterio.titulo || JSON.stringify(criterio)}
+                                </div>
+                              ))
+                            : JSON.stringify(desafio.criterios_aceite)
+                        }
+                      </div>
+                      <button className="mt-4 w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition-colors shadow-lg shadow-purple-200">
+                        Enviar Resposta do Desafio
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+          ) : null}
+
           {/* Metodologias */}
           {metodologias.length > 0 && (
             <section className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
@@ -269,17 +364,18 @@ async function AulaDetalhesContent({ numero }: { numero: number }) {
           )}
 
           {/* Pré-requisitos */}
-          {preRequisitos.length > 0 && (
+          {aula.pre_requisitos && aula.pre_requisitos.length > 0 && (
             <div className="bg-orange-50 rounded-3xl p-6 border border-orange-100">
               <h3 className="font-bold text-orange-900 mb-4 flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-orange-600" />
                 Pré-requisitos
               </h3>
               <ul className="space-y-2">
-                {preRequisitos.map((req) => (
+                {aula.pre_requisitos.map((req) => (
                   <li key={req.id} className="flex items-start gap-2 text-sm text-orange-800">
                     <span className="mt-1.5 w-1.5 h-1.5 bg-orange-400 rounded-full flex-shrink-0"></span>
-                    {req.descricao}
+                    {/* Se tivermos o objeto aula_prerequisito populado, usamos o título, senão a descrição genérica se existir */}
+                    Aula anterior necessária
                   </li>
                 ))}
               </ul>
@@ -297,15 +393,20 @@ async function AulaDetalhesContent({ numero }: { numero: number }) {
                 <Link 
                   key={prox.id} 
                   href={`/alunos/aulas/${prox.numero}`}
-                  className="block p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors border border-white/5"
+                  className="block p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors border border-white/5 group"
                 >
                   <div className="text-xs text-gray-400 mb-1">Aula {prox.numero}</div>
-                  <div className="font-medium text-sm line-clamp-1">{prox.titulo}</div>
+                  <div className="font-medium text-sm line-clamp-1 group-hover:text-yellow-400 transition-colors">{prox.titulo}</div>
                 </Link>
               ))}
               {proximasAulas.length === 0 && (
                 <p className="text-sm text-gray-400">Você está na última aula disponível!</p>
               )}
+              
+              <Link href="/alunos/aulas" className="flex items-center justify-center gap-2 w-full py-3 mt-4 bg-red-600 hover:bg-red-700 rounded-xl font-bold text-sm transition-colors">
+                Ver Todas as Aulas
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </div>

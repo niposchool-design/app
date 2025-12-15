@@ -1,6 +1,7 @@
 
 import { Play, Star, Trophy, Target } from 'lucide-react'
 import { getTodasAulas } from '@/src/lib/supabase/queries/aulas';
+import { BannerTradicaoOriental, CulturaJaponesaNav } from '@/components/cultura-japonesa-nav';
 import Link from 'next/link';
 
 export default async function StudentDashboard() {
@@ -8,20 +9,28 @@ export default async function StudentDashboard() {
 
   // Simulação de próxima aula (pegar a primeira da lista ou uma random para demo se vazia)
   const proximaAula = aulas.length > 0 ? aulas[0] : {
-    titulo: 'Introdução ao Hiragana',
-    descricao_curta: 'Aprenda os fundamentos da escrita japonesa e comece a ler suas primeiras palavras.',
+    titulo: 'Introdução ao Koto',
+    descricao_curta: 'Aprenda os fundamentos deste instrumento tradicional japonês de 13 cordas.',
     id: '#'
   };
 
   return (
     <>
+      {/* Banner Tradição Oriental */}
+      <BannerTradicaoOriental />
+
+      {/* Navegação Cultura Japonesa */}
+      <div className="mb-8">
+        <CulturaJaponesaNav />
+      </div>
+
       {/* Welcome Section */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Konnichiwa, Aluno-san! 🎌
-        </h1>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          Seu Progresso Musical 🎵
+        </h2>
         <p className="text-gray-600">
-          Sua jornada de aprendizado continua. O esforço de hoje é a maestria de amanhã.
+          Ganbatte kudasai! Cada nota praticada te aproxima da maestria.
         </p>
       </div>
 
