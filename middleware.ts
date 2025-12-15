@@ -78,29 +78,16 @@ export async function middleware(request: NextRequest) {
 
   // Se tem sessão
   if (session) {
-    // Buscar role do usuário
+    // Buscar role do usuário diretamente de profiles (user_roles desativado temporariamente por erro 406)
     // @ts-ignore
-    const { data: userRole } = await supabase
-      .from('user_roles')
-      .select('role_type, is_active')
-      .eq('user_id', session.user.id)
-      .eq('is_active', true)
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('tipo_usuario')
+      .eq('id', session.user.id)
       .single()
 
-    let role = userRole?.role_type
-
-    // Fallback para profiles
-    if (!role) {
-      // @ts-ignore
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('role') // Ajustado para 'role' conforme novo schema
-        .eq('id', session.user.id)
-        .single()
-
-      // @ts-ignore
-      role = profile?.role || 'aluno'
-    }
+    // @ts-ignore
+    let role = profile?.tipo_usuario || 'aluno'
 
     // Normalização de role e tratamento de aliases
     if (typeof role === 'string') {

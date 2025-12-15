@@ -73,34 +73,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return
       }
 
-      // Sistema de permissões: user_roles.role_type (fonte de verdade)
-      // @ts-ignore - Supabase types
-      const { data: userRole } = await supabase
-        // @ts-ignore
-        .from('user_roles')
-        .select('role_type, is_active')
-        .eq('user_id', session.user.id)
-        .eq('is_active', true)
-        .single()
-
-      // Fallback para profiles.role
+      // Sistema de permissões: profiles.tipo_usuario
       let role: UserRole = 'aluno'
 
-      // @ts-ignore
-      if (userRole?.role_type) {
-        // @ts-ignore
-        role = userRole.role_type as UserRole
-      } else {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', session.user.id)
-          .single()
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('tipo_usuario')
+        .eq('id', session.user.id)
+        .single()
 
-        if (profile) {
-          // @ts-ignore
-          role = profile.role as UserRole
-        }
+      if (profile) {
+        // @ts-ignore
+        role = profile.tipo_usuario as UserRole
       }
 
       // Normalização de role e tratamento de aliases
