@@ -6,6 +6,7 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   X, Home, Users, Library, BarChart3, Award, QrCode,
   Settings, HelpCircle, LogOut, Calendar, Music
@@ -61,10 +62,14 @@ export function ProfessorSidebar({ isOpen, onClose }: ProfessorSidebarProps) {
       <div className="flex flex-col h-full">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">NS</span>
-            </div>
+          <div className="flex items-center gap-3">
+            <Image 
+              src="/logo-icon.svg" 
+              alt="Nipo School" 
+              width={32} 
+              height={32}
+              className="flex-shrink-0"
+            />
             <div>
               <h2 className="font-bold text-gray-900">Nipo School</h2>
               <p className="text-xs text-green-600 font-medium">Professor</p>

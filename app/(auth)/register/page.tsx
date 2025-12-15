@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -64,9 +65,15 @@ export default function RegisterPage() {
           Voltar
         </Link>
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Criar Conta
-          </h1>
+          <div className="flex justify-center mb-4">
+            <Image 
+              src="/logo.svg" 
+              alt="Nipo School" 
+              width={180} 
+              height={45}
+              priority
+            />
+          </div>
           <p className="text-gray-600">
             Junte-se ao Nipo School
           </p>

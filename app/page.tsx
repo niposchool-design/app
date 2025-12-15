@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import Image from 'next/image'
 
 export default function Home() {
   return (
@@ -8,10 +9,15 @@ export default function Home() {
         
         {/* Logo / Branding */}
         <div className="space-y-4">
-          <div className="text-6xl mb-4 animate-bounce-slow">🎌</div>
-          <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
-            Nipo School
-          </h1>
+          <div className="flex justify-center mb-6">
+            <Image 
+              src="/logo.svg" 
+              alt="Nipo School" 
+              width={240} 
+              height={60}
+              priority
+            />
+          </div>
           <p className="text-lg text-gray-600 max-w-sm mx-auto">
             Sua jornada no aprendizado da cultura e música japonesa começa aqui.
           </p>

@@ -2,6 +2,7 @@
 
 import { ReactNode, useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import {
   LogOut,
@@ -279,9 +280,14 @@ export default function OrientalDashboardLayout({ children, role }: OrientalDash
 
         {/* Logo Area */}
         <div className={`p-6 text-center border-b border-gray-100/50 flex flex-col items-center justify-center transition-all duration-300 ${isSidebarCollapsed ? 'gap-0' : 'gap-2'}`}>
-          <div className={`rounded-2xl bg-gradient-to-br ${theme.gradient} flex items-center justify-center shadow-lg transition-all duration-300 group
-             ${isSidebarCollapsed ? 'w-10 h-10' : 'w-14 h-14 transform rotate-3 hover:rotate-0'}`}>
-            <Icon className={`${isSidebarCollapsed ? 'w-5 h-5' : 'w-7 h-7'} text-white group-hover:scale-110 transition-transform`} />
+          <div className={`flex items-center justify-center transition-all duration-300 ${isSidebarCollapsed ? 'w-10 h-10' : 'w-14 h-14'}`}>
+            <Image 
+              src="/logo-icon.svg" 
+              alt="Nipo School" 
+              width={isSidebarCollapsed ? 40 : 56}
+              height={isSidebarCollapsed ? 40 : 56}
+              className="transition-all duration-300"
+            />
           </div>
 
           <div className={`overflow-hidden transition-all duration-300 ${isSidebarCollapsed ? 'max-h-0 opacity-0' : 'max-h-20 opacity-100'}`}>
@@ -330,9 +336,12 @@ export default function OrientalDashboardLayout({ children, role }: OrientalDash
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-4 z-40 shadow-sm">
         <div className="flex items-center gap-2">
-          <div className={`p-2 rounded-lg ${theme.secondaryColor}`}>
-            <Icon className={`w-5 h-5 ${theme.primaryColor}`} />
-          </div>
+          <Image 
+            src="/logo-icon.svg" 
+            alt="Nipo School" 
+            width={32}
+            height={32}
+          />
           <span className="font-bold text-gray-900 text-lg">Nipo School</span>
         </div>
         <button
