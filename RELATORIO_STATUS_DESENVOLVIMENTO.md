@@ -58,7 +58,7 @@ Este documento compara as funcionalidades planejadas na documentação original 
 | **Show Final** | ✅ | Página dedicada ao evento, com contagem regressiva e repertório do show. |
 | **Meus Instrumentos** | ✅ | Visualização dos instrumentos que o aluno estuda. |
 | **Repertório Pessoal** | ✅ | Acesso a músicas e partituras liberadas. |
-| **Gamificação** | ⏳ | (Conquistas, Níveis, XP). Links apontam para "Em Construção" ou UI estática. |
+| **Gamificação** | ✅ | Sistema completo implementado: Pontos, Níveis, Badges e Conquistas com tabelas dedicadas, queries, mutations e components. |
 | **Carteirinha Digital** | 🎨 | UI do cartão implementada no perfil/sidebar (visual). |
 
 ---
@@ -71,16 +71,18 @@ Este documento compara as funcionalidades planejadas na documentação original 
 | Tabela `instrumentos` | ✅ | CRUD admin ativo. |
 | Tabela `repertorio` | ✅ | Leitura ativa. Gravação pendente. |
 | Tabela `users_turmas` | ✅ | Matrículas (vínculo aluno-turma). |
-| Mutations | 🚧 | Arquivos de mutations criados (`instrumentos.ts`, `turmas.ts`) e funcionais. Faltam mutations para outros módulos. |
+| Tabelas `gamification_*` | ✅ | Sistema completo: gamification_usuarios, gamification_pontos, gamification_badges, gamification_conquistas. |
+| Mutations | ✅ | Arquivos de mutations criados (`instrumentos.ts`, `turmas.ts`, `gamificacao-real.ts`) e funcionais. |
 
 ---
 
 ## 📋 Próximos Passos Prioritários (Sugestão)
 
-1.  **Gamificação Completa**: Implementar lógica real de XP e Conquistas no banco para dar vida ao Dashboard do Aluno.
-2.  **Upload de Arquivos**: Finalizar integração com Supabase Storage para upload real de imagens de instrumentos e PDFs de partituras (hoje aceita URL).
-3.  **Chamada/Presença**: Criar fluxo para o Professor registrar presença nas aulas.
-4.  **Financeiro/Matrículas**: Módulo administrativo para gerenciar pagamentos (se escopo permitir).
+1.  **Integrar Gamificação com Aulas**: Adicionar chamadas às Server Actions de gamificação quando aluno completar aulas.
+2.  **Widget de Gamificação no Dashboard**: Adicionar o GamificationWidget no dashboard do aluno.
+3.  **Upload de Arquivos**: Finalizar integração com Supabase Storage para upload real de imagens de instrumentos e PDFs de partituras (hoje aceita URL).
+4.  **Chamada/Presença**: Criar fluxo para o Professor registrar presença nas aulas.
+5.  **Financeiro/Matrículas**: Módulo administrativo para gerenciar pagamentos (se escopo permitir).
 
 ---
 *Relatório gerado automaticamente por Antigravity Agent.*

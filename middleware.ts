@@ -102,6 +102,14 @@ export async function middleware(request: NextRequest) {
       role = profile?.role || 'aluno'
     }
 
+    // Normalização de role e tratamento de aliases
+    if (typeof role === 'string') {
+      role = role.toLowerCase().trim()
+      if (role === 'teacher') role = 'professor'
+      if (role === 'student') role = 'aluno'
+      if (role === 'administrator') role = 'admin'
+    }
+
     const userArea = roleToArea[role] || '/alunos'
     console.log('✅ Sessão válida:', { role, userArea, path })
 

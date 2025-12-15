@@ -1,0 +1,50 @@
+{
+  "node": {
+    "40367f895c6dc02befc84cd9da9c0bdbc257608bce": {
+      "workers": {
+        "app/(protected)/admin/repertorio/nova/page": {
+          "moduleId": 35915,
+          "async": false,
+          "exportedName": "createRepertorio",
+          "filename": "src/lib/supabase/mutations/repertorio.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/repertorio/nova/page": "action-browser"
+      },
+      "exportedName": "createRepertorio",
+      "filename": "src/lib/supabase/mutations/repertorio.ts"
+    },
+    "6089c6cc4a4c6cd78b4cd726034f0423b32324f72d": {
+      "workers": {
+        "app/(protected)/admin/repertorio/nova/page": {
+          "moduleId": 35915,
+          "async": false,
+          "exportedName": "updateRepertorio",
+          "filename": "src/lib/supabase/mutations/repertorio.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/repertorio/nova/page": "action-browser"
+      },
+      "exportedName": "updateRepertorio",
+      "filename": "src/lib/supabase/mutations/repertorio.ts"
+    },
+    "40e6db3e3fddaaee477a08bd1691d3e4305b3067a2": {
+      "workers": {
+        "app/(protected)/admin/repertorio/nova/page": {
+          "moduleId": 35915,
+          "async": false,
+          "exportedName": "deleteRepertorio",
+          "filename": "src/lib/supabase/mutations/repertorio.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/repertorio/nova/page": "action-browser"
+      },
+      "exportedName": "deleteRepertorio",
+      "filename": "src/lib/supabase/mutations/repertorio.ts"
+    }
+  },
+  "edge": {}
+}

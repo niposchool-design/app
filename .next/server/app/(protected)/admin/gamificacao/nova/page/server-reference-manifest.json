@@ -1,0 +1,50 @@
+{
+  "node": {
+    "40f90310adfc5c84ae831e84abace4a88d8b8283d4": {
+      "workers": {
+        "app/(protected)/admin/gamificacao/nova/page": {
+          "moduleId": 39320,
+          "async": false,
+          "exportedName": "createAchievement",
+          "filename": "src/lib/supabase/mutations/gamificacao.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/gamificacao/nova/page": "action-browser"
+      },
+      "exportedName": "createAchievement",
+      "filename": "src/lib/supabase/mutations/gamificacao.ts"
+    },
+    "604189aeb2a03605dd14f2bc51100e14c78c74b536": {
+      "workers": {
+        "app/(protected)/admin/gamificacao/nova/page": {
+          "moduleId": 39320,
+          "async": false,
+          "exportedName": "updateAchievement",
+          "filename": "src/lib/supabase/mutations/gamificacao.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/gamificacao/nova/page": "action-browser"
+      },
+      "exportedName": "updateAchievement",
+      "filename": "src/lib/supabase/mutations/gamificacao.ts"
+    },
+    "401773e6324ec51578686168e3def4f7f4513e1efe": {
+      "workers": {
+        "app/(protected)/admin/gamificacao/nova/page": {
+          "moduleId": 39320,
+          "async": false,
+          "exportedName": "deleteAchievement",
+          "filename": "src/lib/supabase/mutations/gamificacao.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/gamificacao/nova/page": "action-browser"
+      },
+      "exportedName": "deleteAchievement",
+      "filename": "src/lib/supabase/mutations/gamificacao.ts"
+    }
+  },
+  "edge": {}
+}

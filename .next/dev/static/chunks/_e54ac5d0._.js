@@ -46,6 +46,14 @@ const THEMES = {
                 href: '/alunos/aulas'
             },
             {
+                label: 'Progresso',
+                href: '/alunos/progresso'
+            },
+            {
+                label: 'Portfólio',
+                href: '/alunos/portfolio'
+            },
+            {
                 label: 'Show Final',
                 href: '/alunos/show-final'
             },
@@ -62,12 +70,24 @@ const THEMES = {
                 href: '/alunos/videos'
             },
             {
+                label: 'Desafios',
+                href: '/alunos/desafios'
+            },
+            {
                 label: 'História',
                 href: '/alunos/historia'
             },
             {
                 label: 'Conquistas',
                 href: '/alunos/conquistas'
+            },
+            {
+                label: 'Gamificação',
+                href: '/alunos/gamificacao'
+            },
+            {
+                label: 'Meu Perfil',
+                href: '/alunos/perfil'
             }
         ]
     },
@@ -112,42 +132,78 @@ const THEMES = {
         gradient: 'from-purple-600 to-indigo-600',
         pattern: 'bg-pattern-sayagata',
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$crown$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Crown$3e$__["Crown"],
-        navItems: [
+        groups: [
             {
-                label: 'Dashboard',
-                href: '/admin'
+                title: 'Gestão Escolar',
+                items: [
+                    {
+                        label: 'Dashboard',
+                        href: '/admin'
+                    },
+                    {
+                        label: 'Alunos',
+                        href: '/admin/alunos'
+                    },
+                    {
+                        label: 'Professores',
+                        href: '/admin/professores'
+                    },
+                    {
+                        label: 'Turmas & Matrículas',
+                        href: '/admin/turmas'
+                    }
+                ]
             },
             {
-                label: 'Aulas',
-                href: '/admin/aulas'
+                title: 'Acadêmico & Conteúdo',
+                items: [
+                    {
+                        label: 'Aulas',
+                        href: '/admin/aulas'
+                    },
+                    {
+                        label: 'Instrumentos',
+                        href: '/admin/instrumentos'
+                    },
+                    {
+                        label: 'Repertório',
+                        href: '/admin/repertorio'
+                    },
+                    {
+                        label: 'História da Música',
+                        href: '/admin/historia'
+                    }
+                ]
             },
             {
-                label: 'Turmas',
-                href: '/admin/turmas'
+                title: 'Engajamento',
+                items: [
+                    {
+                        label: 'Gamificação & XP',
+                        href: '/admin/gamificacao'
+                    }
+                ]
             },
             {
-                label: 'Instrumentos',
-                href: '/admin/instrumentos'
-            },
-            {
-                label: 'Repertório',
-                href: '/admin/repertorio'
-            },
-            {
-                label: 'Gamificação & XP',
-                href: '/admin/gamificacao'
-            },
-            {
-                label: 'Professores',
-                href: '/admin/professores'
-            },
-            {
-                label: 'Alunos',
-                href: '/admin/alunos'
-            },
-            {
-                label: 'QR Codes',
-                href: '/em-construcao'
+                title: 'Sistema',
+                items: [
+                    {
+                        label: 'QR Codes',
+                        href: '/admin/qr/gerenciar'
+                    },
+                    {
+                        label: 'Diagnóstico',
+                        href: '/admin/diagnostico'
+                    },
+                    {
+                        label: 'Configurações',
+                        href: '/admin/configuracoes'
+                    },
+                    {
+                        label: 'Ajuda',
+                        href: '/admin/ajuda'
+                    }
+                ]
             }
         ]
     }
@@ -159,6 +215,76 @@ function OrientalDashboardLayout({ children, role }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const theme = THEMES[role];
     const Icon = theme.icon;
+    const renderNavItems = (items)=>{
+        return items.map((item)=>{
+            const isActive = pathname === item.href;
+            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                href: item.href,
+                onClick: ()=>setIsMobileMenuOpen(false),
+                className: `flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 group ${isActive ? `bg-gradient-to-r ${theme.gradient} text-white shadow-md` : 'hover:bg-white/50 text-gray-600 hover:text-gray-900'}`,
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: "font-medium",
+                        children: item.label
+                    }, void 0, false, {
+                        fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
+                        lineNumber: 158,
+                        columnNumber: 11
+                    }, this),
+                    isActive && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
+                        className: "w-4 h-4"
+                    }, void 0, false, {
+                        fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
+                        lineNumber: 159,
+                        columnNumber: 24
+                    }, this)
+                ]
+            }, item.href, true, {
+                fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
+                lineNumber: 149,
+                columnNumber: 9
+            }, this);
+        });
+    };
+    const renderContent = ()=>{
+        if (theme.navItems) {
+            return renderNavItems(theme.navItems);
+        }
+        if (theme.groups) {
+            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "space-y-6",
+                children: theme.groups.map((group, idx)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        children: [
+                            group.title && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                className: `px-4 text-xs font-bold uppercase tracking-wider mb-2 ${theme.primaryColor} opacity-70`,
+                                children: group.title
+                            }, void 0, false, {
+                                fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
+                                lineNumber: 176,
+                                columnNumber: 17
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "space-y-1",
+                                children: renderNavItems(group.items)
+                            }, void 0, false, {
+                                fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
+                                lineNumber: 180,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, idx, true, {
+                        fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
+                        lineNumber: 174,
+                        columnNumber: 13
+                    }, this))
+            }, void 0, false, {
+                fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
+                lineNumber: 172,
+                columnNumber: 9
+            }, this);
+        }
+        return null;
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: `min-h-screen ${theme.pattern} transition-colors duration-500`,
         children: [
@@ -174,12 +300,12 @@ function OrientalDashboardLayout({ children, role }) {
                                     className: "w-8 h-8 text-white"
                                 }, void 0, false, {
                                     fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                    lineNumber: 112,
+                                    lineNumber: 198,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                lineNumber: 111,
+                                lineNumber: 197,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -187,7 +313,7 @@ function OrientalDashboardLayout({ children, role }) {
                                 children: "Nipo School"
                             }, void 0, false, {
                                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                lineNumber: 114,
+                                lineNumber: 200,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -199,48 +325,21 @@ function OrientalDashboardLayout({ children, role }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                lineNumber: 115,
+                                lineNumber: 201,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                        lineNumber: 110,
+                        lineNumber: 196,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
                         className: "flex-1 p-6 space-y-2 overflow-y-auto",
-                        children: theme.navItems.map((item)=>{
-                            const isActive = pathname === item.href;
-                            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                href: item.href,
-                                className: `flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 group ${isActive ? `bg-gradient-to-r ${theme.gradient} text-white shadow-md` : 'hover:bg-white/50 text-gray-600 hover:text-gray-900'}`,
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "font-medium",
-                                        children: item.label
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                        lineNumber: 133,
-                                        columnNumber: 17
-                                    }, this),
-                                    isActive && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
-                                        className: "w-4 h-4"
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                        lineNumber: 134,
-                                        columnNumber: 30
-                                    }, this)
-                                ]
-                            }, item.href, true, {
-                                fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                lineNumber: 125,
-                                columnNumber: 15
-                            }, this);
-                        })
+                        children: renderContent()
                     }, void 0, false, {
                         fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                        lineNumber: 121,
+                        lineNumber: 207,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -256,12 +355,12 @@ function OrientalDashboardLayout({ children, role }) {
                                             children: user?.email?.[0].toUpperCase()
                                         }, void 0, false, {
                                             fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                            lineNumber: 144,
+                                            lineNumber: 215,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                        lineNumber: 143,
+                                        lineNumber: 214,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -272,7 +371,7 @@ function OrientalDashboardLayout({ children, role }) {
                                                 children: user?.email
                                             }, void 0, false, {
                                                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                                lineNumber: 149,
+                                                lineNumber: 220,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -280,19 +379,19 @@ function OrientalDashboardLayout({ children, role }) {
                                                 children: theme.meaning
                                             }, void 0, false, {
                                                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                                lineNumber: 152,
+                                                lineNumber: 223,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                        lineNumber: 148,
+                                        lineNumber: 219,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                lineNumber: 142,
+                                lineNumber: 213,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -303,26 +402,26 @@ function OrientalDashboardLayout({ children, role }) {
                                         className: "w-4 h-4"
                                     }, void 0, false, {
                                         fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                        lineNumber: 161,
+                                        lineNumber: 232,
                                         columnNumber: 13
                                     }, this),
                                     "Sair do Dojo"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                lineNumber: 157,
+                                lineNumber: 228,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                        lineNumber: 141,
+                        lineNumber: 212,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                lineNumber: 108,
+                lineNumber: 194,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -335,7 +434,7 @@ function OrientalDashboardLayout({ children, role }) {
                                 className: `w-6 h-6 ${theme.primaryColor}`
                             }, void 0, false, {
                                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                lineNumber: 170,
+                                lineNumber: 241,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -343,13 +442,13 @@ function OrientalDashboardLayout({ children, role }) {
                                 children: "Nipo School"
                             }, void 0, false, {
                                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                lineNumber: 171,
+                                lineNumber: 242,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                        lineNumber: 169,
+                        lineNumber: 240,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -359,24 +458,24 @@ function OrientalDashboardLayout({ children, role }) {
                             className: "w-6 h-6"
                         }, void 0, false, {
                             fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                            lineNumber: 177,
+                            lineNumber: 248,
                             columnNumber: 31
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$menu$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Menu$3e$__["Menu"], {
                             className: "w-6 h-6"
                         }, void 0, false, {
                             fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                            lineNumber: 177,
+                            lineNumber: 248,
                             columnNumber: 59
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                        lineNumber: 173,
+                        lineNumber: 244,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                lineNumber: 168,
+                lineNumber: 239,
                 columnNumber: 7
             }, this),
             isMobileMenuOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -388,29 +487,10 @@ function OrientalDashboardLayout({ children, role }) {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
                             className: "space-y-2",
-                            children: theme.navItems.map((item)=>{
-                                const isActive = pathname === item.href;
-                                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                    href: item.href,
-                                    onClick: ()=>setIsMobileMenuOpen(false),
-                                    className: `flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 ${isActive ? `bg-gradient-to-r ${theme.gradient} text-white shadow-md` : 'hover:bg-gray-50 text-gray-600'}`,
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "font-medium",
-                                        children: item.label
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                        lineNumber: 201,
-                                        columnNumber: 21
-                                    }, this)
-                                }, item.href, false, {
-                                    fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                    lineNumber: 192,
-                                    columnNumber: 19
-                                }, this);
-                            })
+                            children: renderContent()
                         }, void 0, false, {
                             fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                            lineNumber: 188,
+                            lineNumber: 259,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -423,30 +503,30 @@ function OrientalDashboardLayout({ children, role }) {
                                         className: "w-4 h-4"
                                     }, void 0, false, {
                                         fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                        lineNumber: 212,
+                                        lineNumber: 268,
                                         columnNumber: 17
                                     }, this),
                                     "Sair"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                                lineNumber: 208,
+                                lineNumber: 264,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                            lineNumber: 207,
+                            lineNumber: 263,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                    lineNumber: 184,
+                    lineNumber: 255,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                lineNumber: 183,
+                lineNumber: 254,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -456,18 +536,18 @@ function OrientalDashboardLayout({ children, role }) {
                     children: children
                 }, void 0, false, {
                     fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                    lineNumber: 222,
+                    lineNumber: 278,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-                lineNumber: 221,
+                lineNumber: 277,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/layouts/OrientalDashboardLayout.tsx",
-        lineNumber: 106,
+        lineNumber: 192,
         columnNumber: 5
     }, this);
 }

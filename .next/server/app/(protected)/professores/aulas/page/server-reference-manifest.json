@@ -1,4 +1,20 @@
 {
-  "node": {},
+  "node": {
+    "6062a2c98d0830d7eb41092848e5d17818dcb88365": {
+      "workers": {
+        "app/(protected)/professores/aulas/page": {
+          "moduleId": 71453,
+          "async": false,
+          "exportedName": "updateAula",
+          "filename": "src/lib/supabase/mutations/aulas.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/professores/aulas/page": "action-browser"
+      },
+      "exportedName": "updateAula",
+      "filename": "src/lib/supabase/mutations/aulas.ts"
+    }
+  },
   "edge": {}
 }

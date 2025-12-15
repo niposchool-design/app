@@ -1,0 +1,18 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(protected)/layout,_N_T_/(protected)/admin/layout,_N_T_/(protected)/admin/historia/layout,_N_T_/(protected)/admin/historia/novo-periodo/layout,_N_T_/(protected)/admin/historia/novo-periodo/page,_N_T_/admin/historia/novo-periodo"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KHByb3RlY3RlZCk/admin/historia/novo-periodo/__PAGE__",
+    "/!KHByb3RlY3RlZCk/admin/historia/novo-periodo",
+    "/!KHByb3RlY3RlZCk/admin/historia",
+    "/!KHByb3RlY3RlZCk/admin",
+    "/!KHByb3RlY3RlZCk",
+    "/_index",
+    "/_head"
+  ]
+}

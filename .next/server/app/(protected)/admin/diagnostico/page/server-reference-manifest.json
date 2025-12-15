@@ -1,0 +1,20 @@
+{
+  "node": {
+    "00446db163f38f6aea0436e7abe6f8f6fd9d751604": {
+      "workers": {
+        "app/(protected)/admin/diagnostico/page": {
+          "moduleId": 73996,
+          "async": false,
+          "exportedName": "checkDatabaseHealth",
+          "filename": "src/lib/supabase/actions/system.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/diagnostico/page": "action-browser"
+      },
+      "exportedName": "checkDatabaseHealth",
+      "filename": "src/lib/supabase/actions/system.ts"
+    }
+  },
+  "edge": {}
+}

@@ -1,0 +1,20 @@
+{
+  "node": {
+    "60bfc19fc7b8750a0ef31bb328e4c55c6510a94e8c": {
+      "workers": {
+        "app/(protected)/admin/professores/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(protected)/admin/professores/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/lib/supabase/mutations/profiles.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updateProfile",
+          "filename": "src/lib/supabase/mutations/profiles.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/professores/[id]/page": "action-browser"
+      },
+      "exportedName": "updateProfile",
+      "filename": "src/lib/supabase/mutations/profiles.ts"
+    }
+  },
+  "edge": {}
+}

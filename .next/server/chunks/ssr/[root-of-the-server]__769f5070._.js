@@ -1,0 +1,112 @@
+module.exports=[93695,(a,b,c)=>{b.exports=a.x("next/dist/shared/lib/no-fallback-error.external.js",()=>require("next/dist/shared/lib/no-fallback-error.external.js"))},70864,a=>{a.n(a.i(33290))},43619,a=>{a.n(a.i(79962))},13718,a=>{a.n(a.i(85523))},18198,a=>{a.n(a.i(45518))},62212,a=>{a.n(a.i(66114))},12851,a=>{a.n(a.i(91991))},60573,a=>{"use strict";var b=a.i(98310);async function c(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("aulas").select(`
+      id,
+      numero,
+      titulo,
+      data_programada,
+      objetivo_didatico,
+      resumo_atividades,
+      desafio_alpha,
+      nivel,
+      formato,
+      status,
+      modulo_id,
+      responsavel_id,
+      detalhes_aula
+    `).eq("id",a).single();return e?(console.error(`Erro ao buscar aula por ID ${a}:`,e),null):d}async function d(a){let c=(await (0,b.createClient)()).from("aulas").select(`
+      id,
+      numero,
+      titulo,
+      data_programada,
+      objetivo_didatico,
+      resumo_atividades,
+      desafio_alpha,
+      nivel,
+      formato,
+      status,
+      modulo_id,
+      responsavel_id,
+      detalhes_aula
+    `).order("numero",{ascending:!0});a?.status&&(c=c.eq("status",a.status)),a?.formato&&(c=c.eq("formato",a.formato)),a?.modulo&&(c=c.eq("modulo_id",a.modulo)),a?.data_inicio&&(c=c.gte("data_programada",a.data_inicio)),a?.data_fim&&(c=c.lte("data_programada",a.data_fim)),a?.search&&(c=c.or(`titulo.ilike.%${a.search}%,objetivo_didatico.ilike.%${a.search}%`));let{data:d,error:e}=await c;return e?(console.error("Erro ao buscar todas as aulas:",e),[]):d}async function e(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("aulas").select(`
+      id,
+      numero,
+      titulo,
+      data_programada,
+      objetivo_didatico,
+      resumo_atividades,
+      desafio_alpha,
+      nivel,
+      formato,
+      status,
+      modulo_id,
+      responsavel_id,
+      detalhes_aula
+    `).eq("numero",a).single();if(e||!d)return console.error("Erro ao buscar aula:",e),null;let{data:f}=await c.from("aula_materiais").select("*").eq("aula_id",d.id).order("ordem",{ascending:!0}),{data:g}=await c.from("aula_pre_requisitos").select("*").eq("aula_id",d.id),{data:h}=await c.from("aula_feedbacks").select("*").eq("aula_id",d.id).order("data_feedback",{ascending:!1}),{data:i}=await c.from("aula_registros").select("*").eq("aula_id",d.id).order("data_registro",{ascending:!1}),{data:j}=await c.from("aula_checklist").select("*").eq("aula_id",d.id).order("ordem",{ascending:!0}),{data:k}=await c.from("aula_atividades").select("*").eq("aula_id",d.id),{data:l}=await c.from("aula_desafios").select("*").eq("aula_id",d.id);return{...d,materiais:f||[],pre_requisitos:g||[],feedbacks:h||[],registros:i||[],checklist:j||[],atividades:k||[],desafios:l||[]}}async function f(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("aluno_progresso_aula").select(`
+      *,
+      aulas (
+        numero,
+        titulo,
+        data_programada
+      )
+    `).eq("aluno_id",a);return e?("{}"===JSON.stringify(e)||"PGRST116"===e.code||"42P01"===e.code||e.message?.includes("does not exist")||e.message?.includes("relation")&&e.message?.includes("does not exist")?console.log("Tabela aluno_progresso_aula não existe ainda. Retornando array vazio."):console.error("Erro ao buscar progresso geral:",e),[]):d}async function g(a){let c=await (0,b.createClient)(),{count:d,error:e}=await c.from("aulas").select("id",{count:"exact"});if(e)return console.error("Erro ao contar aulas:",e),{totalAulas:30,concluidas:0,emAndamento:0,desafiosAprovados:0,porcentagemConclusao:0};let{data:f,error:g}=await c.from("aluno_progresso_aula").select("*").eq("aluno_id",a);if(g?.code==="PGRST116"||g?.message?.includes("does not exist"))return console.log("Tabela aluno_progresso_aula não existe ainda. Retornando estatísticas padrão."),{totalAulas:d||30,concluidas:0,emAndamento:0,desafiosAprovados:0,porcentagemConclusao:0};let h=f?.filter(a=>"concluida"===a.status).length||0;return{totalAulas:d||30,concluidas:h,emAndamento:f?.filter(a=>"em_andamento"===a.status).length||0,desafiosAprovados:f?.filter(a=>a.desafio_aprovado).length||0,porcentagemConclusao:d?h/d*100:0}}async function h(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("aula_materiais").select("*").eq("aula_id",a).order("ordem",{ascending:!0});return e?(console.error("Erro ao buscar materiais:",e),[]):d}async function i(){let a=await (0,b.createClient)(),{data:c,error:d}=await a.from("aulas").select("*").gte("numero",25).lte("numero",29).order("numero",{ascending:!0});return d?(console.error("Erro ao buscar aulas do show final:",d),[]):c}async function j(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("metodologias").select(`
+      id,
+      nome,
+      resumo,
+      filosofia,
+      principios,
+      caracteristicas,
+      faixa_etaria,
+      instrumentos_utilizados,
+      sequencia_didatica,
+      imagem_representativa_url,
+      video_explicativo_url
+    `).contains("tags",[a]);return e?(console.error("Erro ao buscar metodologias:",e),[]):d||[]}async function k(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("biblioteca_instrumentos").select(`
+      id,
+      nome,
+      categoria_id,
+      origem,
+      historia,
+      curiosidades,
+      uso_tradicional,
+      uso_moderno,
+      material,
+      tecnicas_basicas,
+      imagem_url,
+      audio_exemplo_url,
+      video_demonstracao_url,
+      nivel_dificuldade,
+      idade_recomendada,
+      pre_requisitos,
+      disponivel_escola,
+      pode_emprestar
+    `).contains("tags",[a]);return e?(console.error("Erro ao buscar instrumentos:",e),[]):d||[]}async function l(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("repertorio").select(`
+      id,
+      titulo,
+      compositor,
+      arranjo_por,
+      tonalidade,
+      andamento,
+      duracao_estimada,
+      nivel_dificuldade,
+      instrumentos_necessarios,
+      partitura_url,
+      cifra_url,
+      letra_url,
+      playback_url,
+      video_tutorial_url,
+      tags,
+      observacoes
+    `).contains("tags",[a]);return e?(console.error("Erro ao buscar repertório:",e),[]):d||[]}async function m(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("videos_professores").select(`
+      id,
+      titulo,
+      descricao,
+      duracao,
+      video_url,
+      thumbnail_url,
+      modulo,
+      instrumento_foco,
+      nivel_dificuldade,
+      transcricao,
+      materiais_complementares
+    `).eq("aula_relacionada_id",a).eq("publico",!0);return e?(console.error("Erro ao buscar vídeos:",e),[]):d||[]}async function n(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("aulas").select("id, numero, titulo, objetivo_didatico, data_programada, status").gt("numero",a).order("numero",{ascending:!0}).limit(3);return e?(console.error("Erro ao buscar próximas aulas:",e),[]):d||[]}a.s(["getAulaById",()=>c,"getAulaPorNumero",()=>e,"getAulasShowFinal",()=>i,"getEstatisticasProgresso",()=>g,"getInstrumentosAula",()=>k,"getMateriaisAula",()=>h,"getMetodologiasAula",()=>j,"getProgressoGeralAluno",()=>f,"getProximasAulas",()=>n,"getRepertorioAula",()=>l,"getTodasAulas",()=>d,"getVideosAula",()=>m])},87705,a=>{"use strict";let b=(0,a.i(1269).default)("ChevronLeft",[["path",{d:"m15 18-6-6 6-6",key:"1wnfg3"}]]);a.s(["ChevronLeft",()=>b],87705)},60612,a=>{"use strict";let b=(0,a.i(1269).default)("Calendar",[["path",{d:"M8 2v4",key:"1cmpym"}],["path",{d:"M16 2v4",key:"4m81vk"}],["rect",{width:"18",height:"18",x:"3",y:"4",rx:"2",key:"1hopcy"}],["path",{d:"M3 10h18",key:"8toen8"}]]);a.s(["Calendar",()=>b],60612)},49442,a=>{"use strict";let b=(0,a.i(1269).default)("Target",[["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}],["circle",{cx:"12",cy:"12",r:"6",key:"1vlfrh"}],["circle",{cx:"12",cy:"12",r:"2",key:"1c9p78"}]]);a.s(["Target",()=>b],49442)},73992,a=>{"use strict";let b=(0,a.i(1269).default)("Music",[["path",{d:"M9 18V5l12-2v13",key:"1jmyc2"}],["circle",{cx:"6",cy:"18",r:"3",key:"fqmcym"}],["circle",{cx:"18",cy:"16",r:"3",key:"1hluhg"}]]);a.s(["Music",()=>b],73992)},96293,a=>{"use strict";let b=(0,a.i(1269).default)("Video",[["path",{d:"m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5",key:"ftymec"}],["rect",{x:"2",y:"6",width:"14",height:"12",rx:"2",key:"158x01"}]]);a.s(["Video",()=>b],96293)},90582,a=>{"use strict";let b=(0,a.i(1269).default)("MicVocal",[["path",{d:"m11 7.601-5.994 8.19a1 1 0 0 0 .1 1.298l.817.818a1 1 0 0 0 1.314.087L15.09 12",key:"80a601"}],["path",{d:"M16.5 21.174C15.5 20.5 14.372 20 13 20c-2.058 0-3.928 2.356-6 2-2.072-.356-2.775-3.369-1.5-4.5",key:"j0ngtp"}],["circle",{cx:"16",cy:"7",r:"5",key:"d08jfb"}]]);a.s(["Mic2",()=>b],90582)},84674,a=>{"use strict";let b=(0,a.i(1269).default)("FileText",[["path",{d:"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z",key:"1rqfz7"}],["path",{d:"M14 2v4a2 2 0 0 0 2 2h4",key:"tnqrlb"}],["path",{d:"M10 9H8",key:"b1mrlr"}],["path",{d:"M16 13H8",key:"t4e002"}],["path",{d:"M16 17H8",key:"z1uh3a"}]]);a.s(["FileText",()=>b],84674)},70683,a=>{"use strict";let b=(0,a.i(1269).default)("SquarePen",[["path",{d:"M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7",key:"1m0v6g"}],["path",{d:"M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z",key:"ohrbg2"}]]);a.s(["Edit",()=>b],70683)},33835,a=>{"use strict";var b=a.i(7997),c=a.i(60573);a.i(70396);var d=a.i(73727),e=a.i(95936),f=a.i(87705),g=a.i(70683),h=a.i(60612),i=a.i(84674),j=a.i(96293),k=a.i(73992),l=a.i(90582);let m=(0,a.i(1269).default)("PanelsTopLeft",[["rect",{width:"18",height:"18",x:"3",y:"3",rx:"2",key:"afitv7"}],["path",{d:"M3 9h18",key:"1pudct"}],["path",{d:"M9 21V9",key:"1oto5p"}]]);var n=a.i(49442);async function o({params:a}){let o=await (0,c.getAulaById)(a.id);o||(0,d.notFound)();let[p,q,r,s]=await Promise.all([(0,c.getMateriaisAula)(o.id),(0,c.getVideosAula)(o.id),(0,c.getRepertorioAula)(o.id),(0,c.getInstrumentosAula)(o.id)]),t={rascunho:"bg-gray-100 text-gray-700 border-gray-200",agendada:"bg-blue-50 text-blue-700 border-blue-100",concluida:"bg-green-50 text-green-700 border-green-100",cancelada:"bg-red-50 text-red-700 border-red-100"};return(0,b.jsxs)("div",{className:"space-y-8 animate-fade-in",children:[(0,b.jsx)("div",{className:"bg-white p-6 rounded-2xl border border-gray-100 shadow-sm",children:(0,b.jsxs)("div",{className:"flex flex-col md:flex-row justify-between items-start md:items-center gap-4",children:[(0,b.jsxs)("div",{className:"flex items-start gap-4",children:[(0,b.jsx)(e.default,{href:"/admin/aulas",className:"p-2 hover:bg-gray-50 rounded-lg transition-colors border border-gray-200 text-gray-500 mt-1",children:(0,b.jsx)(f.ChevronLeft,{className:"w-5 h-5"})}),(0,b.jsxs)("div",{children:[(0,b.jsxs)("div",{className:"flex items-center gap-3 mb-1",children:[(0,b.jsxs)("span",{className:"bg-indigo-600 text-white text-xs font-bold px-2 py-0.5 rounded shadow-sm",children:["Aula ",o.numero]}),(0,b.jsx)("span",{className:`px-2.5 py-0.5 rounded-full text-xs font-medium border uppercase tracking-wide ${t[o.status]||t.rascunho}`,children:{rascunho:"Rascunho",agendada:"Agendada",concluida:"Concluída",cancelada:"Cancelada"}[o.status]||o.status})]}),(0,b.jsx)("h1",{className:"text-3xl font-bold text-gray-900",children:o.titulo}),(0,b.jsxs)("div",{className:"flex items-center gap-4 mt-2 text-sm text-gray-500",children:[(0,b.jsxs)("span",{className:"flex items-center gap-1",children:[(0,b.jsx)(h.Calendar,{className:"w-4 h-4"}),o.data_programada?new Date(o.data_programada).toLocaleDateString():"Data não definida"]}),(0,b.jsxs)("span",{className:"flex items-center gap-1 capitalize",children:[(0,b.jsx)(m,{className:"w-4 h-4"}),o.formato]}),(0,b.jsxs)("span",{className:"flex items-center gap-1 capitalize",children:[(0,b.jsx)(n.Target,{className:"w-4 h-4"}),"Nível ",o.nivel]})]})]})]}),(0,b.jsx)("div",{children:(0,b.jsxs)(e.default,{href:`/admin/aulas/editar/${o.id}`,className:"inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 shadow-sm transition-all active:scale-95",children:[(0,b.jsx)(g.Edit,{className:"w-4 h-4"}),"Editar Conteúdo"]})})]})}),(0,b.jsxs)("div",{className:"grid grid-cols-1 lg:grid-cols-3 gap-8",children:[(0,b.jsxs)("div",{className:"lg:col-span-2 space-y-8",children:[(0,b.jsxs)("div",{className:"bg-white p-8 rounded-2xl border border-gray-100 shadow-sm space-y-6",children:[(0,b.jsxs)("div",{children:[(0,b.jsxs)("h3",{className:"text-lg font-bold text-gray-900 mb-3 flex items-center gap-2",children:[(0,b.jsx)(n.Target,{className:"w-5 h-5 text-red-500"}),"Objetivo Didático"]}),(0,b.jsx)("p",{className:"text-gray-700 leading-relaxed bg-red-50/50 p-4 rounded-xl border border-red-50",children:o.objetivo_didatico||(0,b.jsx)("span",{className:"text-gray-400 italic",children:"Nenhum objetivo definido."})})]}),(0,b.jsxs)("div",{children:[(0,b.jsxs)("h3",{className:"text-lg font-bold text-gray-900 mb-3 flex items-center gap-2",children:[(0,b.jsx)(i.FileText,{className:"w-5 h-5 text-blue-500"}),"Resumo das Atividades"]}),(0,b.jsx)("div",{className:"text-gray-600 prose prose-sm max-w-none",children:o.resumo_atividades?(0,b.jsx)("p",{className:"whitespace-pre-wrap",children:o.resumo_atividades}):(0,b.jsx)("span",{className:"text-gray-400 italic",children:"Sem descrição de atividades."})})]})]}),(0,b.jsxs)("div",{className:"bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden",children:[(0,b.jsxs)("div",{className:"px-6 py-4 border-b border-gray-100 bg-gray-50 flex items-center justify-between",children:[(0,b.jsxs)("h3",{className:"font-bold text-gray-900 flex items-center gap-2",children:[(0,b.jsx)(m,{className:"w-5 h-5 text-gray-500"}),"Conteúdo & Mídia"]}),(0,b.jsxs)("span",{className:"text-xs font-medium text-gray-500 px-2 py-1 bg-white rounded border border-gray-200",children:[q.length+p.length," itens"]})]}),(0,b.jsxs)("div",{className:"p-6 space-y-6",children:[q.length>0&&(0,b.jsxs)("div",{children:[(0,b.jsx)("h4",{className:"text-sm font-bold text-gray-500 uppercase tracking-wider mb-3",children:"Vídeos Relacionados"}),(0,b.jsx)("div",{className:"grid grid-cols-1 sm:grid-cols-2 gap-4",children:q.map(a=>(0,b.jsxs)("a",{href:a.video_url,target:"_blank",rel:"noopener noreferrer",className:"group relative block rounded-xl overflow-hidden border border-gray-200 hover:shadow-md transition-all",children:[(0,b.jsxs)("div",{className:"aspect-video bg-gray-100 relative",children:[a.thumbnail_url?(0,b.jsx)("img",{src:a.thumbnail_url,alt:a.titulo,className:"w-full h-full object-cover"}):(0,b.jsx)("div",{className:"w-full h-full flex items-center justify-center bg-gray-100 text-gray-400",children:(0,b.jsx)(j.Video,{className:"w-8 h-8"})}),(0,b.jsx)("div",{className:"absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity",children:(0,b.jsx)("div",{className:"bg-white/20 backdrop-blur rounded-full p-3",children:(0,b.jsx)("div",{className:"bg-white rounded-full p-2",children:(0,b.jsx)(j.Video,{className:"w-4 h-4 text-black"})})})})]}),(0,b.jsxs)("div",{className:"p-3",children:[(0,b.jsx)("h5",{className:"font-medium text-gray-900 line-clamp-1 group-hover:text-blue-600 transition-colors",children:a.titulo}),(0,b.jsx)("p",{className:"text-xs text-gray-500 mt-1",children:a.duracao?`${a.duracao} min`:"Duração N/A"})]})]},a.id))})]}),p.length>0&&(0,b.jsxs)("div",{children:[(0,b.jsx)("h4",{className:"text-sm font-bold text-gray-500 uppercase tracking-wider mb-3",children:"Materiais Complementares"}),(0,b.jsx)("div",{className:"space-y-2",children:p.map(a=>(0,b.jsxs)("div",{className:"flex items-center p-3 rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors",children:[(0,b.jsx)("div",{className:"p-2 bg-yellow-50 text-yellow-600 rounded mr-3",children:(0,b.jsx)(i.FileText,{className:"w-4 h-4"})}),(0,b.jsxs)("div",{className:"flex-1",children:[(0,b.jsx)("div",{className:"font-medium text-gray-900",children:a.titulo}),(0,b.jsx)("div",{className:"text-xs text-gray-500 capitalize",children:a.tipo})]}),(0,b.jsx)("a",{href:a.url,target:"_blank",className:"text-blue-600 hover:text-blue-800 text-sm font-medium px-3 py-1 bg-blue-50 rounded hover:bg-blue-100 transition-colors",children:"Abrir"})]},a.id))})]}),0===q.length&&0===p.length&&(0,b.jsx)("div",{className:"text-center py-8 text-gray-400 italic bg-gray-50 rounded-xl border border-dashed border-gray-200",children:"Nenhum material de mídia vinculado a esta aula."})]})]})]}),(0,b.jsxs)("div",{className:"space-y-6",children:[(0,b.jsxs)("div",{className:"bg-white rounded-2xl border border-gray-100 shadow-sm p-6",children:[(0,b.jsxs)("h3",{className:"font-bold text-gray-900 mb-4 flex items-center gap-2",children:[(0,b.jsx)(k.Music,{className:"w-5 h-5 text-purple-600"}),"Repertório da Aula"]}),r.length>0?(0,b.jsx)("div",{className:"space-y-3",children:r.map(a=>(0,b.jsxs)(e.default,{href:`/admin/repertorio/${a.id}`,className:"flex items-center gap-3 p-2 hover:bg-purple-50 rounded-lg transition-colors group",children:[(0,b.jsx)("div",{className:"w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 text-xs font-bold",children:(0,b.jsx)(l.Mic2,{className:"w-4 h-4"})}),(0,b.jsxs)("div",{className:"flex-1 min-w-0",children:[(0,b.jsx)("div",{className:"font-medium text-gray-900 truncate group-hover:text-purple-700",children:a.titulo}),(0,b.jsx)("div",{className:"text-xs text-gray-500 truncate",children:a.compositor})]})]},a.id))}):(0,b.jsx)("p",{className:"text-sm text-gray-500 italic",children:"Nenhuma música vinculada."})]}),(0,b.jsxs)("div",{className:"bg-white rounded-2xl border border-gray-100 shadow-sm p-6",children:[(0,b.jsxs)("h3",{className:"font-bold text-gray-900 mb-4 flex items-center gap-2",children:[(0,b.jsx)(m,{className:"w-5 h-5 text-indigo-600"}),"Instrumentos Foco"]}),s.length>0?(0,b.jsx)("div",{className:"flex flex-wrap gap-2",children:s.map(a=>(0,b.jsx)("span",{className:"px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-bold border border-indigo-100",children:a.nome},a.id))}):(0,b.jsx)("p",{className:"text-sm text-gray-500 italic",children:"Nenhum instrumento específico."})]}),(0,b.jsxs)("div",{className:"bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl border border-gray-200 p-6",children:[(0,b.jsx)("h4",{className:"font-bold text-gray-700 text-sm uppercase tracking-wider mb-4",children:"Metadados"}),(0,b.jsxs)("div",{className:"space-y-3 text-sm",children:[(0,b.jsxs)("div",{className:"flex justify-between",children:[(0,b.jsx)("span",{className:"text-gray-500",children:"ID"}),(0,b.jsx)("span",{className:"font-mono text-xs text-gray-700 truncate max-w-[100px]",title:o.id,children:o.id})]}),(0,b.jsxs)("div",{className:"flex justify-between",children:[(0,b.jsx)("span",{className:"text-gray-500",children:"Módulo"}),(0,b.jsx)("span",{className:"font-medium text-gray-900",children:o.modulo_id||"Geral"})]}),(0,b.jsxs)("div",{className:"flex justify-between",children:[(0,b.jsx)("span",{className:"text-gray-500",children:"Responsável"}),(0,b.jsx)("span",{className:"font-medium text-gray-900",children:o.responsavel_id?"Definido":"N/A"})]})]})]})]})]})]})}a.s(["default",()=>o],33835)}];
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__769f5070._.js.map

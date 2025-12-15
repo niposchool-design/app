@@ -1,4 +1,20 @@
 {
-  "node": {},
+  "node": {
+    "6023c8904f52cf3475882f58eb43ee9bb856888659": {
+      "workers": {
+        "app/(protected)/admin/aulas/page": {
+          "moduleId": "[project]/.next-internal/server/app/(protected)/admin/aulas/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/lib/supabase/mutations/aulas.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updateAula",
+          "filename": "src/lib/supabase/mutations/aulas.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/aulas/page": "action-browser"
+      },
+      "exportedName": "updateAula",
+      "filename": "src/lib/supabase/mutations/aulas.ts"
+    }
+  },
   "edge": {}
 }

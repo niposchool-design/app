@@ -1,0 +1,112 @@
+module.exports=[93695,(a,b,c)=>{b.exports=a.x("next/dist/shared/lib/no-fallback-error.external.js",()=>require("next/dist/shared/lib/no-fallback-error.external.js"))},70864,a=>{a.n(a.i(33290))},43619,a=>{a.n(a.i(79962))},13718,a=>{a.n(a.i(85523))},18198,a=>{a.n(a.i(45518))},62212,a=>{a.n(a.i(66114))},12851,a=>{a.n(a.i(91991))},60573,a=>{"use strict";var b=a.i(98310);async function c(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("aulas").select(`
+      id,
+      numero,
+      titulo,
+      data_programada,
+      objetivo_didatico,
+      resumo_atividades,
+      desafio_alpha,
+      nivel,
+      formato,
+      status,
+      modulo_id,
+      responsavel_id,
+      detalhes_aula
+    `).eq("id",a).single();return e?(console.error(`Erro ao buscar aula por ID ${a}:`,e),null):d}async function d(a){let c=(await (0,b.createClient)()).from("aulas").select(`
+      id,
+      numero,
+      titulo,
+      data_programada,
+      objetivo_didatico,
+      resumo_atividades,
+      desafio_alpha,
+      nivel,
+      formato,
+      status,
+      modulo_id,
+      responsavel_id,
+      detalhes_aula
+    `).order("numero",{ascending:!0});a?.status&&(c=c.eq("status",a.status)),a?.formato&&(c=c.eq("formato",a.formato)),a?.modulo&&(c=c.eq("modulo_id",a.modulo)),a?.data_inicio&&(c=c.gte("data_programada",a.data_inicio)),a?.data_fim&&(c=c.lte("data_programada",a.data_fim)),a?.search&&(c=c.or(`titulo.ilike.%${a.search}%,objetivo_didatico.ilike.%${a.search}%`));let{data:d,error:e}=await c;return e?(console.error("Erro ao buscar todas as aulas:",e),[]):d}async function e(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("aulas").select(`
+      id,
+      numero,
+      titulo,
+      data_programada,
+      objetivo_didatico,
+      resumo_atividades,
+      desafio_alpha,
+      nivel,
+      formato,
+      status,
+      modulo_id,
+      responsavel_id,
+      detalhes_aula
+    `).eq("numero",a).single();if(e||!d)return console.error("Erro ao buscar aula:",e),null;let{data:f}=await c.from("aula_materiais").select("*").eq("aula_id",d.id).order("ordem",{ascending:!0}),{data:g}=await c.from("aula_pre_requisitos").select("*").eq("aula_id",d.id),{data:h}=await c.from("aula_feedbacks").select("*").eq("aula_id",d.id).order("data_feedback",{ascending:!1}),{data:i}=await c.from("aula_registros").select("*").eq("aula_id",d.id).order("data_registro",{ascending:!1}),{data:j}=await c.from("aula_checklist").select("*").eq("aula_id",d.id).order("ordem",{ascending:!0}),{data:k}=await c.from("aula_atividades").select("*").eq("aula_id",d.id),{data:l}=await c.from("aula_desafios").select("*").eq("aula_id",d.id);return{...d,materiais:f||[],pre_requisitos:g||[],feedbacks:h||[],registros:i||[],checklist:j||[],atividades:k||[],desafios:l||[]}}async function f(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("aluno_progresso_aula").select(`
+      *,
+      aulas (
+        numero,
+        titulo,
+        data_programada
+      )
+    `).eq("aluno_id",a);return e?("{}"===JSON.stringify(e)||"PGRST116"===e.code||"42P01"===e.code||e.message?.includes("does not exist")||e.message?.includes("relation")&&e.message?.includes("does not exist")?console.log("Tabela aluno_progresso_aula não existe ainda. Retornando array vazio."):console.error("Erro ao buscar progresso geral:",e),[]):d}async function g(a){let c=await (0,b.createClient)(),{count:d,error:e}=await c.from("aulas").select("id",{count:"exact"});if(e)return console.error("Erro ao contar aulas:",e),{totalAulas:30,concluidas:0,emAndamento:0,desafiosAprovados:0,porcentagemConclusao:0};let{data:f,error:g}=await c.from("aluno_progresso_aula").select("*").eq("aluno_id",a);if(g?.code==="PGRST116"||g?.message?.includes("does not exist"))return console.log("Tabela aluno_progresso_aula não existe ainda. Retornando estatísticas padrão."),{totalAulas:d||30,concluidas:0,emAndamento:0,desafiosAprovados:0,porcentagemConclusao:0};let h=f?.filter(a=>"concluida"===a.status).length||0;return{totalAulas:d||30,concluidas:h,emAndamento:f?.filter(a=>"em_andamento"===a.status).length||0,desafiosAprovados:f?.filter(a=>a.desafio_aprovado).length||0,porcentagemConclusao:d?h/d*100:0}}async function h(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("aula_materiais").select("*").eq("aula_id",a).order("ordem",{ascending:!0});return e?(console.error("Erro ao buscar materiais:",e),[]):d}async function i(){let a=await (0,b.createClient)(),{data:c,error:d}=await a.from("aulas").select("*").gte("numero",25).lte("numero",29).order("numero",{ascending:!0});return d?(console.error("Erro ao buscar aulas do show final:",d),[]):c}async function j(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("metodologias").select(`
+      id,
+      nome,
+      resumo,
+      filosofia,
+      principios,
+      caracteristicas,
+      faixa_etaria,
+      instrumentos_utilizados,
+      sequencia_didatica,
+      imagem_representativa_url,
+      video_explicativo_url
+    `).contains("tags",[a]);return e?(console.error("Erro ao buscar metodologias:",e),[]):d||[]}async function k(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("biblioteca_instrumentos").select(`
+      id,
+      nome,
+      categoria_id,
+      origem,
+      historia,
+      curiosidades,
+      uso_tradicional,
+      uso_moderno,
+      material,
+      tecnicas_basicas,
+      imagem_url,
+      audio_exemplo_url,
+      video_demonstracao_url,
+      nivel_dificuldade,
+      idade_recomendada,
+      pre_requisitos,
+      disponivel_escola,
+      pode_emprestar
+    `).contains("tags",[a]);return e?(console.error("Erro ao buscar instrumentos:",e),[]):d||[]}async function l(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("repertorio").select(`
+      id,
+      titulo,
+      compositor,
+      arranjo_por,
+      tonalidade,
+      andamento,
+      duracao_estimada,
+      nivel_dificuldade,
+      instrumentos_necessarios,
+      partitura_url,
+      cifra_url,
+      letra_url,
+      playback_url,
+      video_tutorial_url,
+      tags,
+      observacoes
+    `).contains("tags",[a]);return e?(console.error("Erro ao buscar repertório:",e),[]):d||[]}async function m(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("videos_professores").select(`
+      id,
+      titulo,
+      descricao,
+      duracao,
+      video_url,
+      thumbnail_url,
+      modulo,
+      instrumento_foco,
+      nivel_dificuldade,
+      transcricao,
+      materiais_complementares
+    `).eq("aula_relacionada_id",a).eq("publico",!0);return e?(console.error("Erro ao buscar vídeos:",e),[]):d||[]}async function n(a){let c=await (0,b.createClient)(),{data:d,error:e}=await c.from("aulas").select("id, numero, titulo, objetivo_didatico, data_programada, status").gt("numero",a).order("numero",{ascending:!0}).limit(3);return e?(console.error("Erro ao buscar próximas aulas:",e),[]):d||[]}a.s(["getAulaById",()=>c,"getAulaPorNumero",()=>e,"getAulasShowFinal",()=>i,"getEstatisticasProgresso",()=>g,"getInstrumentosAula",()=>k,"getMateriaisAula",()=>h,"getMetodologiasAula",()=>j,"getProgressoGeralAluno",()=>f,"getProximasAulas",()=>n,"getRepertorioAula",()=>l,"getTodasAulas",()=>d,"getVideosAula",()=>m])},13743,a=>{"use strict";let b=(0,a.i(1269).default)("ArrowLeft",[["path",{d:"m12 19-7-7 7-7",key:"1l729n"}],["path",{d:"M19 12H5",key:"x3x0zl"}]]);a.s(["ArrowLeft",()=>b],13743)},38938,a=>{"use strict";let b=(0,a.i(11857).registerClientReference)(function(){throw Error("Attempted to call AulaForm() from the server but AulaForm is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.")},"[project]/app/(protected)/admin/aulas/_components/AulaForm.tsx <module evaluation>","AulaForm");a.s(["AulaForm",0,b])},96861,a=>{"use strict";let b=(0,a.i(11857).registerClientReference)(function(){throw Error("Attempted to call AulaForm() from the server but AulaForm is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.")},"[project]/app/(protected)/admin/aulas/_components/AulaForm.tsx","AulaForm");a.s(["AulaForm",0,b])},93259,a=>{"use strict";a.i(38938);var b=a.i(96861);a.n(b)},68227,a=>{"use strict";var b=a.i(7997),c=a.i(93259),d=a.i(60573);a.i(70396);var e=a.i(73727),f=a.i(95936),g=a.i(13743);async function h({params:a}){let h=await (0,d.getAulaById)(a.id);h||(0,e.notFound)();let i={id:h.id,numero:h.numero,titulo:h.titulo,data_programada:h.data_programada||"",objetivo_didatico:h.objetivo_didatico||"",resumo_atividades:h.resumo_atividades||"",nivel:h.nivel||"iniciante",formato:h.formato||"presencial",status:h.status||"rascunho"};return(0,b.jsxs)("div",{className:"p-6 lg:p-8 max-w-5xl mx-auto",children:[(0,b.jsxs)("div",{className:"mb-6",children:[(0,b.jsxs)(f.default,{href:"/admin/aulas",className:"inline-flex items-center text-gray-500 hover:text-gray-900 transition-colors mb-4",children:[(0,b.jsx)(g.ArrowLeft,{className:"w-4 h-4 mr-1"}),"Voltar para lista"]}),(0,b.jsxs)("div",{className:"flex items-center gap-3",children:[(0,b.jsx)("h1",{className:"text-3xl font-bold text-gray-900",children:"Editar Aula"}),(0,b.jsxs)("span",{className:"bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-bold",children:["#",h.numero]})]}),(0,b.jsx)("p",{className:"text-gray-600 mt-1",children:"Atualize as informações e o conteúdo didático."})]}),(0,b.jsx)(c.AulaForm,{initialData:i,isEditing:!0})]})}a.s(["default",()=>h])}];
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__a3df429e._.js.map

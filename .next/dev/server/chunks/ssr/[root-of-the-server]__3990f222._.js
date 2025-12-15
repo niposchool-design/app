@@ -72,24 +72,45 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/supabase/server.ts [app-rsc] (ecmascript)");
 ;
 async function getCategoriasInstrumentos() {
-    const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createClient"])();
-    const { data, error } = await supabase.from('categorias_instrumentos').select('*').order('ordem_exibicao', {
-        ascending: true
-    });
-    if (error) {
-        console.error('Erro ao buscar categorias:', error);
-        return [];
-    }
-    return data;
+    // Retornamos fixo pois a tabela categorias_instrumentos pode não estar populada ou faltar no dump
+    return [
+        {
+            id: 'Cordas',
+            nome: 'Cordas'
+        },
+        {
+            id: 'Sopro',
+            nome: 'Sopro'
+        },
+        {
+            id: 'Percussão',
+            nome: 'Percussão'
+        },
+        {
+            id: 'Teclas',
+            nome: 'Teclas'
+        },
+        {
+            id: 'Vocal',
+            nome: 'Vocal'
+        }
+    ];
 }
 async function getInstrumentos(filtros) {
     const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createClient"])();
-    let query = supabase.from('biblioteca_instrumentos').select(`
-      *,
-      categoria:categorias_instrumentos(*)
-    `).eq('ativo', true);
-    if (filtros?.categoria_id) {
-        query = query.eq('categoria_id', filtros.categoria_id);
+    let query = supabase.from('instrumentos').select('*').order('nome');
+    if (!filtros?.includeInactive) {
+    // Por padrão, para usuários finais, apenas ativos.
+    // Mas a UI do admin pode passar includeInactive: true
+    // query = query.eq('ativo', true); 
+    // OBS: Para admin, queremos ver tudo. Deixarei a lógica de filtro
+    }
+    // Se for explicitamente solicitado apenas ativos (ex: site publico)
+    if (filtros?.includeInactive === false) {
+        query = query.eq('ativo', true);
+    }
+    if (filtros?.categoria) {
+        query = query.eq('categoria', filtros.categoria);
     }
     if (filtros?.search) {
         query = query.ilike('nome', `%${filtros.search}%`);
@@ -103,15 +124,20 @@ async function getInstrumentos(filtros) {
 }
 async function getInstrumentoById(id) {
     const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createClient"])();
-    const { data, error } = await supabase.from('biblioteca_instrumentos').select(`
-      *,
-      categoria:categorias_instrumentos(*)
-    `).eq('id', id).single();
+    // Verificando quais relacionamentos realmente existem no banco
+    // Baseado na análise: instrumento_curiosidades, instrumento_midias, instrumento_sons
+    const { data, error } = await supabase.from('instrumentos').select(`
+            *,
+            midias:instrumento_midias(*),
+            sons:instrumento_sons(*),
+            curiosidades_lista:instrumento_curiosidades(*),
+            tecnicas:instrumento_tecnicas(*)
+        `).eq('id', id).single();
     if (error) {
         console.error('Erro ao buscar instrumento:', error);
         return null;
     }
-    return data;
+    return data; // Cast necessário pois o tipo retornado pelo join do supapsse é complexo
 }
 }),
 "[project]/app/(protected)/admin/instrumentos/page.tsx [app-rsc] (ecmascript)", ((__turbopack_context__) => {
@@ -128,12 +154,15 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/search.js [app-rsc] (ecmascript) <export default as Search>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$filter$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Filter$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/filter.js [app-rsc] (ecmascript) <export default as Filter>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$music$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Music$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/music.js [app-rsc] (ecmascript) <export default as Music>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$square$2d$pen$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Edit$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/square-pen.js [app-rsc] (ecmascript) <export default as Edit>");
 ;
 ;
 ;
 ;
 async function AdminInstrumentosPage() {
-    const instrumentos = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$queries$2f$instrumentos$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getInstrumentos"])();
+    const instrumentos = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$queries$2f$instrumentos$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getInstrumentos"])({
+        includeInactive: true
+    });
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "p-6 lg:p-8 space-y-6",
         children: [
@@ -172,14 +201,14 @@ async function AdminInstrumentosPage() {
                                 className: "w-5 h-5"
                             }, void 0, false, {
                                 fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                lineNumber: 21,
+                                lineNumber: 20,
                                 columnNumber: 21
                             }, this),
                             "Novo Instrumento"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                        lineNumber: 17,
+                        lineNumber: 16,
                         columnNumber: 17
                     }, this)
                 ]
@@ -198,7 +227,7 @@ async function AdminInstrumentosPage() {
                                 className: "absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"
                             }, void 0, false, {
                                 fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                lineNumber: 29,
+                                lineNumber: 28,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -207,13 +236,13 @@ async function AdminInstrumentosPage() {
                                 className: "w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none"
                             }, void 0, false, {
                                 fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                lineNumber: 30,
+                                lineNumber: 29,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                        lineNumber: 28,
+                        lineNumber: 27,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -223,20 +252,20 @@ async function AdminInstrumentosPage() {
                                 className: "w-4 h-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                lineNumber: 37,
+                                lineNumber: 36,
                                 columnNumber: 21
                             }, this),
                             "Filtros"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                        lineNumber: 36,
+                        lineNumber: 35,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                lineNumber: 27,
+                lineNumber: 26,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -255,6 +284,14 @@ async function AdminInstrumentosPage() {
                                             children: "Nome"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
+                                            lineNumber: 46,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                            className: "px-6 py-4",
+                                            children: "Família"
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
                                             lineNumber: 47,
                                             columnNumber: 33
                                         }, this),
@@ -267,27 +304,11 @@ async function AdminInstrumentosPage() {
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                            className: "px-6 py-4",
-                                            children: "Origem"
+                                            className: "px-6 py-4 text-center",
+                                            children: "Ordem"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
                                             lineNumber: 49,
-                                            columnNumber: 33
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                            className: "px-6 py-4",
-                                            children: "Nível"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                            lineNumber: 50,
-                                            columnNumber: 33
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                            className: "px-6 py-4 text-center",
-                                            children: "Disponível na Escola"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                            lineNumber: 51,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -295,24 +316,32 @@ async function AdminInstrumentosPage() {
                                             children: "Status"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                            lineNumber: 52,
+                                            lineNumber: 50,
+                                            columnNumber: 33
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                            className: "px-6 py-4 text-right",
+                                            children: "Ações"
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
+                                            lineNumber: 51,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                    lineNumber: 46,
+                                    lineNumber: 45,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                lineNumber: 45,
+                                lineNumber: 44,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
                                 className: "divide-y divide-gray-100",
                                 children: instrumentos.length > 0 ? instrumentos.map((inst)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                        className: "hover:bg-gray-50 transition-colors",
+                                        className: "hover:bg-gray-50 transition-colors group",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                 className: "px-6 py-4 font-medium text-gray-900 flex items-center gap-3",
@@ -325,32 +354,40 @@ async function AdminInstrumentosPage() {
                                                             className: "w-full h-full object-cover"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                                            lineNumber: 62,
+                                                            lineNumber: 61,
                                                             columnNumber: 53
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$music$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Music$3e$__["Music"], {
                                                             size: 16
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                                            lineNumber: 63,
+                                                            lineNumber: 62,
                                                             columnNumber: 53
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                                        lineNumber: 60,
+                                                        lineNumber: 59,
                                                         columnNumber: 45
                                                     }, this),
                                                     inst.nome
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                                lineNumber: 59,
+                                                lineNumber: 58,
+                                                columnNumber: 41
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                className: "px-6 py-4 capitalized",
+                                                children: inst.familia || '-'
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
+                                                lineNumber: 66,
                                                 columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                 className: "px-6 py-4",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-700 text-xs font-medium",
-                                                    children: inst.categoria?.nome || 'Geral'
+                                                    children: inst.categoria || 'Geral'
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
                                                     lineNumber: 68,
@@ -362,34 +399,11 @@ async function AdminInstrumentosPage() {
                                                 columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                className: "px-6 py-4",
-                                                children: inst.origem || '-'
+                                                className: "px-6 py-4 text-center",
+                                                children: inst.ordem
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
                                                 lineNumber: 72,
-                                                columnNumber: 41
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                className: "px-6 py-4 capitalize",
-                                                children: inst.nivel_dificuldade || '-'
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                                lineNumber: 73,
-                                                columnNumber: 41
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                className: "px-6 py-4 text-center",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: `inline-block w-2.5 h-2.5 rounded-full ${inst.disponivel_escola ? 'bg-green-500' : 'bg-red-300'}`,
-                                                    title: inst.disponivel_escola ? 'Sim' : 'Não'
-                                                }, void 0, false, {
-                                                    fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                                    lineNumber: 75,
-                                                    columnNumber: 45
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                                lineNumber: 74,
                                                 columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -399,18 +413,50 @@ async function AdminInstrumentosPage() {
                                                     children: inst.ativo ? 'Ativo' : 'Inativo'
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                                    lineNumber: 78,
+                                                    lineNumber: 74,
                                                     columnNumber: 45
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                                lineNumber: 77,
+                                                lineNumber: 73,
+                                                columnNumber: 41
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                className: "px-6 py-4 text-right",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
+                                                    href: `/admin/instrumentos/${inst.id}`,
+                                                    className: "text-gray-400 hover:text-red-600 font-medium inline-flex items-center gap-1",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$square$2d$pen$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Edit$3e$__["Edit"], {
+                                                            className: "w-4 h-4"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
+                                                            lineNumber: 83,
+                                                            columnNumber: 49
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "hidden sm:inline",
+                                                            children: "Editar"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
+                                                            lineNumber: 84,
+                                                            columnNumber: 49
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
+                                                    lineNumber: 79,
+                                                    columnNumber: 45
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
+                                                lineNumber: 78,
                                                 columnNumber: 41
                                             }, this)
                                         ]
                                     }, inst.id, true, {
                                         fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                        lineNumber: 58,
+                                        lineNumber: 57,
                                         columnNumber: 37
                                     }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -419,33 +465,33 @@ async function AdminInstrumentosPage() {
                                         children: "Nenhum instrumento cadastrado."
                                     }, void 0, false, {
                                         fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                        lineNumber: 86,
+                                        lineNumber: 91,
                                         columnNumber: 37
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                    lineNumber: 85,
+                                    lineNumber: 90,
                                     columnNumber: 33
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                                lineNumber: 55,
+                                lineNumber: 54,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                        lineNumber: 44,
+                        lineNumber: 43,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                    lineNumber: 43,
+                    lineNumber: 42,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/(protected)/admin/instrumentos/page.tsx",
-                lineNumber: 42,
+                lineNumber: 41,
                 columnNumber: 13
             }, this)
         ]

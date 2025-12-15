@@ -72,24 +72,45 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/supabase/server.ts [app-rsc] (ecmascript)");
 ;
 async function getCategoriasInstrumentos() {
-    const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createClient"])();
-    const { data, error } = await supabase.from('categorias_instrumentos').select('*').order('ordem_exibicao', {
-        ascending: true
-    });
-    if (error) {
-        console.error('Erro ao buscar categorias:', error);
-        return [];
-    }
-    return data;
+    // Retornamos fixo pois a tabela categorias_instrumentos pode não estar populada ou faltar no dump
+    return [
+        {
+            id: 'Cordas',
+            nome: 'Cordas'
+        },
+        {
+            id: 'Sopro',
+            nome: 'Sopro'
+        },
+        {
+            id: 'Percussão',
+            nome: 'Percussão'
+        },
+        {
+            id: 'Teclas',
+            nome: 'Teclas'
+        },
+        {
+            id: 'Vocal',
+            nome: 'Vocal'
+        }
+    ];
 }
 async function getInstrumentos(filtros) {
     const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createClient"])();
-    let query = supabase.from('biblioteca_instrumentos').select(`
-      *,
-      categoria:categorias_instrumentos(*)
-    `).eq('ativo', true);
-    if (filtros?.categoria_id) {
-        query = query.eq('categoria_id', filtros.categoria_id);
+    let query = supabase.from('instrumentos').select('*').order('nome');
+    if (!filtros?.includeInactive) {
+    // Por padrão, para usuários finais, apenas ativos.
+    // Mas a UI do admin pode passar includeInactive: true
+    // query = query.eq('ativo', true); 
+    // OBS: Para admin, queremos ver tudo. Deixarei a lógica de filtro
+    }
+    // Se for explicitamente solicitado apenas ativos (ex: site publico)
+    if (filtros?.includeInactive === false) {
+        query = query.eq('ativo', true);
+    }
+    if (filtros?.categoria) {
+        query = query.eq('categoria', filtros.categoria);
     }
     if (filtros?.search) {
         query = query.ilike('nome', `%${filtros.search}%`);
@@ -103,15 +124,20 @@ async function getInstrumentos(filtros) {
 }
 async function getInstrumentoById(id) {
     const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createClient"])();
-    const { data, error } = await supabase.from('biblioteca_instrumentos').select(`
-      *,
-      categoria:categorias_instrumentos(*)
-    `).eq('id', id).single();
+    // Verificando quais relacionamentos realmente existem no banco
+    // Baseado na análise: instrumento_curiosidades, instrumento_midias, instrumento_sons
+    const { data, error } = await supabase.from('instrumentos').select(`
+            *,
+            midias:instrumento_midias(*),
+            sons:instrumento_sons(*),
+            curiosidades_lista:instrumento_curiosidades(*),
+            tecnicas:instrumento_tecnicas(*)
+        `).eq('id', id).single();
     if (error) {
         console.error('Erro ao buscar instrumento:', error);
         return null;
     }
-    return data;
+    return data; // Cast necessário pois o tipo retornado pelo join do supapsse é complexo
 }
 }),
 "[project]/app/(protected)/alunos/instrumentos/page.tsx [app-rsc] (ecmascript)", ((__turbopack_context__) => {
@@ -322,7 +348,7 @@ async function InstrumentosPage() {
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         className: "text-gray-600 text-sm line-clamp-3 mb-4 flex-1 leading-relaxed",
-                                        children: inst.curiosidades || inst.historia || 'Conheça mais sobre este instrumento fascinante...'
+                                        children: typeof inst.descricao === 'string' ? inst.descricao : typeof inst.historia === 'string' ? inst.historia : inst.curiosidades && Array.isArray(inst.curiosidades) && inst.curiosidades.length > 0 ? typeof inst.curiosidades[0] === 'string' ? inst.curiosidades[0] : inst.curiosidades[0]?.texto || inst.curiosidades[0]?.descricao || '' : 'Conheça mais sobre este instrumento fascinante...'
                                     }, void 0, false, {
                                         fileName: "[project]/app/(protected)/alunos/instrumentos/page.tsx",
                                         lineNumber: 86,
@@ -339,14 +365,14 @@ async function InstrumentosPage() {
                                                         className: "text-red-400"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(protected)/alunos/instrumentos/page.tsx",
-                                                        lineNumber: 92,
+                                                        lineNumber: 101,
                                                         columnNumber: 41
                                                     }, this),
                                                     "Ver detalhes"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(protected)/alunos/instrumentos/page.tsx",
-                                                lineNumber: 91,
+                                                lineNumber: 100,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -355,18 +381,18 @@ async function InstrumentosPage() {
                                                     size: 16
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(protected)/alunos/instrumentos/page.tsx",
-                                                    lineNumber: 96,
+                                                    lineNumber: 105,
                                                     columnNumber: 41
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(protected)/alunos/instrumentos/page.tsx",
-                                                lineNumber: 95,
+                                                lineNumber: 104,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(protected)/alunos/instrumentos/page.tsx",
-                                        lineNumber: 90,
+                                        lineNumber: 99,
                                         columnNumber: 33
                                     }, this)
                                 ]
@@ -394,12 +420,12 @@ async function InstrumentosPage() {
                             className: "w-10 h-10 text-red-300"
                         }, void 0, false, {
                             fileName: "[project]/app/(protected)/alunos/instrumentos/page.tsx",
-                            lineNumber: 106,
+                            lineNumber: 115,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/(protected)/alunos/instrumentos/page.tsx",
-                        lineNumber: 105,
+                        lineNumber: 114,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -407,7 +433,7 @@ async function InstrumentosPage() {
                         children: "Biblioteca vazia"
                     }, void 0, false, {
                         fileName: "[project]/app/(protected)/alunos/instrumentos/page.tsx",
-                        lineNumber: 108,
+                        lineNumber: 117,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -415,13 +441,13 @@ async function InstrumentosPage() {
                         children: "Nenhum instrumento encontrado. O administrador está catalogando."
                     }, void 0, false, {
                         fileName: "[project]/app/(protected)/alunos/instrumentos/page.tsx",
-                        lineNumber: 109,
+                        lineNumber: 118,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(protected)/alunos/instrumentos/page.tsx",
-                lineNumber: 104,
+                lineNumber: 113,
                 columnNumber: 17
             }, this)
         ]

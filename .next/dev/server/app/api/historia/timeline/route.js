@@ -1,0 +1,10 @@
+var R=require("../../../../chunks/[turbopack]_runtime.js")("server/app/api/historia/timeline/route.js")
+R.c("server/chunks/node_modules_next_7221c26d._.js")
+R.c("server/chunks/node_modules_@supabase_realtime-js_dist_module_306ac729._.js")
+R.c("server/chunks/node_modules_@supabase_storage-js_dist_module_473cf4b8._.js")
+R.c("server/chunks/node_modules_@supabase_auth-js_dist_module_d4605ced._.js")
+R.c("server/chunks/node_modules_b2383b72._.js")
+R.c("server/chunks/[root-of-the-server]__91b62b61._.js")
+R.c("server/chunks/_next-internal_server_app_api_historia_timeline_route_actions_2656a2dc.js")
+R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/historia/timeline/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/historia/timeline/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

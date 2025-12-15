@@ -1,0 +1,20 @@
+{
+  "node": {
+    "607183850844b8f638cc73d891a7d8279d093b388c": {
+      "workers": {
+        "app/(protected)/admin/alunos/[id]/page": {
+          "moduleId": 5599,
+          "async": false,
+          "exportedName": "atualizarAluno",
+          "filename": "src/lib/supabase/mutations/alunos.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/alunos/[id]/page": "action-browser"
+      },
+      "exportedName": "atualizarAluno",
+      "filename": "src/lib/supabase/mutations/alunos.ts"
+    }
+  },
+  "edge": {}
+}

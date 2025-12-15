@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(protected)/layout,_N_T_/(protected)/admin/layout,_N_T_/(protected)/admin/configuracoes/layout,_N_T_/(protected)/admin/configuracoes/page,_N_T_/admin/configuracoes"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KHByb3RlY3RlZCk/admin/configuracoes/__PAGE__",
+    "/!KHByb3RlY3RlZCk/admin/configuracoes",
+    "/!KHByb3RlY3RlZCk/admin",
+    "/!KHByb3RlY3RlZCk",
+    "/_index",
+    "/_head"
+  ]
+}

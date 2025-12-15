@@ -21,12 +21,60 @@
   },
   "dynamicRoutes": [
     {
+      "page": "/admin/alunos/[id]",
+      "regex": "^/admin/alunos/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/alunos/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/admin/aulas/editar/[id]",
+      "regex": "^/admin/aulas/editar/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/aulas/editar/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/admin/aulas/[id]",
       "regex": "^/admin/aulas/([^/]+?)(?:/)?$",
       "routeKeys": {
         "nxtPid": "nxtPid"
       },
       "namedRegex": "^/admin/aulas/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/admin/gamificacao/editar/[id]",
+      "regex": "^/admin/gamificacao/editar/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/gamificacao/editar/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/admin/gamificacao/[id]",
+      "regex": "^/admin/gamificacao/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/gamificacao/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/admin/historia/periodos/[id]",
+      "regex": "^/admin/historia/periodos/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/historia/periodos/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/admin/instrumentos/[id]",
+      "regex": "^/admin/instrumentos/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/instrumentos/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
       "page": "/admin/professores/[id]",
@@ -37,6 +85,46 @@
       "namedRegex": "^/admin/professores/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/admin/qr/display/[id]",
+      "regex": "^/admin/qr/display/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/qr/display/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/admin/repertorio/editar/[id]",
+      "regex": "^/admin/repertorio/editar/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/repertorio/editar/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/admin/repertorio/[id]",
+      "regex": "^/admin/repertorio/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/repertorio/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/admin/turmas/editar/[id]",
+      "regex": "^/admin/turmas/editar/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/turmas/editar/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/admin/turmas/[id]",
+      "regex": "^/admin/turmas/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/turmas/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/alunos/aulas/[numero]",
       "regex": "^/alunos/aulas/([^/]+?)(?:/)?$",
       "routeKeys": {
@@ -45,12 +133,36 @@
       "namedRegex": "^/alunos/aulas/(?<nxtPnumero>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/alunos/desafios/[id]",
+      "regex": "^/alunos/desafios/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/alunos/desafios/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/alunos/historia/[periodo]",
+      "regex": "^/alunos/historia/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPperiodo": "nxtPperiodo"
+      },
+      "namedRegex": "^/alunos/historia/(?<nxtPperiodo>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/alunos/instrumentos/[id]",
       "regex": "^/alunos/instrumentos/([^/]+?)(?:/)?$",
       "routeKeys": {
         "nxtPid": "nxtPid"
       },
       "namedRegex": "^/alunos/instrumentos/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/alunos/portfolio/[id]",
+      "regex": "^/alunos/portfolio/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/alunos/portfolio/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
       "page": "/professores/turmas/[id]",
@@ -87,6 +199,12 @@
       "namedRegex": "^/admin(?:/)?$"
     },
     {
+      "page": "/admin/ajuda",
+      "regex": "^/admin/ajuda(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/ajuda(?:/)?$"
+    },
+    {
       "page": "/admin/alunos",
       "regex": "^/admin/alunos(?:/)?$",
       "routeKeys": {},
@@ -111,16 +229,46 @@
       "namedRegex": "^/admin/aulas/nova(?:/)?$"
     },
     {
+      "page": "/admin/configuracoes",
+      "regex": "^/admin/configuracoes(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/configuracoes(?:/)?$"
+    },
+    {
       "page": "/admin/database",
       "regex": "^/admin/database(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/admin/database(?:/)?$"
     },
     {
+      "page": "/admin/diagnostico",
+      "regex": "^/admin/diagnostico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/diagnostico(?:/)?$"
+    },
+    {
       "page": "/admin/gamificacao",
       "regex": "^/admin/gamificacao(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/admin/gamificacao(?:/)?$"
+    },
+    {
+      "page": "/admin/gamificacao/nova",
+      "regex": "^/admin/gamificacao/nova(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/gamificacao/nova(?:/)?$"
+    },
+    {
+      "page": "/admin/historia",
+      "regex": "^/admin/historia(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/historia(?:/)?$"
+    },
+    {
+      "page": "/admin/historia/novo-periodo",
+      "regex": "^/admin/historia/novo\\-periodo(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/historia/novo\\-periodo(?:/)?$"
     },
     {
       "page": "/admin/instrumentos",
@@ -141,10 +289,28 @@
       "namedRegex": "^/admin/professores(?:/)?$"
     },
     {
+      "page": "/admin/professores/novo",
+      "regex": "^/admin/professores/novo(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/professores/novo(?:/)?$"
+    },
+    {
+      "page": "/admin/qr/gerenciar",
+      "regex": "^/admin/qr/gerenciar(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/qr/gerenciar(?:/)?$"
+    },
+    {
       "page": "/admin/repertorio",
       "regex": "^/admin/repertorio(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/admin/repertorio(?:/)?$"
+    },
+    {
+      "page": "/admin/repertorio/nova",
+      "regex": "^/admin/repertorio/nova(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/repertorio/nova(?:/)?$"
     },
     {
       "page": "/admin/turmas",
@@ -177,6 +343,24 @@
       "namedRegex": "^/alunos/conquistas(?:/)?$"
     },
     {
+      "page": "/alunos/desafios",
+      "regex": "^/alunos/desafios(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alunos/desafios(?:/)?$"
+    },
+    {
+      "page": "/alunos/gamificacao",
+      "regex": "^/alunos/gamificacao(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alunos/gamificacao(?:/)?$"
+    },
+    {
+      "page": "/alunos/historia",
+      "regex": "^/alunos/historia(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alunos/historia(?:/)?$"
+    },
+    {
       "page": "/alunos/instrumentos",
       "regex": "^/alunos/instrumentos(?:/)?$",
       "routeKeys": {},
@@ -187,6 +371,18 @@
       "regex": "^/alunos/perfil(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/alunos/perfil(?:/)?$"
+    },
+    {
+      "page": "/alunos/portfolio",
+      "regex": "^/alunos/portfolio(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alunos/portfolio(?:/)?$"
+    },
+    {
+      "page": "/alunos/progresso",
+      "regex": "^/alunos/progresso(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alunos/progresso(?:/)?$"
     },
     {
       "page": "/alunos/repertorio",
@@ -207,10 +403,58 @@
       "namedRegex": "^/alunos/videos(?:/)?$"
     },
     {
+      "page": "/api/admin/activity",
+      "regex": "^/api/admin/activity(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/activity(?:/)?$"
+    },
+    {
+      "page": "/api/admin/stats",
+      "regex": "^/api/admin/stats(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/stats(?:/)?$"
+    },
+    {
+      "page": "/api/aulas",
+      "regex": "^/api/aulas(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/aulas(?:/)?$"
+    },
+    {
       "page": "/api/debug/stats",
       "regex": "^/api/debug/stats(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/debug/stats(?:/)?$"
+    },
+    {
+      "page": "/api/historia/check",
+      "regex": "^/api/historia/check(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/historia/check(?:/)?$"
+    },
+    {
+      "page": "/api/historia/timeline",
+      "regex": "^/api/historia/timeline(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/historia/timeline(?:/)?$"
+    },
+    {
+      "page": "/api/instrumentos",
+      "regex": "^/api/instrumentos(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/instrumentos(?:/)?$"
+    },
+    {
+      "page": "/api/profiles",
+      "regex": "^/api/profiles(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/profiles(?:/)?$"
+    },
+    {
+      "page": "/api/turmas",
+      "regex": "^/api/turmas(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/turmas(?:/)?$"
     },
     {
       "page": "/em-construcao",

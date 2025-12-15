@@ -1,0 +1,35 @@
+{
+  "node": {
+    "40700f59f014ecdf0aa3734030de9bf9876e87a334": {
+      "workers": {
+        "app/(protected)/admin/aulas/editar/[id]/page": {
+          "moduleId": 67214,
+          "async": false,
+          "exportedName": "createAula",
+          "filename": "src/lib/supabase/mutations/aulas.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/aulas/editar/[id]/page": "action-browser"
+      },
+      "exportedName": "createAula",
+      "filename": "src/lib/supabase/mutations/aulas.ts"
+    },
+    "6062a2c98d0830d7eb41092848e5d17818dcb88365": {
+      "workers": {
+        "app/(protected)/admin/aulas/editar/[id]/page": {
+          "moduleId": 67214,
+          "async": false,
+          "exportedName": "updateAula",
+          "filename": "src/lib/supabase/mutations/aulas.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/aulas/editar/[id]/page": "action-browser"
+      },
+      "exportedName": "updateAula",
+      "filename": "src/lib/supabase/mutations/aulas.ts"
+    }
+  },
+  "edge": {}
+}

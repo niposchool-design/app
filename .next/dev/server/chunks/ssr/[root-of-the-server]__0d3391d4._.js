@@ -62,10 +62,16 @@ async function createClient() {
 "use strict";
 
 __turbopack_context__.s([
+    "getAllTurmas",
+    ()=>getAllTurmas,
     "getAlunosTurma",
     ()=>getAlunosTurma,
     "getCurrentProfile",
     ()=>getCurrentProfile,
+    "getMatriculasAluno",
+    ()=>getMatriculasAluno,
+    "getProfileById",
+    ()=>getProfileById,
     "getProfiles",
     ()=>getProfiles,
     "getTurmaById",
@@ -99,6 +105,47 @@ async function getCurrentProfile() {
         return null;
     }
     return data;
+}
+async function getProfileById(id) {
+    const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createClient"])();
+    const { data, error } = await supabase.from('profiles').select('*').eq('id', id).single();
+    if (error) {
+        console.error('Erro ao buscar perfil:', error);
+        return null;
+    }
+    return data;
+}
+async function getMatriculasAluno(alunoId) {
+    const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createClient"])();
+    const { data, error } = await supabase.from('matriculas').select(`
+            *,
+            turma:turmas(*)
+        `).eq('aluno_id', alunoId).eq('status', 'ativa');
+    if (error) {
+        console.error('Erro ao buscar matrículas do aluno:', error);
+        return [];
+    }
+    return data;
+}
+async function getAllTurmas() {
+    const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createClient"])();
+    const { data, error } = await supabase.from('turmas').select(`
+            *,
+            professor:profiles!professor_id(*),
+            matriculas(count)
+        `).order('ativo', {
+        ascending: false
+    }) // Ativas primeiro
+    .order('nome');
+    if (error) {
+        console.error('Erro ao buscar todas as turmas:', error);
+        return [];
+    }
+    // Mapear count para qtd_alunos
+    return data.map((t)=>({
+            ...t,
+            qtd_alunos: t.matriculas?.[0]?.count || 0
+        }));
 }
 async function getTurmas(professorId) {
     const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createClient"])();

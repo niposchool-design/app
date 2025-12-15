@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///D:/projetos/nipo_school/app/page.tsx"],"sourcesContent":["'use client'\r\n\r\nimport { useEffect } from 'react'\r\n\r\nexport default function Home() {\r\n  useEffect(() => {\r\n    // O middleware vai interceptar e redirecionar\r\n    // Mas forçamos reload para garantir\r\n    const timer = setTimeout(() => {\r\n      window.location.reload()\r\n    }, 100)\r\n    return () => clearTimeout(timer)\r\n  }, [])\r\n\r\n  return (\r\n    <div className=\"flex min-h-screen items-center justify-center bg-gradient-to-br from-red-50 to-orange-50\">\r\n      <div className=\"text-center\">\r\n        <div className=\"inline-block animate-spin rounded-full h-12 w-12 border-4 border-red-500 border-t-transparent mb-4\"></div>\r\n        <p className=\"text-gray-600\">Carregando Nipo School...</p>\r\n      </div>\r\n    </div>\r\n  )\r\n}\r\n"],"names":[],"mappings":";;;;;AAEA;AAFA;;;AAIe,SAAS;IACtB,IAAA,kNAAS,EAAC;QACR,8CAA8C;QAC9C,oCAAoC;QACpC,MAAM,QAAQ,WAAW;YACvB,OAAO,QAAQ,CAAC,MAAM;QACxB,GAAG;QACH,OAAO,IAAM,aAAa;IAC5B,GAAG,EAAE;IAEL,qBACE,8OAAC;QAAI,WAAU;kBACb,cAAA,8OAAC;YAAI,WAAU;;8BACb,8OAAC;oBAAI,WAAU;;;;;;8BACf,8OAAC;oBAAE,WAAU;8BAAgB;;;;;;;;;;;;;;;;;AAIrC"}}]
-}

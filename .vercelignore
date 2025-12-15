@@ -1,0 +1,4 @@
+# Force Vercel to ignore build cache
+node_modules/
+.next/
+.turbo/

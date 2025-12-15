@@ -62,6 +62,8 @@ async function createClient() {
 "use strict";
 
 __turbopack_context__.s([
+    "getAllTurmas",
+    ()=>getAllTurmas,
     "getAlunosTurma",
     ()=>getAlunosTurma,
     "getCurrentProfile",
@@ -99,6 +101,26 @@ async function getCurrentProfile() {
         return null;
     }
     return data;
+}
+async function getAllTurmas() {
+    const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createClient"])();
+    const { data, error } = await supabase.from('turmas').select(`
+            *,
+            professor:profiles!professor_id(*),
+            matriculas(count)
+        `).order('ativo', {
+        ascending: false
+    }) // Ativas primeiro
+    .order('nome');
+    if (error) {
+        console.error('Erro ao buscar todas as turmas:', error);
+        return [];
+    }
+    // Mapear count para qtd_alunos
+    return data.map((t)=>({
+            ...t,
+            qtd_alunos: t.matriculas?.[0]?.count || 0
+        }));
 }
 async function getTurmas(professorId) {
     const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createClient"])();

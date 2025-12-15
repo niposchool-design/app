@@ -1,9 +1,60 @@
 {
   "node": {
-    "4066fe6b47f29f239049d705f77649475a135cd6e3": {
+    "607183850844b8f638cc73d891a7d8279d093b388c": {
       "workers": {
-        "app/(protected)/admin/aulas/[id]/page": {
-          "moduleId": 81705,
+        "app/(protected)/admin/alunos/[id]/page": {
+          "moduleId": 5599,
+          "async": false,
+          "exportedName": "atualizarAluno",
+          "filename": "src/lib/supabase/mutations/alunos.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/alunos/[id]/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/alunos.ts",
+      "exportedName": "atualizarAluno"
+    },
+    "6062a2c98d0830d7eb41092848e5d17818dcb88365": {
+      "workers": {
+        "app/(protected)/admin/aulas/editar/[id]/page": {
+          "moduleId": 67214,
+          "async": false,
+          "exportedName": "updateAula",
+          "filename": "src/lib/supabase/mutations/aulas.ts"
+        },
+        "app/(protected)/admin/aulas/nova/page": {
+          "moduleId": 49690,
+          "async": false,
+          "exportedName": "updateAula",
+          "filename": "src/lib/supabase/mutations/aulas.ts"
+        },
+        "app/(protected)/admin/aulas/page": {
+          "moduleId": 22132,
+          "async": false,
+          "exportedName": "updateAula",
+          "filename": "src/lib/supabase/mutations/aulas.ts"
+        },
+        "app/(protected)/professores/aulas/page": {
+          "moduleId": 71453,
+          "async": false,
+          "exportedName": "updateAula",
+          "filename": "src/lib/supabase/mutations/aulas.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/aulas/editar/[id]/page": "action-browser",
+        "app/(protected)/admin/aulas/nova/page": "action-browser",
+        "app/(protected)/admin/aulas/page": "action-browser",
+        "app/(protected)/professores/aulas/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/aulas.ts",
+      "exportedName": "updateAula"
+    },
+    "40700f59f014ecdf0aa3734030de9bf9876e87a334": {
+      "workers": {
+        "app/(protected)/admin/aulas/editar/[id]/page": {
+          "moduleId": 67214,
           "async": false,
           "exportedName": "createAula",
           "filename": "src/lib/supabase/mutations/aulas.ts"
@@ -16,35 +67,277 @@
         }
       },
       "layer": {
-        "app/(protected)/admin/aulas/[id]/page": "action-browser",
+        "app/(protected)/admin/aulas/editar/[id]/page": "action-browser",
         "app/(protected)/admin/aulas/nova/page": "action-browser"
       },
       "filename": "src/lib/supabase/mutations/aulas.ts",
       "exportedName": "createAula"
     },
-    "60c9a68de1a61480d14ae3a345993cd2418a2dbb2d": {
+    "00446db163f38f6aea0436e7abe6f8f6fd9d751604": {
       "workers": {
-        "app/(protected)/admin/aulas/[id]/page": {
-          "moduleId": 81705,
+        "app/(protected)/admin/diagnostico/page": {
+          "moduleId": 73996,
           "async": false,
-          "exportedName": "updateAula",
-          "filename": "src/lib/supabase/mutations/aulas.ts"
-        },
-        "app/(protected)/admin/aulas/nova/page": {
-          "moduleId": 49690,
-          "async": false,
-          "exportedName": "updateAula",
-          "filename": "src/lib/supabase/mutations/aulas.ts"
+          "exportedName": "checkDatabaseHealth",
+          "filename": "src/lib/supabase/actions/system.ts"
         }
       },
       "layer": {
-        "app/(protected)/admin/aulas/[id]/page": "action-browser",
-        "app/(protected)/admin/aulas/nova/page": "action-browser"
+        "app/(protected)/admin/diagnostico/page": "action-browser"
       },
-      "filename": "src/lib/supabase/mutations/aulas.ts",
-      "exportedName": "updateAula"
+      "filename": "src/lib/supabase/actions/system.ts",
+      "exportedName": "checkDatabaseHealth"
+    },
+    "40f90310adfc5c84ae831e84abace4a88d8b8283d4": {
+      "workers": {
+        "app/(protected)/admin/gamificacao/[id]/page": {
+          "moduleId": 88145,
+          "async": false,
+          "exportedName": "createAchievement",
+          "filename": "src/lib/supabase/mutations/gamificacao.ts"
+        },
+        "app/(protected)/admin/gamificacao/editar/[id]/page": {
+          "moduleId": 36091,
+          "async": false,
+          "exportedName": "createAchievement",
+          "filename": "src/lib/supabase/mutations/gamificacao.ts"
+        },
+        "app/(protected)/admin/gamificacao/nova/page": {
+          "moduleId": 39320,
+          "async": false,
+          "exportedName": "createAchievement",
+          "filename": "src/lib/supabase/mutations/gamificacao.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/gamificacao/[id]/page": "action-browser",
+        "app/(protected)/admin/gamificacao/editar/[id]/page": "action-browser",
+        "app/(protected)/admin/gamificacao/nova/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/gamificacao.ts",
+      "exportedName": "createAchievement"
+    },
+    "604189aeb2a03605dd14f2bc51100e14c78c74b536": {
+      "workers": {
+        "app/(protected)/admin/gamificacao/[id]/page": {
+          "moduleId": 88145,
+          "async": false,
+          "exportedName": "updateAchievement",
+          "filename": "src/lib/supabase/mutations/gamificacao.ts"
+        },
+        "app/(protected)/admin/gamificacao/editar/[id]/page": {
+          "moduleId": 36091,
+          "async": false,
+          "exportedName": "updateAchievement",
+          "filename": "src/lib/supabase/mutations/gamificacao.ts"
+        },
+        "app/(protected)/admin/gamificacao/nova/page": {
+          "moduleId": 39320,
+          "async": false,
+          "exportedName": "updateAchievement",
+          "filename": "src/lib/supabase/mutations/gamificacao.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/gamificacao/[id]/page": "action-browser",
+        "app/(protected)/admin/gamificacao/editar/[id]/page": "action-browser",
+        "app/(protected)/admin/gamificacao/nova/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/gamificacao.ts",
+      "exportedName": "updateAchievement"
+    },
+    "401773e6324ec51578686168e3def4f7f4513e1efe": {
+      "workers": {
+        "app/(protected)/admin/gamificacao/[id]/page": {
+          "moduleId": 88145,
+          "async": false,
+          "exportedName": "deleteAchievement",
+          "filename": "src/lib/supabase/mutations/gamificacao.ts"
+        },
+        "app/(protected)/admin/gamificacao/editar/[id]/page": {
+          "moduleId": 36091,
+          "async": false,
+          "exportedName": "deleteAchievement",
+          "filename": "src/lib/supabase/mutations/gamificacao.ts"
+        },
+        "app/(protected)/admin/gamificacao/nova/page": {
+          "moduleId": 39320,
+          "async": false,
+          "exportedName": "deleteAchievement",
+          "filename": "src/lib/supabase/mutations/gamificacao.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/gamificacao/[id]/page": "action-browser",
+        "app/(protected)/admin/gamificacao/editar/[id]/page": "action-browser",
+        "app/(protected)/admin/gamificacao/nova/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/gamificacao.ts",
+      "exportedName": "deleteAchievement"
+    },
+    "404d2c3c3f256020a5dd3323b2c344d7dd56f7e874": {
+      "workers": {
+        "app/(protected)/admin/historia/novo-periodo/page": {
+          "moduleId": 38887,
+          "async": false,
+          "exportedName": "criarPeriodo",
+          "filename": "src/lib/supabase/mutations/historia.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/historia/novo-periodo/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/historia.ts",
+      "exportedName": "criarPeriodo"
+    },
+    "602995fb2967c1817d5c656bac7afe220d95cb7e16": {
+      "workers": {
+        "app/(protected)/admin/professores/[id]/page": {
+          "moduleId": 33704,
+          "async": false,
+          "exportedName": "updateProfile",
+          "filename": "src/lib/supabase/mutations/profiles.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/professores/[id]/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/profiles.ts",
+      "exportedName": "updateProfile"
+    },
+    "40367f895c6dc02befc84cd9da9c0bdbc257608bce": {
+      "workers": {
+        "app/(protected)/admin/repertorio/editar/[id]/page": {
+          "moduleId": 14508,
+          "async": false,
+          "exportedName": "createRepertorio",
+          "filename": "src/lib/supabase/mutations/repertorio.ts"
+        },
+        "app/(protected)/admin/repertorio/nova/page": {
+          "moduleId": 35915,
+          "async": false,
+          "exportedName": "createRepertorio",
+          "filename": "src/lib/supabase/mutations/repertorio.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/repertorio/editar/[id]/page": "action-browser",
+        "app/(protected)/admin/repertorio/nova/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/repertorio.ts",
+      "exportedName": "createRepertorio"
+    },
+    "6089c6cc4a4c6cd78b4cd726034f0423b32324f72d": {
+      "workers": {
+        "app/(protected)/admin/repertorio/editar/[id]/page": {
+          "moduleId": 14508,
+          "async": false,
+          "exportedName": "updateRepertorio",
+          "filename": "src/lib/supabase/mutations/repertorio.ts"
+        },
+        "app/(protected)/admin/repertorio/nova/page": {
+          "moduleId": 35915,
+          "async": false,
+          "exportedName": "updateRepertorio",
+          "filename": "src/lib/supabase/mutations/repertorio.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/repertorio/editar/[id]/page": "action-browser",
+        "app/(protected)/admin/repertorio/nova/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/repertorio.ts",
+      "exportedName": "updateRepertorio"
+    },
+    "40e6db3e3fddaaee477a08bd1691d3e4305b3067a2": {
+      "workers": {
+        "app/(protected)/admin/repertorio/editar/[id]/page": {
+          "moduleId": 14508,
+          "async": false,
+          "exportedName": "deleteRepertorio",
+          "filename": "src/lib/supabase/mutations/repertorio.ts"
+        },
+        "app/(protected)/admin/repertorio/nova/page": {
+          "moduleId": 35915,
+          "async": false,
+          "exportedName": "deleteRepertorio",
+          "filename": "src/lib/supabase/mutations/repertorio.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/repertorio/editar/[id]/page": "action-browser",
+        "app/(protected)/admin/repertorio/nova/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/repertorio.ts",
+      "exportedName": "deleteRepertorio"
+    },
+    "40422e8feb25220c7804f12555b67da1e5f1ffcc94": {
+      "workers": {
+        "app/(protected)/admin/turmas/editar/[id]/page": {
+          "moduleId": 14624,
+          "async": false,
+          "exportedName": "criarTurma",
+          "filename": "src/lib/supabase/mutations/turmas.ts"
+        },
+        "app/(protected)/admin/turmas/nova/page": {
+          "moduleId": 27585,
+          "async": false,
+          "exportedName": "criarTurma",
+          "filename": "src/lib/supabase/mutations/turmas.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/turmas/editar/[id]/page": "action-browser",
+        "app/(protected)/admin/turmas/nova/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/turmas.ts",
+      "exportedName": "criarTurma"
+    },
+    "6081e13bb7f121af8b1150593164a43f5bff771052": {
+      "workers": {
+        "app/(protected)/admin/turmas/editar/[id]/page": {
+          "moduleId": 14624,
+          "async": false,
+          "exportedName": "atualizarTurma",
+          "filename": "src/lib/supabase/mutations/turmas.ts"
+        },
+        "app/(protected)/admin/turmas/nova/page": {
+          "moduleId": 27585,
+          "async": false,
+          "exportedName": "atualizarTurma",
+          "filename": "src/lib/supabase/mutations/turmas.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/turmas/editar/[id]/page": "action-browser",
+        "app/(protected)/admin/turmas/nova/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/turmas.ts",
+      "exportedName": "atualizarTurma"
+    },
+    "40fa41b05a9eb02e4a8f745b7df18b286734c47454": {
+      "workers": {
+        "app/(protected)/admin/turmas/editar/[id]/page": {
+          "moduleId": 14624,
+          "async": false,
+          "exportedName": "deletarTurma",
+          "filename": "src/lib/supabase/mutations/turmas.ts"
+        },
+        "app/(protected)/admin/turmas/nova/page": {
+          "moduleId": 27585,
+          "async": false,
+          "exportedName": "deletarTurma",
+          "filename": "src/lib/supabase/mutations/turmas.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/turmas/editar/[id]/page": "action-browser",
+        "app/(protected)/admin/turmas/nova/page": "action-browser"
+      },
+      "filename": "src/lib/supabase/mutations/turmas.ts",
+      "exportedName": "deletarTurma"
     }
   },
   "edge": {},
-  "encryptionKey": "f0Hrsvu2m5J5PAcpCFad/xrRNm3qPkEyE8YsmfmBsSU="
+  "encryptionKey": "5HAFZvoMzmyFUbvTFB5TSgwSkJ9PRiTYgctDXWvrb9o="
 }

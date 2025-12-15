@@ -105,21 +105,26 @@ function AuthProvider({ children }) {
             // @ts-ignore - Supabase types
             const { data: userRole } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"]// @ts-ignore
             .from('user_roles').select('role_type, is_active').eq('user_id', session.user.id).eq('is_active', true).single();
-            // Fallback para profiles.tipo_usuario
+            // Fallback para profiles.role
             let role = 'aluno';
             // @ts-ignore
             if (userRole?.role_type) {
                 // @ts-ignore
                 role = userRole.role_type;
             } else {
-                // @ts-ignore - Supabase types
-                const { data: profile } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"]// @ts-ignore
-                .from('profiles').select('tipo_usuario').eq('id', session.user.id).single();
-                // @ts-ignore
-                if (profile?.tipo_usuario) {
+                const { data: profile } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["supabase"].from('profiles').select('role').eq('id', session.user.id).single();
+                if (profile) {
                     // @ts-ignore
-                    role = profile.tipo_usuario;
+                    role = profile.role;
                 }
+            }
+            // Normalização de role e tratamento de aliases
+            if (typeof role === 'string') {
+                // @ts-ignore
+                let roleStr = role.toLowerCase().trim();
+                if (roleStr === 'teacher') role = 'professor';
+                if (roleStr === 'student') role = 'aluno';
+                if (roleStr === 'administrator') role = 'admin';
             }
             setUser({
                 id: session.user.id,
@@ -175,7 +180,7 @@ function AuthProvider({ children }) {
         loading,
         isAuthenticated: !!user,
         profile: user ? {
-            tipo_usuario: user.role
+            role: user.role
         } : null,
         signIn,
         signUp,
@@ -186,7 +191,7 @@ function AuthProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/app/providers/AuthProvider.tsx",
-        lineNumber: 175,
+        lineNumber: 181,
         columnNumber: 5
     }, this);
 }

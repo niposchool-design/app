@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///D:/projetos/nipo_school/app/%28protected%29/admin/layout.tsx"],"sourcesContent":["'use client'\r\n\r\nimport OrientalDashboardLayout from '@/components/layouts/OrientalDashboardLayout'\r\n\r\nexport default function AdminLayout({\r\n  children,\r\n}: {\r\n  children: React.ReactNode\r\n}) {\r\n  return (\r\n    <OrientalDashboardLayout role=\"admin\">\r\n      {children}\r\n    </OrientalDashboardLayout>\r\n  )\r\n}\r\n"],"names":[],"mappings":";;;;;;;;;;AAAA;;;AAIe,SAAS,YAAY,EAClC,QAAQ,EAGT;IACC,qBACE,6LAAC;QAAwB,MAAK;kBAC3B;;;;;;AAGP;KAVwB"}}]
-}

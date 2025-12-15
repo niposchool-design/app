@@ -1,4 +1,20 @@
 {
-  "node": {},
+  "node": {
+    "602995fb2967c1817d5c656bac7afe220d95cb7e16": {
+      "workers": {
+        "app/(protected)/admin/professores/[id]/page": {
+          "moduleId": 33704,
+          "async": false,
+          "exportedName": "updateProfile",
+          "filename": "src/lib/supabase/mutations/profiles.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/professores/[id]/page": "action-browser"
+      },
+      "exportedName": "updateProfile",
+      "filename": "src/lib/supabase/mutations/profiles.ts"
+    }
+  },
   "edge": {}
 }

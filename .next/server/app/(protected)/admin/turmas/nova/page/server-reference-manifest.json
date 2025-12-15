@@ -1,4 +1,50 @@
 {
-  "node": {},
+  "node": {
+    "40422e8feb25220c7804f12555b67da1e5f1ffcc94": {
+      "workers": {
+        "app/(protected)/admin/turmas/nova/page": {
+          "moduleId": 27585,
+          "async": false,
+          "exportedName": "criarTurma",
+          "filename": "src/lib/supabase/mutations/turmas.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/turmas/nova/page": "action-browser"
+      },
+      "exportedName": "criarTurma",
+      "filename": "src/lib/supabase/mutations/turmas.ts"
+    },
+    "6081e13bb7f121af8b1150593164a43f5bff771052": {
+      "workers": {
+        "app/(protected)/admin/turmas/nova/page": {
+          "moduleId": 27585,
+          "async": false,
+          "exportedName": "atualizarTurma",
+          "filename": "src/lib/supabase/mutations/turmas.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/turmas/nova/page": "action-browser"
+      },
+      "exportedName": "atualizarTurma",
+      "filename": "src/lib/supabase/mutations/turmas.ts"
+    },
+    "40fa41b05a9eb02e4a8f745b7df18b286734c47454": {
+      "workers": {
+        "app/(protected)/admin/turmas/nova/page": {
+          "moduleId": 27585,
+          "async": false,
+          "exportedName": "deletarTurma",
+          "filename": "src/lib/supabase/mutations/turmas.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/turmas/nova/page": "action-browser"
+      },
+      "exportedName": "deletarTurma",
+      "filename": "src/lib/supabase/mutations/turmas.ts"
+    }
+  },
   "edge": {}
 }

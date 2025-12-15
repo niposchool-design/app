@@ -199,13 +199,19 @@ async function getAulaPorNumero(numero) {
     const { data: checklist } = await supabase.from('aula_checklist').select('*').eq('aula_id', aula.id).order('ordem', {
         ascending: true
     });
+    // Buscar atividades
+    const { data: atividades } = await supabase.from('aula_atividades').select('*').eq('aula_id', aula.id);
+    // Buscar desafios
+    const { data: desafios } = await supabase.from('aula_desafios').select('*').eq('aula_id', aula.id);
     return {
         ...aula,
         materiais: materiais || [],
         pre_requisitos: preRequisitos || [],
         feedbacks: feedbacks || [],
         registros: registros || [],
-        checklist: checklist || []
+        checklist: checklist || [],
+        atividades: atividades || [],
+        desafios: desafios || []
     };
 }
 async function getProgressoAula(alunoId, aulaId) {

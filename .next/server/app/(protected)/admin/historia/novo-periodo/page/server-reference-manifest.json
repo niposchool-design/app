@@ -1,0 +1,20 @@
+{
+  "node": {
+    "404d2c3c3f256020a5dd3323b2c344d7dd56f7e874": {
+      "workers": {
+        "app/(protected)/admin/historia/novo-periodo/page": {
+          "moduleId": 38887,
+          "async": false,
+          "exportedName": "criarPeriodo",
+          "filename": "src/lib/supabase/mutations/historia.ts"
+        }
+      },
+      "layer": {
+        "app/(protected)/admin/historia/novo-periodo/page": "action-browser"
+      },
+      "exportedName": "criarPeriodo",
+      "filename": "src/lib/supabase/mutations/historia.ts"
+    }
+  },
+  "edge": {}
+}
