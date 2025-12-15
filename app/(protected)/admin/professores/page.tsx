@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { ProfessoresList } from './_components/ProfessoresList';
 import AdminPageLayout from '../_components/AdminPageLayout';
-import { Users, UserPlus, Download } from 'lucide-react';
+import { StatsCard, StatsGrid } from '../_components/StatsCard';
+import { Users, UserPlus, Download, Shield, BookOpen, Clock, Star } from 'lucide-react';
 import Link from 'next/link';
 import { UserProfile } from '@/src/lib/types/users_turmas';
 
@@ -36,6 +37,14 @@ export default function AdminProfessoresPage() {
     );
   }
 
+  // Métricas executivas do corpo docente
+  const totalProfessores = professores.length;
+  const professoresAtivos = professores.filter(p => p.ativo !== false).length;
+
+  // Simulações de métricas (podem ser substituídas por dados reais da API)
+  const horasLecaoadas = 320; // Exemplo: total de horas lecionadas no mês
+  const avaliacaoMedia = 4.6; // Exemplo: avaliação média dos professores
+
   return (
     <AdminPageLayout
       title="Gestão de Professores"
@@ -55,7 +64,44 @@ export default function AdminProfessoresPage() {
         </>
       }
     >
-      <ProfessoresList professores={professores} />
+      {/* KPIs Executivos - Corpo Docente */}
+      <StatsGrid cols={4}>
+        <StatsCard
+          title="Total de Professores"
+          value={totalProfessores}
+          icon={Shield}
+          color="indigo"
+          subtitle="No corpo docente"
+        />
+        <StatsCard
+          title="Professores Ativos"
+          value={professoresAtivos}
+          icon={Users}
+          color="emerald"
+          trend={{ value: 2, isPositive: true }}
+          subtitle="Lecionando atualmente"
+        />
+        <StatsCard
+          title="Horas Lecionadas"
+          value={horasLecaoadas}
+          icon={Clock}
+          color="blue"
+          subtitle="Total no mês atual"
+        />
+        <StatsCard
+          title="Avaliação Média"
+          value={avaliacaoMedia.toFixed(1)}
+          icon={Star}
+          color="orange"
+          trend={{ value: 8, isPositive: true }}
+          subtitle="Satisfação dos alunos"
+        />
+      </StatsGrid>
+
+      {/* Lista de Professores */}
+      <div className="mt-8">
+        <ProfessoresList professores={professores} />
+      </div>
     </AdminPageLayout>
   );
 }

@@ -43,36 +43,31 @@ export default function TurmasGrid({ turmas }: TurmasGridProps) {
     };
 
     return (
-        <div className="space-y-8">
-            {/* Toolbar */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-white p-2 rounded-2xl border border-gray-100 shadow-sm">
-                <div className="relative flex-1 w-full sm:max-w-md ml-2">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+        <div className="space-y-6">
+            {/* Toolbar - Executivo */}
+            <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col sm:flex-row gap-4 justify-between admin-card p-4"
+            >
+                <div className="relative flex-1 group">
+                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4 group-focus-within:text-purple-600 transition-colors" strokeWidth={2} />
                     <input
                         type="text"
-                        placeholder="Buscar turma..."
+                        placeholder="Buscar turma por nome..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 rounded-xl border-none bg-gray-50 focus:bg-white focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                        className="admin-input pl-10"
                     />
                 </div>
-                <div className="flex gap-2 w-full sm:w-auto p-1">
-                    <Link
-                        href="/admin/turmas/nova"
-                        className="flex-1 sm:flex-none justify-center inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-md shadow-purple-200 active:scale-95"
-                    >
-                        <Plus className="w-5 h-5" />
-                        Nova Turma
-                    </Link>
-                </div>
-            </div>
+            </motion.div>
 
-            {/* Grid */}
+            {/* Grid Executivo de Turmas */}
             <motion.div
                 variants={container}
                 initial="hidden"
                 animate="show"
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
             >
                 <AnimatePresence>
                     {filteredTurmas.length > 0 ? (
@@ -81,50 +76,49 @@ export default function TurmasGrid({ turmas }: TurmasGridProps) {
                                 key={turma.id}
                                 variants={item}
                                 layout
-                                className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-purple-100 transition-all duration-300 group relative overflow-hidden"
+                                className="group bg-white rounded-xl p-6 shadow-sm border border-slate-200/80 hover:shadow-lg hover:border-purple-200 transition-all duration-300 relative overflow-hidden"
                             >
-                                {/* Decorative Gradient */}
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-transparent rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110 pointer-events-none"></div>
+                                {/* Gradiente decorativo sutil */}
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/5 to-transparent rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110 pointer-events-none"></div>
 
-                                <div className="flex justify-between items-start mb-6">
-                                    <div className="p-3.5 bg-orange-50 rounded-2xl group-hover:bg-orange-500 group-hover:text-white transition-all shadow-sm">
-                                        <School className="w-6 h-6 text-orange-600 group-hover:text-white" />
+                                <div className="relative z-10">
+                                    <div className="flex justify-between items-start mb-5">
+                                        <div className="p-2.5 bg-violet-50 rounded-lg group-hover:bg-violet-100 transition-all">
+                                            <School className="w-5 h-5 text-violet-600" strokeWidth={2} />
+                                        </div>
+
+                                        <div className="flex items-center gap-2">
+                                            <span className={`px-2.5 py-1 rounded-lg text-xs font-semibold ${turma.ativo ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-50 text-slate-500 border border-slate-200'}`}>
+                                                {turma.ativo ? 'Ativa' : 'Inativa'}
+                                            </span>
+                                        </div>
                                     </div>
 
-                                    <div className="flex items-center gap-2">
-                                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${turma.ativo ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-gray-50 text-gray-500 border border-gray-100'}`}>
-                                            {turma.ativo ? 'Ativa' : 'Inativa'}
-                                        </span>
+                                    <div className="mb-5">
+                                        <h3 className="text-lg font-semibold text-slate-900 mb-1 group-hover:text-purple-700 transition-colors line-clamp-1">{turma.nome}</h3>
+                                        <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{turma.descricao || 'Sem descrição definida.'}</p>
                                     </div>
-                                </div>
 
-                                <div className="mb-4">
-                                    <h3 className="text-xl font-black text-gray-900 mb-1 group-hover:text-purple-700 transition-colors line-clamp-1">{turma.nome}</h3>
-                                    <p className="text-sm text-gray-500 line-clamp-2">{turma.descricao || 'Sem descrição definida.'}</p>
-                                </div>
-
-                                <div className="flex flex-col gap-3 mb-6">
-                                    <div className="flex items-center gap-3 text-sm text-gray-600 font-medium bg-gray-50 p-2 rounded-lg">
-                                        <Clock className="w-4 h-4 text-purple-400" />
-                                        <span>{turma.horario_padrao || 'A definir'}</span>
+                                    <div className="space-y-2.5 mb-5">
+                                        <div className="flex items-center gap-2.5 text-sm text-slate-600 font-medium bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                                            <Clock className="w-4 h-4 text-purple-400" strokeWidth={2} />
+                                            <span className="text-xs">{turma.horario_padrao || 'Horário a definir'}</span>
+                                        </div>
+                                        <div className="flex items-center gap-2.5 text-sm text-slate-600 font-medium bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                                            <Users className="w-4 h-4 text-blue-400" strokeWidth={2} />
+                                            <span className="text-xs">{turma.qtd_alunos || 0} alunos matriculados</span>
+                                        </div>
                                     </div>
-                                    <div className="flex items-center gap-3 text-sm text-gray-600 font-medium bg-gray-50 p-2 rounded-lg">
-                                        <Users className="w-4 h-4 text-blue-400" />
-                                        <span>{turma.qtd_alunos || 0} alunos matriculados</span>
-                                    </div>
-                                </div>
 
-                                <div className="pt-4 border-t border-gray-50 flex items-center justify-between">
-                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                                        Detalhes
-                                    </span>
-                                    <Link
-                                        href={`/admin/turmas/${turma.id}`}
-                                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-50 text-purple-700 text-sm font-bold hover:bg-purple-100 transition-colors"
-                                    >
-                                        Gerenciar
-                                        <MoreVertical className="w-4 h-4" />
-                                    </Link>
+                                    <div className="pt-4 border-t border-slate-100">
+                                        <Link
+                                            href={`/admin/turmas/${turma.id}`}
+                                            className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-purple-600 transition-all shadow-sm"
+                                        >
+                                            Gerenciar Turma
+                                            <MoreVertical className="w-4 h-4" />
+                                        </Link>
+                                    </div>
                                 </div>
                             </motion.div>
                         ))
@@ -132,10 +126,15 @@ export default function TurmasGrid({ turmas }: TurmasGridProps) {
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="col-span-full py-16 text-center text-gray-400 bg-white rounded-3xl border-2 border-dashed border-gray-100"
+                            className="col-span-full"
                         >
-                            <School className="w-12 h-12 mx-auto mb-3 opacity-20" />
-                            <p className="font-medium">Nenhuma turma encontrada.</p>
+                            <div className="admin-card py-16 text-center">
+                                <div className="w-14 h-14 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <School className="w-7 h-7 text-slate-300" strokeWidth={1.5} />
+                                </div>
+                                <p className="font-semibold text-slate-900 text-base">Nenhuma turma encontrada</p>
+                                <p className="text-sm text-slate-500 mt-1">Tente ajustar os filtros de busca</p>
+                            </div>
                         </motion.div>
                     )}
                 </AnimatePresence>

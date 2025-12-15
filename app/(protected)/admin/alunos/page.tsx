@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { AlunosList } from './_components/AlunosList';
 import AdminPageLayout from '../_components/AdminPageLayout';
-import { GraduationCap, UserPlus, Download } from 'lucide-react';
+import { StatsCard, StatsGrid } from '../_components/StatsCard';
+import { GraduationCap, UserPlus, Download, TrendingUp, Users, Award, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import { UserProfile } from '@/lib/types/users_turmas';
 
@@ -15,18 +16,18 @@ export default function AdminAlunosPage() {
     async function loadAlunos() {
       try {
         const response = await fetch('/api/profiles?tipo_usuario=aluno');
-        
+
         if (!response.ok) {
           const errorData = await response.json();
           console.error('❌ Erro HTTP:', response.status, errorData);
           setAlunos([]);
           return;
         }
-        
+
         const data = await response.json();
-        
+
         console.log('📦 Dados recebidos:', data);
-        
+
         // Garantir que data é um array
         if (Array.isArray(data)) {
           setAlunos(data);
@@ -54,6 +55,18 @@ export default function AdminAlunosPage() {
     );
   }
 
+  // Cálculos de métricas executivas
+  const totalAlunos = alunos.length;
+  const alunosAtivos = alunos.filter(a => a.ativo !== false).length;
+  const novosEsteMes = alunos.filter(a => {
+    const created = new Date(a.created_at || 0);
+    const now = new Date();
+    return created.getMonth() === now.getMonth() && created.getFullYear() === now.getFullYear();
+  }).length;
+
+  // Simulação de métricas (podem ser substituídas por dados reais)
+  const taxaRetencao = totalAlunos > 0 ? Math.round((alunosAtivos / totalAlunos) * 100) : 0;
+
   return (
     <AdminPageLayout
       title="Gestão de Alunos"
@@ -73,7 +86,44 @@ export default function AdminAlunosPage() {
         </>
       }
     >
-      <AlunosList alunos={alunos} />
+      {/* KPIs Executivos */}
+      <StatsGrid cols={4}>
+        <StatsCard
+          title="Total de Alunos"
+          value={totalAlunos}
+          icon={GraduationCap}
+          color="purple"
+          subtitle="Matriculados na instituição"
+        />
+        <StatsCard
+          title="Alunos Ativos"
+          value={alunosAtivos}
+          icon={Users}
+          color="emerald"
+          trend={{ value: 5, isPositive: true }}
+          subtitle="Frequentando regularmente"
+        />
+        <StatsCard
+          title="Novos Este Mês"
+          value={novosEsteMes}
+          icon={Calendar}
+          color="blue"
+          subtitle="Matrículas recentes"
+        />
+        <StatsCard
+          title="Taxa de Retenção"
+          value={`${taxaRetencao}%`}
+          icon={Award}
+          color="orange"
+          trend={{ value: 3, isPositive: true }}
+          subtitle="Alunos que permanecem"
+        />
+      </StatsGrid>
+
+      {/* Lista de Alunos */}
+      <div className="mt-8">
+        <AlunosList alunos={alunos} />
+      </div>
     </AdminPageLayout>
   );
 }
