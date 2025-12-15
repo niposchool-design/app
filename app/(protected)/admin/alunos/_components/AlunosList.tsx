@@ -184,14 +184,6 @@ export function AlunosList({ alunos }: AlunosListProps) {
                         </motion.tbody>
                     </table>
                 </div>
-                <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/30 text-xs text-slate-500 flex justify-between items-center font-medium">
-                    <span>Exibindo <span className="text-slate-900 font-semibold">{filteredAlunos.length}</span> de {alunos.length} alunos</span>
-                    {/* Pagination placeholder */}
-                    <div className="flex gap-2">
-                        <button className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-medium" disabled>Anterior</button>
-                        <button className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-medium" disabled>Próxima</button>
-                    </div>
-                </div>
             </div>
         </div>
     );

@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: Add executive-level KPIs and professional design to admin pages\n\nImplemented comprehensive improvements to the admin area with CEO-focused\nmetrics and professional UI design:\n\n## New Features\n- Created reusable StatsCard component with 6 color schemes\n- Added executive KPIs to all main admin pages\n- Implemented real-time metric calculations\n\n## Pages Enhanced\n- Students (Alunos): 4 KPIs - Total, Active, New This Month, Retention Rate\n- Teachers (Professores): 4 KPIs - Total, Active, Hours Taught, Avg Rating\n- Classes (Turmas): 4 KPIs - Total, Students, Avg per Class, Occupancy Rate\n- Instruments: 4 KPIs - Total Inventory, Active, Families, Diversity\n\n## Design Improvements\n- Standardized table layouts with purple executive theme\n- Professional cards with subtle gradients and animations\n- Trend indicators with up/down arrows and percentages\n- Consistent color palette across all admin pages\n- Improved hover states and transitions\n\n## Technical Details\n- Component: StatsCard with StatsGrid wrapper\n- Animations: Framer Motion for smooth transitions\n- Responsive: All KPIs adapt to mobile/tablet/desktop\n- Type-safe: Full TypeScript support\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(git checkout:*)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []
