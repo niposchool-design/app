@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { BookOpen, Plus, Clock, Users, Music as MusicIcon } from 'lucide-react';
+import { BookOpen, Plus, Clock, Users, Music } from 'lucide-react';
 import AdminPageLayout from '../_components/AdminPageLayout';
 
 export default function HistoriaMusicaPage() {
