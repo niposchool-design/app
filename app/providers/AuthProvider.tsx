@@ -82,7 +82,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       // Primary role: highest hierarchy (admin > teacher > student)
       const roleHierarchy: UserRole[] = ['admin', 'teacher', 'student']
-      const role: UserRole = roleHierarchy.find(r => userRoles.includes(r)) || 'student'
+      let role: UserRole = roleHierarchy.find(r => userRoles.includes(r)) || 'student'
+
+      // Fallback: if JWT has no user_roles (hook not enabled), ask the RPC
+      if (userRoles.length === 0) {
+        try {
+          const { data } = await supabase.rpc('rpc_get_user_rbac')
+          if (data?.role?.slug) {
+            role = data.role.slug as UserRole
+          }
+        } catch {
+          // RPC not available yet, keep default
+        }
+      }
 
       setUser({
         id: session.user.id,
