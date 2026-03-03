@@ -1,63 +1,53 @@
-# Nipo School - Sistema Oriental de Ensino Musical
+﻿# Nipo School - Sistema Oriental de Ensino Musical
 
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+![Status](https://img.shields.io/badge/status-pilot%20ready-green)
+![CI](https://github.com/YOUR_ORG/nipo-school/actions/workflows/ci.yml/badge.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black)
 ![React](https://img.shields.io/badge/React-19-blue)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-cyan)
 
 ## Sobre o Projeto
 
-**Nipo School** é uma plataforma de ensino musical que combina a disciplina e excelência da **pedagogia japonesa** com a criatividade do método **Orff-Schulwerk**, criando uma experiência educacional única e envolvente.
-
-### Metodologias Integradas
-
-- **Orff Schulwerk** - Aprendizado através do movimento e criatividade
-- **Método Suzuki** - Aprendizado natural como uma língua materna
-- **Musical Futures** - Aprendizado informal e colaborativo
-- **Kodály** - Desenvolvimento da musicalidade interior
+**Nipo School** e uma plataforma de ensino musical que combina disciplina da pedagogia japonesa com metodologias ativas.
 
 ## Tecnologias
 
 ### Frontend
 - **Next.js 16** - App Router (React 19)
-- **TypeScript 5** - Tipagem estática
-- **TailwindCSS 3.4** - Estilização utilitária
-- **Lucide React** - Ícones
-- **React Query** - Gerenciamento de dados assíncronos
-- **React Hook Form + Zod** - Formulários e validação
-- **Framer Motion** - Animações
+- **TypeScript 5**
+- **TailwindCSS 3.4**
+- **React Query**
+- **React Hook Form + Zod**
 
 ### Backend / Infraestrutura
-- **Supabase** - Auth + PostgreSQL + Storage + Realtime
-- **OpenAI** - Geração de materiais e feedback (GPT-4o / GPT-4o-mini)
-- **Vercel** - Deploy e hosting
+- **Supabase** - Auth + PostgreSQL + Storage
+- **OpenAI** - Geracao de materiais e feedback
+- **Vercel** - Deploy
 
 ### Arquitetura
-- Multi-tenant (schemas: `iam`, `core`, `internal`, `public`)
-- RBAC com permissões granulares via JWT custom claims
-- Navegação 100% database-driven
-- Server Actions com Zod validation
-- Proxy de autenticação (`proxy.ts`, convenção Next.js 16)
+- Multi-tenant (`iam`, `core`, `internal`, `public`)
+- RBAC com permissoes granulares
+- Navegacao orientada por banco
+- Server Actions com validacao
+- Proxy de autenticacao (`proxy.ts`)
+- Feature flags por tenant
+- AI cost control (logging, quotas, rate limiting)
+- Audit trail para acoes administrativas
 
 ## Quick Start
 
-### Pré-requisitos
-
+### Pre-requisitos
 - Node.js 18+
 - npm
 - Conta Supabase
 
-### Instalação
+### Instalacao
 
 ```bash
 git clone <repo-url>
 cd nipo_school
 npm install
-
-# Configure as variáveis de ambiente
 cp .env.local.example .env.local
-# Edite .env.local com suas credenciais
-
 npm run dev
 ```
 
@@ -67,53 +57,68 @@ Acesse: `http://localhost:4000`
 
 ```
 nipo_school/
-├── app/                       # Next.js App Router
-│   ├── (auth)/                # Login / registro
-│   ├── (protected)/           # Rotas protegidas (RBAC)
-│   │   ├── lessons/           # Aulas e atividades
-│   │   ├── challenges/        # Desafios
-│   │   ├── portfolio/         # Portfólio do aluno
-│   │   ├── academic/          # Currículo e biblioteca
-│   │   ├── settings/          # Configurações e admin
-│   │   └── ...
-│   ├── actions/               # Server Actions (17 arquivos)
-│   └── providers/             # Context providers
-├── lib/                       # Bibliotecas e utilitários
-│   ├── supabase/              # Clientes Supabase (server/client/admin)
-│   ├── ai/                    # AI client, prompts, curriculum context
-│   ├── auth/                  # Permission checks
-│   ├── validations/           # Zod schemas
-│   ├── types/                 # TypeScript types
-│   └── utils/                 # Action context, response helpers
-├── database/                  # Schema SQL e migrações
-│   ├── schema/                # DDL (00-16)
-│   └── migrations/            # Migrações incrementais (001-055d)
-├── docs/                      # Documentação de arquitetura
-├── __tests__/                 # Testes (Vitest)
-└── proxy.ts                   # Middleware de autenticação (Next.js 16)
+|-- app/                       # Next.js App Router
+|   |-- (auth)/                # Login / registro
+|   |-- (protected)/           # Rotas protegidas (RBAC)
+|   |-- actions/               # Server Actions
+|   `-- providers/             # Context providers
+|-- lib/                       # Utilitarios e integracoes
+|-- lib/
+|   |-- ai/                    # AI client, rate-limiter, prompts
+|   |-- features/              # Feature flags
+|   |-- monitoring/            # Alertas do superadmin
+|   |-- cache/                 # React Query cache config
+|   `-- validations/           # Zod contracts
+|-- database/
+|   |-- schema/                # DDL base (00-16)
+|   `-- migrations/            # Migracoes incrementais (001-063)
+|-- docs/                      # Documentacao
+|-- __tests__/                 # Testes (Vitest, 6 arquivos, 45 testes)
+|-- scripts/                   # Load tests e utilitarios
+`-- proxy.ts                   # Proxy de autenticacao
 ```
 
 ## Scripts
 
 ```bash
-npm run dev          # Desenvolvimento (localhost:4000)
-npm run build        # Build de produção
-npm run start        # Servidor de produção
-npm run lint         # ESLint
-npm run type-check   # TypeScript sem emitir
-npm run test         # Testes (Vitest)
+npm run dev
+npm run build
+npm run start
+npm run lint
+npm run type-check
+npm run test
 ```
 
-## Documentação
+## Pilot Readiness
+
+A plataforma esta preparada para um piloto real de 1 ano em 1 escola. Sistemas implementados:
+
+- **CI Pipeline** — Lint + type-check + testes automatizados em push/PR
+- **Data Quality** — CHECK constraints, contratos Zod, dashboard de completude
+- **AI Cost Control** — Logging de tokens/custo, quotas diarias/mensais, rate limiting
+- **Superadmin** — Dashboard com metricas de uso, custo IA, audit trail, alertas
+- **Feature Flags** — Controle granular de modulos por tenant
+- **Observabilidade** — Runbook de incidentes, load tests basicos
+
+Checklist completo: [PILOT_READINESS.md](./PILOT_READINESS.md)
+
+## Documentacao
 
 - [Estado Atual da Arquitetura](./docs/arquitetura/ESTADO_ATUAL.md)
+- [Rotas e Navegacao](./docs/arquitetura/ROTAS_E_NAVEGACAO.md)
+- [Banco de Dados](./docs/arquitetura/BANCO_DE_DADOS.md)
+- [Status Geral](./docs/implementacao/STATUS_GERAL.md)
+- [Migracoes](./docs/implementacao/MIGRACOES.md)
+- [Runbook de Incidentes](./docs/operations/RUNBOOK.md)
+
+### Onboarding
+- [Guia do Admin](./docs/onboarding/ADMIN_GUIDE.md)
+- [Guia do Professor](./docs/onboarding/TEACHER_GUIDE.md)
+- [Guia do Aluno](./docs/onboarding/STUDENT_GUIDE.md)
+- [Guia da Familia](./docs/onboarding/FAMILY_GUIDE.md)
 
 ## Contato
 
 **ADNIPO Suzano**
 - Website: [niposchool.com](https://niposchool.com)
 - Email: contato@niposchool.com
-
----
-
-*"Se não for divertido, ninguém aprende. Se não for fácil, ninguém começa."* - Filosofia Nipo School
