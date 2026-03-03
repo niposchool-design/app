@@ -1,44 +1,54 @@
-# 🎯 PLANO DE VALIDAÇÃO E TESTES - NIPO SCHOOL
+﻿# Plano de Validacao de Testes (Historico)
+
+**Status:** historico
+
+Este documento contem exemplos antigos e nao e fonte de verdade da arquitetura atual.
+
+Fonte de verdade atual: docs/implementacao/STATUS_GERAL.md, docs/arquitetura/ESTADO_ATUAL.md.
+
+---
+
+# ðŸŽ¯ PLANO DE VALIDAÃ‡ÃƒO E TESTES - NIPO SCHOOL
 
 **Data:** 05/10/2025  
-**Status:** 🚀 Pronto para validação  
+**Status:** ðŸš€ Pronto para validaÃ§Ã£o  
 **Objetivo:** Validar banco de dados e iniciar testes do frontend
 
 ---
 
-## 📋 FASE 1: VALIDAÇÃO DO BANCO DE DADOS (30 min)
+## ðŸ“‹ FASE 1: VALIDAÃ‡ÃƒO DO BANCO DE DADOS (30 min)
 
-### 🔍 Passo 1: Executar Diagnóstico Completo
+### ðŸ” Passo 1: Executar DiagnÃ³stico Completo
 
 **Arquivo:** `sql_scripts/DIAGNOSTICO_COMPLETO_BANCO.sql`
 
 #### No Supabase SQL Editor:
 
 1. Abrir SQL Editor
-2. Colar todo o conteúdo de `DIAGNOSTICO_COMPLETO_BANCO.sql`
+2. Colar todo o conteÃºdo de `DIAGNOSTICO_COMPLETO_BANCO.sql`
 3. Executar (Run)
 4. Copiar todos os resultados
 
 #### O que o script verifica:
 
-✅ **Total de tabelas** (esperado: 68)  
-✅ **Total de functions** (esperado: 50+)  
-✅ **Total de políticas RLS** (esperado: 29)  
-✅ **Total de views** (esperado: 2+)  
-✅ **Total de índices** (esperado: 100+)
+âœ… **Total de tabelas** (esperado: 68)  
+âœ… **Total de functions** (esperado: 50+)  
+âœ… **Total de polÃ­ticas RLS** (esperado: 29)  
+âœ… **Total de views** (esperado: 2+)  
+âœ… **Total de Ã­ndices** (esperado: 100+)
 
-#### Tabelas críticas verificadas:
+#### Tabelas crÃ­ticas verificadas:
 
-**Autenticação:**
+**AutenticaÃ§Ã£o:**
 - profiles
 
-**Gamificação:**
+**GamificaÃ§Ã£o:**
 - achievements
 - user_achievements
 - achievements_progress
 - user_points_log
 
-**Portfólio:**
+**PortfÃ³lio:**
 - portfolios
 - portfolio_evidencias
 - portfolio_avaliacoes
@@ -61,15 +71,15 @@
 
 ---
 
-### 📊 Passo 2: Analisar Resultados
+### ðŸ“Š Passo 2: Analisar Resultados
 
-#### Se TUDO OK (≥68 tabelas, ≥50 functions, ≥29 RLS):
+#### Se TUDO OK (â‰¥68 tabelas, â‰¥50 functions, â‰¥29 RLS):
 
-✅ **BANCO COMPLETO!** → Prosseguir para Fase 2 (Testes Frontend)
+âœ… **BANCO COMPLETO!** â†’ Prosseguir para Fase 2 (Testes Frontend)
 
 #### Se FALTAM COMPONENTES:
 
-⚠️ **Identificar o que falta:**
+âš ï¸ **Identificar o que falta:**
 
 ```sql
 -- Ver lista completa de tabelas
@@ -79,27 +89,27 @@ WHERE table_schema = 'public'
 ORDER BY table_name;
 ```
 
-**Ações possíveis:**
+**AÃ§Ãµes possÃ­veis:**
 1. Comparar lista com `docs/banco_de_dados_completo.md`
-2. Executar scripts específicos:
+2. Executar scripts especÃ­ficos:
    - `create_alpha_system.sql`
    - `create_portfolio_system.sql`
    - `create-gamification-tables.sql`
-3. Verificar se tabelas têm nomes diferentes
+3. Verificar se tabelas tÃªm nomes diferentes
 
 ---
 
-## 🧪 FASE 2: TESTES DO FRONTEND (2 horas)
+## ðŸ§ª FASE 2: TESTES DO FRONTEND (2 horas)
 
-### ✅ Pré-requisitos
+### âœ… PrÃ©-requisitos
 
 - [ ] Banco de dados validado (Fase 1 completa)
 - [ ] `.env.local` configurado
-- [ ] Dependências instaladas (`npm install`)
+- [ ] DependÃªncias instaladas (`npm install`)
 
 ---
 
-### 🎯 Teste 1: Geração de Types TypeScript (5 min)
+### ðŸŽ¯ Teste 1: GeraÃ§Ã£o de Types TypeScript (5 min)
 
 ```bash
 # Gerar types do Supabase
@@ -109,11 +119,11 @@ npx supabase gen types typescript \
 ```
 
 **Resultado esperado:**
-- ✅ Arquivo `database.types.ts` criado
-- ✅ Sem erros de compilação
-- ✅ Types para todas as 68 tabelas
+- âœ… Arquivo `database.types.ts` criado
+- âœ… Sem erros de compilaÃ§Ã£o
+- âœ… Types para todas as 68 tabelas
 
-**Verificação:**
+**VerificaÃ§Ã£o:**
 ```bash
 # Contar tabelas nos types
 grep "export type" src/lib/supabase/database.types.ts | wc -l
@@ -121,7 +131,7 @@ grep "export type" src/lib/supabase/database.types.ts | wc -l
 
 ---
 
-### 🎯 Teste 2: Conexão com Supabase (10 min)
+### ðŸŽ¯ Teste 2: ConexÃ£o com Supabase (10 min)
 
 **Criar script de teste:** `scripts/tests/test-connection.ts`
 
@@ -129,21 +139,21 @@ grep "export type" src/lib/supabase/database.types.ts | wc -l
 import { supabase } from '../../src/lib/supabase/client'
 
 async function testConnection() {
-  console.log('🔌 Testando conexão com Supabase...\n')
+  console.log('ðŸ”Œ Testando conexÃ£o com Supabase...\n')
 
   try {
-    // Teste 1: Buscar tabelas públicas
+    // Teste 1: Buscar tabelas pÃºblicas
     const { data: tables, error: tablesError } = await supabase
       .from('profiles')
       .select('count')
       .limit(0)
 
     if (tablesError) {
-      console.error('❌ Erro ao conectar:', tablesError.message)
+      console.error('âŒ Erro ao conectar:', tablesError.message)
       return
     }
 
-    console.log('✅ Conexão estabelecida!')
+    console.log('âœ… ConexÃ£o estabelecida!')
 
     // Teste 2: Contar profiles
     const { count: profileCount, error: countError } = await supabase
@@ -151,36 +161,36 @@ async function testConnection() {
       .select('*', { count: 'exact', head: true })
 
     if (countError) {
-      console.error('❌ Erro ao contar profiles:', countError.message)
+      console.error('âŒ Erro ao contar profiles:', countError.message)
       return
     }
 
-    console.log(`✅ Total de profiles: ${profileCount}`)
+    console.log(`âœ… Total de profiles: ${profileCount}`)
 
     // Teste 3: Verificar achievements
     const { count: achievementCount } = await supabase
       .from('achievements')
       .select('*', { count: 'exact', head: true })
 
-    console.log(`✅ Total de achievements: ${achievementCount}`)
+    console.log(`âœ… Total de achievements: ${achievementCount}`)
 
     // Teste 4: Verificar portfolios
     const { count: portfolioCount } = await supabase
       .from('portfolios')
       .select('*', { count: 'exact', head: true })
 
-    console.log(`✅ Total de portfolios: ${portfolioCount}`)
+    console.log(`âœ… Total de portfolios: ${portfolioCount}`)
 
     // Teste 5: Verificar alpha_desafios
     const { count: desafioCount } = await supabase
       .from('alpha_desafios')
       .select('*', { count: 'exact', head: true })
 
-    console.log(`✅ Total de alpha_desafios: ${desafioCount}`)
+    console.log(`âœ… Total de alpha_desafios: ${desafioCount}`)
 
-    console.log('\n🎉 Todos os testes passaram!')
+    console.log('\nðŸŽ‰ Todos os testes passaram!')
   } catch (error) {
-    console.error('❌ Erro inesperado:', error)
+    console.error('âŒ Erro inesperado:', error)
   }
 }
 
@@ -194,33 +204,33 @@ npx tsx scripts/tests/test-connection.ts
 
 **Resultado esperado:**
 ```
-🔌 Testando conexão com Supabase...
+ðŸ”Œ Testando conexÃ£o com Supabase...
 
-✅ Conexão estabelecida!
-✅ Total de profiles: X
-✅ Total de achievements: X
-✅ Total de portfolios: X
-✅ Total de alpha_desafios: X
+âœ… ConexÃ£o estabelecida!
+âœ… Total de profiles: X
+âœ… Total de achievements: X
+âœ… Total de portfolios: X
+âœ… Total de alpha_desafios: X
 
-🎉 Todos os testes passaram!
+ðŸŽ‰ Todos os testes passaram!
 ```
 
 ---
 
-### 🎯 Teste 3: Autenticação (15 min)
+### ðŸŽ¯ Teste 3: AutenticaÃ§Ã£o (15 min)
 
-**Criar usuário de teste no Supabase:**
+**Criar usuÃ¡rio de teste no Supabase:**
 
-1. Ir para Authentication → Users
+1. Ir para Authentication â†’ Users
 2. Add user
    - Email: `teste.aluno@niposchool.com`
    - Password: `Teste123!`
-   - Auto Confirm: ✅
+   - Auto Confirm: âœ…
 
 3. Ir para SQL Editor e executar:
 
 ```sql
--- Criar profile para o usuário
+-- Criar profile para o usuÃ¡rio
 INSERT INTO profiles (
   id, 
   email, 
@@ -251,12 +261,12 @@ Acessar: http://localhost:5173
 
 1. Ir para `/login`
 2. Login com `teste.aluno@niposchool.com` / `Teste123!`
-3. ✅ Deve redirecionar para `/aluno`
-4. ✅ Deve ver dashboard do aluno
+3. âœ… Deve redirecionar para `/aluno`
+4. âœ… Deve ver dashboard do aluno
 
 ---
 
-### 🎯 Teste 4: React Query + Supabase (20 min)
+### ðŸŽ¯ Teste 4: React Query + Supabase (20 min)
 
 **Criar hook de teste:** `src/features/alunos/hooks/useProfile.ts`
 
@@ -282,7 +292,7 @@ export function useProfile(userId: string) {
 }
 ```
 
-**Criar página de teste:** `src/pages/TestPage.tsx`
+**Criar pÃ¡gina de teste:** `src/pages/TestPage.tsx`
 
 ```typescript
 import { useAuth } from '@/contexts/AuthContext'
@@ -300,7 +310,7 @@ export function TestPage() {
       <h1 className="text-2xl font-bold mb-4">Teste de Dados</h1>
       
       <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="font-bold mb-2">Perfil do Usuário</h2>
+        <h2 className="font-bold mb-2">Perfil do UsuÃ¡rio</h2>
         <pre className="bg-gray-100 p-4 rounded">
           {JSON.stringify(profile, null, 2)}
         </pre>
@@ -318,20 +328,20 @@ export function TestPage() {
 
 **Testar:**
 1. Acessar http://localhost:5173/test
-2. ✅ Deve carregar dados do usuário
-3. ✅ Deve exibir JSON do profile
+2. âœ… Deve carregar dados do usuÃ¡rio
+3. âœ… Deve exibir JSON do profile
 
 ---
 
-### 🎯 Teste 5: Dashboard Aluno Completo (30 min)
+### ðŸŽ¯ Teste 5: Dashboard Aluno Completo (30 min)
 
 **Testar componentes do dashboard:**
 
-1. **Métricas gerais:**
+1. **MÃ©tricas gerais:**
    - [ ] Total de pontos exibido
    - [ ] Streak atual exibido
    - [ ] Total de conquistas
-   - [ ] Total de portfólios
+   - [ ] Total de portfÃ³lios
 
 2. **Conquistas recentes:**
    - [ ] Lista de achievements desbloqueados
@@ -339,21 +349,21 @@ export function TestPage() {
 
 3. **Progresso de conquistas:**
    - [ ] Barra de progresso
-   - [ ] Porcentagem de conclusão
+   - [ ] Porcentagem de conclusÃ£o
 
-4. **Portfólios pendentes:**
-   - [ ] Lista de portfólios
+4. **PortfÃ³lios pendentes:**
+   - [ ] Lista de portfÃ³lios
    - [ ] Status de cada um
 
 5. **Alpha desafios:**
-   - [ ] Lista de desafios disponíveis
-   - [ ] Status de submissões
+   - [ ] Lista de desafios disponÃ­veis
+   - [ ] Status de submissÃµes
 
 ---
 
-### 🎯 Teste 6: Dashboard Professor (20 min)
+### ðŸŽ¯ Teste 6: Dashboard Professor (20 min)
 
-**Criar usuário professor:**
+**Criar usuÃ¡rio professor:**
 
 ```sql
 -- No Supabase SQL Editor
@@ -365,24 +375,24 @@ WHERE email = 'teste.professor@niposchool.com';
 
 **Testar funcionalidades:**
 
-1. **Visão geral:**
+1. **VisÃ£o geral:**
    - [ ] Total de turmas
    - [ ] Total de alunos
-   - [ ] Submissões pendentes
+   - [ ] SubmissÃµes pendentes
 
 2. **Turmas:**
    - [ ] Lista de turmas
    - [ ] Alunos por turma
 
-3. **Avaliações pendentes:**
-   - [ ] Lista de portfólios para avaliar
+3. **AvaliaÃ§Ãµes pendentes:**
+   - [ ] Lista de portfÃ³lios para avaliar
    - [ ] Lista de alphas para avaliar
 
 ---
 
-## 📊 FASE 3: CHECKLIST FINAL (30 min)
+## ðŸ“Š FASE 3: CHECKLIST FINAL (30 min)
 
-### ✅ Validação Completa
+### âœ… ValidaÃ§Ã£o Completa
 
 #### Backend (Supabase):
 - [ ] 68 tabelas criadas
@@ -393,67 +403,68 @@ WHERE email = 'teste.professor@niposchool.com';
 
 #### Frontend:
 - [ ] Types TypeScript gerados
-- [ ] Conexão com Supabase OK
-- [ ] Autenticação funcionando
+- [ ] ConexÃ£o com Supabase OK
+- [ ] AutenticaÃ§Ã£o funcionando
 - [ ] React Query funcionando
 - [ ] Dashboard Aluno renderiza
 - [ ] Dashboard Professor renderiza
 - [ ] Rotas protegidas funcionando
 - [ ] Redirecionamentos por role funcionando
 
-#### Testes de Integração:
-- [ ] Login → Redireciona corretamente
-- [ ] Aluno não acessa `/professor`
-- [ ] Professor não acessa `/aluno`
+#### Testes de IntegraÃ§Ã£o:
+- [ ] Login â†’ Redireciona corretamente
+- [ ] Aluno nÃ£o acessa `/professor`
+- [ ] Professor nÃ£o acessa `/aluno`
 - [ ] Dados carregam do Supabase
-- [ ] RLS funciona (usuário só vê próprios dados)
+- [ ] RLS funciona (usuÃ¡rio sÃ³ vÃª prÃ³prios dados)
 
 ---
 
-## 🚀 PRÓXIMOS PASSOS
+## ðŸš€ PRÃ“XIMOS PASSOS
 
 ### Se todos os testes passarem:
 
-✅ **SISTEMA VALIDADO!**
+âœ… **SISTEMA VALIDADO!**
 
 **Iniciar desenvolvimento:**
 
-1. **Sprint 1: Gamificação** (1 semana)
-   - Visualização de conquistas
+1. **Sprint 1: GamificaÃ§Ã£o** (1 semana)
+   - VisualizaÃ§Ã£o de conquistas
    - Sistema de pontos
    - Ranking
 
-2. **Sprint 2: Portfólio** (1 semana)
-   - Upload de evidências
-   - Sistema de avaliação
+2. **Sprint 2: PortfÃ³lio** (1 semana)
+   - Upload de evidÃªncias
+   - Sistema de avaliaÃ§Ã£o
    - Rubricas
 
 3. **Sprint 3: Alpha Desafios** (1 semana)
    - Listagem de desafios
-   - Submissão de respostas
-   - Avaliação automática
+   - SubmissÃ£o de respostas
+   - AvaliaÃ§Ã£o automÃ¡tica
 
 4. **Sprint 4: Instrumentos** (1 semana)
-   - Catálogo
-   - Sistema de empréstimos
+   - CatÃ¡logo
+   - Sistema de emprÃ©stimos
    - QR Code
 
 ---
 
-## 🐛 TROUBLESHOOTING
+## ðŸ› TROUBLESHOOTING
 
 ### Erro: "Table not found"
-**Solução:** Executar scripts SQL faltantes
+**SoluÃ§Ã£o:** Executar scripts SQL faltantes
 
 ### Erro: "Column does not exist"
-**Solução:** Regenerar types TypeScript
+**SoluÃ§Ã£o:** Regenerar types TypeScript
 
 ### Erro: "RLS policy violation"
-**Solução:** Verificar políticas RLS no Supabase
+**SoluÃ§Ã£o:** Verificar polÃ­ticas RLS no Supabase
 
 ### Erro: "Connection failed"
-**Solução:** Verificar `.env.local`
+**SoluÃ§Ã£o:** Verificar `.env.local`
 
 ---
 
-**📌 RESUMO: Validar banco → Testar conexão → Testar autenticação → Desenvolver features! 🚀**
+**ðŸ“Œ RESUMO: Validar banco â†’ Testar conexÃ£o â†’ Testar autenticaÃ§Ã£o â†’ Desenvolver features! ðŸš€**
+

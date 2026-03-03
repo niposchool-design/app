@@ -1,3 +1,13 @@
+﻿# Historia da Musica (Historico de Referencia)
+
+**Status:** historico de conteudo pedagogico
+
+Este documento pode conter exemplos antigos de estrutura tecnica e nao deve ser usado como referencia de arquitetura do app.
+
+Fonte tecnica atual: docs/arquitetura/ESTADO_ATUAL.md e docs/arquitetura/ROTAS_E_NAVEGACAO.md.
+
+---
+
 # Historia da Musica - Nipo School
 
 Documento consolidado com toda a especificacao da funcionalidade de Historia da Musica: banco de dados, experiencia interativa, foco na tradicao oriental, componentes frontend, queries, gamificacao e roadmap.
@@ -1196,3 +1206,4 @@ Verificar:
 
 *Ultima atualizacao: Fevereiro 2026*
 *Nipo School - Onde a tradicao encontra a tecnologia*
+
