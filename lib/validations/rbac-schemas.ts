@@ -1,43 +1,43 @@
-import { z } from 'zod'
+﻿import { z } from 'zod'
 
 // ========================================
 // User Management
 // ========================================
 
 export const assignUserRoleSchema = z.object({
-  userId: z.string().uuid('ID de usuário inválido'),
+  userId: z.string().uuid('ID de usuÃ¡rio invÃ¡lido'),
   roleSlug: z.enum(['student', 'teacher', 'admin'], {
-    errorMap: () => ({ message: 'Role inválido' }),
+    error: 'Valor inválido',
   }),
 })
 
 export const removeUserRoleSchema = z.object({
-  userId: z.string().uuid('ID de usuário inválido'),
+  userId: z.string().uuid('ID de usuÃ¡rio invÃ¡lido'),
   roleSlug: z.enum(['student', 'teacher', 'admin'], {
-    errorMap: () => ({ message: 'Role inválido' }),
+    error: 'Valor inválido',
   }),
 })
 
 export const toggleUserActiveSchema = z.object({
-  userId: z.string().uuid('ID de usuário inválido'),
+  userId: z.string().uuid('ID de usuÃ¡rio invÃ¡lido'),
   isActive: z.boolean(),
 })
 
 export const inviteUserSchema = z.object({
-  email: z.string().email('Email inválido'),
+  email: z.string().email('Email invÃ¡lido'),
   roleSlug: z.enum(['student', 'teacher', 'admin'], {
-    errorMap: () => ({ message: 'Role inválido' }),
+    error: 'Valor inválido',
   }),
 })
 
 export const createStudentSchema = z.object({
-  fullName: z.string().min(3, 'Nome deve ter no mínimo 3 caracteres'),
-  email: z.string().email('Email inválido'),
-  password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres'),
+  fullName: z.string().min(3, 'Nome deve ter no mÃ­nimo 3 caracteres'),
+  email: z.string().email('Email invÃ¡lido'),
+  password: z.string().min(6, 'Senha deve ter no mÃ­nimo 6 caracteres'),
   phone: z.string().optional(),
   instrumentId: z.string().uuid().optional(),
   roleSlug: z.enum(['student', 'teacher'], {
-    errorMap: () => ({ message: 'Tipo inválido' }),
+    error: 'Valor inválido',
   }).default('student'),
 })
 
@@ -46,7 +46,7 @@ export const createStudentSchema = z.object({
 // ========================================
 
 export const updateRoleSchema = z.object({
-  roleId: z.string().uuid('ID de role inválido'),
+  roleId: z.string().uuid('ID de role invÃ¡lido'),
   display_name: z.string().min(1).max(100).optional(),
   kanji: z.string().max(10).optional(),
   kanji_meaning: z.string().max(100).optional(),
@@ -62,7 +62,7 @@ export const updateRoleSchema = z.object({
 // ========================================
 
 export const saveRolePermissionsSchema = z.object({
-  roleId: z.string().uuid('ID de role inválido'),
+  roleId: z.string().uuid('ID de role invÃ¡lido'),
   permissionIds: z.array(z.string().uuid()),
 })
 
@@ -79,7 +79,7 @@ export const roleNavigationItemSchema = z.object({
 })
 
 export const saveRoleNavigationSchema = z.object({
-  roleId: z.string().uuid('ID de role inválido'),
+  roleId: z.string().uuid('ID de role invÃ¡lido'),
   items: z.array(roleNavigationItemSchema),
 })
 
@@ -88,8 +88,8 @@ export const saveRoleNavigationSchema = z.object({
 // ========================================
 
 export const createUnitSchema = z.object({
-  name: z.string().min(2, 'Nome deve ter no mínimo 2 caracteres'),
-  slug: z.string().min(2, 'Slug deve ter no mínimo 2 caracteres').regex(/^[a-z0-9-]+$/, 'Slug deve conter apenas letras minúsculas, números e hífens'),
+  name: z.string().min(2, 'Nome deve ter no mÃ­nimo 2 caracteres'),
+  slug: z.string().min(2, 'Slug deve ter no mÃ­nimo 2 caracteres').regex(/^[a-z0-9-]+$/, 'Slug deve conter apenas letras minÃºsculas, nÃºmeros e hÃ­fens'),
   address: z.string().optional(),
   city: z.string().optional(),
   state: z.string().optional(),
@@ -97,8 +97,8 @@ export const createUnitSchema = z.object({
 })
 
 export const updateUnitSchema = z.object({
-  unitId: z.string().uuid('ID de unidade inválido'),
-  name: z.string().min(2, 'Nome deve ter no mínimo 2 caracteres'),
+  unitId: z.string().uuid('ID de unidade invÃ¡lido'),
+  name: z.string().min(2, 'Nome deve ter no mÃ­nimo 2 caracteres'),
   address: z.string().optional(),
   city: z.string().optional(),
   state: z.string().optional(),
@@ -106,7 +106,7 @@ export const updateUnitSchema = z.object({
 })
 
 export const toggleUnitActiveSchema = z.object({
-  unitId: z.string().uuid('ID de unidade inválido'),
+  unitId: z.string().uuid('ID de unidade invÃ¡lido'),
   isActive: z.boolean(),
 })
 
@@ -115,8 +115,8 @@ export const toggleUnitActiveSchema = z.object({
 // ========================================
 
 export const updateProfileSchema = z.object({
-  userId: z.string().uuid('ID de usuário inválido'),
-  fullName: z.string().min(3, 'Nome deve ter no mínimo 3 caracteres'),
+  userId: z.string().uuid('ID de usuÃ¡rio invÃ¡lido'),
+  fullName: z.string().min(3, 'Nome deve ter no mÃ­nimo 3 caracteres'),
   displayName: z.string().optional(),
   phone: z.string().optional(),
   unitId: z.string().uuid().optional().nullable(),

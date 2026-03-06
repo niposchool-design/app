@@ -4,8 +4,8 @@ import { ZodSchema, ZodError } from 'zod'
  * Resultado da validação
  */
 export type ValidationResult<T> = 
-  | { success: true; data: T }
-  | { success: false; error: string; errors?: Array<{ field: string; message: string }> }
+  | { success: true; data: T; error?: never; errors?: never }
+  | { success: false; error: string; errors?: Array<{ field: string; message: string }>; data?: never }
 
 /**
  * Valida dados usando schema Zod
@@ -23,14 +23,14 @@ export async function validateAction<T>(
     return { success: true, data: validated }
   } catch (error) {
     if (error instanceof ZodError) {
-      const firstError = error.errors[0]
+      const firstError = error.issues[0]
       const field = firstError.path.join('.')
       const message = firstError.message
       
       return {
         success: false,
         error: `${field}: ${message}`,
-        errors: error.errors.map(err => ({
+        errors: error.issues.map(err => ({
           field: err.path.join('.'),
           message: err.message,
         })),

@@ -1,56 +1,56 @@
-import { z } from 'zod'
+﻿import { z } from 'zod'
 
 /**
- * Schema para criação de usuário
+ * Schema para criaÃ§Ã£o de usuÃ¡rio
  */
 export const createUserSchema = z.object({
   email: z.string()
-    .email('Email inválido')
+    .email('Email invÃ¡lido')
     .min(5, 'Email muito curto'),
   
   nome_completo: z.string()
-    .min(3, 'Nome deve ter no mínimo 3 caracteres')
+    .min(3, 'Nome deve ter no mÃ­nimo 3 caracteres')
     .max(100, 'Nome muito longo'),
   
   tipo_usuario: z.enum(['admin', 'professor', 'aluno'], {
-    errorMap: () => ({ message: 'Tipo de usuário inválido' }),
+    error: 'Valor inválido',
   }),
   
   senha: z.string()
-    .min(8, 'Senha deve ter no mínimo 8 caracteres')
+    .min(8, 'Senha deve ter no mÃ­nimo 8 caracteres')
     .max(100, 'Senha muito longa'),
 })
 
 export type CreateUserInput = z.infer<typeof createUserSchema>
 
 /**
- * Schema para atualização de role de usuário
+ * Schema para atualizaÃ§Ã£o de role de usuÃ¡rio
  */
 export const updateUserRoleSchema = z.object({
-  userId: z.string().uuid('ID de usuário inválido'),
+  userId: z.string().uuid('ID de usuÃ¡rio invÃ¡lido'),
   
   novoTipo: z.enum(['admin', 'professor', 'aluno'], {
-    errorMap: () => ({ message: 'Tipo de usuário inválido' }),
+    error: 'Valor inválido',
   }),
 })
 
 export type UpdateUserRoleInput = z.infer<typeof updateUserRoleSchema>
 
 /**
- * Schema para criação de instrumento
+ * Schema para criaÃ§Ã£o de instrumento
  */
 export const createInstrumentoSchema = z.object({
   nome: z.string()
-    .min(2, 'Nome deve ter no mínimo 2 caracteres')
+    .min(2, 'Nome deve ter no mÃ­nimo 2 caracteres')
     .max(100, 'Nome muito longo'),
   
   categoria: z.enum(['cordas', 'sopro', 'percussao', 'teclado', 'outros'], {
-    errorMap: () => ({ message: 'Categoria inválida' }),
+    error: 'Valor inválido',
   }),
   
   descricao: z.string()
-    .min(10, 'Descrição muito curta')
-    .max(500, 'Descrição muito longa')
+    .min(10, 'DescriÃ§Ã£o muito curta')
+    .max(500, 'DescriÃ§Ã£o muito longa')
     .optional(),
   
   dificuldade: z.enum(['iniciante', 'intermediario', 'avancado'])
@@ -61,19 +61,19 @@ export const createInstrumentoSchema = z.object({
 export type CreateInstrumentoInput = z.infer<typeof createInstrumentoSchema>
 
 /**
- * Schema para criação de conquista (achievement)
+ * Schema para criaÃ§Ã£o de conquista (achievement)
  */
 export const createAchievementSchema = z.object({
   nome: z.string()
-    .min(3, 'Nome deve ter no mínimo 3 caracteres')
+    .min(3, 'Nome deve ter no mÃ­nimo 3 caracteres')
     .max(100, 'Nome muito longo'),
   
   descricao: z.string()
-    .min(10, 'Descrição muito curta')
-    .max(500, 'Descrição muito longa'),
+    .min(10, 'DescriÃ§Ã£o muito curta')
+    .max(500, 'DescriÃ§Ã£o muito longa'),
   
   icone: z.string()
-    .max(50, 'Nome do ícone muito longo')
+    .max(50, 'Nome do Ã­cone muito longo')
     .optional(),
   
   xp_requerido: z.number()
@@ -82,32 +82,32 @@ export const createAchievementSchema = z.object({
     .default(100),
   
   tipo: z.enum(['bronze', 'prata', 'ouro', 'platina'], {
-    errorMap: () => ({ message: 'Tipo inválido' }),
+    error: 'Valor inválido',
   }),
 })
 
 export type CreateAchievementInput = z.infer<typeof createAchievementSchema>
 
 /**
- * Schema para atualização de status de usuário
+ * Schema para atualizaÃ§Ã£o de status de usuÃ¡rio
  */
 export const toggleUserStatusSchema = z.object({
-  userId: z.string().uuid('ID de usuário inválido'),
+  userId: z.string().uuid('ID de usuÃ¡rio invÃ¡lido'),
   ativo: z.boolean(),
 })
 
 export type ToggleUserStatusInput = z.infer<typeof toggleUserStatusSchema>
 
 /**
- * Schema para criação de período histórico
+ * Schema para criaÃ§Ã£o de perÃ­odo histÃ³rico
  */
 export const createPeriodoHistoriaSchema = z.object({
   nome: z.string()
-    .min(3, 'Nome deve ter no mínimo 3 caracteres')
+    .min(3, 'Nome deve ter no mÃ­nimo 3 caracteres')
     .max(100, 'Nome muito longo'),
   
   inicio: z.number()
-    .int('Ano de início deve ser inteiro')
+    .int('Ano de inÃ­cio deve ser inteiro')
     .min(1000, 'Ano muito antigo')
     .max(2100, 'Ano muito no futuro'),
   
@@ -117,8 +117,8 @@ export const createPeriodoHistoriaSchema = z.object({
     .max(2100, 'Ano muito no futuro'),
   
   descricao: z.string()
-    .min(20, 'Descrição muito curta')
-    .max(2000, 'Descrição muito longa'),
+    .min(20, 'DescriÃ§Ã£o muito curta')
+    .max(2000, 'DescriÃ§Ã£o muito longa'),
   
   ordem: z.number()
     .int('Ordem deve ser inteira')
@@ -126,7 +126,7 @@ export const createPeriodoHistoriaSchema = z.object({
     .optional(),
 }).refine(
   (data) => data.fim > data.inicio,
-  { message: 'Ano de fim deve ser maior que ano de início' }
+  { message: 'Ano de fim deve ser maior que ano de inÃ­cio' }
 )
 
 export type CreatePeriodoHistoriaInput = z.infer<typeof createPeriodoHistoriaSchema>

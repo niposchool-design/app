@@ -1,5 +1,4 @@
 import { createClient } from '@supabase/supabase-js'
-import type { Database } from './database.types'
 
 /**
  * 🔑 ADMIN CLIENT - Com service_role_key
@@ -25,7 +24,7 @@ if (!supabaseServiceRoleKey) {
 }
 
 // Cliente com privilégios administrativos (bypassa RLS)
-export const adminSupabase = createClient<Database>(
+export const adminSupabase = createClient<any>(
   supabaseUrl,
   supabaseServiceRoleKey,
   {

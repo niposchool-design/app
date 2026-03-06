@@ -1,7 +1,7 @@
-import { z } from 'zod'
+﻿import { z } from 'zod'
 
 /**
- * Categorias válidas para pontos
+ * Categorias vÃ¡lidas para pontos
  */
 export const pointsCategories = [
   'aula_concluida',
@@ -18,20 +18,20 @@ export const pointsCategories = [
  */
 export const addPointsSchema = z.object({
   userId: z.string()
-    .uuid('ID de usuário inválido'),
+    .uuid('ID de usuÃ¡rio invÃ¡lido'),
   
   points: z.number()
     .int('Pontos devem ser inteiros')
     .positive('Pontos devem ser positivos')
-    .max(1000, 'Máximo de 1000 pontos por operação'),
+    .max(1000, 'MÃ¡ximo de 1000 pontos por operaÃ§Ã£o'),
   
   category: z.enum(pointsCategories, {
-    errorMap: () => ({ message: 'Categoria de pontos inválida' }),
+    error: 'Valor inválido',
   }),
   
   description: z.string()
-    .min(3, 'Descrição deve ter no mínimo 3 caracteres')
-    .max(200, 'Descrição deve ter no máximo 200 caracteres'),
+    .min(3, 'DescriÃ§Ã£o deve ter no mÃ­nimo 3 caracteres')
+    .max(200, 'DescriÃ§Ã£o deve ter no mÃ¡ximo 200 caracteres'),
 })
 
 export type AddPointsInput = z.infer<typeof addPointsSchema>
@@ -41,34 +41,34 @@ export type AddPointsInput = z.infer<typeof addPointsSchema>
  */
 export const grantAchievementSchema = z.object({
   userId: z.string()
-    .uuid('ID de usuário inválido'),
+    .uuid('ID de usuÃ¡rio invÃ¡lido'),
   
   achievementId: z.string()
-    .uuid('ID de conquista inválido'),
+    .uuid('ID de conquista invÃ¡lido'),
 })
 
 export type GrantAchievementInput = z.infer<typeof grantAchievementSchema>
 
 /**
- * Schema para aula concluída (pontos automáticos)
+ * Schema para aula concluÃ­da (pontos automÃ¡ticos)
  */
 export const aulaConcluidaPointsSchema = z.object({
   aulaId: z.string()
-    .uuid('ID de aula inválido'),
+    .uuid('ID de aula invÃ¡lido'),
 })
 
 /**
- * Schema para evidência enviada (pontos automáticos)
+ * Schema para evidÃªncia enviada (pontos automÃ¡ticos)
  */
 export const evidenciaEnviadaPointsSchema = z.object({
   evidenciaId: z.string()
-    .uuid('ID de evidência inválido'),
+    .uuid('ID de evidÃªncia invÃ¡lido'),
 })
 
 /**
- * Schema para portfólio completo (pontos automáticos)
+ * Schema para portfÃ³lio completo (pontos automÃ¡ticos)
  */
 export const portfolioCompletoPointsSchema = z.object({
   portfolioId: z.string()
-    .uuid('ID de portfólio inválido'),
+    .uuid('ID de portfÃ³lio invÃ¡lido'),
 })

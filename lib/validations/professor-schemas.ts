@@ -1,28 +1,28 @@
-import { z } from 'zod'
+﻿import { z } from 'zod'
 
 /**
- * Schema para criação de aula
+ * Schema para criaÃ§Ã£o de aula
  */
 export const createAulaSchema = z.object({
   titulo: z.string()
-    .min(3, 'Título deve ter no mínimo 3 caracteres')
-    .max(100, 'Título deve ter no máximo 100 caracteres'),
+    .min(3, 'TÃ­tulo deve ter no mÃ­nimo 3 caracteres')
+    .max(100, 'TÃ­tulo deve ter no mÃ¡ximo 100 caracteres'),
   
   descricao: z.string()
-    .min(10, 'Descrição deve ter no mínimo 10 caracteres')
-    .max(500, 'Descrição deve ter no máximo 500 caracteres'),
+    .min(10, 'DescriÃ§Ã£o deve ter no mÃ­nimo 10 caracteres')
+    .max(500, 'DescriÃ§Ã£o deve ter no mÃ¡ximo 500 caracteres'),
   
   conteudo: z.string()
-    .min(50, 'Conteúdo deve ter no mínimo 50 caracteres'),
+    .min(50, 'ConteÃºdo deve ter no mÃ­nimo 50 caracteres'),
   
   nivel: z.enum(['iniciante', 'intermediario', 'avancado'], {
-    errorMap: () => ({ message: 'Nível inválido' }),
+    error: 'Valor inválido',
   }),
   
   duracao_minutos: z.number()
-    .int('Duração deve ser um número inteiro')
-    .positive('Duração deve ser positiva')
-    .max(480, 'Duração máxima é 8 horas (480 minutos)'),
+    .int('DuraÃ§Ã£o deve ser um nÃºmero inteiro')
+    .positive('DuraÃ§Ã£o deve ser positiva')
+    .max(480, 'DuraÃ§Ã£o mÃ¡xima Ã© 8 horas (480 minutos)'),
   
   xp_ganho: z.number()
     .int('XP deve ser inteiro')
@@ -39,23 +39,23 @@ export const createAulaSchema = z.object({
 export type CreateAulaInput = z.infer<typeof createAulaSchema>
 
 /**
- * Schema para atualização de aula
+ * Schema para atualizaÃ§Ã£o de aula
  */
 export const updateAulaSchema = z.object({
-  aulaId: z.string().uuid('ID de aula inválido'),
+  aulaId: z.string().uuid('ID de aula invÃ¡lido'),
   
   titulo: z.string()
-    .min(3, 'Título deve ter no mínimo 3 caracteres')
-    .max(100, 'Título deve ter no máximo 100 caracteres')
+    .min(3, 'TÃ­tulo deve ter no mÃ­nimo 3 caracteres')
+    .max(100, 'TÃ­tulo deve ter no mÃ¡ximo 100 caracteres')
     .optional(),
   
   descricao: z.string()
-    .min(10, 'Descrição deve ter no mínimo 10 caracteres')
-    .max(500, 'Descrição deve ter no máximo 500 caracteres')
+    .min(10, 'DescriÃ§Ã£o deve ter no mÃ­nimo 10 caracteres')
+    .max(500, 'DescriÃ§Ã£o deve ter no mÃ¡ximo 500 caracteres')
     .optional(),
   
   conteudo: z.string()
-    .min(50, 'Conteúdo deve ter no mínimo 50 caracteres')
+    .min(50, 'ConteÃºdo deve ter no mÃ­nimo 50 caracteres')
     .optional(),
   
   nivel: z.enum(['iniciante', 'intermediario', 'avancado'])
@@ -76,41 +76,41 @@ export const updateAulaSchema = z.object({
 export type UpdateAulaInput = z.infer<typeof updateAulaSchema>
 
 /**
- * Schema para avaliação de portfólio
+ * Schema para avaliaÃ§Ã£o de portfÃ³lio
  */
 export const avaliarPortfolioSchema = z.object({
   portfolioId: z.string()
-    .uuid('ID de portfólio inválido'),
+    .uuid('ID de portfÃ³lio invÃ¡lido'),
   
   nota: z.number()
-    .min(0, 'Nota mínima é 0')
-    .max(10, 'Nota máxima é 10'),
+    .min(0, 'Nota mÃ­nima Ã© 0')
+    .max(10, 'Nota mÃ¡xima Ã© 10'),
   
   feedback: z.string()
-    .min(10, 'Feedback deve ter no mínimo 10 caracteres')
-    .max(1000, 'Feedback deve ter no máximo 1000 caracteres'),
+    .min(10, 'Feedback deve ter no mÃ­nimo 10 caracteres')
+    .max(1000, 'Feedback deve ter no mÃ¡ximo 1000 caracteres'),
   
   status: z.enum(['aprovado', 'reprovado', 'revisao'], {
-    errorMap: () => ({ message: 'Status inválido' }),
+    error: 'Valor inválido',
   }),
 })
 
 export type AvaliarPortfolioInput = z.infer<typeof avaliarPortfolioSchema>
 
 /**
- * Schema para avaliação de desafio
+ * Schema para avaliaÃ§Ã£o de desafio
  */
 export const avaliarDesafioSchema = z.object({
   submissaoId: z.string()
-    .uuid('ID de submissão inválido'),
+    .uuid('ID de submissÃ£o invÃ¡lido'),
   
   nota: z.number()
-    .min(0, 'Nota mínima é 0')
-    .max(10, 'Nota máxima é 10'),
+    .min(0, 'Nota mÃ­nima Ã© 0')
+    .max(10, 'Nota mÃ¡xima Ã© 10'),
   
   feedback: z.string()
-    .min(10, 'Feedback deve ter no mínimo 10 caracteres')
-    .max(1000, 'Feedback deve ter no máximo 1000 caracteres'),
+    .min(10, 'Feedback deve ter no mÃ­nimo 10 caracteres')
+    .max(1000, 'Feedback deve ter no mÃ¡ximo 1000 caracteres'),
   
   aprovado: z.boolean(),
 })
@@ -118,49 +118,47 @@ export const avaliarDesafioSchema = z.object({
 export type AvaliarDesafioInput = z.infer<typeof avaliarDesafioSchema>
 
 /**
- * Schema para criação de turma
+ * Schema para criaÃ§Ã£o de turma
  */
 export const createTurmaSchema = z.object({
   nome: z.string()
-    .min(3, 'Nome deve ter no mínimo 3 caracteres')
-    .max(100, 'Nome deve ter no máximo 100 caracteres'),
+    .min(3, 'Nome deve ter no mÃ­nimo 3 caracteres')
+    .max(100, 'Nome deve ter no mÃ¡ximo 100 caracteres'),
   
   sala: z.string()
     .max(50, 'Nome da sala muito longo')
     .optional(),
   
   horario_padrao: z.string()
-    .max(100, 'Horário muito longo')
+    .max(100, 'HorÃ¡rio muito longo')
     .optional(),
   
   capacidade_maxima: z.number()
     .int('Capacidade deve ser inteira')
     .positive('Capacidade deve ser positiva')
-    .max(100, 'Capacidade máxima é 100 alunos')
+    .max(100, 'Capacidade mÃ¡xima Ã© 100 alunos')
     .default(20),
   
   nivel: z.enum(['iniciante', 'intermediario', 'avancado'], {
-    errorMap: () => ({ message: 'Nível inválido' }),
+    error: 'Valor inválido',
   }),
   
   ano_letivo: z.number()
     .int('Ano letivo deve ser inteiro')
-    .min(2020, 'Ano letivo inválido')
-    .max(2100, 'Ano letivo inválido'),
+    .min(2020, 'Ano letivo invÃ¡lido')
+    .max(2100, 'Ano letivo invÃ¡lido'),
   
-  semestre: z.enum([1, 2], {
-    errorMap: () => ({ message: 'Semestre deve ser 1 ou 2' }),
-  }),
+  semestre: z.union([z.literal(1), z.literal(2)]),
 })
 
 export type CreateTurmaInput = z.infer<typeof createTurmaSchema>
 
 /**
- * Schema para matrícula de aluno em turma
+ * Schema para matrÃ­cula de aluno em turma
  */
 export const matricularAlunoSchema = z.object({
-  turmaId: z.string().uuid('ID de turma inválido'),
-  alunoId: z.string().uuid('ID de aluno inválido'),
+  turmaId: z.string().uuid('ID de turma invÃ¡lido'),
+  alunoId: z.string().uuid('ID de aluno invÃ¡lido'),
 })
 
 export type MatricularAlunoInput = z.infer<typeof matricularAlunoSchema>

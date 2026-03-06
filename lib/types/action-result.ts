@@ -6,8 +6,8 @@
  * - success=false: Operação falhou, retorna error e code opcional
  */
 export type ActionResult<T = any> = 
-  | { success: true; data: T; message?: string }
-  | { success: false; error: string; code?: string }
+  | { success: true; data: T; message?: string; error?: never; code?: never }
+  | { success: false; error: string; code?: string; data?: never; message?: never }
 
 /**
  * Códigos de erro padronizados

@@ -1,5 +1,4 @@
 import { createBrowserClient } from '@supabase/ssr'
-import type { Database } from './database.types'
 
 // Cliente Supabase para uso no lado do cliente (browser)
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -12,13 +11,15 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 // Usando createBrowserClient do @supabase/ssr para compatibilidade com cookies
-export const supabase = createBrowserClient<Database>(
+export const supabase = createBrowserClient<any>(
   supabaseUrl, 
   supabaseAnonKey
 )
 
 // Tipos
-export type UserProfile = Database['public']['Tables']['profiles']['Row']
+export type UserProfile = any
+
+export const createClient = () => supabase
 
 // Helpers
 export const isAuthenticated = async () => {

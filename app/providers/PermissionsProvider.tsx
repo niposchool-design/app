@@ -55,7 +55,7 @@ export function PermissionsProvider({ children }: { children: ReactNode }) {
     queryKey: ['rbac', user?.id],
     queryFn: async () => {
       const result = await loadUserRBAC()
-      if (!result.success) throw new Error(result.error)
+      if ('error' in result) throw new Error(result.error)
       return result.data
     },
     enabled: !!user,
