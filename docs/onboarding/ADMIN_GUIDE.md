@@ -37,6 +37,7 @@
 - Acesse **Aulas** para listar por módulo
 - Crie novas aulas com título, objetivo, atividades e materiais
 - Publique quando pronto (status: draft → published)
+- Marque as metodologias pedagógicas utilizadas (Orff, Suzuki, Kodály, etc.)
 
 ### 3.2 Geração de Material IA
 - Acesse **Configurações → Conteúdo IA**
@@ -49,22 +50,53 @@
 - 24 capítulos de currículo pré-carregados
 - Pode adicionar novos itens se necessário
 
-## 4. Monitoramento
+## 4. Novas Páginas e Funcionalidades
 
-### 4.1 Superadmin Dashboard
+### 4.1 Sistema de Notificações
+- Notificações in-app aparecem no ícone de sino para todos os usuários
+- Tipos: sistema, conquista, feedback, avisos
+- Notificações são criadas automaticamente (conquistas, avaliações) ou via RPC
+
+### 4.2 QR Code Scanner
+- Página **Escanear QR** disponível no menu "Ferramentas"
+- Alunos e professores podem escanear QR codes para presença, materiais, etc.
+
+### 4.3 Relatório para a Família
+- Página **Relatório Família** disponível no menu "Meu Espaço"
+- Alunos veem um resumo completo do progresso com opção de imprimir
+- Inclui: aulas concluídas, frequência, conquistas, práticas e nível
+
+### 4.4 Reflexão Semanal
+- Página **Reflexão Semanal** disponível no menu "Meu Espaço"
+- Alunos registram progresso, dificuldades, metas e ideias semanalmente
+- Reflexões são salvas no portfólio como tipo "reflexão" (+15 pts)
+
+### 4.5 Sistema de Gamificação Atualizado
+- Pontuação alinhada ao currículo pedagógico:
+  - Aula concluída: **+50 pts** (era 10)
+  - Portfólio completo: **+100 pts** (era 20)
+  - Desafio concluído: **+15 pts**
+  - Prática diária: **+5 pts**
+  - Reflexão semanal: **+15 pts**
+- 8 níveis com temática japonesa (Semente Musical 🌱 até Mestre Alpha 🎌)
+- Navegação de itens no menu já configurada para todas as novas páginas
+
+## 5. Monitoramento
+
+### 5.1 Superadmin Dashboard
 - Acesse **Configurações → Superadmin**
 - Visualize: requisições IA, custos, erros, latência
 - Alertas automáticos para anomalias
 
-### 4.2 Qualidade de Dados
+### 5.2 Qualidade de Dados
 - Acesse **Configurações → Qualidade de Dados**
 - Veja campos obrigatórios faltando em perfis, aulas, submissões
 
-## 5. Feature Flags
+## 6. Feature Flags
 - Módulos podem ser ligados/desligados por fase do piloto
 - Flags configurados no banco de dados (`feature_flags`)
 - Contate o desenvolvedor para ativar/desativar módulos
 
-## 6. Suporte
+## 7. Suporte
 - Problemas técnicos: contate Junior (junior.sax@gmail.com)
 - Bugs: registre em https://github.com/[repo]/issues

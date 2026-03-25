@@ -32,7 +32,7 @@ export async function submitPortfolioV2(rawData: any): Promise<ActionResult> {
     // Gamification: award points for portfolio submission (fire-and-forget)
     ;(ctx.supabase as any).rpc('rpc_award_points', {
       p_user_id: ctx.userId,
-      p_points: 20,
+      p_points: 100,  // Alinhado ao curriculum pedagógico (100pts/portfólio)
       p_source: 'portfolio',
       p_action: 'submit',
       p_description: 'Portfólio submetido',

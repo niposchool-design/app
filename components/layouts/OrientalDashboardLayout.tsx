@@ -48,6 +48,7 @@ import {
   Library,
   type LucideIcon,
 } from 'lucide-react'
+import { NotificationBell } from '@/components/notifications/NotificationBell'
 import { useAuth } from '@/app/providers/AuthProvider'
 import { usePermissions } from '@/app/providers/PermissionsProvider'
 import { useNavigationGroups } from '@/lib/hooks/use-navigation'
@@ -370,12 +371,15 @@ export default function OrientalDashboardLayout({ children }: OrientalDashboardL
           />
           <span className="font-bold text-gray-900 text-lg">Nipo School</span>
         </div>
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-        >
+        <div className="flex items-center gap-1">
+          <NotificationBell />
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+          >
           {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Overlay */}

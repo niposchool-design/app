@@ -90,7 +90,7 @@ export async function completeLesson(lessonId: string): Promise<ActionResult> {
     // Gamification: award points + check achievements (fire-and-forget)
     ;(ctx.supabase as any).rpc('rpc_award_points', {
       p_user_id: ctx.userId,
-      p_points: 10,
+      p_points: 50,  // Alinhado ao curriculum pedagógico (50pts/aula)
       p_source: 'lesson',
       p_action: 'complete',
       p_description: 'Aula concluída',
