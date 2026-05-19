@@ -124,3 +124,27 @@ Checklist completo: [PILOT_READINESS.md](./PILOT_READINESS.md)
 **ADNIPO Suzano**
 - Website: [niposchool.com](https://niposchool.com)
 - Email: contato@niposchool.com
+
+---
+
+## Convenções da empresa
+
+Este repo segue o padrão técnico documentado em:
+
+`D:\projetos\diferentes\docs\digiai\docs\07-operacao\convencoes-tecnicas-ecossistema.md`
+
+### Configurar `git push` com token do .env (uma vez por clone)
+
+```bash
+git config --local --unset-all credential.helper
+git config --local --add credential.helper ""
+git config --local --add credential.helper "$(pwd)/scripts/git-credential-env.sh"
+```
+
+Preencha `GITHUB_USERNAME` e `GITHUB_TOKEN` no `.env` da raiz do repo (gitignored — ver `.env.example`).
+
+### Travas adicionais
+
+- **Branch único `main`** — sem branches paralelas
+- **Backups antes de operações destrutivas** — em `D:\projetos\diferentes\_backups\`
+- **README documentando deploy URL, stack, instruções**
