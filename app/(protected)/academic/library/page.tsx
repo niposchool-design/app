@@ -115,7 +115,7 @@ export default function LibraryPage() {
               <Library className="w-6 h-6 text-purple-600" />
               Biblioteca Metodologica
             </h1>
-            <p className="text-sm text-gray-500 mt-1">{items.length} itens na biblioteca</p>
+            <p className="text-sm text-gray-500 mt-1"><span className="nw-tabular">{items.length}</span> itens na biblioteca</p>
           </div>
         </div>
         <PermissionGate permission="lessons.create">

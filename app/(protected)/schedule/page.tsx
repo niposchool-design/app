@@ -60,14 +60,14 @@ export default function SchedulePage() {
               <div className="space-y-2">
                 {items.map(lesson => (
                   <div key={lesson.id} className="bg-white rounded-xl border border-gray-100 p-4 flex items-center gap-4 hover:shadow-sm transition-shadow">
-                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 font-bold text-lg shrink-0">
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 font-bold text-lg shrink-0 nw-tabular">
                       {lesson.number || '?'}
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-bold text-sm text-gray-900 truncate">{lesson.title}</h3>
                       <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
                         {lesson.duration_minutes && (
-                          <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{lesson.duration_minutes} min</span>
+                          <span className="flex items-center gap-1"><Clock className="w-3 h-3" /><span className="nw-tabular">{lesson.duration_minutes}</span> min</span>
                         )}
                         {lesson.teacher_name && <span>{lesson.teacher_name}</span>}
                       </div>

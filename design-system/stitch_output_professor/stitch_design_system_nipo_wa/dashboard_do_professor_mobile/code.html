@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard do Professor - Nipo School</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e6e2db",
+                        "inverse-surface": "#31302c",
+                        "secondary-fixed-dim": "#93ccff",
+                        "surface-variant": "#e6e2db",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#ebe8e1",
+                        "secondary-fixed": "#cce5ff",
+                        "on-tertiary-fixed": "#2f1500",
+                        "primary": "#b70011",
+                        "tertiary-container": "#ad5d00",
+                        "inverse-on-surface": "#f4f0e9",
+                        "primary-fixed-dim": "#ffb4ab",
+                        "primary-container": "#dc2626",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "tertiary": "#894900",
+                        "surface-bright": "#fdf9f2",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#f1ede6",
+                        "surface": "#fdf9f2",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-background": "#1c1c18",
+                        "secondary": "#0284c7", /* Override to Teacher Blue */
+                        "on-secondary-fixed-variant": "#004b73",
+                        "on-secondary-container": "#00476e",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#ffdad6",
+                        "background": "#fbf7f0", /* Ivory Base */
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#5c403c",
+                        "surface-tint": "#bf0715",
+                        "on-primary-container": "#fff6f5",
+                        "outline": "#916f6b",
+                        "on-surface": "#1c1c18",
+                        "on-secondary-fixed": "#001d31",
+                        "on-primary-fixed": "#410002",
+                        "tertiary-fixed": "#ffdcc3",
+                        "surface-container-low": "#f7f3ec",
+                        "outline-variant": "#e6bdb8",
+                        "on-tertiary-container": "#fff6f2",
+                        "surface-dim": "#dddad3",
+                        "inverse-primary": "#ffb4ab",
+                        "on-primary-fixed-variant": "#93000b",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#e0f2fe", /* Light Blue Container */
+                        "on-tertiary-fixed-variant": "#6e3900"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "2xl": "1rem",
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "xl": "32px",
+                        "unit": "4px",
+                        "container-margin": "24px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "gutter": "16px",
+                        "18": "4.5rem", /* Navbar height compensation */
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "data-display": ["JetBrains Mono"],
+                        "headline-xl-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "data-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "data-display": ["20px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-xl-mobile": ["32px", {"lineHeight": "38px", "fontWeight": "800"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    },
+                    "backgroundImage": {
+                        'seigaiha': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Cpath d=\'M50 0a50 50 0 0 0-50 50h10a40 40 0 0 1 80 0h10A50 50 0 0 0 50 0zm0 10a40 40 0 0 0-40 40h10a30 30 0 0 1 60 0h10A40 40 0 0 0 50 10zm0 10a30 30 0 0 0-30 30h10a20 20 0 0 1 40 0h10A30 30 0 0 0 50 20zm0 10a20 20 0 0 0-20 20h10a10 10 0 0 1 20 0h10A20 20 0 0 0 50 30zm0 10a10 10 0 0 0-10 10h10a0 0 0 0 1 0 0h10A10 10 0 0 0 50 40zM0 50a50 50 0 0 0 50 50v-10A40 40 0 0 1 10 50H0zm10 0a40 40 0 0 0 40 40v-10A30 30 0 0 1 20 50H10zm10 0a30 30 0 0 0 30 30v-10A20 20 0 0 1 30 50H20zm10 0a20 20 0 0 0 20 20v-10A10 10 0 0 1 40 50H30zm10 0a10 10 0 0 0 10 10v-10a0 0 0 0 1 0 0H40zM50 50a50 50 0 0 0 50 50v-10A40 40 0 0 1 60 50H50zm10 0a40 40 0 0 0 40 40v-10A30 30 0 0 1 70 50H60zm10 0a30 30 0 0 0 30 30v-10A20 20 0 0 1 80 50H70zm10 0a20 20 0 0 0 20 20v-10A10 10 0 0 1 90 50H80zm10 0a10 10 0 0 0 10 10v-10a0 0 0 0 1 0 0H90z\' fill=\'%230284c7\' fill-opacity=\'0.05\'/%3E%3C/svg%3E")'
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #fbf7f0;
+            color: #1c1c18;
+        }
+        .pattern-bg {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 100 100'%3E%3Cpath d='M50 0a50 50 0 0 0-50 50h10a40 40 0 0 1 80 0h10A50 50 0 0 0 50 0zm0 10a40 40 0 0 0-40 40h10a30 30 0 0 1 60 0h10A40 40 0 0 0 50 10zm0 10a30 30 0 0 0-30 30h10a20 20 0 0 1 40 0h10A30 30 0 0 0 50 20zm0 10a20 20 0 0 0-20 20h10a10 10 0 0 1 20 0h10A20 20 0 0 0 50 30zm0 10a10 10 0 0 0-10 10h10a0 0 0 0 1 0 0h10A10 10 0 0 0 50 40zM0 50a50 50 0 0 0 50 50v-10A40 40 0 0 1 10 50H0zm10 0a40 40 0 0 0 40 40v-10A30 30 0 0 1 20 50H10zm10 0a30 30 0 0 0 30 30v-10A20 20 0 0 1 30 50H20zm10 0a20 20 0 0 0 20 20v-10A10 10 0 0 1 40 50H30zm10 0a10 10 0 0 0 10 10v-10a0 0 0 0 1 0 0H40zM50 50a50 50 0 0 0 50 50v-10A40 40 0 0 1 60 50H50zm10 0a40 40 0 0 0 40 40v-10A30 30 0 0 1 70 50H60zm10 0a30 30 0 0 0 30 30v-10A20 20 0 0 1 80 50H70zm10 0a20 20 0 0 0 20 20v-10A10 10 0 0 1 90 50H80zm10 0a10 10 0 0 0 10 10v-10a0 0 0 0 1 0 0H90z' fill='%230284c7' fill-opacity='0.05'/%3E%3C/svg%3E");
+        }
+        .brush-stroke {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen pb-24 relative overflow-x-hidden">
+<!-- Sumi-e Brush Decor -->
+<svg class="brush-stroke -top-10 -right-20 w-64 h-64 text-secondary opacity-[0.03]" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M10,50 Q30,20 60,30 T90,60" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="8" style="filter: blur(2px);"></path>
+</svg>
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim font-headline-md text-headline-md-mobile flex justify-between items-center px-4 h-16 w-full fixed top-0 z-50 bg-surface-container-low dark:bg-surface-container-highest shadow-sm">
+<button class="p-2 hover:bg-surface-container-high transition-colors active:scale-95 duration-150 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary dark:text-secondary-fixed-dim" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-secondary dark:text-secondary-fixed-dim">Nipo School</h1>
+<button class="p-2 hover:bg-surface-container-high transition-colors active:scale-95 duration-150 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary dark:text-secondary-fixed-dim" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="pt-20 px-4 md:hidden">
+<!-- Greeting -->
+<section class="mb-6 mt-4">
+<h2 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface">Olá, Sensei <span class="text-secondary">Ricardo</span></h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Bem-vindo ao seu painel de controle.</p>
+</section>
+<!-- Quick Actions (Atalhos) -->
+<section class="flex justify-between items-center mb-8 px-2">
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest glass-card flex items-center justify-center text-secondary group-active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+</div>
+<span class="font-data-label text-data-label text-on-surface-variant">Nova Aula</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest glass-card flex items-center justify-center text-secondary group-active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">how_to_reg</span>
+</div>
+<span class="font-data-label text-data-label text-on-surface-variant">Presença</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest glass-card flex items-center justify-center text-secondary group-active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+</div>
+<span class="font-data-label text-data-label text-on-surface-variant">Desafio</span>
+</div>
+</section>
+<!-- Pattern Divider -->
+<div class="w-full h-4 pattern-bg mb-8 opacity-50 rounded-full"></div>
+<!-- KPIs Bento Grid -->
+<section class="grid grid-cols-2 gap-4 mb-8">
+<!-- Minhas Turmas -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.04)] pattern-bg relative overflow-hidden flex flex-col justify-between h-32">
+<div class="absolute inset-0 bg-white/90 z-0"></div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">groups</span>
+<span class="font-data-label text-data-label uppercase">Turmas</span>
+</div>
+<div class="font-data-display text-data-display text-3xl text-secondary">
+                        04
+                    </div>
+</div>
+</div>
+<!-- Alunos Ativos -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.04)] pattern-bg relative overflow-hidden flex flex-col justify-between h-32">
+<div class="absolute inset-0 bg-white/90 z-0"></div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">person</span>
+<span class="font-data-label text-data-label uppercase">Alunos Ativos</span>
+</div>
+<div class="font-data-display text-data-display text-3xl text-secondary">
+                        42
+                    </div>
+</div>
+</div>
+<!-- Submissões a avaliar -->
+<div class="bg-secondary text-on-secondary rounded-xl p-4 shadow-md col-span-2 relative overflow-hidden flex items-center justify-between">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-white opacity-10 rounded-full"></div>
+<div class="flex flex-col z-10">
+<span class="font-data-label text-data-label uppercase opacity-90 mb-1">Submissões a Avaliar</span>
+<span class="font-data-display text-data-display text-4xl">12</span>
+</div>
+<div class="z-10 bg-white/20 p-3 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">grade</span>
+</div>
+</div>
+<!-- Frequência Média -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.04)] col-span-2 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Frequência Média</span>
+</div>
+<div class="font-data-display text-data-display text-secondary">
+                    94%
+                </div>
+</div>
+</section>
+<!-- Avaliar Pendentes (List) -->
+<section class="mb-8">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">notification_important</span>
+                Próximas Avaliações
+            </h3>
+<div class="flex flex-col gap-3">
+<!-- Item 1 -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex justify-between items-center border border-transparent hover:border-secondary-container transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-variant overflow-hidden">
+<img alt="Lucas S" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA67TXAsQ0eodbVV15RUACxB0rbVuKqV7RN9MgBPv1oiv1q2rR3BtIa5gMKfj-gZCD6rklduH9YRns7BS6TKwxNfA81fAxbBDC-8-UJewSMDClq6ilyvneDnc37mhgx9Z6UKbZjxHpR2GWIDGy4vIKoVHD_x2-3vs7tkY2bRQOFX0pvRUyW7mwtcSQFWx8gtLb14lV34uB_zGXDxom-rib-jgmFoNHBhDCDcqAWNmTtQ-nrFoDQgXKqN8ytBqZ0qxcJ2EReVTyd9WI"/>
+</div>
+<div>
+<p class="font-body-md text-body-md font-bold text-on-surface">Lucas Silva</p>
+<p class="font-data-label text-data-label text-on-surface-variant">Violão Básico • Exercício 3</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full bg-secondary-container text-secondary flex items-center justify-center hover:bg-secondary hover:text-white transition-colors active:scale-95">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex justify-between items-center border border-transparent hover:border-secondary-container transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-variant overflow-hidden">
+<img alt="Mariana C" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAa_urTIpMGm--X8-YOhidcl3Pxfa1mXvlv2TXJWGXKNz9dFr_qwJzgTWPKziNauTsIcrWusYrXsPXvt4Q_niGktFNJ3uN376g1tjqUZeD5-1OyeZWsA_c3kwRxNG0nHzZNLV6ro2HKqAMsmoxJ3LGirqqYsfDa19kbefibGRU4IHEzGSDEUBXIrnBKd5WzXzoaIMo7Rwztnkl8n4fqhKIeSjGK8kAaklIjRG9EvIcp5_daqSjYBnfKMQQfXZ0GCGi7U6DsgR-Irs4"/>
+</div>
+<div>
+<p class="font-body-md text-body-md font-bold text-on-surface">Mariana Costa</p>
+<p class="font-data-label text-data-label text-on-surface-variant">Piano Inic. • Escala de Dó</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full bg-secondary-container text-secondary flex items-center justify-center hover:bg-secondary hover:text-white transition-colors active:scale-95">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Minhas Turmas Carousel (Simulated with scroll) -->
+<section class="mb-4">
+<div class="flex justify-between items-end mb-4">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface">Suas Turmas Hoje</h3>
+<span class="font-data-label text-data-label text-secondary cursor-pointer hover:underline">Ver todas</span>
+</div>
+<div class="flex overflow-x-auto gap-4 pb-4 snap-x hide-scrollbar" style="scrollbar-width: none; -ms-overflow-style: none;">
+<!-- Card 1 -->
+<div class="min-w-[240px] bg-surface-container-lowest rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] snap-start border border-surface-variant">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-secondary-container text-secondary font-data-label text-data-label px-2 py-1 rounded-md">14:00</div>
+<span class="material-symbols-outlined text-on-surface-variant">piano</span>
+</div>
+<h4 class="font-body-lg text-body-lg font-bold text-on-surface leading-tight mb-1">Piano Infantil A</h4>
+<p class="font-data-label text-data-label text-on-surface-variant mb-4">Sala 3 • 8 Alunos</p>
+<button class="w-full bg-white border-2 border-secondary text-secondary font-body-md text-body-md py-2 rounded-xl hover:bg-secondary hover:text-white transition-colors font-medium">
+                        Iniciar Chamada
+                    </button>
+</div>
+<!-- Card 2 -->
+<div class="min-w-[240px] bg-surface-container-lowest rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] snap-start border border-surface-variant">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-surface-variant text-on-surface-variant font-data-label text-data-label px-2 py-1 rounded-md">16:30</div>
+<span class="material-symbols-outlined text-on-surface-variant">music_note</span>
+</div>
+<h4 class="font-body-lg text-body-lg font-bold text-on-surface leading-tight mb-1">Teoria Musical I</h4>
+<p class="font-data-label text-data-label text-on-surface-variant mb-4">Sala Online • 15 Alunos</p>
+<button class="w-full bg-white border-2 border-surface-variant text-on-surface-variant font-body-md text-body-md py-2 rounded-xl hover:border-secondary hover:text-secondary transition-colors font-medium">
+                        Preparar Aula
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface dark:bg-surface-container-lowest font-data-label text-data-label docked full-width bottom-0 rounded-t-xl bg-surface-container-low dark:bg-surface-container-high shadow-[0_-4px_20px_rgba(0,0,0,0.04)] fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 md:hidden">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200 p-2 rounded-lg">
+<span class="material-symbols-outlined mb-1">groups</span>
+<span>Turmas</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200 p-2 rounded-lg">
+<span class="material-symbols-outlined mb-1">grade</span>
+<span>Avaliar</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl px-4 py-2 hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="font-bold">Agenda</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200 p-2 rounded-lg">
+<span class="material-symbols-outlined mb-1">library_music</span>
+<span>Materiais</span>
+</button>
+</nav>
+<style>
+        /* Hide scrollbar for carousel but keep functionality */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</body></html>

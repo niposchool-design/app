@@ -4,9 +4,10 @@ import { revalidatePath } from 'next/cache'
 import { getActionContext } from '@/lib/utils/action-context'
 import { validateAction } from '@/lib/validations/validate-action'
 import { submitPortfolioSchema, evaluatePortfolioSchema } from '@/lib/validations/unified-schemas'
-import { successResponse, unauthorizedError, databaseError, validationError } from '@/lib/utils/action-response'
+import { successResponse, unauthorizedError, databaseError, validationError, forbiddenError } from '@/lib/utils/action-response'
 import type { ActionResult } from '@/lib/types/action-result'
 import { generatePortfolioFeedback } from '@/app/actions/ai-feedback-actions'
+import { checkPermission } from '@/lib/auth/check-permission'
 
 export async function submitPortfolioV2(rawData: any): Promise<ActionResult> {
   try {
@@ -59,6 +60,8 @@ export async function evaluatePortfolioV2(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+
+    if (!(await checkPermission('portfolios.grade'))) return forbiddenError('Permissao portfolios.grade necessaria')
 
     const { error } = await ctx.supabase
       .from('portfolios')

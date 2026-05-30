@@ -84,12 +84,12 @@ export default function InstrumentsPage() {
                         <div className="flex items-center gap-2 mt-2">
                           {instrument.sounds_count > 0 && (
                             <span className="text-[10px] bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded font-medium">
-                              {instrument.sounds_count} sons
+                              <span className="nw-tabular">{instrument.sounds_count}</span> sons
                             </span>
                           )}
                           {instrument.media_count > 0 && (
                             <span className="text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded font-medium">
-                              {instrument.media_count} mídia
+                              <span className="nw-tabular">{instrument.media_count}</span> mídia
                             </span>
                           )}
                         </div>

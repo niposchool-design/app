@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nipo School - Dashboard do Professor</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed": "#ffdad6",
+                      "tertiary": "#894900",
+                      "on-primary-container": "#fff6f5",
+                      "inverse-on-surface": "#f4f0e9",
+                      "tertiary-container": "#ad5d00",
+                      "on-primary": "#ffffff",
+                      "secondary": "#006398",
+                      "surface-variant": "#e6e2db",
+                      "secondary-fixed-dim": "#93ccff",
+                      "on-tertiary-container": "#fff6f2",
+                      "primary-fixed-dim": "#ffb4ab",
+                      "on-background": "#1c1c18",
+                      "tertiary-fixed": "#ffdcc3",
+                      "on-error-container": "#93000a",
+                      "background": "#fdf9f2",
+                      "on-primary-fixed-variant": "#93000b",
+                      "on-surface": "#1c1c18",
+                      "on-secondary-fixed": "#001d31",
+                      "error-container": "#ffdad6",
+                      "surface-container": "#f1ede6",
+                      "on-surface-variant": "#5c403c",
+                      "surface-container-high": "#ebe8e1",
+                      "surface-container-low": "#f7f3ec",
+                      "on-secondary": "#ffffff",
+                      "primary-container": "#dc2626",
+                      "surface-container-lowest": "#ffffff",
+                      "surface": "#fdf9f2",
+                      "secondary-container": "#5bb8fe",
+                      "on-primary-fixed": "#410002",
+                      "on-secondary-fixed-variant": "#004b73",
+                      "surface-bright": "#fdf9f2",
+                      "error": "#ba1a1a",
+                      "secondary-fixed": "#cce5ff",
+                      "on-tertiary-fixed": "#2f1500",
+                      "on-error": "#ffffff",
+                      "surface-dim": "#dddad3",
+                      "on-tertiary": "#ffffff",
+                      "outline-variant": "#e6bdb8",
+                      "inverse-surface": "#31302c",
+                      "surface-tint": "#bf0715",
+                      "inverse-primary": "#ffb4ab",
+                      "surface-container-highest": "#e6e2db",
+                      "primary": "#b70011",
+                      "tertiary-fixed-dim": "#ffb77d",
+                      "outline": "#916f6b",
+                      "on-secondary-container": "#00476e",
+                      "on-tertiary-fixed-variant": "#6e3900"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-margin": "24px",
+                      "sm": "8px",
+                      "xl": "32px",
+                      "gutter": "16px",
+                      "xs": "4px",
+                      "md": "16px",
+                      "unit": "4px",
+                      "lg": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-xl-mobile": [
+                              "Inter"
+                      ],
+                      "headline-xl": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "data-label": [
+                              "JetBrains Mono"
+                      ],
+                      "data-display": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-xl-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "38px",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-xl": [
+                              "40px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "data-label": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "data-display": [
+                              "20px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        /* Pattern Overlay for background */
+        .seigaiha-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%230284c7' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface seigaiha-pattern min-h-screen font-body-lg pb-24 relative overflow-x-hidden md:hidden">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim shadow-sm flex justify-between items-center px-4 h-16 w-full fixed top-0 z-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary dark:text-secondary-fixed-dim" data-icon="menu">menu</span>
+</div>
+<div class="font-headline-md text-headline-md-mobile font-bold text-secondary dark:text-secondary-fixed-dim">
+            Nipo School
+        </div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary dark:text-secondary-fixed-dim" data-icon="notifications">notifications</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 px-gutter space-y-xl">
+<!-- Header Section -->
+<section class="flex items-center gap-4 py-4">
+<img alt="Logo Nipo School" class="w-16 h-16 rounded-full bg-white shadow-sm p-1 object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0uigFjeSqFddkzANbTKMiQ8BX-7CHuC8Siul2vkoaZr_h0fJKWIWORMGpDCcow87LzR2LraiQEovhkNudnaZN0wF8Ws0prCOxe3RPYMCHHNJqePuCxNVdmw35_ixj29lbsPUKzxEZI0uIcj8LTslScmxa6PMjOUzjLiCSHqWk5-O2xWPq44qBorAzhMo9AQ5iTV5bI4rc_zCjZviFMjTcd9JvFUkeC1VWa8ZbYuL6VGqcrhh-ZZ-9VmhRdU"/>
+<div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Bom dia, Sensei!</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Pronto para inspirar hoje?</p>
+</div>
+</section>
+<!-- KPIs Grid -->
+<section class="grid grid-cols-2 gap-sm">
+<!-- KPI Card 1 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_-4px_20px_rgba(0,0,0,0.04)] border border-surface-container flex flex-col justify-between">
+<span class="font-body-md text-body-md text-on-surface-variant">Turmas</span>
+<div class="flex items-center justify-between mt-2">
+<span class="font-data-display text-data-display text-secondary">6</span>
+<span class="material-symbols-outlined text-secondary opacity-50 text-xl" data-icon="groups">groups</span>
+</div>
+</div>
+<!-- KPI Card 2 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_-4px_20px_rgba(0,0,0,0.04)] border border-surface-container flex flex-col justify-between">
+<span class="font-body-md text-body-md text-on-surface-variant">Alunos ativos</span>
+<div class="flex items-center justify-between mt-2">
+<span class="font-data-display text-data-display text-secondary">42</span>
+<span class="material-symbols-outlined text-secondary opacity-50 text-xl" data-icon="person">person</span>
+</div>
+</div>
+<!-- KPI Card 3 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_-4px_20px_rgba(0,0,0,0.04)] border border-secondary-container flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 right-0 bg-secondary text-on-secondary font-data-label text-data-label px-2 py-1 rounded-bl-lg">
+                    Ação
+                </div>
+<span class="font-body-md text-body-md text-on-surface-variant">Submissões</span>
+<div class="flex items-center justify-between mt-2">
+<span class="font-data-display text-data-display text-secondary font-bold">12</span>
+<span class="material-symbols-outlined text-secondary opacity-50 text-xl" data-icon="assignment">assignment</span>
+</div>
+</div>
+<!-- KPI Card 4 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_-4px_20px_rgba(0,0,0,0.04)] border border-surface-container flex flex-col justify-between">
+<span class="font-body-md text-body-md text-on-surface-variant">Frequência</span>
+<div class="flex items-center justify-between mt-2">
+<span class="font-data-display text-data-display text-secondary">94%</span>
+<span class="material-symbols-outlined text-secondary opacity-50 text-xl" data-icon="how_to_reg">how_to_reg</span>
+</div>
+</div>
+</section>
+<!-- Quick Actions -->
+<section class="flex justify-between gap-sm overflow-x-auto pb-4 hide-scrollbar">
+<button class="flex flex-col items-center gap-2 min-w-[80px] group">
+<div class="w-14 h-14 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-sm group-active:scale-95 transition-transform duration-150 border-2 border-transparent focus:border-secondary">
+<span class="material-symbols-outlined" data-icon="add_box">add_box</span>
+</div>
+<span class="font-data-label text-data-label text-on-surface-variant whitespace-nowrap">Nova aula</span>
+</button>
+<button class="flex flex-col items-center gap-2 min-w-[80px] group">
+<div class="w-14 h-14 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center shadow-sm group-active:scale-95 transition-transform duration-150 border-2 border-transparent focus:border-secondary">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+</div>
+<span class="font-data-label text-data-label text-on-surface-variant whitespace-nowrap">Presença</span>
+</button>
+<button class="flex flex-col items-center gap-2 min-w-[80px] group">
+<div class="w-14 h-14 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center shadow-sm group-active:scale-95 transition-transform duration-150 border-2 border-transparent focus:border-secondary">
+<span class="material-symbols-outlined" data-icon="emoji_events">emoji_events</span>
+</div>
+<span class="font-data-label text-data-label text-on-surface-variant whitespace-nowrap">Desafio</span>
+</button>
+</section>
+<!-- Pattern Divider -->
+<div class="w-full h-2 bg-secondary opacity-10 rounded-full" style="background-image: url('data:image/svg+xml,%3Csvg width=\'20\' height=\'10\' viewBox=\'0 0 20 10\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M10 10c-5.523 0-10-4.477-10-10h2c0 4.418 3.582 8 8 8s8-3.582 8-8h2c0 5.523-4.477 10-10 10z\' fill=\'%230284c7\' fill-opacity=\'1\' fill-rule=\'evenodd\'/%3E%3C/svg%3E'); background-repeat: repeat-x;"></div>
+<!-- Avaliar Section -->
+<section class="space-y-md">
+<div class="flex justify-between items-end">
+<h2 class="font-headline-md text-headline-md-mobile text-on-surface">Avaliar</h2>
+<a class="font-data-label text-data-label text-secondary font-bold uppercase tracking-wider" href="#">Ver todos</a>
+</div>
+<div class="space-y-sm">
+<!-- Evaluation Card 1 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_-4px_20px_rgba(0,0,0,0.04)] flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex-shrink-0 overflow-hidden">
+<img alt="Foto do aluno Kenji" class="w-full h-full object-cover" data-alt="A portrait of a young boy of Japanese descent looking focused, soft natural lighting, light warm background, photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvMDqK2s49dfrCzqon3GA_OMrQG9uMVYJDlULUUwcWy2e4zJSmJh1YC7NhiG62IGgbDolE1R9wOtXpvoG3dxMG0VJc4p2_pvEnj2CZHU7_SHKvnFqUAVTmnZ5rkjdlircXFUfJdgwhmsN_-nBKVzPXMbvAo2inw0OPUj-Hr610DjUrSDC4Grw5U2djrbZDV1gnr64D1owIoyHwTklq_iqel3mcjFg06VJfcaPOR2XAt7SnmxC5jgTPYysKC5sVd3xcLjNBdFAEppo"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-body-md text-body-md font-bold text-on-surface">Kenji Sato</h3>
+<p class="font-data-label text-data-label text-on-surface-variant">Taiko - Intermediário</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="bg-tertiary-container text-on-tertiary-container font-data-label text-data-label px-2 py-1 rounded-md text-[10px]">Aguardando</span>
+<span class="font-data-label text-data-label text-on-surface-variant mt-1">Hoje</span>
+</div>
+</div>
+<!-- Evaluation Card 2 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_-4px_20px_rgba(0,0,0,0.04)] flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex-shrink-0 overflow-hidden">
+<img alt="Foto da aluna Maria" class="w-full h-full object-cover" data-alt="A portrait of a young Brazilian girl smiling, soft natural lighting, light warm background, photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwm5vCAM_LNmYL5sfNHuwmhD9dmaZlXTUn-y9VwakMGHungQ7z61NZFTqyybOU9wTBFt8vLHRBroMeOopf4LFrHta5wiWyz6JcLMv7RCy4F_juHVFJ9gkflYbPSSkQ2HyzNO3kRJuZoC2gDSGJmse9CQvLrGtLD2kBF-1cDvGsJLJ14nekrfHiQq6bNj2RFwJZOxGqPb26cX5HVTO1JY4hYeSpf0znM-5qfRlahvQzTJfJWo1OHVNLeUF545f-MnaXsMUcvNHRN38"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-body-md text-body-md font-bold text-on-surface">Maria Silva</h3>
+<p class="font-data-label text-data-label text-on-surface-variant">Koto - Iniciante</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="bg-surface-variant text-on-surface-variant font-data-label text-data-label px-2 py-1 rounded-md text-[10px]">Atrasado</span>
+<span class="font-data-label text-data-label text-error mt-1 text-xs">-1 dia</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Minhas Turmas Section -->
+<section class="space-y-md">
+<h2 class="font-headline-md text-headline-md-mobile text-on-surface">Minhas turmas</h2>
+<div class="flex overflow-x-auto gap-4 pb-4 hide-scrollbar snap-x">
+<!-- Class Card 1 -->
+<div class="min-w-[240px] bg-secondary text-on-secondary p-lg rounded-xl shadow-sm relative overflow-hidden snap-center">
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z\' fill=\'%23ffffff\' fill-opacity=\'1\' fill-rule=\'evenodd\'/%3E%3C/svg%3E');"></div>
+<h3 class="font-headline-md text-headline-md-mobile font-bold mb-1 relative z-10">Koto Iniciante</h3>
+<p class="font-body-md text-body-md opacity-90 mb-4 relative z-10">Sala Sakura</p>
+<div class="flex justify-between items-center relative z-10">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-secondary bg-surface-variant"></div>
+<div class="w-8 h-8 rounded-full border-2 border-secondary bg-surface-variant"></div>
+<div class="w-8 h-8 rounded-full border-2 border-secondary bg-surface-variant"></div>
+<div class="w-8 h-8 rounded-full border-2 border-secondary bg-secondary-fixed-dim text-on-secondary-fixed flex items-center justify-center font-data-label text-[10px]">+5</div>
+</div>
+<div class="text-right">
+<span class="block font-data-label text-data-label opacity-75">Próx. Aula</span>
+<span class="block font-data-display text-data-display font-bold">14:00</span>
+</div>
+</div>
+</div>
+<!-- Class Card 2 -->
+<div class="min-w-[240px] bg-surface-container-lowest text-on-surface p-lg rounded-xl shadow-sm border border-surface-container relative overflow-hidden snap-center">
+<h3 class="font-headline-md text-headline-md-mobile font-bold mb-1 relative z-10">Taiko Avançado</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 relative z-10">Dojo Principal</p>
+<div class="flex justify-between items-center relative z-10">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface-container-lowest bg-surface-variant"></div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container-lowest bg-surface-variant"></div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container-lowest bg-surface-container text-on-surface flex items-center justify-center font-data-label text-[10px]">+12</div>
+</div>
+<div class="text-right">
+<span class="block font-data-label text-data-label text-on-surface-variant">Amanhã</span>
+<span class="block font-data-display text-data-display font-bold text-secondary">09:00</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface dark:bg-surface-container-lowest shadow-[0_-4px_20px_rgba(0,0,0,0.04)] fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 rounded-t-xl md:hidden">
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl px-3 py-1 hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="groups">groups</span>
+<span class="font-data-label text-data-label">Turmas</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200 px-3 py-1 rounded-xl">
+<span class="material-symbols-outlined mb-1" data-icon="grade">grade</span>
+<span class="font-data-label text-data-label">Avaliar</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200 px-3 py-1 rounded-xl">
+<span class="material-symbols-outlined mb-1" data-icon="calendar_month">calendar_month</span>
+<span class="font-data-label text-data-label">Agenda</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200 px-3 py-1 rounded-xl">
+<span class="material-symbols-outlined mb-1" data-icon="library_music">library_music</span>
+<span class="font-data-label text-data-label">Materiais</span>
+</button>
+</nav>
+<style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>

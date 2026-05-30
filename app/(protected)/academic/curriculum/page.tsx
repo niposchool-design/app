@@ -123,19 +123,19 @@ export default function CurriculumPage() {
       <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl p-6 text-white">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
-            <p className="text-3xl font-bold">9</p>
+            <p className="text-3xl font-bold nw-tabular">9</p>
             <p className="text-sm text-indigo-200">Metodologias</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold">4</p>
+            <p className="text-3xl font-bold nw-tabular">4</p>
             <p className="text-sm text-indigo-200">Ciclos</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold">70</p>
+            <p className="text-3xl font-bold nw-tabular">70</p>
             <p className="text-sm text-indigo-200">Aulas</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold">8</p>
+            <p className="text-3xl font-bold nw-tabular">8</p>
             <p className="text-sm text-indigo-200">Pilares Alpha</p>
           </div>
         </div>
@@ -162,7 +162,7 @@ export default function CurriculumPage() {
           <div className="px-5 pb-5 grid grid-cols-1 md:grid-cols-2 gap-3">
             {ALPHA_PILLARS.map(p => (
               <div key={p.num} className="flex items-start gap-3 p-3 bg-red-50/50 rounded-lg border border-red-100">
-                <div className="w-7 h-7 bg-red-100 rounded-full flex items-center justify-center text-red-700 font-bold text-xs flex-shrink-0">
+                <div className="w-7 h-7 bg-red-100 rounded-full flex items-center justify-center text-red-700 font-bold text-xs flex-shrink-0 nw-tabular">
                   {p.num}
                 </div>
                 <div>
@@ -224,7 +224,7 @@ export default function CurriculumPage() {
                     <h3 className="font-bold text-gray-900 text-sm">{m.name}</h3>
                     <p className="text-xs text-gray-500 truncate">{m.summary}</p>
                   </div>
-                  <span className="text-xs text-gray-400 flex-shrink-0">{methodLessons.length} aulas</span>
+                  <span className="text-xs text-gray-400 flex-shrink-0"><span className="nw-tabular">{methodLessons.length}</span> aulas</span>
                   {isExpanded ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
                 </button>
 
@@ -241,7 +241,7 @@ export default function CurriculumPage() {
                               href={`/lessons/${l.id}`}
                               className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-gray-200 rounded-lg text-xs hover:border-indigo-300 hover:bg-indigo-50 transition-colors"
                             >
-                              <span className="font-bold text-gray-400">#{l.lesson_number ?? l.number}</span>
+                              <span className="font-bold text-gray-400 nw-tabular">#{l.lesson_number ?? l.number}</span>
                               <span className="text-gray-700 truncate max-w-[200px]">{l.title}</span>
                             </Link>
                           ))}
@@ -292,7 +292,7 @@ export default function CurriculumPage() {
               href="/academic/library"
               className="flex items-center gap-3 p-3 rounded-lg hover:bg-indigo-50 transition-colors group"
             >
-              <span className="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 text-xs font-bold group-hover:bg-indigo-100 group-hover:text-indigo-600">
+              <span className="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 text-xs font-bold group-hover:bg-indigo-100 group-hover:text-indigo-600 nw-tabular">
                 {ch.num}
               </span>
               <span className="text-sm text-gray-700 group-hover:text-indigo-700">{ch.label}</span>

@@ -62,7 +62,7 @@ export default function AchievementsPage() {
           Conquistas
         </h1>
         <span className="text-sm text-gray-500 font-medium">
-          {completedIds.size} / {all.length} desbloqueadas
+          <span className="nw-tabular">{completedIds.size} / {all.length}</span> desbloqueadas
         </span>
       </div>
 
@@ -86,7 +86,7 @@ export default function AchievementsPage() {
                     <h3 className="font-bold text-sm text-gray-900">{a.name}</h3>
                     <p className="text-xs text-gray-500 mt-0.5">{a.description}</p>
                     <div className="flex items-center gap-3 mt-2">
-                      <span className="text-xs font-medium text-amber-600">+{a.points_reward} pts</span>
+                      <span className="text-xs font-medium text-amber-600 nw-tabular">+{a.points_reward} pts</span>
                       {!completed && ua && ua.target_progress > 0 && (
                         <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                           <div className="h-full bg-amber-400 rounded-full" style={{ width: `${(ua.current_progress / ua.target_progress) * 100}%` }} />

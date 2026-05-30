@@ -12,9 +12,11 @@ import {
   errorResponse,
   validationError,
   unauthorizedError,
+  forbiddenError,
   databaseError,
 } from '@/lib/utils/action-response'
 import type { ActionResult } from '@/lib/types/action-result'
+import { checkPermission } from '@/lib/auth/check-permission'
 
 // Reuse getAuthContext from rbac-admin-actions (admin-only)
 import { createClient } from '@/lib/supabase/server'
@@ -61,6 +63,8 @@ export async function createUnit(rawData: unknown): Promise<ActionResult> {
   const ctx = await getAuthContext()
   if (!ctx) return unauthorizedError('Acesso restrito a administradores')
 
+  if (!(await checkPermission('settings.manage'))) return forbiddenError('Permissao settings.manage necessaria')
+
   const validation = await validateAction(createUnitSchema, rawData)
   if (!validation.success) return validationError(validation.error)
 
@@ -91,6 +95,8 @@ export async function updateUnit(rawData: unknown): Promise<ActionResult> {
   const ctx = await getAuthContext()
   if (!ctx) return unauthorizedError('Acesso restrito a administradores')
 
+  if (!(await checkPermission('settings.manage'))) return forbiddenError('Permissao settings.manage necessaria')
+
   const validation = await validateAction(updateUnitSchema, rawData)
   if (!validation.success) return validationError(validation.error)
 
@@ -120,6 +126,8 @@ export async function updateUnit(rawData: unknown): Promise<ActionResult> {
 export async function toggleUnitActive(rawData: unknown): Promise<ActionResult> {
   const ctx = await getAuthContext()
   if (!ctx) return unauthorizedError('Acesso restrito a administradores')
+
+  if (!(await checkPermission('settings.manage'))) return forbiddenError('Permissao settings.manage necessaria')
 
   const validation = await validateAction(toggleUnitActiveSchema, rawData)
   if (!validation.success) return validationError(validation.error)

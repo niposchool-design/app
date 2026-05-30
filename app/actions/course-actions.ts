@@ -4,8 +4,9 @@ import { revalidatePath } from 'next/cache'
 import { getActionContext } from '@/lib/utils/action-context'
 import { validateAction } from '@/lib/validations/validate-action'
 import { createCourseSchema, enrollStudentSchema, unenrollStudentSchema, recordAttendanceSchema } from '@/lib/validations/unified-schemas'
-import { successResponse, unauthorizedError, databaseError, validationError } from '@/lib/utils/action-response'
+import { successResponse, unauthorizedError, forbiddenError, databaseError, validationError } from '@/lib/utils/action-response'
 import type { ActionResult } from '@/lib/types/action-result'
+import { checkPermission } from '@/lib/auth/check-permission'
 
 export async function createCourse(rawData: any): Promise<ActionResult> {
   try {
@@ -14,6 +15,8 @@ export async function createCourse(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+
+    if (!(await checkPermission('courses.create'))) return forbiddenError('Permissao courses.create necessaria')
 
     const { data, error } = await ctx.supabase
       .from('courses')
@@ -37,6 +40,8 @@ export async function enrollStudent(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+
+    if (!(await checkPermission('enrollments.manage'))) return forbiddenError('Permissao enrollments.manage necessaria')
 
     const { data, error } = await ctx.supabase
       .from('enrollments')
@@ -82,6 +87,8 @@ export async function recordAttendance(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+
+    if (!(await checkPermission('attendance.manage'))) return forbiddenError('Permissao attendance.manage necessaria')
 
     const records = validation.data.records.map((r: any) => ({
       tenant_id: ctx.tenantId,

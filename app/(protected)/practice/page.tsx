@@ -162,14 +162,14 @@ export default function PracticePage() {
             <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mx-auto mb-2">
               <BarChart3 className="w-5 h-5 text-blue-600" />
             </div>
-            <p className="text-2xl font-bold text-gray-900">{stats.total_sessions}</p>
+            <p className="text-2xl font-bold text-gray-900 nw-tabular">{stats.total_sessions}</p>
             <p className="text-xs text-gray-500">Sessoes</p>
           </div>
           <div className="bg-white rounded-xl border border-gray-100 p-4 text-center">
             <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center mx-auto mb-2">
               <TrendingUp className="w-5 h-5 text-green-600" />
             </div>
-            <p className="text-2xl font-bold text-gray-900">
+            <p className="text-2xl font-bold text-gray-900 nw-tabular">
               {stats.total_minutes >= 60
                 ? `${Math.floor(stats.total_minutes / 60)}h${stats.total_minutes % 60 > 0 ? ` ${stats.total_minutes % 60}m` : ''}`
                 : `${stats.total_minutes}m`
@@ -181,14 +181,14 @@ export default function PracticePage() {
             <div className="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center mx-auto mb-2">
               <Flame className="w-5 h-5 text-amber-600" />
             </div>
-            <p className="text-2xl font-bold text-gray-900">{currentStreak}</p>
+            <p className="text-2xl font-bold text-gray-900 nw-tabular">{currentStreak}</p>
             <p className="text-xs text-gray-500">Dias seguidos</p>
           </div>
           <div className="bg-white rounded-xl border border-gray-100 p-4 text-center">
             <div className="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center mx-auto mb-2">
               <Guitar className="w-5 h-5 text-purple-600" />
             </div>
-            <p className="text-2xl font-bold text-gray-900">{stats.instruments_practiced}</p>
+            <p className="text-2xl font-bold text-gray-900 nw-tabular">{stats.instruments_practiced}</p>
             <p className="text-xs text-gray-500">Instrumentos</p>
           </div>
         </div>
@@ -200,20 +200,20 @@ export default function PracticePage() {
           <div className="flex items-center gap-2">
             <Award className="w-4 h-4 text-blue-500" />
             <span className="text-sm text-gray-600">
-              Media: <span className="font-bold text-gray-900">{Math.round(stats.avg_minutes)} min</span> por sessao
+              Media: <span className="font-bold text-gray-900 nw-tabular">{Math.round(stats.avg_minutes)} min</span> por sessao
             </span>
           </div>
           <div className="flex items-center gap-2">
             <Calendar className="w-4 h-4 text-green-500" />
             <span className="text-sm text-gray-600">
-              <span className="font-bold text-gray-900">{stats.unique_days}</span> dias unicos
+              <span className="font-bold text-gray-900 nw-tabular">{stats.unique_days}</span> dias unicos
             </span>
           </div>
           {stats.last_practice_date && (
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-amber-500" />
               <span className="text-sm text-gray-600">
-                Ultima: <span className="font-bold text-gray-900">
+                Ultima: <span className="font-bold text-gray-900 nw-tabular">
                   {new Date(stats.last_practice_date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
                 </span>
               </span>
@@ -327,7 +327,7 @@ export default function PracticePage() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <p className="font-bold text-gray-900">{session.duration_minutes} min</p>
+                  <p className="font-bold text-gray-900 nw-tabular">{session.duration_minutes} min</p>
                   <span className="text-xs text-gray-400">-</span>
                   <span className="text-xs font-medium text-gray-500">{practiceTypeLabels[session.practice_type] || session.practice_type}</span>
                 </div>
@@ -347,7 +347,7 @@ export default function PracticePage() {
                   )}
                 </div>
               </div>
-              <span className="text-sm text-gray-400">
+              <span className="text-sm text-gray-400 nw-tabular">
                 {new Date(session.session_date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
               </span>
               <button onClick={() => handleDelete(session.id)} className="text-gray-300 hover:text-red-500 transition-colors p-1">

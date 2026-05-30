@@ -61,7 +61,7 @@ export default function HistoryPage() {
                 <div className="flex gap-4 relative">
                   {/* Timeline dot */}
                   <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xs z-10 flex-shrink-0 shadow-md"
+                    className="nw-tabular w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xs z-10 flex-shrink-0 shadow-md"
                     style={{ backgroundColor: period.theme_color || '#6B7280' }}
                   >
                     {period.start_year}
@@ -74,7 +74,7 @@ export default function HistoryPage() {
                         <h3 className="font-bold text-lg text-gray-900 group-hover:text-emerald-700 transition-colors">
                           {period.name}
                         </h3>
-                        <p className="text-sm text-gray-400">
+                        <p className="nw-tabular text-sm text-gray-400">
                           {period.start_year}{period.end_year ? ` - ${period.end_year}` : ' - presente'}
                         </p>
                       </div>
@@ -84,8 +84,8 @@ export default function HistoryPage() {
                       <p className="text-sm text-gray-500 mt-2 line-clamp-2">{period.description}</p>
                     )}
                     <div className="flex items-center gap-4 mt-3 text-xs text-gray-400">
-                      <span>{period.composer_count} compositores</span>
-                      <span>{period.work_count} obras</span>
+                      <span><span className="nw-tabular">{period.composer_count}</span> compositores</span>
+                      <span><span className="nw-tabular">{period.work_count}</span> obras</span>
                     </div>
                   </div>
                 </div>

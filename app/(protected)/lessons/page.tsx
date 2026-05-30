@@ -191,7 +191,7 @@ export default function LessonsPage() {
           }`}
         >
           Ano 1 - 2025
-          {isStudent && <span className="ml-2 text-xs opacity-60">{y1Completed}/{y1Count}</span>}
+          {isStudent && <span className="ml-2 text-xs opacity-60 nw-tabular">{y1Completed}/{y1Count}</span>}
         </button>
         <button
           onClick={() => setSelectedYear(2)}
@@ -202,7 +202,7 @@ export default function LessonsPage() {
           }`}
         >
           Ano 2 - 2026
-          {isStudent && <span className="ml-2 text-xs opacity-60">{y2Completed}/{y2Count}</span>}
+          {isStudent && <span className="ml-2 text-xs opacity-60 nw-tabular">{y2Completed}/{y2Count}</span>}
         </button>
       </div>
 
@@ -215,7 +215,7 @@ export default function LessonsPage() {
               <span className="text-sm font-medium text-gray-700">
                 Progresso {selectedYear === 1 ? 'Ano 1' : 'Ano 2'}
               </span>
-              <span className="text-sm font-bold text-indigo-600">
+              <span className="text-sm font-bold text-indigo-600 nw-tabular">
                 {selectedYear === 1 ? y1Completed : y2Completed}/{selectedYear === 1 ? y1Count : y2Count} aulas
               </span>
             </div>
@@ -284,8 +284,8 @@ export default function LessonsPage() {
                       ) : (
                         <>
                           <div className="flex items-center justify-between text-xs mb-1">
-                            <span className="text-gray-500">{stats.completed}/{stats.total} concluidas</span>
-                            <span className="font-bold text-gray-700">{percent}%</span>
+                            <span className="text-gray-500 nw-tabular">{stats.completed}/{stats.total} concluidas</span>
+                            <span className="font-bold text-gray-700 nw-tabular">{percent}%</span>
                           </div>
                           <div className="w-full bg-gray-100 rounded-full h-2">
                             <div className={`bg-gradient-to-r ${colors.gradient} h-2 rounded-full transition-all`} style={{ width: `${percent}%` }} />
@@ -337,8 +337,8 @@ export default function LessonsPage() {
                       ) : (
                         <>
                           <div className="flex items-center justify-between text-xs mb-1">
-                            <span className="text-gray-500">{stats.completed}/{stats.total} concluidas</span>
-                            <span className="font-bold text-gray-700">{percent}%</span>
+                            <span className="text-gray-500 nw-tabular">{stats.completed}/{stats.total} concluidas</span>
+                            <span className="font-bold text-gray-700 nw-tabular">{percent}%</span>
                           </div>
                           <div className="w-full bg-gray-100 rounded-full h-2">
                             <div className={`bg-gradient-to-r ${colors.gradient} h-2 rounded-full transition-all`} style={{ width: `${percent}%` }} />
@@ -369,7 +369,7 @@ export default function LessonsPage() {
               <option value="completed">Concluida</option>
               <option value="cancelled">Cancelada</option>
             </select>
-            <span className="text-xs text-gray-400">{filteredLessons.length} aulas</span>
+            <span className="text-xs text-gray-400 nw-tabular">{filteredLessons.length} aulas</span>
           </div>
 
           {filteredLessons.length === 0 ? (
@@ -390,7 +390,7 @@ export default function LessonsPage() {
                 return (
                   <Link key={lesson.id} href={`/lessons/${lesson.id}`} className="block group">
                     <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:shadow-md hover:border-indigo-200 transition-all flex items-center gap-4">
-                      <div className={`w-12 h-12 ${colors.bg} rounded-xl flex items-center justify-center ${colors.text} font-bold`}>
+                      <div className={`w-12 h-12 ${colors.bg} rounded-xl flex items-center justify-center ${colors.text} font-bold nw-tabular`}>
                         {lesson.number !== null ? lesson.number : '#'}
                       </div>
                       <div className="flex-1 min-w-0">

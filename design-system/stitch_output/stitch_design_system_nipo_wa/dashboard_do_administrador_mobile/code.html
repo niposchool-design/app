@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard Administrativo - Nipo School</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        /* Subtle Japanese Pattern Overlay */
+        .bg-pattern-sayagata {
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H8v-2h12V0h2v12h12v2H20v2h20v2H20v2.5h20v2H20v2h12v2H20v12h-2V28H6v-2h12v-2H0v-2h20v-1.5z' fill='%231c1c18' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+    </style>
+<!-- Tailwind CSS & Config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#ebe8e1",
+                        "tertiary-container": "#ad5d00",
+                        "surface": "#fdf9f2",
+                        "primary": "#b70011",
+                        "on-secondary-container": "#00476e",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#ffdcc3",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#ffdad6",
+                        "background": "#fdf9f2",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#93ccff",
+                        "on-primary-fixed": "#410002",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "outline-variant": "#e6bdb8",
+                        "inverse-primary": "#ffb4ab",
+                        "surface-tint": "#bf0715",
+                        "on-primary-container": "#fff6f5",
+                        "surface-variant": "#e6e2db",
+                        "primary-fixed-dim": "#ffb4ab",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "on-tertiary-fixed": "#2f1500",
+                        "inverse-on-surface": "#f4f0e9",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#006398",
+                        "inverse-surface": "#31302c",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "surface-container": "#f1ede6",
+                        "primary-container": "#dc2626",
+                        "secondary-fixed": "#cce5ff",
+                        "on-surface": "#1c1c18",
+                        "on-background": "#1c1c18",
+                        "on-primary-fixed-variant": "#93000b",
+                        "on-tertiary-container": "#fff6f2",
+                        "on-surface-variant": "#5c403c",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f7f3ec",
+                        "on-secondary-fixed": "#001d31",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#894900",
+                        "surface-container-highest": "#e6e2db",
+                        "surface-dim": "#dddad3",
+                        "secondary-container": "#5bb8fe",
+                        "surface-bright": "#fdf9f2",
+                        "outline": "#916f6b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "container-margin": "24px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "headline-xl-mobile": ["Inter"],
+                        "data-display": ["JetBrains Mono"],
+                        "headline-xl": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "data-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-xl-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "800" }],
+                        "data-display": ["20px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md antialiased pb-24 min-h-screen relative bg-pattern-sayagata">
+<!-- TopAppBar -->
+<header class="docked full-width top-0 bg-surface shadow-sm z-40 sticky">
+<div class="flex justify-between items-center w-full px-container-margin py-md">
+<div class="flex items-center gap-sm">
+<!-- Avatar Leading -->
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">school</span>
+</div>
+<h1 class="text-headline-md font-headline-md text-primary">Academia de Música</h1>
+</div>
+<!-- Trailing Icon -->
+<button class="text-primary hover:bg-surface-container-high transition-colors p-sm rounded-full flex items-center justify-center active:scale-95 opacity-90 transition-all">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="px-md py-lg flex flex-col gap-xl">
+<!-- Page Header & Quick Actions -->
+<section class="flex flex-col gap-md">
+<div class="flex items-center justify-between">
+<h2 class="text-headline-xl-mobile font-headline-xl-mobile text-on-surface">Painel<br/>Administrativo</h2>
+<div class="inline-flex items-center gap-xs px-3 py-1 rounded-full bg-surface-container-high border border-surface-variant">
+<div class="w-2 h-2 rounded-full bg-[#10b981]"></div>
+<span class="text-data-label font-data-label text-on-surface-variant">Online</span>
+</div>
+</div>
+<div class="flex gap-sm mt-xs">
+<button class="flex-1 bg-primary text-on-primary py-3 px-4 rounded-xl font-body-md font-semibold flex justify-center items-center gap-xs shadow-md active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm">person_add</span>
+                    Novo Aluno
+                </button>
+<button class="flex-1 bg-transparent border-2 border-outline-variant text-primary py-3 px-4 rounded-xl font-body-md font-semibold flex justify-center items-center gap-xs hover:bg-surface-container-low active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm">group_add</span>
+                    Nova Turma
+                </button>
+</div>
+</section>
+<!-- KPI Grid -->
+<section>
+<h3 class="text-body-md font-bold text-on-surface-variant mb-md px-xs">Visão Geral</h3>
+<div class="grid grid-cols-2 gap-sm">
+<!-- KPI Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+<span class="material-symbols-outlined text-secondary mb-xs" style="font-variation-settings: 'FILL' 1;">face</span>
+<div class="mt-sm">
+<div class="text-data-display font-data-display text-on-surface">342</div>
+<div class="text-data-label font-data-label text-on-surface-variant uppercase mt-xs">Alunos Ativos</div>
+</div>
+</div>
+<!-- KPI Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+<span class="material-symbols-outlined text-tertiary-container mb-xs" style="font-variation-settings: 'FILL' 1;">assignment_ind</span>
+<div class="mt-sm">
+<div class="text-data-display font-data-display text-on-surface">24</div>
+<div class="text-data-label font-data-label text-on-surface-variant uppercase mt-xs">Professores</div>
+</div>
+</div>
+<!-- KPI Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+<span class="material-symbols-outlined text-primary mb-xs" style="font-variation-settings: 'FILL' 1;">groups</span>
+<div class="mt-sm">
+<div class="text-data-display font-data-display text-on-surface">48</div>
+<div class="text-data-label font-data-label text-on-surface-variant uppercase mt-xs">Turmas Ativas</div>
+</div>
+</div>
+<!-- KPI Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+<span class="material-symbols-outlined text-on-surface-variant mb-xs" style="font-variation-settings: 'FILL' 1;">piano</span>
+<div class="mt-sm">
+<div class="text-data-display font-data-display text-on-surface">156</div>
+<div class="text-data-label font-data-label text-on-surface-variant uppercase mt-xs">Instrumentos</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Access -->
+<section>
+<h3 class="text-body-md font-bold text-on-surface-variant mb-md px-xs">Acesso Rápido</h3>
+<div class="grid grid-cols-4 gap-sm bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline-variant/30">
+<button class="flex flex-col items-center gap-xs active:scale-95 transition-transform group">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined">person_search</span>
+</div>
+<span class="text-data-label font-data-label text-on-surface">Alunos</span>
+</button>
+<button class="flex flex-col items-center gap-xs active:scale-95 transition-transform group">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined">class</span>
+</div>
+<span class="text-data-label font-data-label text-on-surface">Turmas</span>
+</button>
+<button class="flex flex-col items-center gap-xs active:scale-95 transition-transform group">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined">grading</span>
+</div>
+<span class="text-data-label font-data-label text-on-surface">Avaliações</span>
+</button>
+<button class="flex flex-col items-center gap-xs active:scale-95 transition-transform group">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined">settings_suggest</span>
+</div>
+<span class="text-data-label font-data-label text-on-surface">Config</span>
+</button>
+</div>
+</section>
+<!-- Weekly Activity -->
+<section>
+<h3 class="text-body-md font-bold text-on-surface-variant mb-md px-xs">Atividade da Semana</h3>
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden">
+<ul class="divide-y divide-surface-variant/50">
+<li class="flex items-center justify-between p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">forum</span>
+</div>
+<div>
+<p class="text-body-md font-body-md text-on-surface">Novos posts no mural</p>
+<p class="text-data-label font-data-label text-on-surface-variant">Últimos 7 dias</p>
+</div>
+</div>
+<span class="text-data-display font-data-display text-secondary">42</span>
+</li>
+<li class="flex items-center justify-between p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">schedule</span>
+</div>
+<div>
+<p class="text-body-md font-body-md text-on-surface">Minutos de prática</p>
+<p class="text-data-label font-data-label text-on-surface-variant">Total da escola</p>
+</div>
+</div>
+<span class="text-data-display font-data-display text-primary">1.2k</span>
+</li>
+<li class="flex items-center justify-between p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">music_note</span>
+</div>
+<div>
+<p class="text-body-md font-body-md text-on-surface">Alunos praticando</p>
+<p class="text-data-label font-data-label text-on-surface-variant">Meta: 80%</p>
+</div>
+</div>
+<span class="text-data-display font-data-display text-tertiary-container">65%</span>
+</li>
+</ul>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container-low shadow-[0_-4px_10px_rgba(0,0,0,0.02)] fixed bottom-0 left-0 w-full flex justify-around items-center px-sm pb-safe pt-xs">
+<!-- Active Tab: Dashboard -->
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1 scale-95 duration-150 ease-out">
+<span class="material-symbols-outlined" data-icon="dashboard" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-data-label font-data-label mt-1">Dashboard</span>
+</button>
+<!-- Inactive Tabs -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-container-high transition-colors rounded-xl px-4">
+<span class="material-symbols-outlined" data-icon="person_book">person_book</span>
+<span class="text-data-label font-data-label mt-1">Alunos</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-container-high transition-colors rounded-xl px-4">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-data-label font-data-label mt-1">Turmas</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-container-high transition-colors rounded-xl px-4">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-data-label font-data-label mt-1">Ajustes</span>
+</button>
+</nav>
+<style>
+        /* Safe area padding for mobile bottom nav */
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom, 8px);
+        }
+    </style>
+</body></html>

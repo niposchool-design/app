@@ -208,14 +208,14 @@ export default function FeedPage() {
               <div className="flex items-center gap-6 p-4">
                 <button onClick={() => handleLike(post.id)} className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-pink-500 transition-colors">
                   <Heart className="w-5 h-5" />
-                  <span className="font-medium">{post.like_count}</span>
+                  <span className="font-medium nw-tabular">{post.like_count}</span>
                 </button>
                 <button
                   onClick={() => setCommentingOn(commentingOn === post.id ? null : post.id)}
                   className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-blue-500 transition-colors"
                 >
                   <MessageCircle className="w-5 h-5" />
-                  <span className="font-medium">{post.comment_count}</span>
+                  <span className="font-medium nw-tabular">{post.comment_count}</span>
                 </button>
               </div>
 

@@ -119,7 +119,7 @@ export default function KanbanPage() {
               Kanban de Aulas
             </h1>
           </div>
-          <span className="text-sm text-gray-400">{filtered.length} aulas</span>
+          <span className="text-sm text-gray-400"><span className="nw-tabular">{filtered.length}</span> aulas</span>
         </div>
 
         {/* Filters */}
@@ -179,7 +179,7 @@ export default function KanbanPage() {
                     <div className={`w-3 h-3 rounded-full ${col.color}`} />
                     <span className="text-sm font-bold text-gray-700">{col.label}</span>
                   </div>
-                  <span className="text-xs font-medium text-gray-400 bg-white px-2 py-0.5 rounded-full">
+                  <span className="text-xs font-medium text-gray-400 bg-white px-2 py-0.5 rounded-full nw-tabular">
                     {items.length}
                   </span>
                 </div>
@@ -198,7 +198,7 @@ export default function KanbanPage() {
                       <div key={lesson.id} className={`bg-white rounded-lg border border-gray-100 shadow-sm p-3 ${isMoving ? 'opacity-50' : ''}`}>
                         <Link href={`/lessons/${lesson.id}`} className="block group">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className={`w-6 h-6 ${levelColor.bg} ${levelColor.text} rounded flex items-center justify-center text-xs font-bold`}>
+                            <span className={`w-6 h-6 ${levelColor.bg} ${levelColor.text} rounded flex items-center justify-center text-xs font-bold nw-tabular`}>
                               {lesson.number !== null ? lesson.number : '#'}
                             </span>
                             <h4 className="text-sm font-bold text-gray-900 group-hover:text-indigo-700 transition-colors truncate flex-1">

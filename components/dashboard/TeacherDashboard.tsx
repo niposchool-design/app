@@ -136,17 +136,31 @@ export function TeacherDashboard() {
   )
 }
 
+const STAT_CARD_COLORS: Record<string, string> = {
+  blue: 'bg-blue-50 text-blue-600',
+  indigo: 'bg-indigo-50 text-indigo-600',
+  amber: 'bg-amber-50 text-amber-600',
+  green: 'bg-green-50 text-green-600',
+}
+
+const QUICK_CARD_COLORS: Record<string, string> = {
+  yellow: 'bg-yellow-50 text-yellow-500',
+  pink: 'bg-pink-50 text-pink-500',
+  blue: 'bg-blue-50 text-blue-500',
+  cyan: 'bg-cyan-50 text-cyan-500',
+}
+
 function StatCard({ icon: Icon, value, label, color }: {
   icon: any; value: number; label: string; color: string
 }) {
   return (
     <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
       <div className="flex items-center gap-3">
-        <div className={`p-2 bg-${color}-50 rounded-lg text-${color}-600`}>
+        <div className={`p-2 rounded-lg ${STAT_CARD_COLORS[color] ?? STAT_CARD_COLORS.blue}`}>
           <Icon className="w-4 h-4" />
         </div>
         <div>
-          <p className="text-2xl font-bold text-gray-900">{value}</p>
+          <p className="nw-tabular text-2xl font-bold text-gray-900">{value}</p>
           <p className="text-xs text-gray-500">{label}</p>
         </div>
       </div>
@@ -160,8 +174,8 @@ function QuickCard({ href, icon: Icon, label, desc, color }: {
   return (
     <Link href={href} className="group">
       <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-center gap-3">
-        <div className={`w-12 h-12 bg-${color}-50 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform`}>
-          <Icon className={`w-6 h-6 text-${color}-500`} />
+        <div className={`w-12 h-12 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform ${QUICK_CARD_COLORS[color] ?? QUICK_CARD_COLORS.blue}`}>
+          <Icon className="w-6 h-6" />
         </div>
         <div>
           <h3 className="font-bold text-gray-900">{label}</h3>

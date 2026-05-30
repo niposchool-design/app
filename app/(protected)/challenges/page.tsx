@@ -75,7 +75,7 @@ export default function ChallengesPage() {
                   </span>
                   <div className="flex items-center gap-1 text-amber-500">
                     <Star className="w-4 h-4 fill-current" />
-                    <span className="text-sm font-bold">{ch.base_points} pts</span>
+                    <span className="text-sm font-bold"><span className="nw-tabular">{ch.base_points}</span> pts</span>
                   </div>
                 </div>
                 <h3 className="font-bold text-gray-900 mb-2 group-hover:text-amber-700 transition-colors">{ch.title}</h3>
@@ -83,7 +83,7 @@ export default function ChallengesPage() {
                   <p className="text-sm text-gray-500 line-clamp-2 flex-1">{ch.description}</p>
                 )}
                 <div className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between">
-                  <span className="text-xs text-gray-400">{ch.submission_count} submissões</span>
+                  <span className="text-xs text-gray-400"><span className="nw-tabular">{ch.submission_count}</span> submissões</span>
                   <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-amber-500 transition-colors" />
                 </div>
               </div>

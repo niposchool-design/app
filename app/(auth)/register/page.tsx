@@ -21,22 +21,18 @@ const registerSchema = z.object({
   unitId: z.string().optional(),
   role: z.enum(['student', 'teacher']),
 }).refine((data) => data.password === data.confirmPassword, {
-  message: "Senhas não conferem",
-  path: ["confirmPassword"],
+  message: 'Senhas não conferem',
+  path: ['confirmPassword'],
 })
 
 type RegisterFormData = z.infer<typeof registerSchema>
 
-interface Instrument {
-  id: string
-  name: string
-}
+interface Instrument { id: string; name: string }
+interface Unit { id: string; name: string; city: string | null }
 
-interface Unit {
-  id: string
-  name: string
-  city: string | null
-}
+const INPUT = 'w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-stone-500 focus:ring-2 focus:ring-student/30 focus:border-student transition-all outline-none'
+const ICON = 'absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500 group-focus-within:text-student transition-colors'
+const LABEL = 'block text-sm font-medium text-stone-300 mb-2'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -75,7 +71,7 @@ export default function RegisterPage() {
   function toggleInstrument(instrumentId: string) {
     const current = selectedInstrumentIds || []
     if (current.includes(instrumentId)) {
-      setValue('instrumentIds', current.filter(id => id !== instrumentId))
+      setValue('instrumentIds', current.filter((id) => id !== instrumentId))
     } else {
       setValue('instrumentIds', [...current, instrumentId])
     }
@@ -84,7 +80,6 @@ export default function RegisterPage() {
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true)
     setApiError(null)
-
     try {
       await signUp(data.email, data.password, {
         full_name: data.name,
@@ -93,7 +88,6 @@ export default function RegisterPage() {
         primary_instrument_id: data.instrumentIds?.[0] || null,
         unit_id: data.unitId || null,
       })
-
       router.push('/login?registered=true')
     } catch (error: any) {
       console.error('Register error:', error)
@@ -103,48 +97,38 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-
+    <div className="bg-stone-900/70 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/40 p-8 border border-white/10">
       {/* Header */}
       <div className="mb-8">
-        <Link href="/" className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4 transition-colors">
+        <Link href="/" className="inline-flex items-center text-sm text-stone-400 hover:text-white mb-4 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-1" />
           Voltar
         </Link>
         <div className="text-center">
-          <div className="flex justify-center mb-4">
-            <Image
-              src="/logo.svg"
-              alt="Nipo School"
-              width={180}
-              height={45}
-              priority
-            />
+          <div className="flex justify-center mb-4 lg:hidden">
+            <Image src="/logo-white.png" alt="Nipo School" width={110} height={133} priority className="w-24 h-auto" />
           </div>
-          <p className="text-gray-600">
-            Junte-se ao Nipo School
-          </p>
+          <h1 className="text-2xl font-bold text-white">Criar sua conta</h1>
+          <p className="text-stone-400 text-sm mt-1">Junte-se à comunidade Nipo School 🎵</p>
         </div>
       </div>
 
       {/* API Error */}
       {apiError && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3 animate-shake">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-red-600">{apiError}</p>
+        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg flex items-start gap-3 animate-shake">
+          <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-red-300">{apiError}</p>
         </div>
       )}
 
       {/* Role Toggle */}
       <div className="mb-6">
-        <div className="flex rounded-xl border border-gray-200 overflow-hidden">
+        <div className="flex rounded-xl border border-white/10 overflow-hidden">
           <button
             type="button"
             onClick={() => setValue('role', 'student')}
             className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-bold transition-all ${
-              selectedRole === 'student'
-                ? 'bg-red-600 text-white'
-                : 'bg-white text-gray-500 hover:bg-gray-50'
+              selectedRole === 'student' ? 'bg-student text-white' : 'bg-white/5 text-stone-400 hover:bg-white/10'
             }`}
           >
             <Music className="w-4 h-4" />
@@ -154,9 +138,7 @@ export default function RegisterPage() {
             type="button"
             onClick={() => setValue('role', 'teacher')}
             className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-bold transition-all ${
-              selectedRole === 'teacher'
-                ? 'bg-blue-600 text-white'
-                : 'bg-white text-gray-500 hover:bg-gray-50'
+              selectedRole === 'teacher' ? 'bg-teacher text-white' : 'bg-white/5 text-stone-400 hover:bg-white/10'
             }`}
           >
             <GraduationCap className="w-4 h-4" />
@@ -167,146 +149,99 @@ export default function RegisterPage() {
 
       {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        {/* Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Nome Completo</label>
+          <label className={LABEL}>Nome Completo</label>
           <div className="relative group">
-            <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-red-500 transition-colors" />
-            <input
-              type="text"
-              placeholder="Seu nome"
-              {...register('name')}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
-            />
+            <User className={ICON} />
+            <input type="text" placeholder="Seu nome" {...register('name')} className={INPUT} />
           </div>
-          {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>}
+          {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>}
         </div>
 
-        {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+          <label className={LABEL}>Email</label>
           <div className="relative group">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-red-500 transition-colors" />
-            <input
-              type="email"
-              placeholder="seu@email.com"
-              {...register('email')}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
-            />
+            <Mail className={ICON} />
+            <input type="email" placeholder="seu@email.com" {...register('email')} className={INPUT} />
           </div>
-          {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
+          {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>}
         </div>
 
-        {/* Phone */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Telefone <span className="text-gray-400 font-normal">(opcional)</span>
-          </label>
+          <label className={LABEL}>Telefone <span className="text-stone-500 font-normal">(opcional)</span></label>
           <div className="relative group">
-            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-red-500 transition-colors" />
-            <input
-              type="tel"
-              placeholder="(11) 99999-9999"
-              {...register('phone')}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
-            />
+            <Phone className={ICON} />
+            <input type="tel" placeholder="(11) 99999-9999" {...register('phone')} className={INPUT} />
           </div>
         </div>
 
-        {/* Unit */}
         {units.length > 0 && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Unidade</label>
+            <label className={LABEL}>Unidade</label>
             <div className="relative group">
-              <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-red-500 transition-colors" />
-              <select
-                {...register('unitId')}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all bg-white appearance-none"
-              >
+              <Building2 className={ICON} />
+              <select {...register('unitId')} className={`${INPUT} appearance-none [&>option]:text-stone-900`}>
                 <option value="">Selecione a unidade</option>
-                {units.map(unit => (
-                  <option key={unit.id} value={unit.id}>
-                    {unit.name}{unit.city ? ` (${unit.city})` : ''}
-                  </option>
+                {units.map((unit) => (
+                  <option key={unit.id} value={unit.id}>{unit.name}{unit.city ? ` (${unit.city})` : ''}</option>
                 ))}
               </select>
             </div>
           </div>
         )}
 
-        {/* Instruments (multi-select) */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className={LABEL}>
             {selectedRole === 'teacher' ? 'Instrumentos que leciona' : 'Instrumentos de interesse'}
-            <span className="text-gray-400 font-normal ml-1">(selecione um ou mais)</span>
+            <span className="text-stone-500 font-normal ml-1">(um ou mais)</span>
           </label>
           <div className="grid grid-cols-2 gap-2">
-            {instruments.map(inst => (
-              <label
-                key={inst.id}
-                className={`flex items-center gap-2 px-3 py-2.5 rounded-lg border cursor-pointer transition-all text-sm ${
-                  selectedInstrumentIds.includes(inst.id)
-                    ? selectedRole === 'teacher'
-                      ? 'border-blue-300 bg-blue-50 text-blue-700 font-medium'
-                      : 'border-red-300 bg-red-50 text-red-700 font-medium'
-                    : 'border-gray-200 hover:border-gray-300 text-gray-600'
-                }`}
-              >
-                <input
-                  type="checkbox"
-                  checked={selectedInstrumentIds.includes(inst.id)}
-                  onChange={() => toggleInstrument(inst.id)}
-                  className={`rounded border-gray-300 ${
-                    selectedRole === 'teacher'
-                      ? 'text-blue-600 focus:ring-blue-500'
-                      : 'text-red-600 focus:ring-red-500'
+            {instruments.map((inst) => {
+              const active = selectedInstrumentIds.includes(inst.id)
+              const activeCls = selectedRole === 'teacher' ? 'border-teacher/40 bg-teacher/10 text-teacher-light' : 'border-student/40 bg-student/10 text-student-light'
+              return (
+                <label
+                  key={inst.id}
+                  className={`flex items-center gap-2 px-3 py-2.5 rounded-lg border cursor-pointer transition-all text-sm ${
+                    active ? `${activeCls} font-medium` : 'border-white/10 hover:border-white/20 text-stone-400'
                   }`}
-                />
-                <Music className="w-3.5 h-3.5" />
-                {inst.name}
-              </label>
-            ))}
+                >
+                  <input
+                    type="checkbox"
+                    checked={active}
+                    onChange={() => toggleInstrument(inst.id)}
+                    className="rounded border-white/20 bg-white/5 text-student focus:ring-student/40"
+                  />
+                  <Music className="w-3.5 h-3.5" />
+                  {inst.name}
+                </label>
+              )
+            })}
           </div>
         </div>
 
-        {/* Password */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Senha</label>
+          <label className={LABEL}>Senha</label>
           <div className="relative group">
-            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-red-500 transition-colors" />
-            <input
-              type="password"
-              placeholder="••••••••"
-              {...register('password')}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
-            />
+            <Lock className={ICON} />
+            <input type="password" placeholder="••••••••" {...register('password')} className={INPUT} />
           </div>
-          {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>}
+          {errors.password && <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>}
         </div>
 
-        {/* Confirm Password */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Confirmar Senha</label>
+          <label className={LABEL}>Confirmar Senha</label>
           <div className="relative group">
-            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-red-500 transition-colors" />
-            <input
-              type="password"
-              placeholder="••••••••"
-              {...register('confirmPassword')}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
-            />
+            <Lock className={ICON} />
+            <input type="password" placeholder="••••••••" {...register('confirmPassword')} className={INPUT} />
           </div>
-          {errors.confirmPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmPassword.message}</p>}
+          {errors.confirmPassword && <p className="mt-1 text-sm text-red-400">{errors.confirmPassword.message}</p>}
         </div>
 
         <button
           type="submit"
           disabled={isLoading}
-          className={`w-full bg-gradient-to-r ${
-            selectedRole === 'teacher'
-              ? 'from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700'
-              : 'from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700'
-          } text-white font-bold py-3 px-4 rounded-lg transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center`}
+          className={`w-full ${selectedRole === 'teacher' ? 'bg-teacher hover:bg-teacher-dark' : 'bg-student hover:bg-student-dark'} text-white font-bold py-3 px-4 rounded-xl transition-all shadow-lg shadow-black/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center`}
         >
           {isLoading ? (
             <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -318,9 +253,9 @@ export default function RegisterPage() {
 
       {/* Footer */}
       <div className="mt-8 text-center">
-        <p className="text-gray-600">
+        <p className="text-stone-400">
           Já tem uma conta?{' '}
-          <Link href="/login" className="text-red-600 hover:text-red-700 font-medium transition-colors">
+          <Link href="/login" className="text-student hover:text-student-light font-medium transition-colors">
             Fazer login
           </Link>
         </p>

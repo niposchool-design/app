@@ -306,7 +306,7 @@ export default function OrientalDashboardLayout({ children }: OrientalDashboardL
         <div className={`p-6 text-center border-b border-gray-100/50 flex flex-col items-center justify-center transition-all duration-300 ${isSidebarCollapsed ? 'gap-0' : 'gap-2'}`}>
           <div className={`flex items-center justify-center transition-all duration-300 ${isSidebarCollapsed ? 'w-10 h-10' : 'w-14 h-14'}`}>
             <Image
-              src="/logo-icon.svg"
+              src="/logo-icon.png"
               alt="Nipo School"
               width={isSidebarCollapsed ? 40 : 56}
               height={isSidebarCollapsed ? 40 : 56}
@@ -364,7 +364,7 @@ export default function OrientalDashboardLayout({ children }: OrientalDashboardL
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-4 z-40 shadow-sm">
         <div className="flex items-center gap-2">
           <Image
-            src="/logo-icon.svg"
+            src="/logo-icon.png"
             alt="Nipo School"
             width={32}
             height={32}

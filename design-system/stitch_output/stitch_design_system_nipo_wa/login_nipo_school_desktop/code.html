@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login - Nipo School</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "on-surface-variant": "#5c403c",
+                        "inverse-on-surface": "#f4f0e9",
+                        "background": "#fdf9f2",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#894900",
+                        "secondary": "#006398",
+                        "surface-container-high": "#ebe8e1",
+                        "primary-fixed": "#ffdad6",
+                        "on-tertiary-fixed": "#2f1500",
+                        "on-primary-fixed-variant": "#93000b",
+                        "tertiary-container": "#ad5d00",
+                        "surface-container": "#f1ede6",
+                        "surface-variant": "#e6e2db",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "surface-container-low": "#f7f3ec",
+                        "on-tertiary-container": "#fff6f2",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#916f6b",
+                        "primary-container": "#dc2626",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#410002",
+                        "secondary-fixed-dim": "#93ccff",
+                        "surface": "#fdf9f2",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "secondary-container": "#5bb8fe",
+                        "surface-bright": "#fdf9f2",
+                        "inverse-primary": "#ffb4ab",
+                        "outline-variant": "#e6bdb8",
+                        "on-secondary-container": "#00476e",
+                        "primary-fixed-dim": "#ffb4ab",
+                        "surface-tint": "#bf0715",
+                        "secondary-fixed": "#cce5ff",
+                        "inverse-surface": "#31302c",
+                        "error-container": "#ffdad6",
+                        "on-background": "#1c1c18",
+                        "surface-container-highest": "#e6e2db",
+                        "primary": "#b70011",
+                        "surface-dim": "#dddad3",
+                        "on-secondary-fixed": "#001d31",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#ffdcc3",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#fff6f5",
+                        "on-surface": "#1c1c18"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "container-margin": "24px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "data-display": ["JetBrains Mono"],
+                        "headline-xl": ["Inter"],
+                        "headline-xl-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "data-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "data-display": ["20px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-xl-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "800" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex font-body-md">
+<!-- Split Screen Container -->
+<main class="flex w-full min-h-screen">
+<!-- Left Side: Branding / Illustration (Hidden on mobile) -->
+<section class="hidden lg:flex w-1/2 bg-[#fbf7f0] flex-col justify-center items-center relative overflow-hidden">
+<!-- Subtle Texture/Pattern Overlay (Simulated with gradient) -->
+<div class="absolute inset-0 bg-gradient-to-br from-transparent to-surface-variant/20 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col items-center max-w-md text-center p-xl">
+<img alt="Sumi-e Illustration of a Torii gate inside an Enso circle, representing Japanese heritage and discipline." class="w-64 h-64 object-contain mb-lg drop-shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtchRlxCEOkX_TtTgznxvSAWFwRQHX0rCHaiFMP2FjHQySjycQFE3K8SGxQ2L4E1dvyK4Ql59q-7Jol69-SCHvODSIWPoVEn_e6m0t6QnqHQHjdVYdwF7TqxPDAKjaXo0GYpWH17FRpjPEQ6B4gSrv8AmNyXCd68YMlK1jdsaLYVH0mMyMezVELlrbQPqzLVHU8cCiV7sB8La6P2DJZXWxT-pMCZIQmFUyza2NbS94MbMf_sJmFyS6cwG499dNxaeShEDiK6FtfJE"/>
+<h1 class="text-headline-xl font-headline-xl text-on-surface mb-sm">NIPO SCHOOL</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant">Disciplina japonesa, alma brasileira.</p>
+</div>
+<!-- Decorative brush stroke element -->
+<div class="absolute bottom-0 left-0 w-full h-32 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-surface-variant/30 to-transparent pointer-events-none"></div>
+</section>
+<!-- Right Side: Login Form -->
+<section class="w-full lg:w-1/2 bg-surface-container-lowest flex flex-col justify-center items-center p-container-margin md:p-xl relative">
+<div class="w-full max-w-sm flex flex-col items-center">
+<!-- Mobile Logo (Visible only on small screens) -->
+<div class="lg:hidden flex flex-col items-center mb-xl">
+<img alt="Nipo School Logo, a red Enso circle with a musical note." class="w-16 h-16 object-contain mb-sm" src="https://lh3.googleusercontent.com/aida/ADBb0uigFjeSqFddkzANbTKMiQ8BX-7CHuC8Siul2vkoaZr_h0fJKWIWORMGpDCcow87LzR2LraiQEovhkNudnaZN0wF8Ws0prCOxe3RPYMCHHNJqePuCxNVdmw35_ixj29lbsPUKzxEZI0uIcj8LTslScmxa6PMjOUzjLiCSHqWk5-O2xWPq44qBorAzhMo9AQ5iTV5bI4rc_zCjZviFMjTcd9JvFUkeC1VWa8ZbYuL6VGqcrhh-ZZ-9VmhRdU"/>
+<h2 class="text-headline-md font-headline-md text-on-surface">NIPO SCHOOL</h2>
+</div>
+<!-- Form Header -->
+<div class="w-full text-left mb-xl">
+<h2 class="text-headline-lg font-headline-lg text-on-surface mb-xs">Bem-vindo de volta</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">Insira suas credenciais para acessar sua conta.</p>
+</div>
+<!-- Form -->
+<form action="#" class="w-full space-y-md" method="POST">
+<!-- Email Field -->
+<div class="flex flex-col">
+<label class="text-data-label font-data-label text-on-surface mb-xs uppercase" for="email">Email</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-sm text-outline">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+</span>
+<input class="w-full pl-xl pr-sm py-sm bg-surface rounded-DEFAULT border-2 border-surface-variant text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" id="email" name="email" placeholder="seu@email.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="flex flex-col">
+<div class="flex justify-between items-center mb-xs">
+<label class="text-data-label font-data-label text-on-surface uppercase" for="password">Senha</label>
+<a class="text-data-label font-data-label text-primary hover:underline" href="#">Esqueci a senha</a>
+</div>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-sm text-outline">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+</span>
+<input class="w-full pl-xl pr-sm py-sm bg-surface rounded-DEFAULT border-2 border-surface-variant text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+</div>
+</div>
+<!-- Submit Button -->
+<button class="w-full mt-lg bg-[#dc2626] text-on-primary text-body-md font-body-md font-bold py-sm rounded-[12px] hover:bg-primary-container/90 hover:shadow-md transition-all duration-200 flex justify-center items-center gap-xs" type="submit">
+                        Entrar
+                        <span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</form>
+<!-- Sign Up Link -->
+<div class="mt-xl text-center">
+<p class="text-body-md font-body-md text-on-surface-variant">
+                        Ainda não tem uma conta? 
+                        <a class="text-primary font-bold hover:underline" href="#">Criar conta</a>
+</p>
+</div>
+</div>
+<!-- Minimalist Footer for the right side -->
+<div class="absolute bottom-md text-center w-full">
+<p class="text-data-label font-data-label text-outline">© 2024 Nipo School</p>
+</div>
+</section>
+</main>
+</body></html>

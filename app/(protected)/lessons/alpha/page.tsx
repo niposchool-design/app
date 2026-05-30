@@ -208,15 +208,15 @@ export default function AlphaPage() {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-3">
             <div className="bg-white/15 rounded-xl p-3 text-center">
-              <p className="text-2xl font-bold">{completedCount}</p>
+              <p className="text-2xl font-bold nw-tabular">{completedCount}</p>
               <p className="text-xs text-white/70">Aulas Alpha</p>
             </div>
             <div className="bg-white/15 rounded-xl p-3 text-center">
-              <p className="text-2xl font-bold">{queue.length}</p>
+              <p className="text-2xl font-bold nw-tabular">{queue.length}</p>
               <p className="text-xs text-white/70">Na fila</p>
             </div>
             <div className="bg-white/15 rounded-xl p-3 text-center">
-              <p className="text-2xl font-bold">{totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0}%</p>
+              <p className="text-2xl font-bold nw-tabular">{totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0}%</p>
               <p className="text-xs text-white/70">Progresso</p>
             </div>
           </div>
@@ -229,7 +229,7 @@ export default function AlphaPage() {
           <div className="bg-amber-100/50 px-6 py-3 flex items-center gap-2 border-b border-amber-200">
             <Zap className="w-4 h-4 text-amber-600" />
             <span className="text-sm font-bold text-amber-700">Desafio do Dia</span>
-            <span className="ml-auto flex items-center gap-1 text-xs font-bold text-amber-600">
+            <span className="ml-auto flex items-center gap-1 text-xs font-bold text-amber-600 nw-tabular">
               +{dailyChallenge.points_reward} pts
             </span>
           </div>
@@ -279,7 +279,7 @@ export default function AlphaPage() {
           <div className="bg-gray-50 px-6 py-3 flex items-center gap-2 border-b border-gray-100">
             <Video className="w-4 h-4 text-gray-500" />
             <span className="text-sm font-bold text-gray-700">Desafio Alpha da Aula</span>
-            <span className="text-xs text-gray-400 ml-auto">Aula {currentAlpha.lesson_number}</span>
+            <span className="text-xs text-gray-400 ml-auto nw-tabular">Aula {currentAlpha.lesson_number}</span>
           </div>
           <div className="p-6">
             <h3 className="text-base font-bold text-gray-900 mb-1">{currentAlpha.title}</h3>
@@ -357,7 +357,7 @@ export default function AlphaPage() {
 
                     {/* Points + Actions */}
                     <div className="flex items-center gap-2 flex-shrink-0">
-                      <span className="text-xs font-bold text-amber-600">+{item.points_reward}</span>
+                      <span className="text-xs font-bold text-amber-600 nw-tabular">+{item.points_reward}</span>
                       <button
                         onClick={() => handleSkipItem(item.id)}
                         className="p-1.5 rounded-lg text-gray-300 hover:text-gray-500 hover:bg-gray-50 transition-all"
@@ -386,7 +386,7 @@ export default function AlphaPage() {
                         {Array.from({ length: 5 }).map((_, i) => (
                           <div key={i} className={`h-1 flex-1 rounded-full ${i < item.difficulty ? 'bg-purple-400' : 'bg-gray-200'}`} />
                         ))}
-                        <span className="text-[10px] text-gray-400 ml-2">Dificuldade {item.difficulty}/5</span>
+                        <span className="text-[10px] text-gray-400 ml-2">Dificuldade <span className="nw-tabular">{item.difficulty}/5</span></span>
                       </div>
                     </div>
                   )}
@@ -403,7 +403,7 @@ export default function AlphaPage() {
         className="w-full flex items-center justify-center gap-2 py-3 text-sm font-bold text-gray-500 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
       >
         <Trophy className="w-4 h-4 text-amber-500" />
-        {showTimeline ? 'Ocultar' : 'Ver'} Todos os Desafios Alpha ({totalCount})
+        {showTimeline ? 'Ocultar' : 'Ver'} Todos os Desafios Alpha (<span className="nw-tabular">{totalCount}</span>)
         <ChevronRight className={`w-4 h-4 transition-transform ${showTimeline ? 'rotate-90' : ''}`} />
       </button>
 
@@ -435,7 +435,7 @@ export default function AlphaPage() {
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-gray-400">Aula {activity.lesson_number}</p>
+                    <p className="text-xs text-gray-400 nw-tabular">Aula {activity.lesson_number}</p>
                   </div>
                   <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-amber-500 transition-colors flex-shrink-0" />
                 </div>

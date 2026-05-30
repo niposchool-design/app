@@ -38,11 +38,7 @@ export default function LoginPage() {
 
     try {
       await signIn(data.email, data.password)
-      
-      // Pequeno delay para garantir que cookies foram salvos
-      await new Promise(resolve => setTimeout(resolve, 500))
-      
-      // Força reload completo da página para atualizar cookies no middleware
+      await new Promise((resolve) => setTimeout(resolve, 500))
       window.location.href = '/'
     } catch (error) {
       console.error('Login error:', error)
@@ -52,35 +48,27 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-          
+    <div className="bg-stone-900/70 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/40 p-8 border border-white/10">
       {/* Header */}
       <div className="mb-8">
-        <Link href="/" className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4 transition-colors">
+        <Link href="/" className="inline-flex items-center text-sm text-stone-400 hover:text-white mb-4 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-1" />
           Voltar
         </Link>
         <div className="text-center">
-          <div className="flex justify-center mb-4">
-            <Image 
-              src="/logo.svg" 
-              alt="Nipo School" 
-              width={180} 
-              height={45}
-              priority
-            />
+          <div className="flex justify-center mb-4 lg:hidden">
+            <Image src="/logo-white.png" alt="Nipo School" width={120} height={145} priority className="w-24 h-auto" />
           </div>
-          <p className="text-gray-600">
-            Bem-vindo de volta
-          </p>
+          <h1 className="text-2xl font-bold text-white">Bem-vindo de volta</h1>
+          <p className="text-stone-400 text-sm mt-1">Entre para continuar sua jornada musical 🎵</p>
         </div>
       </div>
 
       {/* API Error */}
       {apiError && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3 animate-shake">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-red-600">{apiError}</p>
+        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg flex items-start gap-3 animate-shake">
+          <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-red-300">{apiError}</p>
         </div>
       )}
 
@@ -88,48 +76,48 @@ export default function LoginPage() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+          <label className="block text-sm font-medium text-stone-300 mb-2">Email</label>
           <div className="relative group">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-red-500 transition-colors" />
+            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500 group-focus-within:text-student transition-colors" />
             <input
               type="email"
               placeholder="seu@email.com"
               {...register('email')}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+              className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-stone-500 focus:ring-2 focus:ring-student/30 focus:border-student transition-all outline-none"
             />
           </div>
-          {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
+          {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>}
         </div>
 
         {/* Password */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Senha</label>
+          <label className="block text-sm font-medium text-stone-300 mb-2">Senha</label>
           <div className="relative group">
-            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-red-500 transition-colors" />
+            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500 group-focus-within:text-student transition-colors" />
             <input
               type={showPassword ? 'text' : 'password'}
               placeholder="••••••••"
               {...register('password')}
-              className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+              className="w-full pl-10 pr-12 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-stone-500 focus:ring-2 focus:ring-student/30 focus:border-student transition-all outline-none"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-500 hover:text-stone-300 transition-colors"
             >
               {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
             </button>
           </div>
-          {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>}
+          {errors.password && <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>}
         </div>
 
         {/* Options */}
         <div className="flex items-center justify-between text-sm">
           <label className="flex items-center gap-2 cursor-pointer group">
-            <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500"/>
-            <span className="text-gray-600 group-hover:text-gray-800 transition-colors">Lembrar de mim</span>
+            <input type="checkbox" className="w-4 h-4 rounded border-white/20 bg-white/5 text-student focus:ring-student/40" />
+            <span className="text-stone-400 group-hover:text-stone-200 transition-colors">Lembrar de mim</span>
           </label>
-          <Link href="/forgot-password" className="text-red-600 hover:text-red-700 font-medium transition-colors">
+          <Link href="/forgot-password" className="text-student hover:text-student-light font-medium transition-colors">
             Esqueceu a senha?
           </Link>
         </div>
@@ -138,7 +126,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-3 bg-gradient-to-r from-red-600 to-orange-600 text-white font-semibold rounded-lg hover:from-red-700 hover:to-orange-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+          className="w-full py-3 bg-student hover:bg-student-dark text-white font-semibold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-student/20 flex items-center justify-center gap-2"
         >
           {isLoading ? (
             <span className="flex items-center gap-2">
@@ -157,18 +145,18 @@ export default function LoginPage() {
       {/* Divider */}
       <div className="relative my-6">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-200"></div>
+          <div className="w-full border-t border-white/10"></div>
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="px-3 bg-white text-gray-500">ou</span>
+          <span className="px-3 bg-stone-900 text-stone-500">ou</span>
         </div>
       </div>
 
       {/* Sign Up */}
       <div className="text-center text-sm">
-        <p className="text-gray-600">
+        <p className="text-stone-400">
           Novo por aqui?{' '}
-          <Link href="/register" className="text-red-600 hover:text-red-700 font-semibold transition-colors">
+          <Link href="/register" className="text-student hover:text-student-light font-semibold transition-colors">
             Criar conta gratuita
           </Link>
         </p>

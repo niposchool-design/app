@@ -4,10 +4,11 @@ import { revalidatePath } from 'next/cache'
 import { getActionContext } from '@/lib/utils/action-context'
 import { validateAction } from '@/lib/validations/validate-action'
 import { submitChallengeSchema, evaluateSubmissionSchema } from '@/lib/validations/unified-schemas'
-import { successResponse, unauthorizedError, databaseError, validationError } from '@/lib/utils/action-response'
+import { successResponse, unauthorizedError, forbiddenError, databaseError, validationError } from '@/lib/utils/action-response'
 import type { ActionResult } from '@/lib/types/action-result'
 import { onChallengeComplete } from '@/app/actions/alpha-engine-actions'
 import { generateChallengeFeedback } from '@/app/actions/ai-feedback-actions'
+import { checkPermission } from '@/lib/auth/check-permission'
 
 export async function submitChallenge(rawData: any): Promise<ActionResult> {
   try {
@@ -66,6 +67,8 @@ export async function evaluateSubmission(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+
+    if (!(await checkPermission('challenges.grade'))) return forbiddenError('Permissao challenges.grade necessaria')
 
     const { error } = await ctx.supabase
       .from('challenge_submissions')

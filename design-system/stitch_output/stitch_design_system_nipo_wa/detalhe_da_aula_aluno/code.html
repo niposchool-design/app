@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nipo School - Detalhe da Aula</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e6e2db",
+                        "on-primary-fixed": "#410002",
+                        "error-container": "#ffdad6",
+                        "primary-fixed-dim": "#ffb4ab",
+                        "inverse-on-surface": "#f4f0e9",
+                        "on-primary-fixed-variant": "#93000b",
+                        "on-primary-container": "#fff6f5",
+                        "on-tertiary-fixed": "#2f1500",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#00476e",
+                        "primary-container": "#dc2626",
+                        "background": "#fdf9f2",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#ffdad6",
+                        "on-surface": "#1c1c18",
+                        "inverse-surface": "#31302c",
+                        "surface-tint": "#bf0715",
+                        "surface-container": "#f1ede6",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#dddad3",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#ad5d00",
+                        "tertiary": "#894900",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#5c403c",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "surface-bright": "#fdf9f2",
+                        "secondary": "#006398",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#001d31",
+                        "on-secondary": "#ffffff",
+                        "outline": "#916f6b",
+                        "primary": "#b70011",
+                        "surface-variant": "#e6e2db",
+                        "inverse-primary": "#ffb4ab",
+                        "surface-container-low": "#f7f3ec",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "surface-container-high": "#ebe8e1",
+                        "on-background": "#1c1c18",
+                        "on-tertiary-container": "#fff6f2",
+                        "outline-variant": "#e6bdb8",
+                        "surface": "#fdf9f2",
+                        "secondary-fixed-dim": "#93ccff",
+                        "tertiary-fixed": "#ffdcc3",
+                        "secondary-fixed": "#cce5ff",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "secondary-container": "#5bb8fe"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "unit": "4px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "container-margin": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-xl-mobile": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "data-display": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-xl-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "800" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "data-display": ["20px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "data-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Base configuration */
+        body {
+            background-color: #fdf9f2; /* Fallback to closest named surface color */
+        }
+
+        /* Subtle Asanoha-inspired pattern overlay using CSS gradients to avoid SVG blobs */
+        .bg-pattern-asanoha {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(220, 38, 38, 0.03) 10px, rgba(220, 38, 38, 0.03) 11px), 
+                              repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(220, 38, 38, 0.03) 10px, rgba(220, 38, 38, 0.03) 11px);
+        }
+
+        /* Brush stroke progress bar simulation */
+        .progress-brush {
+            height: 6px;
+            background: #e6e2db; /* surface-container-highest */
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-brush::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 40%; /* Progress */
+            background: #dc2626; /* primary-container */
+            border-radius: 8px;
+            /* Simulating a slightly organic edge */
+            clip-path: polygon(0 0, 100% 10%, 98% 90%, 0 100%);
+        }
+
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md bg-pattern-asanoha min-h-screen relative pb-32">
+<!-- Shared Component: TopAppBar -->
+<header class="bg-surface flex justify-between items-center px-4 h-16 w-full fixed top-0 z-50 shadow-sm border-b-0">
+<button class="text-secondary active:scale-95 duration-150 p-2 hover:bg-surface-container-high transition-colors rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-secondary">Nipo School</h1>
+<button class="text-secondary active:scale-95 duration-150 p-2 hover:bg-surface-container-high transition-colors rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-[88px] px-gutter md:px-xl max-w-4xl mx-auto space-y-lg">
+<!-- Header Section -->
+<section class="space-y-sm">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="font-data-label text-data-label uppercase tracking-wider">Módulo 1: Fundamentos</span>
+<span class="w-1 h-1 bg-outline rounded-full"></span>
+<span class="font-data-display text-[14px] font-semibold text-primary-container">Aula 03</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">Introdução ao Koto: Postura e Primeiras Notas</h2>
+<div class="pt-sm space-y-xs">
+<div class="flex justify-between font-data-label text-data-label text-on-surface-variant">
+<span>Progresso do Módulo</span>
+<span>40%</span>
+</div>
+<div class="progress-brush w-full"></div>
+</div>
+</section>
+<!-- Video/Audio Player Section -->
+<section class="relative w-full aspect-video rounded-[16px] bg-surface-container-highest overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] group cursor-pointer">
+<!-- Image placeholder mimicking a video thumbnail -->
+<img alt="Thumbnail da aula de música" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300" data-alt="A serene, high-key photograph of traditional Japanese musical instruments, specifically a Koto, resting on a clean wooden surface. The lighting is soft and diffused, creating a calm, educational atmosphere fitting a modern-tactile design system. Subtle red Sumi-e brush stroke graphics overlay the edges of the frame to integrate with the UI style. The overall color palette leans heavily into warm ivory tones with striking, focused red accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCj-Fxdv2ptexNrysxBNMzSbvoR6t61E2m39au1r6LvumQ_hAs0ALq-YiYqQfkyxgU5bdIjMQmIzEqqWGPl51hWTTyo1YOeX09_rxmn4ALXN6j4ozM7LAIeZ-NX5LSZyN2do7tepUpG84umrK9qK_z5FhCiNcvAi14mfV7CRevkK_BvkAxUgBUyFETbDwl9x2dsu6F4o-IfhcdUuLhz8DKWcZn6SlfGGQcBdyLPUgKuS3PSQQULeCRop94kFtoYl-64lEcLDopZFk"/>
+<!-- Play Button Overlay -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 bg-primary-container/90 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-on-primary text-[32px] ml-1" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<!-- Duration Badge -->
+<div class="absolute bottom-4 right-4 bg-inverse-surface/80 text-inverse-on-surface font-data-label text-data-label px-2 py-1 rounded-md backdrop-blur-md">
+                12:45
+            </div>
+</section>
+<!-- Explanatory Text -->
+<section class="text-on-surface leading-relaxed space-y-md">
+<p>Nesta aula, vamos explorar a postura correta para tocar o Koto, um instrumento fundamental na nossa jornada. A disciplina na postura é o primeiro passo para extrair um som limpo e ressonante. Sente-se confortavelmente, mantenha a coluna reta e os ombros relaxados.</p>
+</section>
+<!-- Practical Exercises -->
+<section class="space-y-md">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface border-l-4 border-primary-container pl-3">Exercícios Práticos</h3>
+<div class="space-y-sm">
+<!-- Task 1 -->
+<div class="bg-surface-container-lowest rounded-[12px] p-md shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-surface-container-highest">
+<div>
+<h4 class="font-bold text-on-surface">Afinação Básica</h4>
+<p class="text-sm text-on-surface-variant mt-1">Verifique a tensão das cordas principais usando o afinador digital.</p>
+</div>
+<div class="flex items-center gap-1 text-primary-container">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px] text-surface-container-highest" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px] text-surface-container-highest" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<!-- Task 2 -->
+<div class="bg-surface-container-lowest rounded-[12px] p-md shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-surface-container-highest">
+<div>
+<h4 class="font-bold text-on-surface">Postura das Mãos</h4>
+<p class="text-sm text-on-surface-variant mt-1">Pratique a posição de "garra" por 3 minutos sem tocar as cordas.</p>
+</div>
+<div class="flex items-center gap-1 text-primary-container">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px] text-surface-container-highest" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<!-- Task 3 -->
+<div class="bg-surface-container-lowest rounded-[12px] p-md shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-surface-container-highest">
+<div>
+<h4 class="font-bold text-on-surface">Escala Ascendente</h4>
+<p class="text-sm text-on-surface-variant mt-1">Toque as 5 primeiras notas mantendo o ritmo de 60 BPM.</p>
+</div>
+<div class="flex items-center gap-1 text-primary-container">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Alpha Challenge Card -->
+<section class="bg-surface-container-lowest rounded-[16px] p-lg shadow-md border-2 border-primary-container/20 relative overflow-hidden mt-xl">
+<!-- Decorative Japanese motif pattern in background of card -->
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M0 0h20v20H0V0zm10 10l5-5-5-5-5 5 5 5zm0 10l5-5-5-5-5 5 5 5z\' fill=\'%23dc2626\' fill-rule=\'evenodd\'/%3E%3C/svg%3E');"></div>
+<div class="relative z-10 flex flex-col gap-md text-center items-center">
+<div class="w-12 h-12 bg-primary-container/10 rounded-full flex items-center justify-center text-primary-container mb-2">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md-mobile font-bold text-on-surface">Desafio Alpha</h3>
+<p class="text-on-surface-variant mt-2 max-w-md mx-auto">Grave um curto áudio tocando a escala ascendente. Nossa IA analisará sua precisão rítmica e postura sonora para oferecer dicas personalizadas.</p>
+</div>
+<button class="bg-primary-container text-on-primary rounded-[12px] px-lg py-3 font-semibold shadow-md hover:bg-surface-tint active:scale-95 transition-all duration-200 mt-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">upload_file</span>
+                    Enviar meu trabalho
+                </button>
+</div>
+</section>
+<!-- Footer Disclaimer -->
+<p class="text-center text-sm text-on-surface-variant/70 font-data-label flex items-center justify-center gap-1 mt-md">
+<span class="material-symbols-outlined text-[16px]">info</span>
+            Avaliação gerada por IA para feedback instantâneo
+        </p>
+</main>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-6 right-6 lg:right-xl bg-primary-container text-on-primary shadow-[0_8px_24px_rgba(220,38,38,0.3)] hover:shadow-[0_12px_28px_rgba(220,38,38,0.4)] rounded-[16px] px-5 py-4 flex items-center gap-3 active:scale-90 transition-all duration-200 z-40 group">
+<span class="material-symbols-outlined text-[24px] group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="flex flex-col items-start">
+<span class="font-bold text-[16px] leading-tight">Concluir Aula</span>
+<span class="font-data-label text-[12px] text-on-primary/80">+10 pontos</span>
+</div>
+</button>
+</body></html>

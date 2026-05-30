@@ -6,7 +6,8 @@ import { successResponse, unauthorizedError, forbiddenError, databaseError } fro
 import type { ActionResult } from '@/lib/types/action-result'
 import { checkPermission } from '@/lib/auth/check-permission'
 import { generateJSON, type AICallContext } from '@/lib/ai/ai-client'
-import { SYSTEM_BASE, FEEDBACK_PROMPT } from '@/lib/ai/prompts'
+import { SYSTEM_BASE, INJECTION_GUARD, FEEDBACK_PROMPT } from '@/lib/ai/prompts'
+import { sanitizeForPrompt } from '@/lib/ai/sanitize'
 
 interface FeedbackResult {
   strengths: string[]
@@ -49,13 +50,15 @@ Descrição: ${challenge.description || 'N/A'}
 Objetivos: ${challenge.objectives || 'N/A'}
 
 ## Resposta do Aluno:
-${submission.response}
+<ALUNO_INPUT>
+${sanitizeForPrompt(submission.response)}
+</ALUNO_INPUT>
 ${submission.file_url ? '\n(O aluno também enviou um arquivo anexo)' : ''}
 `.trim()
 
     const aiCtx: AICallContext = { tenantId: ctx.tenantId, userId: ctx.userId, actionName: 'generateChallengeFeedback' }
     const result = await generateJSON<FeedbackResult>({
-      system: SYSTEM_BASE,
+      system: SYSTEM_BASE + INJECTION_GUARD,
       prompt: `${feedbackContext}\n\n${FEEDBACK_PROMPT}`,
       model: 'smart', // Use GPT-4o for better feedback quality
       maxTokens: 2000,
@@ -126,9 +129,12 @@ export async function generatePortfolioFeedback(
     if (!portfolio.description?.trim()) return
 
     const feedbackContext = `
-## Trabalho do Portfólio: ${portfolio.title}
+## Trabalho do Portfólio
 Tipo: ${portfolio.work_type}
-${portfolio.description ? `\nDescrição do aluno:\n${portfolio.description}` : ''}
+<ALUNO_INPUT>
+Título: ${sanitizeForPrompt(portfolio.title)}
+${portfolio.description ? `Descrição do aluno:\n${sanitizeForPrompt(portfolio.description)}` : ''}
+</ALUNO_INPUT>
 ${portfolio.file_url ? '\n(O aluno enviou arquivo de evidência)' : ''}
 ${portfolio.video_url ? '\n(O aluno enviou vídeo)' : ''}
 ${portfolio.audio_url ? '\n(O aluno enviou áudio)' : ''}
@@ -136,7 +142,7 @@ ${portfolio.audio_url ? '\n(O aluno enviou áudio)' : ''}
 
     const aiCtx: AICallContext = { tenantId: ctx.tenantId, userId: ctx.userId, actionName: 'generatePortfolioFeedback' }
     const result = await generateJSON<FeedbackResult>({
-      system: SYSTEM_BASE,
+      system: SYSTEM_BASE + INJECTION_GUARD,
       prompt: `${feedbackContext}\n\n${FEEDBACK_PROMPT}`,
       model: 'smart',
       maxTokens: 2000,

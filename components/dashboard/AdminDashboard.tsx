@@ -178,17 +178,24 @@ export function AdminDashboard() {
   )
 }
 
+const KPI_CARD_COLORS: Record<string, string> = {
+  purple: 'bg-purple-50 text-purple-600',
+  indigo: 'bg-indigo-50 text-indigo-600',
+  violet: 'bg-violet-50 text-violet-600',
+  fuchsia: 'bg-fuchsia-50 text-fuchsia-600',
+}
+
 function KPICard({ icon: Icon, value, label, href, color }: {
   icon: any; value: number; label: string; href: string; color: string
 }) {
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200/80 hover:shadow-lg hover:border-purple-200 transition-all">
       <div className="flex items-start justify-between mb-4">
-        <div className={`p-2.5 bg-${color}-50 rounded-lg text-${color}-600`}>
+        <div className={`p-2.5 rounded-lg ${KPI_CARD_COLORS[color] ?? KPI_CARD_COLORS.purple}`}>
           <Icon className="w-5 h-5" />
         </div>
       </div>
-      <h3 className="text-3xl font-bold text-slate-900 mb-1 tracking-tight">{value}</h3>
+      <h3 className="nw-tabular text-3xl font-bold text-slate-900 mb-1 tracking-tight">{value}</h3>
       <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">{label}</p>
       <div className="mt-4 pt-4 border-t border-slate-100">
         <Link href={href} className="text-xs font-medium text-purple-600 hover:text-purple-700 flex items-center gap-1">
@@ -203,7 +210,7 @@ function ActivityStat({ icon: Icon, value, label }: { icon: any; value: number; 
   return (
     <div className="text-center p-3 rounded-lg bg-slate-50">
       <Icon className="w-4 h-4 text-slate-400 mx-auto mb-2" />
-      <p className="text-2xl font-bold text-slate-900">{value}</p>
+      <p className="nw-tabular text-2xl font-bold text-slate-900">{value}</p>
       <p className="text-[10px] text-slate-500 uppercase tracking-wider">{label}</p>
     </div>
   )

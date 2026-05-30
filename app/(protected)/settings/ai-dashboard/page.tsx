@@ -7,6 +7,7 @@ import {
   AlertTriangle, ChevronRight, RefreshCw, Loader2,
 } from 'lucide-react'
 import Link from 'next/link'
+import { PermissionGate } from '@/components/auth/PermissionGate'
 
 interface AIStats {
   totalContent: number
@@ -136,6 +137,7 @@ export default function AIDashboardPage() {
     : 0
 
   return (
+    <PermissionGate permission="settings.view" fallback={<div className="text-center py-16"><p className="text-gray-500">Acesso restrito a administradores.</p></div>}>
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
@@ -298,6 +300,7 @@ export default function AIDashboardPage() {
         </Link>
       </div>
     </div>
+    </PermissionGate>
   )
 }
 

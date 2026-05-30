@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Portal do Aluno - Nipo School</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#93ccff",
+                        "inverse-primary": "#ffb4ab",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#cce5ff",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "primary": "#b70011",
+                        "primary-fixed": "#ffdad6",
+                        "surface-container-highest": "#e6e2db",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#ffdcc3",
+                        "tertiary": "#894900",
+                        "on-background": "#1c1c18",
+                        "on-secondary-container": "#00476e",
+                        "primary-container": "#dc2626",
+                        "tertiary-container": "#ad5d00",
+                        "on-primary-fixed-variant": "#93000b",
+                        "primary-fixed-dim": "#ffb4ab",
+                        "surface-container-high": "#ebe8e1",
+                        "on-tertiary-container": "#fff6f2",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#410002",
+                        "surface-bright": "#fdf9f2",
+                        "secondary": "#006398",
+                        "surface-dim": "#dddad3",
+                        "surface-variant": "#e6e2db",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#5bb8fe",
+                        "surface-tint": "#bf0715",
+                        "outline": "#916f6b",
+                        "on-surface": "#1c1c18",
+                        "background": "#fdf9f2",
+                        "inverse-on-surface": "#f4f0e9",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#fff6f5",
+                        "surface-container": "#f1ede6",
+                        "surface-container-low": "#f7f3ec",
+                        "outline-variant": "#e6bdb8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#2f1500",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#001d31",
+                        "on-surface-variant": "#5c403c",
+                        "inverse-surface": "#31302c",
+                        "surface": "#fdf9f2",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb77d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "gutter": "16px",
+                        "container-margin": "24px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "data-display": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "headline-xl-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "headline-xl": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "data-display": ["20px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-xl-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "800" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "data-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #fbf7f0;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20L20 0ZM20 4L4 20L20 36L36 20L20 4Z' fill='%23000000' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background-attachment: fixed;
+        }
+        .asanoha-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20L20 0ZM20 4L4 20L20 36L36 20L20 4Z' fill='%23dc2626' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .sumie-stroke {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="text-on-surface font-body-md antialiased min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface/80 backdrop-blur-md shadow-sm sticky top-0 z-50 w-full flex justify-between items-center px-container-margin py-md max-w-7xl mx-auto">
+<div class="flex items-center gap-md">
+<img alt="Nipo School Logo" class="h-10 w-10 object-contain rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDBgCM9U-DKhEz1r_sxPuJuf2FdBHXbU3DaFaOXIIE5NqZOa13jKlamQ77fNL8gWKaxCYc4d2aJsrFZGJWfoaw0dukpkeFCRWMnEvm3l1XNV9WYfsVitOSJKe-GawAKe-BGIaXG8ofwv8p3dMqG4e8Dp6GhfNSXSJq3283KwnW-TWIDm_NvMuYv95DqYsNtvShDM0FDLuK70hvrdkUBjKy6A5RtCZ5xvasqpCNxzO30D_HeiunYiG1LjRaSl3EoAR0tOiVD-F1DR0"/>
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Nipo School</span>
+</div>
+<nav class="hidden md:flex gap-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Aulas</a>
+<a class="text-primary border-b-2 border-primary pb-1 font-bold font-body-md" href="#">Minha Prática</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Comunidade</a>
+</nav>
+<div class="flex items-center gap-md">
+<button aria-label="Notifications" class="p-2 text-on-surface-variant hover:bg-surface-container-high/50 rounded-lg transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="Settings" class="p-2 text-on-surface-variant hover:bg-surface-container-high/50 rounded-lg transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<img alt="Foto de perfil do aluno" class="h-10 w-10 rounded-full border-2 border-primary-container object-cover" data-alt="A close-up portrait of a cheerful teenager looking directly at the camera. The teenager has short dark hair and a warm, welcoming smile. The background is a soft, blurred light tone, emphasizing the subject. The lighting is bright and natural, fitting a modern, friendly school environment aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkKfqMZE4_FsZZzqyYq6OP6vdTrfTk5R3GPkJcQm4rf1h7uqzJfKwT9wHP2OSlCln14kWUe9Y3NXgQDMMNerZEDXLOMEdvRyB28mPfjRY8fJ9qJ4FyhRpV1e0YPjFXh-7XKOBYhf5ZEHRm15mbLOSdqH_bBarZtkgBipdnenfq3n0DI8iFRdptO2b7MMFf0R_T1IzotUGE86MIxF33tZIVsylyUqluT6ZvgF47rpZhZbJdlTeJ6CniwPfxQbVad118-T4CBUahLxE"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-7xl mx-auto px-container-margin py-xl flex flex-col gap-xl relative z-10">
+<!-- Sumi-e decorative background element -->
+<svg class="sumie-stroke top-20 right-0 w-96 h-96 text-on-surface-variant" viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<path d="M45.7,-76.1C58.9,-69.3,69.2,-55.4,77.3,-40.8C85.4,-26.2,91.3,-10.8,88.7,3.5C86.1,17.8,75,30.9,64.2,42.5C53.4,54.1,43,64.1,30.3,71.7C17.6,79.3,2.6,84.4,-11.4,82.4C-25.4,80.4,-38.4,71.2,-51,60.8C-63.6,50.4,-75.8,38.8,-82.9,24.4C-90,10,-92,-7,-86.3,-21.2C-80.6,-35.4,-67.2,-46.8,-53.4,-53.5C-39.6,-60.2,-25.4,-62.2,-10.7,-64.8C4,-67.4,18,-70.6,32.5,-82.9C36.9,-86.6,41.3,-83.1,45.7,-76.1Z" fill="currentColor" transform="translate(100 100) scale(1.1)"></path>
+</svg>
+<!-- Hero Section -->
+<section class="bg-surface rounded-xl shadow-sm overflow-hidden flex flex-col md:flex-row items-center border border-outline-variant/20 relative">
+<div class="asanoha-pattern absolute inset-0 z-0"></div>
+<div class="p-xl md:w-1/2 flex flex-col gap-md relative z-10">
+<h1 class="font-headline-xl text-headline-xl text-on-surface">Bem-vindo, Kaito!</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Pronto para dar o próximo passo na sua jornada musical hoje?</p>
+<div class="mt-md">
+<button class="bg-primary-container text-on-primary-container font-bold py-3 px-6 rounded-xl shadow-md hover:scale-105 transition-transform duration-200 flex items-center gap-sm">
+<span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span>
+                        Iniciar Prática
+                    </button>
+</div>
+</div>
+<div class="md:w-1/2 relative z-10 flex justify-center p-lg h-64 md:h-auto">
+<img alt="Ilustração minimalista de piano" class="w-full h-full object-cover rounded-lg shadow-sm max-h-80 mix-blend-multiply opacity-90" data-alt="A minimalist, evocative black and white photograph resembling a sumi-e brush painting of a grand piano keyboard. The keys are shot from a slight angle, with a shallow depth of field focusing on the center keys. The lighting is soft and diffused, creating elegant shadows that enhance the tactile feel of the instrument. The overall mood is calm, disciplined, and deeply artistic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArwu31dxX1mnzdxH4o3ZzAFdAFL1RHpotfoAt4_I1n6qTJJ6cmuiYw09gWTeRdXN9-xW58xr7f9nwANBVCbS_FzkTLVMj-hWuYjQSXN1Ra7yUCQeCXyvvmLqJhHNnk_DTzkbwhAV79GY-uoZEVFUv7_Ot74mgvNk82JK8AP2nAh8dcvUWc2v1_b0TxJ_SVNt98JlovaMxhuJI8Bn_eSqmo4DKFl-Q120JO7Na3CMTybCUZNaprEAmRXKxhS9ZtPUMQrsoQdusIzZg"/>
+</div>
+</section>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-xl">
+<!-- Metas (Bento Grid Style) -->
+<section class="md:col-span-8 flex flex-col gap-md">
+<div class="flex items-center gap-sm mb-sm border-b-2 border-primary-container/20 pb-2">
+<span class="material-symbols-outlined text-primary-container" data-icon="track_changes">track_changes</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Metas da Semana</h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+<!-- Card 1 -->
+<div class="bg-surface rounded-xl p-lg shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border border-surface-variant hover:-translate-y-1 transition-transform relative overflow-hidden">
+<div class="asanoha-pattern absolute inset-0 z-0"></div>
+<div class="relative z-10">
+<p class="font-body-md text-on-surface-variant mb-xs">Tempo de Prática</p>
+<div class="flex items-baseline gap-sm">
+<span class="font-data-display text-4xl font-bold text-primary-container">12/20</span>
+<span class="font-data-label text-on-surface-variant">horas</span>
+</div>
+<div class="w-full bg-surface-variant h-2 rounded-full mt-md overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 60%"></div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface rounded-xl p-lg shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border border-surface-variant hover:-translate-y-1 transition-transform relative overflow-hidden">
+<div class="asanoha-pattern absolute inset-0 z-0"></div>
+<div class="relative z-10">
+<p class="font-body-md text-on-surface-variant mb-xs">Andamento (BPM)</p>
+<div class="flex items-baseline gap-sm">
+<span class="font-data-display text-4xl font-bold text-primary-container">120</span>
+<span class="font-data-label text-on-surface-variant">bpm</span>
+</div>
+<p class="font-body-md text-on-surface-variant mt-sm text-sm">Objetivo: 140 bpm na peça atual</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Próximas Aulas -->
+<section class="md:col-span-4 flex flex-col gap-md">
+<div class="flex items-center gap-sm mb-sm border-b-2 border-primary-container/20 pb-2">
+<span class="material-symbols-outlined text-primary-container" data-icon="calendar_today">calendar_today</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Próximas Aulas</h2>
+</div>
+<div class="flex flex-col gap-sm">
+<div class="bg-surface rounded-xl p-md shadow-sm border border-outline-variant/30 flex justify-between items-center hover:bg-surface-container-low transition-colors cursor-pointer">
+<div>
+<p class="font-bold text-on-surface">Piano Clássico</p>
+<p class="font-body-md text-on-surface-variant text-sm">Prof. Silva</p>
+</div>
+<div class="text-right">
+<p class="font-data-display text-primary-container text-sm">14 Out</p>
+<p class="font-data-label text-on-surface-variant">15:00 - 16:00</p>
+</div>
+</div>
+<div class="bg-surface rounded-xl p-md shadow-sm border border-outline-variant/30 flex justify-between items-center hover:bg-surface-container-low transition-colors cursor-pointer opacity-80">
+<div>
+<p class="font-bold text-on-surface">Teoria Musical</p>
+<p class="font-body-md text-on-surface-variant text-sm">Sala A2</p>
+</div>
+<div class="text-right">
+<p class="font-data-display text-primary-container text-sm">16 Out</p>
+<p class="font-data-label text-on-surface-variant">10:00 - 11:30</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Conquistas -->
+<section class="mt-md">
+<div class="flex items-center gap-sm mb-md border-b-2 border-primary-container/20 pb-2 w-max">
+<span class="material-symbols-outlined text-primary-container" data-icon="workspace_premium">workspace_premium</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Conquistas Recentes</h2>
+</div>
+<div class="flex flex-wrap gap-lg">
+<div class="flex flex-col items-center gap-sm group">
+<div class="w-20 h-20 rounded-full bg-surface shadow-md flex items-center justify-center border-4 border-primary-container group-hover:scale-110 transition-transform relative overflow-hidden">
+<div class="absolute inset-0 bg-primary-container/10"></div>
+<span class="material-symbols-outlined text-primary-container text-3xl" data-icon="music_note" data-weight="fill" style="font-variation-settings: 'FILL' 1;">music_note</span>
+</div>
+<span class="font-data-label text-on-surface-variant text-center max-w-[5rem]">Primeira Peça</span>
+</div>
+<div class="flex flex-col items-center gap-sm group">
+<div class="w-20 h-20 rounded-full bg-surface shadow-md flex items-center justify-center border-4 border-secondary-container group-hover:scale-110 transition-transform relative overflow-hidden">
+<div class="absolute inset-0 bg-secondary-container/10"></div>
+<span class="material-symbols-outlined text-secondary-container text-3xl" data-icon="metronome">timer</span>
+</div>
+<span class="font-data-label text-on-surface-variant text-center max-w-[5rem]">Mestre do Ritmo</span>
+</div>
+<div class="flex flex-col items-center gap-sm group opacity-50 grayscale">
+<div class="w-20 h-20 rounded-full bg-surface shadow-md flex items-center justify-center border-4 border-outline-variant">
+<span class="material-symbols-outlined text-outline text-3xl" data-icon="star">star</span>
+</div>
+<span class="font-data-label text-on-surface-variant text-center max-w-[5rem]">Recital Anual</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-inverse-surface border-t-2 border-outline-variant/20 w-full mt-xl py-xl px-container-margin flex flex-col md:flex-row justify-between items-center gap-md relative z-10">
+<span class="font-headline-md text-headline-md text-primary font-bold">Nipo School</span>
+<div class="flex gap-lg">
+<a class="font-data-label text-data-label text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors opacity-80 hover:opacity-100" href="#">Sobre Nós</a>
+<a class="font-data-label text-data-label text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors opacity-80 hover:opacity-100" href="#">Termos de Uso</a>
+<a class="font-data-label text-data-label text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors opacity-80 hover:opacity-100" href="#">Privacidade</a>
+<a class="font-data-label text-data-label text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors opacity-80 hover:opacity-100" href="#">Contato</a>
+</div>
+<span class="font-data-label text-data-label text-on-surface-variant dark:text-outline-variant">© 2024 Nipo School - Harmonia entre Culturas</span>
+</footer>
+</body></html>

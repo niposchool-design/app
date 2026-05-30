@@ -18,9 +18,10 @@ import {
   addLessonTagSchema,
   removeLessonTagSchema,
 } from '@/lib/validations/unified-schemas'
-import { successResponse, unauthorizedError, databaseError, validationError } from '@/lib/utils/action-response'
+import { successResponse, unauthorizedError, forbiddenError, databaseError, validationError } from '@/lib/utils/action-response'
 import type { ActionResult } from '@/lib/types/action-result'
 import { onLessonComplete } from '@/app/actions/alpha-engine-actions'
+import { checkPermission } from '@/lib/auth/check-permission'
 
 export async function createLesson(rawData: any): Promise<ActionResult> {
   try {
@@ -29,6 +30,7 @@ export async function createLesson(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.create'))) return forbiddenError('Permissao lessons.create necessaria')
 
     const { data, error } = await ctx.supabase
       .from('lessons')
@@ -59,6 +61,7 @@ export async function updateLesson(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.edit'))) return forbiddenError('Permissao lessons.edit necessaria')
 
     const { error } = await ctx.supabase
       .from('lessons')
@@ -220,6 +223,7 @@ export async function updateLessonStatus(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.edit'))) return forbiddenError('Permissao lessons.edit necessaria')
 
     const { error } = await ctx.supabase
       .from('lessons')
@@ -248,6 +252,7 @@ export async function createMaterial(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.edit'))) return forbiddenError('Permissao lessons.edit necessaria')
 
     const { data, error } = await ctx.supabase
       .from('lesson_materials' as any)
@@ -273,6 +278,7 @@ export async function updateMaterial(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.edit'))) return forbiddenError('Permissao lessons.edit necessaria')
 
     const { error } = await ctx.supabase
       .from('lesson_materials' as any)
@@ -292,6 +298,7 @@ export async function deleteMaterial(materialId: string): Promise<ActionResult> 
   try {
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.edit'))) return forbiddenError('Permissao lessons.edit necessaria')
 
     const { error } = await ctx.supabase
       .from('lesson_materials' as any)
@@ -318,6 +325,7 @@ export async function createActivity(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.edit'))) return forbiddenError('Permissao lessons.edit necessaria')
 
     const { data, error } = await ctx.supabase
       .from('lesson_activities' as any)
@@ -343,6 +351,7 @@ export async function updateActivity(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.edit'))) return forbiddenError('Permissao lessons.edit necessaria')
 
     const { error } = await ctx.supabase
       .from('lesson_activities' as any)
@@ -362,6 +371,7 @@ export async function deleteActivity(activityId: string): Promise<ActionResult> 
   try {
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.edit'))) return forbiddenError('Permissao lessons.edit necessaria')
 
     const { error } = await ctx.supabase
       .from('lesson_activities' as any)
@@ -388,6 +398,7 @@ export async function createCriteria(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.edit'))) return forbiddenError('Permissao lessons.edit necessaria')
 
     const { data, error } = await ctx.supabase
       .from('evaluation_criteria' as any)
@@ -413,6 +424,7 @@ export async function updateCriteria(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.edit'))) return forbiddenError('Permissao lessons.edit necessaria')
 
     const { error } = await ctx.supabase
       .from('evaluation_criteria' as any)
@@ -432,6 +444,7 @@ export async function deleteCriteria(criteriaId: string): Promise<ActionResult> 
   try {
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.edit'))) return forbiddenError('Permissao lessons.edit necessaria')
 
     const { error } = await ctx.supabase
       .from('evaluation_criteria' as any)
@@ -458,6 +471,7 @@ export async function addLessonTag(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.edit'))) return forbiddenError('Permissao lessons.edit necessaria')
 
     const { data, error } = await ctx.supabase
       .from('lesson_tags' as any)
@@ -485,6 +499,7 @@ export async function removeLessonTag(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('lessons.edit'))) return forbiddenError('Permissao lessons.edit necessaria')
 
     const { error } = await ctx.supabase
       .from('lesson_tags' as any)

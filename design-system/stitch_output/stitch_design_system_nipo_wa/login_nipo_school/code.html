@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nipo School - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .asanoha-pattern {
+            background-color: #fbf7f0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='103.92304845413264' viewBox='0 0 60 103.92304845413264' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 103.92304845413264L60 86.60254037844386L60 51.96152422706632L30 34.64101615137754L0 51.96152422706632L0 86.60254037844386L30 103.92304845413264ZM30 69.28203230275508L45 77.94228634059942L45 95.26279441628819L30 86.60254037844386L15 95.26279441628819L15 77.94228634059942L30 69.28203230275508ZM30 69.28203230275508L30 34.64101615137754M45 77.94228634059942L60 51.96152422706632M15 77.94228634059942L0 51.96152422706632' stroke='%23000000' stroke-width='1' stroke-opacity='0.05' fill='none'/%3E%3C/svg%3E");
+            background-size: 60px 103.92px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "on-surface-variant": "#5c403c",
+                        "inverse-on-surface": "#f4f0e9",
+                        "background": "#fdf9f2",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#894900",
+                        "secondary": "#006398",
+                        "surface-container-high": "#ebe8e1",
+                        "primary-fixed": "#ffdad6",
+                        "on-tertiary-fixed": "#2f1500",
+                        "on-primary-fixed-variant": "#93000b",
+                        "tertiary-container": "#ad5d00",
+                        "surface-container": "#f1ede6",
+                        "surface-variant": "#e6e2db",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "surface-container-low": "#f7f3ec",
+                        "on-tertiary-container": "#fff6f2",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#916f6b",
+                        "primary-container": "#dc2626",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#410002",
+                        "secondary-fixed-dim": "#93ccff",
+                        "surface": "#fdf9f2",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "secondary-container": "#5bb8fe",
+                        "surface-bright": "#fdf9f2",
+                        "inverse-primary": "#ffb4ab",
+                        "outline-variant": "#e6bdb8",
+                        "on-secondary-container": "#00476e",
+                        "primary-fixed-dim": "#ffb4ab",
+                        "surface-tint": "#bf0715",
+                        "secondary-fixed": "#cce5ff",
+                        "inverse-surface": "#31302c",
+                        "error-container": "#ffdad6",
+                        "on-background": "#1c1c18",
+                        "surface-container-highest": "#e6e2db",
+                        "primary": "#b70011",
+                        "surface-dim": "#dddad3",
+                        "on-secondary-fixed": "#001d31",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#ffdcc3",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#fff6f5",
+                        "on-surface": "#1c1c18"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "container-margin": "24px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "data-display": ["JetBrains Mono"],
+                        "headline-xl": ["Inter"],
+                        "headline-xl-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "data-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "data-display": ["20px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-xl-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "800" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background min-h-screen flex flex-col items-center justify-center font-body-lg text-on-background asanoha-pattern">
+<main class="w-full max-w-md mx-auto p-gutter flex flex-col min-h-screen justify-center relative z-10">
+<!-- Header Section -->
+<div class="flex flex-col items-center text-center mb-xl">
+<!-- Main Illustration -->
+<div class="w-48 h-48 mb-lg rounded-full overflow-hidden shadow-sm bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center">
+<img alt="Illustration of a serene Japanese garden with cherry blossoms, a small wooden bridge, and a student practicing an instrument, reflecting a calm learning environment." class="w-full h-full object-cover" data-alt="A serene digital illustration of a traditional Japanese garden scene. The scene features blooming cherry blossom trees, a smooth wooden bridge over a quiet koi pond, and a young student peacefully playing a classical string instrument. The lighting is soft and warm, casting gentle shadows that evoke a calm, focused morning. The color palette incorporates ivory, soft pinks, natural wood tones, and subtle hints of vibrant Japanese red. The style is modern minimalist with a tactile, storybook feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtchRlxCEOkX_TtTgznxvSAWFwRQHX0rCHaiFMP2FjHQySjycQFE3K8SGxQ2L4E1dvyK4Ql59q-7Jol69-SCHvODSIWPoVEn_e6m0t6QnqHQHjdVYdwF7TqxPDAKjaXo0GYpWH17FRpjPEQ6B4gSrv8AmNyXCd68YMlK1jdsaLYVH0mMyMezVELlrbQPqzLVHU8cCiV7sB8La6P2DJZXWxT-pMCZIQmFUyza2NbS94MbMf_sJmFyS6cwG499dNxaeShEDiK6FtfJE"/>
+</div>
+<!-- Brand Logo & Wordmark -->
+<div class="flex flex-col items-center gap-sm mb-md">
+<img alt="Nipo School Logo Enso with musical note" class="w-16 h-16" data-alt="A stylized logo featuring an Enso circle, hand-painted in vibrant red sumi-e brush strokes on an ivory background. Inside the circle is a clean, modern musical note, also in bright red. The overall aesthetic is minimalist, cultural, and focused, representing a blend of Japanese discipline and musical education." src="https://lh3.googleusercontent.com/aida/ADBb0uigFjeSqFddkzANbTKMiQ8BX-7CHuC8Siul2vkoaZr_h0fJKWIWORMGpDCcow87LzR2LraiQEovhkNudnaZN0wF8Ws0prCOxe3RPYMCHHNJqePuCxNVdmw35_ixj29lbsPUKzxEZI0uIcj8LTslScmxa6PMjOUzjLiCSHqWk5-O2xWPq44qBorAzhMo9AQ5iTV5bI4rc_zCjZviFMjTcd9JvFUkeC1VWa8ZbYuL6VGqcrhh-ZZ-9VmhRdU"/>
+<h1 class="text-primary-container font-headline-xl-mobile md:font-headline-xl tracking-tight uppercase">Nipo School</h1>
+</div>
+<!-- Tagline -->
+<p class="font-body-md text-on-surface-variant max-w-[280px]">
+                Disciplina japonesa, alma brasileira.
+            </p>
+</div>
+<!-- Login Form Card -->
+<div class="bg-surface rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.04)] p-lg border border-outline-variant/20 w-full relative overflow-hidden">
+<!-- Decorative Sumi-e Brush Stroke (Subtle Background) -->
+<div 0="" 100="" 100\"="" class="absolute -top-10 -right-10 w-32 h-32 opacity-10 pointer-events-none" style="background-image: url('data:image/svg+xml;utf8,&lt;svg viewBox=\" xmlns='\"http://www.w3.org/2000/svg\"'><path 80,40="" d='\"M20,80' fill='\"none\"' q40,20="" stroke='\"%23dc2626\"' stroke-linecap='\"round\"/' stroke-width='\"4\"' t90,90\"="">'); background-size: contain; background-repeat: no-repeat;"&gt;</path></div>
+<form action="#" class="flex flex-col gap-md relative z-10" method="POST">
+<!-- Email Input -->
+<div class="flex flex-col gap-xs">
+<label class="font-data-label text-data-label text-on-surface-variant uppercase" for="email">E-mail</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">mail</span>
+<input class="w-full bg-surface-container-low border-2 border-surface-variant rounded-lg pl-xl pr-sm py-sm font-body-md text-on-surface placeholder:text-outline focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors outline-none h-[48px]" id="email" name="email" placeholder="seu@email.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="flex flex-col gap-xs">
+<label class="font-data-label text-data-label text-on-surface-variant uppercase" for="password">Senha</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">lock</span>
+<input class="w-full bg-surface-container-low border-2 border-surface-variant rounded-lg pl-xl pr-sm py-sm font-body-md text-on-surface placeholder:text-outline focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors outline-none h-[48px]" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-sm top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary-container transition-colors" type="button">
+<span class="material-symbols-outlined">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Primary Action -->
+<button class="mt-sm w-full bg-primary-container text-on-primary font-headline-md text-body-lg rounded-[12px] h-[56px] flex items-center justify-center gap-sm shadow-md hover:bg-primary transition-colors focus:ring-4 focus:ring-primary-container/30 outline-none" type="submit">
+                    Entrar
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</form>
+<!-- Secondary Links -->
+<div class="mt-lg flex flex-col items-center gap-sm font-body-md">
+<a class="text-on-surface-variant hover:text-primary-container transition-colors border-b border-transparent hover:border-primary-container pb-xs" href="#">
+                    Esqueci a senha
+                </a>
+<div class="flex items-center gap-sm w-full">
+<hr class="flex-1 border-outline-variant/30"/>
+<span class="text-data-label font-data-label text-outline uppercase">ou</span>
+<hr class="flex-1 border-outline-variant/30"/>
+</div>
+<a class="text-primary-container font-headline-md text-body-md hover:text-primary transition-colors mt-xs" href="#">
+                    Criar conta
+                </a>
+</div>
+</div>
+</main>
+</body></html>

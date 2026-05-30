@@ -98,7 +98,7 @@ export function StudentDashboard() {
             {s.current_streak > 0 && (
               <div className="ml-auto flex items-center gap-2 bg-white/20 px-4 py-2 rounded-xl">
                 <Flame className="w-5 h-5 text-yellow-300" />
-                <span className="font-bold text-lg">{s.current_streak} dias</span>
+                <span className="font-bold text-lg"><span className="nw-tabular">{s.current_streak}</span> dias</span>
               </div>
             )}
           </div>
@@ -107,7 +107,7 @@ export function StudentDashboard() {
           <div className="mt-6">
             <div className="flex justify-between text-sm mb-2">
               <span className="font-medium">XP para próximo nível</span>
-              <span className="font-bold">{s.current_xp || 0} / {s.xp_to_next_level || 100}</span>
+              <span className="nw-tabular font-bold">{s.current_xp || 0} / {s.xp_to_next_level || 100}</span>
             </div>
             <div className="h-3 bg-white/20 rounded-full overflow-hidden">
               <div
@@ -139,7 +139,7 @@ export function StudentDashboard() {
             Meta Semanal
           </h3>
           <div className="text-center mb-4">
-            <p className="text-4xl font-black text-gray-900">{practicePercent}%</p>
+            <p className="nw-tabular text-4xl font-black text-gray-900">{practicePercent}%</p>
             <p className="text-sm text-gray-500">{s.practice_minutes_this_week || 0} de {practiceGoal} min</p>
           </div>
           <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-4">
@@ -185,17 +185,24 @@ export function StudentDashboard() {
   )
 }
 
+const MINI_STAT_COLORS: Record<string, string> = {
+  blue: 'bg-blue-50 text-blue-600',
+  amber: 'bg-amber-50 text-amber-600',
+  pink: 'bg-pink-50 text-pink-600',
+  green: 'bg-green-50 text-green-600',
+}
+
 function MiniStat({ icon: Icon, value, label, color }: {
   icon: any; value: string | number; label: string; color: string
 }) {
   return (
     <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
       <div className="flex items-center gap-3">
-        <div className={`p-2 bg-${color}-50 rounded-lg text-${color}-600`}>
+        <div className={`p-2 rounded-lg ${MINI_STAT_COLORS[color] ?? MINI_STAT_COLORS.blue}`}>
           <Icon className="w-4 h-4" />
         </div>
         <div>
-          <p className="text-xl font-bold text-gray-900">{value}</p>
+          <p className="nw-tabular text-xl font-bold text-gray-900">{value}</p>
           <p className="text-[10px] text-gray-500 uppercase tracking-wider">{label}</p>
         </div>
       </div>

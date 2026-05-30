@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nipo School - Música e Disciplina</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#5c403c",
+                        "surface-tint": "#bf0715",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#ffdad6",
+                        "background": "#fdf9f2",
+                        "secondary": "#006398",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "on-secondary-container": "#00476e",
+                        "on-background": "#1c1c18",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#5bb8fe",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "inverse-primary": "#ffb4ab",
+                        "on-primary-fixed-variant": "#93000b",
+                        "surface-dim": "#dddad3",
+                        "tertiary-fixed": "#ffdcc3",
+                        "surface-container-low": "#f7f3ec",
+                        "outline-variant": "#e6bdb8",
+                        "on-tertiary-container": "#fff6f2",
+                        "outline": "#916f6b",
+                        "on-surface": "#1c1c18",
+                        "on-secondary-fixed": "#001d31",
+                        "on-primary-fixed": "#410002",
+                        "on-primary-container": "#fff6f5",
+                        "surface-container-high": "#ebe8e1",
+                        "secondary-fixed": "#cce5ff",
+                        "on-tertiary-fixed": "#2f1500",
+                        "surface-variant": "#e6e2db",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#31302c",
+                        "secondary-fixed-dim": "#93ccff",
+                        "surface-container-highest": "#e6e2db",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container": "#f1ede6",
+                        "surface": "#fdf9f2",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#894900",
+                        "surface-bright": "#fdf9f2",
+                        "primary-container": "#dc2626",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "primary-fixed-dim": "#ffb4ab",
+                        "tertiary-container": "#ad5d00",
+                        "inverse-on-surface": "#f4f0e9",
+                        "primary": "#b70011"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "container-margin": "24px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "gutter": "16px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-xl-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "data-display": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-xl-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "800" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "data-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "data-display": ["20px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pattern-asanoha {
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0l20 11.547v23.094L20 46.188 0 34.641V11.547L20 0zm0 4.619L4 13.856v18.475L20 41.569l16-9.238V13.856L20 4.619z' fill='%231c1c18' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-background/95 dark:bg-background/95 backdrop-blur-sm fixed top-0 w-full z-50 shadow-sm transition-all duration-300 flex justify-between items-center h-20 px-4 md:px-8 max-w-7xl mx-auto" id="top-nav">
+<div class="flex items-center gap-2">
+<img alt="Nipo School Logo" class="h-10 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uigFjeSqFddkzANbTKMiQ8BX-7CHuC8Siul2vkoaZr_h0fJKWIWORMGpDCcow87LzR2LraiQEovhkNudnaZN0wF8Ws0prCOxe3RPYMCHHNJqePuCxNVdmw35_ixj29lbsPUKzxEZI0uIcj8LTslScmxa6PMjOUzjLiCSHqWk5-O2xWPq44qBorAzhMo9AQ5iTV5bI4rc_zCjZviFMjTcd9JvFUkeC1VWa8ZbYuL6VGqcrhh-ZZ-9VmhRdU"/>
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary tracking-tighter">Nipo School</span>
+</div>
+<!-- Mobile Menu Toggle -->
+<button aria-label="Menu" class="md:hidden text-on-surface p-2 rounded-full hover:bg-surface-variant/50 transition-colors" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1" href="#inicio">Início</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant/50 duration-300 rounded-md px-3 py-2" href="#oquee">O que é</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant/50 duration-300 rounded-md px-3 py-2" href="#pilares">Pilares</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant/50 duration-300 rounded-md px-3 py-2" href="#metodologia">Metodologia</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant/50 duration-300 rounded-md px-3 py-2" href="#galeria">Galeria</a>
+<a class="bg-primary-container text-on-primary font-body-md font-medium px-6 py-2.5 rounded-full hover:shadow-md transition-all active:scale-95 duration-150" href="#matricula">Matricule-se</a>
+</nav>
+</header>
+<!-- Mobile Menu Overlay -->
+<div class="hidden fixed inset-0 bg-background z-40 pt-24 px-6 flex flex-col gap-4 animate-fade-in" id="mobile-menu">
+<a class="font-headline-md text-headline-md text-primary border-b border-outline-variant/30 pb-4" href="#inicio" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Início</a>
+<a class="font-headline-md text-headline-md text-on-surface-variant border-b border-outline-variant/30 pb-4" href="#oquee" onclick="document.getElementById('mobile-menu').classList.add('hidden')">O que é</a>
+<a class="font-headline-md text-headline-md text-on-surface-variant border-b border-outline-variant/30 pb-4" href="#pilares" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Pilares</a>
+<a class="font-headline-md text-headline-md text-on-surface-variant border-b border-outline-variant/30 pb-4" href="#metodologia" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Metodologia</a>
+<a class="font-headline-md text-headline-md text-on-surface-variant border-b border-outline-variant/30 pb-4" href="#galeria" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Galeria</a>
+<a class="mt-8 bg-primary-container text-on-primary font-headline-md text-center py-4 rounded-full shadow-sm" href="#matricula" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Matricule-se Agora</a>
+</div>
+<main class="pt-20">
+<!-- Hero Section (Mobile First) -->
+<section class="relative min-h-[85vh] flex flex-col items-center justify-start pt-8 px-4 pattern-asanoha" id="inicio">
+<div class="w-full max-w-sm mb-8 relative">
+<div class="absolute inset-0 bg-primary/5 rounded-full blur-2xl"></div>
+<img alt="Sumi-e brush stroke representing a musical note in a circle" class="w-full h-auto object-contain relative z-10 drop-shadow-sm" src="https://lh3.googleusercontent.com/aida/ADBb0ui_cUq2lJdMKddB03mHRpyWKCRUK1H8AqemEf1iJ5p4VtBWyXv0TqPo0srugg_gFuIKCDajInlspKDDeDw1xRFELnKoePO7OEVSUQIId4NbtxMp_UbeRL5BYrywOi_3U-OcgI-HVsmCd9sMd12qL3XN9cP-j7XltjB29skAo5-Dc7_GtVjq5Ym3d4ZR-l_j-2rF6xWqpCi_Uq8TGEbsgcuyTPXR9REa-EzHzG0btcCDKMY6dqz-NlpAJyo"/>
+</div>
+<div class="text-center z-10 w-full max-w-md px-2">
+<span class="font-data-label text-data-label text-primary tracking-widest uppercase mb-4 block">Bem-vindo à Nipo School</span>
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-on-background mb-6 leading-tight">
+                    Onde a disciplina japonesa encontra a alma brasileira da música.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10">
+                    Uma abordagem inovadora que une técnica e expressão para formar músicos completos.
+                </p>
+<div class="flex flex-col gap-4 w-full">
+<a class="w-full bg-primary-container text-on-primary font-body-lg font-medium py-4 rounded-full text-center shadow-[0_4px_14px_0_rgba(220,38,38,0.39)] active:scale-95 transition-transform duration-200" href="#matricula">
+                        Comece sua jornada
+                    </a>
+<a class="w-full border-2 border-outline text-on-surface font-body-lg font-medium py-3.5 rounded-full text-center hover:bg-surface-variant transition-colors duration-200 flex items-center justify-center gap-2" href="#oquee">
+<span class="material-symbols-outlined">play_circle</span>
+                        Conheça o método
+                    </a>
+</div>
+</div>
+<!-- Decorative wave -->
+<div class="absolute bottom-0 w-full h-16 bg-gradient-to-t from-surface-container-low to-transparent"></div>
+</section>
+<!-- O Que É Section -->
+<section class="py-16 px-4 bg-surface-container-low relative" id="oquee">
+<div class="max-w-xl mx-auto text-center">
+<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-secondary-container/20 text-secondary mb-6">
+<span class="material-symbols-outlined text-2xl">music_note</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg mb-6">O que é a Nipo School?</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                    Somos mais que uma escola de música. Somos um hub cultural que traduz a precisão milenar japonesa para o balanço caloroso brasileiro. Nossa missão é cultivar foco, resiliência e criatividade através do estudo profundo da música.
+                </p>
+</div>
+</section>
+<!-- Pilares Section -->
+<section class="py-16 px-4 pattern-asanoha" id="pilares">
+<div class="max-w-xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-center mb-10">Nossos Pilares</h2>
+<div class="flex flex-col gap-6">
+<!-- Pillar 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20 flex gap-4 items-start">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">self_improvement</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2 text-lg">Disciplina (Kirisuto)</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">A base da consistência. Prática diária focada para dominar a técnica com paciência e respeito ao processo.</p>
+</div>
+</div>
+<!-- Pillar 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20 flex gap-4 items-start">
+<div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">celebration</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2 text-lg">Expressão (Hyōgen)</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">A alma brasileira. Transformar a técnica impecável em emoção genuína, encontrando a própria voz no instrumento.</p>
+</div>
+</div>
+<!-- Pillar 3 -->
+<div class="bg-surface-container-lowest p-6 rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20 flex gap-4 items-start">
+<div class="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">diversity_3</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2 text-lg">Comunidade (Kyōdōtai)</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Aprender em conjunto. Ensembles, recitais e apoio mútuo que fortalecem o laço entre alunos, pais e mestres.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Metodologias Section (Compact List for Mobile) -->
+<section class="py-16 bg-surface-container-high px-4" id="metodologia">
+<div class="max-w-xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg mb-8">Nossa Metodologia</h2>
+<div class="grid grid-cols-1 gap-3">
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center gap-3 border-l-4 border-primary">
+<span class="font-data-display text-data-display text-primary/40">01</span>
+<span class="font-body-lg font-medium text-on-surface">Método Suzuki Adaptado</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center gap-3 border-l-4 border-secondary">
+<span class="font-data-display text-data-display text-secondary/40">02</span>
+<span class="font-body-lg font-medium text-on-surface">Leitura Rítmica Kodály</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center gap-3 border-l-4 border-tertiary">
+<span class="font-data-display text-data-display text-tertiary/40">03</span>
+<span class="font-body-lg font-medium text-on-surface">Improvisação Brasileira</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center gap-3 border-l-4 border-primary">
+<span class="font-data-display text-data-display text-primary/40">04</span>
+<span class="font-body-lg font-medium text-on-surface">Prática de Conjunto (Ensemble)</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center gap-3 border-l-4 border-secondary">
+<span class="font-data-display text-data-display text-secondary/40">05</span>
+<span class="font-body-lg font-medium text-on-surface">Teoria Aplicada</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Video Section -->
+<section class="py-16 px-4 bg-inverse-surface text-inverse-on-surface">
+<div class="max-w-xl mx-auto text-center">
+<h2 class="font-headline-lg text-headline-lg mb-8">Sinta a harmonia</h2>
+<div class="relative w-full aspect-video bg-on-surface rounded-[16px] overflow-hidden shadow-xl flex items-center justify-center group cursor-pointer border border-outline/30" data-alt="A softly lit, cinematic wide shot of a young student playing a grand piano in a minimalist room with warm, natural light filtering through shoji screens. The atmosphere is serene and focused." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBLxzh8rMVCLgR-DFBD0pGZoLHFUWirLS54VKjAbvTVxkQz7epXC4NgN5KmVKRsfCloGkulI4ZsZonePZg6WSBPTDbGAM0n3dl-MmYOL7YIz6YJ9_ABwGzvzf1kyTiTes9r7IxPj9DV0BQsEyf5jcvoVS6N_OeFm_8QNPouKlBY89nDnztSwoxYcbWWPKrhKq6N41S0aeuO9Y-NWX4TqsnWo_eaorV6a8ogzwePm3-mQzoed7D72liWpb7P_GrxD6BEsiCTH5RmavA'); background-size: cover; background-position: center;">
+<div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors"></div>
+<div class="w-16 h-16 rounded-full bg-primary-container/90 flex items-center justify-center z-10 shadow-lg transform group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-primary text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Galeria Section (2xN Grid) -->
+<section class="py-16 px-4" id="galeria">
+<div class="max-w-xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg mb-8 text-center">Momentos Nipo</h2>
+<div class="grid grid-cols-2 gap-4">
+<div class="aspect-square rounded-lg overflow-hidden bg-surface-variant">
+<img alt="Student playing violin" class="w-full h-full object-cover" data-alt="Close up shot of a child's hands carefully holding a violin bow, demonstrating precise technique. The lighting is warm and natural, evoking a sense of calm discipline." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFT4yWJXa2ZWiCRxGrrQSGdPU2ez-x4jGbPntRXScodB6B3xtNB36NoEXHK6ohK7E2Z7vx8_VDO9XC1Nwfw5ZZDQQYR-pfDgo_evVYSLvz7w2qZFVOnS949ITn_MmiaPt4oZi3GIH0dzmuDHeL1Ciso5OD1J4BdATZokB7XqXtFiGWgobXXScZeegp-5Z8x3jOqtmq4kmx03uD0bCls9UquKhHuVw6NBQ28-uInox8umrePMYXFT0Oh4W3ZstE5SNrqNKl3QxvmR0"/>
+</div>
+<div class="aspect-square rounded-lg overflow-hidden bg-surface-variant">
+<img alt="Cello practice" class="w-full h-full object-cover" data-alt="A focused student playing the cello in a bright, modern studio. Subtle Japanese geometric patterns can be seen softly out of focus in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPcoU2uGjYpxRIDdbcaZShT-S1u8cJ0TCRGW6maBfGytCNMnuEfmLG0OgHkpdXzoemLiUV4YLIa_ugGHQaStbMNVygt37B7KkqWBpjxIy-Kr0o7dhwaaIY2NU2JS8O7rs64lIPT8TAQuHeE6UYFFUtujfVixMl0LLUaIXhdXIgbfW0OaoaUru4fYfkjMgev9xQ5lL1Ypl2FpRDvM0S_NlT0OtO23zjcO3D1b4rbdOVHq1BU74Hatdg2NrFYjecA9FaNwE5YhnR9xA"/>
+</div>
+<div class="aspect-[4/5] col-span-2 rounded-lg overflow-hidden bg-surface-variant relative group">
+<img alt="Ensemble performance" class="w-full h-full object-cover" data-alt="A vibrant, wide angle shot of a youth orchestra performing together. The energy is joyful and collaborative, showcasing the blend of structured practice and expressive performance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGJzyrEuUyFzLOb19yx-8bIUZcS6J1tdhEFktO3kbxT-g07l3Wvrju-W6YbqLvsDZdAZkD6ldF4nyqCS4Aui0Ks0LpuEjgJvN1HRsWkyFII-bOt8hCYUsRFdin0Q6LtXGNWf4WHtSy8T4gspcF0TeMjprGBfKWdw8oCdQ_dhK4FdiFyJPKh-WEb-CBWMvRVFKy8ZPXZhYqI0Jc-OvG1GwXzWMzxn_a5GcJry81UiULp46fAD_jjhiuxis7iuWMPYGEFFk4njU3wtM"/>
+<div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+<p class="text-on-primary font-body-md font-medium">Recital de Primavera 2023</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-20 px-4 bg-primary-container text-on-primary text-center relative overflow-hidden" id="matricula">
+<!-- Background pattern overlay -->
+<div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M20 0l20 11.547v23.094L20 46.188 0 34.641V11.547L20 0zm0 4.619L4 13.856v18.475L20 41.569l16-9.238V13.856L20 4.619z\' fill=\'%23ffffff\' fill-opacity=\'1\' fill-rule=\'evenodd\'/%3E%3C/svg%3E');"></div>
+<div class="max-w-md mx-auto relative z-10">
+<span class="material-symbols-outlined text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h2 class="font-headline-xl-mobile text-headline-xl-mobile mb-4">Desperte o som que existe em você.</h2>
+<p class="font-body-lg text-body-lg mb-8 text-on-primary/90">Agende uma aula experimental gratuita e conheça nosso espaço.</p>
+<button class="w-full bg-on-primary text-primary-container font-body-lg font-bold py-4 rounded-full shadow-lg active:scale-95 transition-transform">
+                    Agendar Aula Experimental
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-surface-container-highest dark:bg-inverse-surface w-full py-12 flat no shadows transition-all duration-200 flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto space-y-8 md:space-y-0">
+<div class="flex flex-col items-center md:items-start text-center md:text-left">
+<span class="font-headline-md text-headline-md text-primary mb-4 font-bold tracking-tighter">Nipo School</span>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs mb-6">
+                © 2024 Nipo School de Música. Todos os direitos reservados. Tradução e Harmonia.
+            </p>
+</div>
+<nav class="flex flex-col md:flex-row gap-4 items-center font-body-md text-body-md">
+<a class="text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Sobre Nós</a>
+<a class="text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Política de Privacidade</a>
+<a class="text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Termos de Uso</a>
+<a class="text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4 transition-all duration-200" href="#">Contato</a>
+<div class="flex gap-4 mt-4 md:mt-0 ml-0 md:ml-4 border-t md:border-t-0 md:border-l border-outline-variant/30 pt-4 md:pt-0 md:pl-4">
+<a aria-label="Instagram" class="text-on-surface-variant hover:text-primary transition-colors" href="#">
+<svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" fill-rule="evenodd"></path></svg>
+</a>
+<a aria-label="YouTube" class="text-on-surface-variant hover:text-primary transition-colors" href="#">
+<svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" fill-rule="evenodd"></path></svg>
+</a>
+</div>
+</nav>
+</footer>
+<script>
+        // Simple scroll spy to highlight active nav
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('nav a').forEach(a => {
+                a.classList.remove('text-primary', 'font-bold', 'border-b-2', 'border-primary', 'pb-1');
+                a.classList.add('text-on-surface-variant');
+                if (a.getAttribute('href') === `#${current}` && current !== 'matricula') {
+                    a.classList.add('text-primary', 'font-bold', 'border-b-2', 'border-primary', 'pb-1');
+                    a.classList.remove('text-on-surface-variant');
+                }
+            });
+        });
+    </script>
+</body></html>

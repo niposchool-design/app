@@ -148,8 +148,8 @@ export default function CommunityPage() {
                     </p>
                   </div>
                   <div className="flex items-center gap-4 text-xs text-gray-400">
-                    <span className="flex items-center gap-1"><MessageCircle className="w-3.5 h-3.5" /> {topic.reply_count}</span>
-                    <span className="flex items-center gap-1"><Heart className="w-3.5 h-3.5" /> {topic.like_count}</span>
+                    <span className="flex items-center gap-1"><MessageCircle className="w-3.5 h-3.5" /> <span className="nw-tabular">{topic.reply_count}</span></span>
+                    <span className="flex items-center gap-1"><Heart className="w-3.5 h-3.5" /> <span className="nw-tabular">{topic.like_count}</span></span>
                   </div>
                 </div>
               </div>

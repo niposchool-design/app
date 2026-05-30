@@ -4,8 +4,9 @@ import { revalidatePath } from 'next/cache'
 import { getActionContext } from '@/lib/utils/action-context'
 import { validateAction } from '@/lib/validations/validate-action'
 import { createRepertoireSchema, updateRepertoireSchema } from '@/lib/validations/unified-schemas'
-import { successResponse, unauthorizedError, databaseError, validationError } from '@/lib/utils/action-response'
+import { successResponse, unauthorizedError, forbiddenError, databaseError, validationError } from '@/lib/utils/action-response'
 import type { ActionResult } from '@/lib/types/action-result'
+import { checkPermission } from '@/lib/auth/check-permission'
 
 export async function createRepertoire(rawData: any): Promise<ActionResult> {
   try {
@@ -14,6 +15,7 @@ export async function createRepertoire(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('repertoire.create'))) return forbiddenError('Permissao repertoire.create necessaria')
 
     const { data, error } = await ctx.supabase
       .from('repertoire')
@@ -45,6 +47,7 @@ export async function updateRepertoire(rawData: any): Promise<ActionResult> {
 
     const ctx = await getActionContext()
     if (!ctx) return unauthorizedError()
+    if (!(await checkPermission('repertoire.edit'))) return forbiddenError('Permissao repertoire.edit necessaria')
 
     const { id, ...fields } = validation.data
 

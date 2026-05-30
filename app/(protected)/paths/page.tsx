@@ -138,12 +138,12 @@ export default function PathsPage() {
                   <div className="bg-white rounded-xl border border-emerald-100 p-4 hover:shadow-lg hover:border-emerald-300 transition-all">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">{prog.path_title}</h3>
-                      <span className="text-sm font-bold text-emerald-600">{pct}%</span>
+                      <span className="nw-tabular text-sm font-bold text-emerald-600">{pct}%</span>
                     </div>
                     <div className="w-full bg-gray-100 rounded-full h-2 mb-2">
                       <div className="bg-emerald-500 h-2 rounded-full transition-all" style={{ width: `${pct}%` }} />
                     </div>
-                    <p className="text-xs text-gray-400">{prog.completed_steps} de {prog.total_steps} steps</p>
+                    <p className="text-xs text-gray-400"><span className="nw-tabular">{prog.completed_steps}</span> de <span className="nw-tabular">{prog.total_steps}</span> steps</p>
                   </div>
                 </Link>
               )
@@ -204,7 +204,7 @@ export default function PathsPage() {
                     )}
                     <div className="flex items-center gap-1 text-gray-400">
                       <BookOpen className="w-4 h-4" />
-                      <span className="text-xs font-medium">{path.step_count} steps</span>
+                      <span className="text-xs font-medium"><span className="nw-tabular">{path.step_count}</span> steps</span>
                     </div>
                   </div>
 
@@ -231,7 +231,7 @@ export default function PathsPage() {
                           style={{ width: `${pct}%` }}
                         />
                       </div>
-                      <p className="text-xs text-gray-400 mt-1">
+                      <p className="nw-tabular text-xs text-gray-400 mt-1">
                         {prog.status === 'completed' ? 'Concluída!' : `${pct}% completo`}
                       </p>
                     </div>

@@ -1,0 +1,165 @@
+{
+  "$schema": "https://design-tokens.org/schema.json",
+  "_meta": {
+    "name": "Nipo Wa",
+    "version": "1.0.0",
+    "description": "Design System do Nipo School — disciplina japonesa, alma brasileira. Vermelho japonês + sumi-ê + sistema de 4 papéis com padrões geométricos japoneses.",
+    "owner": "Nipo School / DIGIAI (camada 5 institucional)",
+    "source_of_truth": true,
+    "notes": "Derivado do brand inventory (EXISTING_BRAND.md) + globals.css real. Código vence (R-002)."
+  },
+
+  "color": {
+    "brand": {
+      "red": {
+        "50":  { "value": "#fef2f2" },
+        "100": { "value": "#fee2e2" },
+        "200": { "value": "#fecaca" },
+        "300": { "value": "#fca5a5" },
+        "400": { "value": "#f87171" },
+        "500": { "value": "#ef4444" },
+        "600": { "value": "#dc2626", "_role": "PRIMARY BRAND" },
+        "700": { "value": "#b91c1c" },
+        "800": { "value": "#991b1b" },
+        "900": { "value": "#7f1d1d" },
+        "950": { "value": "#450a0a" }
+      },
+      "sakura": {
+        "_role": "accent decorativo (cherry blossom)",
+        "300": { "value": "#ffb3cd" },
+        "400": { "value": "#ff8fb3" },
+        "500": { "value": "#FF6B9D" },
+        "600": { "value": "#e84a82" }
+      },
+      "ivory": { "value": "#fbf7f0", "_role": "fundo creme do logo / surfaces quentes" },
+      "sumi":  { "value": "#1c1917", "_role": "preto sumi-ê (tinta)" }
+    },
+
+    "role": {
+      "student": {
+        "_pattern": "Asanoha (麻の葉) — folha de cânhamo, crescimento/vigor",
+        "primary": { "value": "{color.brand.red.600}" },
+        "dark":    { "value": "#991b1b" },
+        "light":   { "value": "#f87171" },
+        "bg":      { "value": "#fef2f2" },
+        "detail":  { "value": "#fee2e2" }
+      },
+      "teacher": {
+        "_pattern": "Seigaiha (青海波) — ondas do mar, sabedoria/ciclos",
+        "primary": { "value": "#0284c7" },
+        "dark":    { "value": "#075985" },
+        "light":   { "value": "#38bdf8" },
+        "bg":      { "value": "#eff6ff" },
+        "detail":  { "value": "#dbeafe" }
+      },
+      "admin": {
+        "_pattern": "Sayagata (紗綾形) — chaves entrelaçadas, estrutura/nobreza",
+        "primary": { "value": "#7c3aed" },
+        "dark":    { "value": "#6d28d9" },
+        "darker":  { "value": "#5b21b6" },
+        "darkest": { "value": "#4c1d95" },
+        "light":   { "value": "#a78bfa" },
+        "lighter": { "value": "#c4b5fd" },
+        "bg":      { "value": "#faf5ff" },
+        "accent":  { "value": "#818cf8" }
+      },
+      "family": {
+        "_pattern": "Kikkō (亀甲) — escamas de tartaruga, longevidade/proteção (NOVO)",
+        "primary": { "value": "#d97706" },
+        "dark":    { "value": "#b45309" },
+        "light":   { "value": "#fbbf24" },
+        "bg":      { "value": "#fffbeb" },
+        "detail":  { "value": "#fef3c7" }
+      }
+    },
+
+    "neutral": {
+      "0":   { "value": "#ffffff" },
+      "50":  { "value": "#f8fafc" },
+      "100": { "value": "#f1f5f9" },
+      "200": { "value": "#e2e8f0" },
+      "300": { "value": "#cbd5e1" },
+      "400": { "value": "#94a3b8" },
+      "500": { "value": "#64748b" },
+      "600": { "value": "#475569" },
+      "700": { "value": "#334155" },
+      "800": { "value": "#1e293b" },
+      "900": { "value": "#0f172a" },
+      "950": { "value": "#020617" }
+    },
+
+    "status": {
+      "success": { "value": "#059669" },
+      "warning": { "value": "#d97706" },
+      "danger":  { "value": "#dc2626" },
+      "info":    { "value": "#0284c7" }
+    },
+
+    "semantic": {
+      "_comment": "camada semântica light mode (default). Dark mode em nipo-wa.css.",
+      "text": {
+        "primary":   { "value": "{color.neutral.900}" },
+        "secondary": { "value": "{color.neutral.600}" },
+        "muted":     { "value": "{color.neutral.400}" },
+        "inverse":   { "value": "{color.neutral.0}" }
+      },
+      "surface": {
+        "base":   { "value": "{color.neutral.50}" },
+        "raised": { "value": "{color.neutral.0}" },
+        "sunken": { "value": "{color.neutral.100}" }
+      },
+      "border": {
+        "subtle": { "value": "{color.neutral.200}" },
+        "strong": { "value": "{color.neutral.300}" }
+      },
+      "action": {
+        "primary":       { "value": "{color.brand.red.600}" },
+        "primary-hover": { "value": "{color.brand.red.700}" }
+      }
+    }
+  },
+
+  "font": {
+    "family": {
+      "sans": { "value": "Inter, ui-sans-serif, system-ui, sans-serif" },
+      "mono": { "value": "'JetBrains Mono', ui-monospace, monospace", "_use": "dados tabulares: BPM, pontos, datas, tempo de prática" }
+    },
+    "size": {
+      "display": { "value": "2.25rem" },
+      "h1":      { "value": "1.875rem" },
+      "h2":      { "value": "1.5rem" },
+      "h3":      { "value": "1.25rem" },
+      "body":    { "value": "1rem" },
+      "sm":      { "value": "0.875rem" },
+      "caption": { "value": "0.75rem" }
+    },
+    "weight": {
+      "regular":  { "value": "400" },
+      "medium":   { "value": "500" },
+      "semibold": { "value": "600" },
+      "bold":     { "value": "700" }
+    }
+  },
+
+  "radius": {
+    "sm": { "value": "0.5rem" },
+    "md": { "value": "0.75rem" },
+    "lg": { "value": "1rem" },
+    "xl": { "value": "1.25rem" },
+    "full": { "value": "9999px" }
+  },
+
+  "shadow": {
+    "sm": { "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)" },
+    "md": { "value": "0 4px 6px -1px rgb(0 0 0 / 0.1)" },
+    "lg": { "value": "0 10px 15px -3px rgb(0 0 0 / 0.1)" }
+  },
+
+  "motion": {
+    "duration": {
+      "fast":   { "value": "150ms" },
+      "normal": { "value": "300ms" }
+    },
+    "ease": { "value": "cubic-bezier(0.4, 0, 0.2, 1)" }
+  }
+}

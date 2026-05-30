@@ -44,7 +44,7 @@ export default function EvaluatePage() {
           </h1>
           <div className="flex items-center gap-2 text-sm">
             <span className="bg-amber-100 text-amber-700 px-2 py-1 rounded-lg font-bold">
-              {submissions.length + portfolios.length} pendentes
+              <span className="nw-tabular">{submissions.length + portfolios.length}</span> pendentes
             </span>
           </div>
         </div>
@@ -52,10 +52,10 @@ export default function EvaluatePage() {
         {/* Tabs */}
         <div className="flex gap-2">
           <button onClick={() => setTab('submissions')} className={`px-4 py-2 text-sm font-bold rounded-lg transition-colors ${tab === 'submissions' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
-            Desafios ({submissions.length})
+            Desafios (<span className="nw-tabular">{submissions.length}</span>)
           </button>
           <button onClick={() => setTab('portfolios')} className={`px-4 py-2 text-sm font-bold rounded-lg transition-colors ${tab === 'portfolios' ? 'bg-teal-100 text-teal-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
-            Portfólios ({portfolios.length})
+            Portfólios (<span className="nw-tabular">{portfolios.length}</span>)
           </button>
         </div>
 

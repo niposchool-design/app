@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Portal do Aluno - Nipo School</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#93ccff",
+                        "inverse-primary": "#ffb4ab",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#cce5ff",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "primary": "#b70011",
+                        "primary-fixed": "#ffdad6",
+                        "surface-container-highest": "#e6e2db",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#ffdcc3",
+                        "tertiary": "#894900",
+                        "on-background": "#1c1c18",
+                        "on-secondary-container": "#00476e",
+                        "primary-container": "#dc2626",
+                        "tertiary-container": "#ad5d00",
+                        "on-primary-fixed-variant": "#93000b",
+                        "primary-fixed-dim": "#ffb4ab",
+                        "surface-container-high": "#ebe8e1",
+                        "on-tertiary-container": "#fff6f2",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#410002",
+                        "surface-bright": "#fdf9f2",
+                        "secondary": "#006398",
+                        "surface-dim": "#dddad3",
+                        "surface-variant": "#e6e2db",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#5bb8fe",
+                        "surface-tint": "#bf0715",
+                        "outline": "#916f6b",
+                        "on-surface": "#1c1c18",
+                        "background": "#fdf9f2",
+                        "inverse-on-surface": "#f4f0e9",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#fff6f5",
+                        "surface-container": "#f1ede6",
+                        "surface-container-low": "#f7f3ec",
+                        "outline-variant": "#e6bdb8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#2f1500",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#001d31",
+                        "on-surface-variant": "#5c403c",
+                        "inverse-surface": "#31302c",
+                        "surface": "#fdf9f2",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb77d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "gutter": "16px",
+                        "container-margin": "24px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "data-display": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "headline-xl-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "headline-xl": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "data-display": ["20px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-xl-mobile": ["32px", {"lineHeight": "38px", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "data-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .pattern-asanoha {
+            background-color: #fdf9f2;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2.5L35 24.833V0h2v25.833L50 13.5v2.5H30v2h20v2.5L35 36.167V40h-2V15.167L20 20.5z' fill='%231c1c18' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .brush-stroke {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-20 md:pb-0 md:flex pattern-asanoha">
+<!-- TopAppBar (Mobile & Desktop) -->
+<header class="bg-surface/80 backdrop-blur-md shadow-sm text-primary font-headline-md text-headline-md font-bold font-headline-lg text-headline-lg font-black text-primary docked full-width top-0 shadow-sm flex justify-between items-center w-full px-container-margin py-md max-w-7xl mx-auto z-50 fixed md:hidden">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu</span>
+<img alt="Nipo School Logo" class="h-8 w-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDBgCM9U-DKhEz1r_sxPuJuf2FdBHXbU3DaFaOXIIE5NqZOa13jKlamQ77fNL8gWKaxCYc4d2aJsrFZGJWfoaw0dukpkeFCRWMnEvm3l1XNV9WYfsVitOSJKe-GawAKe-BGIaXG8ofwv8p3dMqG4e8Dp6GhfNSXSJq3283KwnW-TWIDm_NvMuYv95DqYsNtvShDM0FDLuK70hvrdkUBjKy6A5RtCZ5xvasqpCNxzO30D_HeiunYiG1LjRaSl3EoAR0tOiVD-F1DR0"/>
+<span class="font-headline-md text-headline-md font-bold">Nipo School</span>
+</div>
+<div class="flex items-center gap-sm text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="material-symbols-outlined">settings</span>
+<img alt="Foto de perfil do aluno" class="w-8 h-8 rounded-full shadow-sm" data-alt="A close up portrait of a young student with a bright, focused expression. The lighting is soft and natural, emphasizing a calm and disciplined mood suitable for a modern educational platform. The background is a slightly blurred, warm ivory tone, integrating seamlessly with a light-mode Japanese minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBemBdHP3NGkyWCXb2EpPD2m7sy5ciaiYF7HlS5kc38RouFMgen2Kr8nIrRitH0Nov1m-BW9sW5dr9U_2bjJm9Lm9qRSMiAh5JKStq23U8irtof_J0QE_GXKSF2cE0JZ65Bk4bPPZIzYkeLWLa7OLWGUCOzkj5cgHlaVBimayTuuLPxKMvSpx9vMEY7JUZY_1pLudWz163Kr2W1KW62FDOWtm8jox4WCP9nr8CWI_yI3TuVUyvtxpQu2mDyhIfDMWkyaeMhfGJ0H5s"/>
+</div>
+</header>
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex flex-col h-screen sticky top-0 p-md space-y-md bg-surface-container-low text-primary font-body-md text-body-md h-full w-64 rounded-r-xl border-r border-outline-variant/30 shadow-sm z-40">
+<div class="flex items-center gap-sm mb-lg">
+<img alt="Nipo School Logo" class="h-10 w-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDBgCM9U-DKhEz1r_sxPuJuf2FdBHXbU3DaFaOXIIE5NqZOa13jKlamQ77fNL8gWKaxCYc4d2aJsrFZGJWfoaw0dukpkeFCRWMnEvm3l1XNV9WYfsVitOSJKe-GawAKe-BGIaXG8ofwv8p3dMqG4e8Dp6GhfNSXSJq3283KwnW-TWIDm_NvMuYv95DqYsNtvShDM0FDLuK70hvrdkUBjKy6A5RtCZ5xvasqpCNxzO30D_HeiunYiG1LjRaSl3EoAR0tOiVD-F1DR0"/>
+<div>
+<h1 class="font-headline-md text-headline-md text-primary">Portal do Aluno</h1>
+<p class="font-data-label text-data-label text-on-surface-variant">Padrão Asanoha Ativo</p>
+</div>
+</div>
+<button class="bg-primary text-on-primary rounded-xl py-sm px-md flex items-center justify-center gap-xs font-bold mb-lg hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+            Iniciar Prática
+        </button>
+<ul class="flex-1 space-y-xs">
+<li>
+<a class="flex items-center gap-sm p-sm bg-primary-container text-on-primary-container rounded-lg font-bold Active: scale-98 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                    Painel
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">track_changes</span>
+                    Metas
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">workspace_premium</span>
+                    Conquistas
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+                    Agenda
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+                    Suporte
+                </a>
+</li>
+</ul>
+<div class="mt-auto">
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Sair
+            </a>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 px-gutter md:px-container-margin pt-24 md:pt-md max-w-7xl mx-auto w-full relative">
+<!-- Decorative Brush Stroke -->
+<svg class="brush-stroke top-0 right-0 w-64 h-64 text-on-surface-variant" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M10,50 Q40,20 90,60 T10,50" fill="none" stroke="currentColor" stroke-width="2"></path>
+</svg>
+<h1 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-background mb-lg z-10 relative">Konnichiwa, Haru!</h1>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter md:gap-container-margin">
+<!-- Prática do Dia (Bento - Colspan Full on Mobile, 8 on Desktop) -->
+<div class="col-span-1 md:col-span-8 bg-surface rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.04)] p-md relative overflow-hidden z-10">
+<!-- Subtle pattern overlay specific to role -->
+<div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0); background-size: 24px 24px;"></div>
+<div class="flex flex-col md:flex-row items-center justify-between gap-md relative z-10">
+<div class="flex-1 text-center md:text-left">
+<h2 class="font-headline-md text-headline-md text-on-background mb-xs">Prática do Dia</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Koto - Peça Tradicional Sakura</p>
+<div class="flex items-center justify-center md:justify-start gap-sm mb-md">
+<span class="font-data-label text-data-label text-on-surface-variant uppercase">BPM</span>
+<span class="font-data-display text-data-display text-primary">85</span>
+</div>
+<button class="bg-primary text-on-primary rounded-xl py-sm px-lg flex items-center justify-center gap-xs font-bold w-full md:w-auto shadow-sm hover:shadow-md transition-shadow ring-offset-2 ring-offset-background focus:ring-2 focus:ring-primary focus:outline-none">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                            Iniciar
+                        </button>
+</div>
+<!-- Enso Badge -->
+<div class="w-32 h-32 rounded-full border-4 border-primary-container flex items-center justify-center relative shadow-sm">
+<span class="material-symbols-outlined text-primary-container" style="font-size: 48px; font-variation-settings: 'FILL' 1;">music_note</span>
+</div>
+</div>
+</div>
+<!-- Metas Rápidas (Bento - Colspan Full on Mobile, 4 on Desktop) -->
+<div class="col-span-1 md:col-span-4 bg-surface rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.04)] p-md z-10 flex flex-col justify-between">
+<h2 class="font-headline-md text-headline-md text-on-background mb-sm">Metas da Semana</h2>
+<div class="flex items-center justify-center py-md relative">
+<!-- Circular Progress Placeholder -->
+<svg class="w-32 h-32 transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-variant" cx="50" cy="50" fill="none" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary-container" cx="50" cy="50" fill="none" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="62.8" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-data-display text-data-display text-on-background">3/4</span>
+<span class="font-data-label text-data-label text-on-surface-variant">Horas</span>
+</div>
+</div>
+<p class="text-center font-body-md text-body-md text-on-surface-variant">Falta apenas 1h para a meta!</p>
+</div>
+<!-- Agenda & Próxima Aula (Colspan Full on Mobile, 6 on Desktop) -->
+<div class="col-span-1 md:col-span-6 bg-surface rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.04)] p-md z-10">
+<div class="flex justify-between items-center mb-md">
+<h2 class="font-headline-md text-headline-md text-on-background">Agenda</h2>
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+</div>
+<div class="bg-surface-container-low rounded-lg p-sm border border-outline-variant/30 flex items-start gap-md">
+<div class="bg-primary/10 text-primary rounded-lg p-xs text-center min-w-[60px]">
+<div class="font-data-label text-data-label uppercase">Out</div>
+<div class="font-data-display text-data-display">24</div>
+</div>
+<div>
+<h3 class="font-bold text-on-background">Aula de Koto Intermediário</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Sensei Tanaka</p>
+<p class="font-data-label text-data-label text-on-surface-variant mt-xs flex items-center gap-xs">
+<span class="material-symbols-outlined" style="font-size: 14px;">schedule</span>
+                            14:00 - 15:30
+                        </p>
+</div>
+</div>
+</div>
+<!-- Feed de Comunidade (Colspan Full on Mobile, 6 on Desktop) -->
+<div class="col-span-1 md:col-span-6 bg-surface rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.04)] p-md z-10">
+<div class="flex justify-between items-center mb-md">
+<h2 class="font-headline-md text-headline-md text-on-background">Comunidade</h2>
+<span class="material-symbols-outlined text-secondary">forum</span>
+</div>
+<div class="space-y-sm">
+<div class="flex items-start gap-sm border-b border-outline-variant/20 pb-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center flex-shrink-0 font-bold">NS</div>
+<div>
+<h4 class="font-bold text-on-background text-sm">Festival de Primavera</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm line-clamp-2">Inscrições abertas para as apresentações do Festival de Primavera. Participe com sua turma!</p>
+</div>
+</div>
+<div class="flex items-start gap-sm">
+<div class="w-10 h-10 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center flex-shrink-0 font-bold">ST</div>
+<div>
+<h4 class="font-bold text-on-background text-sm">Dica do Sensei Tanaka</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm line-clamp-2">Lembre-se da postura correta ao dedilhar. A respiração é tão importante quanto o toque.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Nav (Mobile Only) -->
+<nav class="fixed bottom-0 w-full bg-surface-container-highest border-t border-outline-variant/20 flex justify-around items-center py-xs md:hidden z-50 px-container-margin pb-safe">
+<a class="flex flex-col items-center p-xs text-primary font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-data-label text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center p-xs text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">library_music</span>
+<span class="font-data-label text-[10px]">Aulas</span>
+</a>
+<a class="flex flex-col items-center p-xs text-on-surface-variant relative -top-4" href="#">
+<div class="bg-primary text-on-primary rounded-full p-sm shadow-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+<span class="font-data-label text-[10px] mt-1">Prática</span>
+</a>
+<a class="flex flex-col items-center p-xs text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-data-label text-[10px]">Perfil</span>
+</a>
+</nav>
+<!-- Simple JS for illustrative active states in bottom nav -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bottomNavLinks = document.querySelectorAll('nav.fixed.bottom-0 a');
+            bottomNavLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Reset all
+                    bottomNavLinks.forEach(l => {
+                        l.classList.remove('text-primary', 'font-bold');
+                        l.classList.add('text-on-surface-variant');
+                        const icon = l.querySelector('.material-symbols-outlined');
+                        if(!l.querySelector('.bg-primary')) {
+                             icon.style.fontVariationSettings = "'FILL' 0";
+                        }
+                    });
+                    
+                    // Set active
+                    if(!link.querySelector('.bg-primary')) {
+                        link.classList.add('text-primary', 'font-bold');
+                        link.classList.remove('text-on-surface-variant');
+                        link.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 1";
+                    }
+                });
+            });
+        });
+    </script>
+</body></html>

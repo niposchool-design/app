@@ -1,0 +1,210 @@
+/* ============================================================================
+   Nipo Wa — camada de tokens CSS (importar em globals.css APÓS @tailwind utilities)
+   Fonte de verdade: nipo-wa.tokens.json. Estende globals.css sem quebrar o existente.
+   ============================================================================ */
+
+:root {
+  /* Marca */
+  --nw-primary: #dc2626;
+  --nw-primary-hover: #b91c1c;
+  --nw-primary-dark: #991b1b;
+  --nw-sakura: #FF6B9D;
+  --nw-ivory: #fbf7f0;
+  --nw-sumi: #1c1917;
+
+  /* Semântica (light) */
+  --nw-text: #0f172a;
+  --nw-text-secondary: #475569;
+  --nw-text-muted: #94a3b8;
+  --nw-surface: #f8fafc;
+  --nw-surface-raised: #ffffff;
+  --nw-surface-sunken: #f1f5f9;
+  --nw-border: #e2e8f0;
+  --nw-border-strong: #cbd5e1;
+
+  /* Status */
+  --nw-success: #059669;
+  --nw-warning: #d97706;
+  --nw-danger: #dc2626;
+  --nw-info: #0284c7;
+
+  /* Tipografia */
+  --nw-font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+  --nw-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Forma / movimento */
+  --nw-radius: 0.75rem;
+  --nw-radius-lg: 1rem;
+  --nw-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --nw-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --nw-duration: 300ms;
+  --nw-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Papel ativo (default = student/brand). Sobrescrito por [data-role]. */
+  --role-primary: #dc2626;
+  --role-dark: #991b1b;
+  --role-light: #f87171;
+  --role-bg: #fef2f2;
+}
+
+/* ---- Theming por papel: aplicar data-role no <body> ou no shell ---- */
+[data-role="student"] { --role-primary:#dc2626; --role-dark:#991b1b; --role-light:#f87171; --role-bg:#fef2f2; }
+[data-role="teacher"] { --role-primary:#0284c7; --role-dark:#075985; --role-light:#38bdf8; --role-bg:#eff6ff; }
+[data-role="admin"]   { --role-primary:#7c3aed; --role-dark:#6d28d9; --role-light:#a78bfa; --role-bg:#faf5ff; }
+[data-role="family"]  { --role-primary:#d97706; --role-dark:#b45309; --role-light:#fbbf24; --role-bg:#fffbeb; }
+
+/* ---- Dark mode: DESATIVADO por ora ----
+   O app ainda não tem componentes preparados para dark mode; ativar via
+   prefers-color-scheme causava texto escuro sobre superfície escura (.nw-card).
+   Dark mode será um esforço deliberado futuro (com tokens dark testados). */
+
+/* ---- 4º padrão japonês: Kikkō (亀甲) — Família (longevidade/proteção) ---- */
+/* Completa o sistema Asanoha(aluno)/Seigaiha(prof)/Sayagata(admin) do globals.css */
+.bg-pattern-kikko {
+  background-color: #fffbeb;
+  background-image:
+    linear-gradient(30deg, #fef3c7 12%, transparent 12.5%, transparent 87%, #fef3c7 87.5%, #fef3c7),
+    linear-gradient(150deg, #fef3c7 12%, transparent 12.5%, transparent 87%, #fef3c7 87.5%, #fef3c7),
+    linear-gradient(30deg, #fef3c7 12%, transparent 12.5%, transparent 87%, #fef3c7 87.5%, #fef3c7),
+    linear-gradient(150deg, #fef3c7 12%, transparent 12.5%, transparent 87%, #fef3c7 87.5%, #fef3c7);
+  background-size: 24px 42px;
+  background-position: 0 0, 0 0, 12px 21px, 12px 21px;
+}
+
+/* ---- Helpers genéricos por papel (simétrico ao .admin-* legado) ---- */
+.nw-card {
+  background: var(--nw-surface-raised);
+  border: 1px solid var(--nw-border);
+  border-radius: var(--nw-radius-lg);
+  box-shadow: var(--nw-shadow-sm);
+  transition: box-shadow var(--nw-duration) var(--nw-ease), border-color var(--nw-duration) var(--nw-ease);
+}
+.nw-card:hover { box-shadow: var(--nw-shadow-md); border-color: var(--role-light); }
+
+.nw-btn-primary {
+  background: var(--role-primary);
+  color: #fff;
+  border-radius: var(--nw-radius);
+  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: background var(--nw-duration) var(--nw-ease);
+}
+.nw-btn-primary:hover { background: var(--role-dark); }
+
+.nw-badge {
+  display: inline-flex; align-items: center; gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--nw-radius);
+  background: var(--role-bg);
+  color: var(--role-dark);
+  font-size: 0.75rem; font-weight: 600;
+}
+
+/* dados tabulares em mono + tabular-nums */
+.nw-tabular { font-family: var(--nw-font-mono); font-variant-numeric: tabular-nums; }
+
+/* ===== Animações do hero dramático ===== */
+@keyframes nw-petal {
+  0%   { transform: translate(0, -8%) rotate(0deg);   opacity: 0; }
+  12%  { opacity: .85; }
+  100% { transform: translate(60px, 105%) rotate(420deg); opacity: 0; }
+}
+.nw-petal { position: absolute; top: 0; will-change: transform, opacity; animation: nw-petal linear infinite; }
+
+/* notas musicais subindo (combina com a marca: música + nota do logo) */
+@keyframes nw-note {
+  0%   { transform: translateY(0) rotate(-8deg);     opacity: 0; }
+  18%  { opacity: .55; }
+  82%  { opacity: .45; }
+  100% { transform: translateY(-86vh) translateX(28px) rotate(10deg); opacity: 0; }
+}
+.nw-note { position: absolute; bottom: 4%; color: #ffffff; line-height: 1; will-change: transform, opacity; animation: nw-note linear infinite; }
+
+@keyframes nw-sun-pulse {
+  0%, 100% { transform: scale(1);    opacity: .95; }
+  50%      { transform: scale(1.035); opacity: 1; }
+}
+.nw-sun-pulse { animation: nw-sun-pulse 7s ease-in-out infinite; transform-origin: center; }
+
+@keyframes nw-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.nw-rise { animation: nw-rise .9s cubic-bezier(0.16,1,0.3,1) both; }
+.nw-rise-1 { animation-delay: .05s; }
+.nw-rise-2 { animation-delay: .18s; }
+.nw-rise-3 { animation-delay: .32s; }
+.nw-rise-4 { animation-delay: .46s; }
+
+@keyframes nw-twinkle {
+  0%, 100% { opacity: .12; }
+  50%      { opacity: .8; }
+}
+.nw-twinkle { animation: nw-twinkle ease-in-out infinite; }
+
+@keyframes nw-drift {
+  0%   { transform: translateX(-22px); }
+  50%  { transform: translateX(22px); }
+  100% { transform: translateX(-22px); }
+}
+.nw-mist { animation: nw-drift 18s ease-in-out infinite; }
+
+@keyframes nw-scene-in {
+  from { opacity: 0; transform: scale(1.05); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.nw-scene-in { animation: nw-scene-in 1.6s cubic-bezier(0.16,1,0.3,1) both; transform-origin: center 60%; }
+
+/* scroll-reveal (controlado por IntersectionObserver no componente Reveal) */
+.nw-reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(0.16,1,0.3,1), transform .8s cubic-bezier(0.16,1,0.3,1); }
+.nw-reveal-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nw-petal, .nw-note, .nw-sun-pulse, .nw-twinkle, .nw-mist, .nw-scene-in { animation: none; }
+  .nw-rise, .nw-scene-in { animation: none; opacity: 1; transform: none; }
+  .nw-note { opacity: 0; }
+  .nw-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ============================================================================
+   Refinamentos derivados do Stitch (v1.1) — "Paper & Ink" / elevação tonal
+   ============================================================================ */
+:root {
+  /* Superfícies tonais (estilo Material 3 — hierarquia por tom, não sombra pesada) */
+  --nw-surface-paper: #fbf7f0;        /* ivory washi (base quente) */
+  --nw-surface-container-low: #f7f3ec;
+  --nw-surface-container: #f1ede6;
+  --nw-surface-container-high: #ebe8e1;
+  --nw-on-surface-variant: #5c403c;   /* texto secundário quente */
+  --nw-outline: #e6bdb8;              /* borda quente sutil */
+  /* Sombra difusa suave (cartões "Paper & Ink") */
+  --nw-shadow-soft: 0 4px 20px rgba(0,0,0,0.04);
+  /* Base de espaçamento 8px (grid 12 col desktop / 4 col mobile) */
+  --nw-space: 8px;
+}
+
+/* Enso Badge — círculo vermelho com nota musical (conquistas / iniciar prática) */
+.nw-enso {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 3rem; height: 3rem; border-radius: 9999px;
+  background: var(--role-primary); color: #fff;
+  box-shadow: var(--nw-shadow-soft);
+}
+
+/* Progress como pincelada (brush stroke horizontal) */
+.nw-progress { height: 0.5rem; border-radius: 9999px; background: var(--nw-surface-container-high); overflow: hidden; }
+.nw-progress > span { display: block; height: 100%; border-radius: 9999px; background: var(--role-primary); }
+
+/* Input: borda 2px que vira cor do papel no foco; foco 3px offset */
+.nw-input {
+  width: 100%; border: 2px solid var(--nw-border); border-radius: var(--nw-radius);
+  padding: 0.625rem 0.875rem; background: var(--nw-surface-raised); color: var(--nw-text);
+  transition: border-color var(--nw-duration) var(--nw-ease);
+}
+.nw-input:focus { outline: none; border-color: var(--role-primary); }
+.nw-focusable:focus-visible { outline: 3px solid var(--role-primary); outline-offset: 2px; }
+
+/* Divisor com padrão (faixa fina do padrão do papel ativo) */
+.nw-divider { height: 6px; border: none; opacity: 0.5; }
+.nw-divider[data-role-pattern="teacher"] { background-image: inherit; }

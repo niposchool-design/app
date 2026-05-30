@@ -78,7 +78,7 @@ export default function PortfolioPage() {
                 {p.description && <p className="text-sm text-gray-500 line-clamp-2 flex-1">{p.description}</p>}
                 <div className="mt-3 pt-3 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400">
                   <span>{p.student_name}</span>
-                  {p.grade !== null && <span className="font-bold text-gray-600">Nota: {p.grade}</span>}
+                  {p.grade !== null && <span className="font-bold text-gray-600">Nota: <span className="nw-tabular">{p.grade}</span></span>}
                 </div>
               </div>
             </Link>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nipo School - Dashboard do Professor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e6e2db",
+                        "inverse-surface": "#31302c",
+                        "secondary-fixed-dim": "#93ccff",
+                        "surface-variant": "#e6e2db",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#ebe8e1",
+                        "secondary-fixed": "#cce5ff",
+                        "on-tertiary-fixed": "#2f1500",
+                        "primary": "#b70011",
+                        "tertiary-container": "#ad5d00",
+                        "inverse-on-surface": "#f4f0e9",
+                        "primary-fixed-dim": "#ffb4ab",
+                        "primary-container": "#dc2626",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "tertiary": "#894900",
+                        "surface-bright": "#fdf9f2",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#f1ede6",
+                        "surface": "#fdf9f2",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-background": "#1c1c18",
+                        "secondary": "#006398",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "on-secondary-container": "#00476e",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#ffdad6",
+                        "background": "#fdf9f2",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#5c403c",
+                        "surface-tint": "#bf0715",
+                        "on-primary-container": "#fff6f5",
+                        "outline": "#916f6b",
+                        "on-surface": "#1c1c18",
+                        "on-secondary-fixed": "#001d31",
+                        "on-primary-fixed": "#410002",
+                        "tertiary-fixed": "#ffdcc3",
+                        "surface-container-low": "#f7f3ec",
+                        "outline-variant": "#e6bdb8",
+                        "on-tertiary-container": "#fff6f2",
+                        "surface-dim": "#dddad3",
+                        "inverse-primary": "#ffb4ab",
+                        "on-primary-fixed-variant": "#93000b",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#5bb8fe",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "teacher-primary": "#0284c7",
+                        "teacher-primary-container": "#e0f2fe",
+                        "teacher-on-primary-container": "#0369a1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "xl": "32px",
+                        "unit": "4px",
+                        "container-margin": "24px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "data-display": ["JetBrains Mono"],
+                        "headline-xl-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "data-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "data-display": ["20px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-xl-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "800" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #fbf7f0;
+            /* Seigaiha Pattern SVG - very subtle */
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%230284c7' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .brush-divider {
+            height: 4px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 4' preserveAspectRatio='none'%3E%3Cpath d='M0,2 Q25,0 50,2 T100,2' stroke='%230284c7' stroke-width='2' fill='none' stroke-linecap='round' style='opacity: 0.3;'/%3E%3C/svg%3E") repeat-x;
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden text-on-surface">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-low dark:bg-surface-container border-r border-outline-variant/30 shadow-sm flex flex-col h-screen sticky top-0 p-md space-y-md w-64 rounded-r-xl z-20">
+<!-- Header -->
+<div class="flex items-center gap-sm mb-lg px-xs">
+<img alt="Enso Badge Music Note" class="w-10 h-10 rounded-full object-cover" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div>
+<h1 class="font-headline-md text-headline-md text-teacher-primary leading-tight">Portal do Professor</h1>
+<p class="font-data-label text-data-label text-on-surface-variant">Padrão Seigaiha Ativo</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 space-y-sm">
+<a class="flex items-center gap-sm px-md py-sm bg-teacher-primary-container text-teacher-on-primary-container rounded-lg font-bold scale-98 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-body-md text-body-md">Painel</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">track_changes</span>
+<span class="font-body-md text-body-md">Metas</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">workspace_premium</span>
+<span class="font-body-md text-body-md">Conquistas</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-body-md text-body-md">Agenda</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-body-md text-body-md">Suporte</span>
+</a>
+</div>
+<!-- CTA & Footer -->
+<div class="mt-auto space-y-md">
+<button class="w-full py-sm px-md bg-teacher-primary text-white rounded-lg font-body-md font-bold shadow-sm hover:shadow-md transition-shadow">
+                Iniciar Prática
+            </button>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:bg-surface-variant/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md text-body-md">Sair</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto px-container-margin py-xl flex flex-col gap-xl">
+<!-- Header Section -->
+<header class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-xl text-headline-xl text-on-surface">Visão Geral</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Bem-vindo de volta, Sensei. Aqui está o resumo de hoje.</p>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container-lowest border-2 border-outline-variant rounded-lg text-teacher-primary font-body-md hover:bg-surface-variant transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">add</span>
+                    Nova aula
+                </button>
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container-lowest border-2 border-outline-variant rounded-lg text-teacher-primary font-body-md hover:bg-surface-variant transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">fact_check</span>
+                    Registrar presença
+                </button>
+</div>
+</header>
+<!-- KPIs Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-md">
+<div class="bg-surface-container-lowest p-lg rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-md">
+<span class="material-symbols-outlined text-teacher-primary">groups</span>
+</div>
+<div>
+<p class="font-data-label text-data-label text-on-surface-variant uppercase">Minhas turmas</p>
+<p class="font-data-display text-data-display text-on-surface text-3xl mt-xs">8</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-md">
+<span class="material-symbols-outlined text-teacher-primary">person</span>
+</div>
+<div>
+<p class="font-data-label text-data-label text-on-surface-variant uppercase">Alunos ativos</p>
+<p class="font-data-display text-data-display text-on-surface text-3xl mt-xs">124</p>
+</div>
+</div>
+<div class="bg-teacher-primary-container p-lg rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border border-teacher-primary/20 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-teacher-primary/10 rounded-full blur-xl"></div>
+<div class="flex justify-between items-start mb-md relative z-10">
+<span class="material-symbols-outlined text-teacher-primary">assignment_late</span>
+<span class="bg-teacher-primary text-white text-xs font-bold px-2 py-1 rounded-full animate-pulse">Urgente</span>
+</div>
+<div class="relative z-10">
+<p class="font-data-label text-data-label text-teacher-on-primary-container uppercase">Submissões a avaliar</p>
+<p class="font-data-display text-data-display text-teacher-primary text-3xl mt-xs">15</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-md">
+<span class="material-symbols-outlined text-teacher-primary">timeline</span>
+</div>
+<div>
+<p class="font-data-label text-data-label text-on-surface-variant uppercase">Frequência média</p>
+<div class="flex items-end gap-2 mt-xs">
+<p class="font-data-display text-data-display text-on-surface text-3xl">92%</p>
+<span class="text-green-600 text-sm font-medium mb-1">↑ 2%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Content Area: Split Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-xl">
+<!-- Fila de Avaliação (Takes up 2 columns) -->
+<section class="lg:col-span-2 bg-surface-container-lowest rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20 overflow-hidden">
+<div class="p-lg border-b border-outline-variant/20 flex justify-between items-center bg-surface-bright">
+<h3 class="font-headline-md text-headline-md text-on-surface">Fila de Avaliação</h3>
+<button class="text-teacher-primary font-body-md hover:underline">Ver todas</button>
+</div>
+<div class="p-0">
+<ul class="divide-y divide-outline-variant/20">
+<li class="p-md hover:bg-surface-variant/20 transition-colors flex justify-between items-center group cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-teacher-primary-container text-teacher-primary flex items-center justify-center font-bold">
+                                    AK
+                                </div>
+<div>
+<p class="font-body-lg text-body-lg text-on-surface font-semibold">Akira Tanaka</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Escala Pentatônica - Vídeo Prática</p>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="text-right">
+<p class="font-data-label text-data-label text-error uppercase">Vence hoje</p>
+<p class="font-data-label text-data-label text-on-surface-variant">14:00</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 bg-teacher-primary text-white px-4 py-2 rounded-lg font-body-md transition-opacity">Avaliar</button>
+</div>
+</li>
+<li class="p-md hover:bg-surface-variant/20 transition-colors flex justify-between items-center group cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-teacher-primary-container text-teacher-primary flex items-center justify-center font-bold">
+                                    JS
+                                </div>
+<div>
+<p class="font-body-lg text-body-lg text-on-surface font-semibold">Juliana Silva</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Leitura Rítmica Nível 2</p>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="text-right">
+<p class="font-data-label text-data-label text-amber-600 uppercase">Amanhã</p>
+<p class="font-data-label text-data-label text-on-surface-variant">10:00</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 bg-teacher-primary text-white px-4 py-2 rounded-lg font-body-md transition-opacity">Avaliar</button>
+</div>
+</li>
+<li class="p-md hover:bg-surface-variant/20 transition-colors flex justify-between items-center group cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-teacher-primary-container text-teacher-primary flex items-center justify-center font-bold">
+                                    LM
+                                </div>
+<div>
+<p class="font-body-lg text-body-lg text-on-surface font-semibold">Lucas Mendes</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Composição Livre - Áudio</p>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="text-right">
+<p class="font-data-label text-data-label text-on-surface-variant uppercase">Em 2 dias</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 bg-teacher-primary text-white px-4 py-2 rounded-lg font-body-md transition-opacity">Avaliar</button>
+</div>
+</li>
+</ul>
+</div>
+</section>
+<!-- Side Panel: Turmas & Atalhos -->
+<div class="flex flex-col gap-lg">
+<!-- Atalhos -->
+<section class="bg-surface-container-lowest p-lg rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-md">Ações Rápidas</h3>
+<div class="grid grid-cols-2 gap-sm">
+<button class="flex flex-col items-center justify-center gap-sm p-md bg-surface-container-low hover:bg-teacher-primary-container rounded-xl transition-colors border border-outline-variant/30 text-teacher-primary">
+<span class="material-symbols-outlined text-2xl">campaign</span>
+<span class="font-data-label text-data-label text-center">Criar Desafio</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-sm p-md bg-surface-container-low hover:bg-teacher-primary-container rounded-xl transition-colors border border-outline-variant/30 text-teacher-primary">
+<span class="material-symbols-outlined text-2xl">message</span>
+<span class="font-data-label text-data-label text-center">Mensagem Geral</span>
+</button>
+</div>
+</section>
+<!-- Minhas Turmas -->
+<section class="bg-surface-container-lowest p-lg rounded-2xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)] border border-outline-variant/20 flex-1">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-md">Turmas do Dia</h3>
+<div class="space-y-md">
+<div class="p-md rounded-xl border border-outline-variant/30 hover:border-teacher-primary/50 transition-colors">
+<div class="flex justify-between items-start mb-sm">
+<h4 class="font-body-lg text-body-lg font-semibold text-on-surface">Iniciação Musical A</h4>
+<span class="bg-surface-container-high px-2 py-1 rounded text-xs font-data-label">14:00</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mb-sm">Sala 3 • 12 alunos</p>
+<div class="w-full bg-surface-variant rounded-full h-1.5">
+<div class="bg-teacher-primary h-1.5 rounded-full" style="width: 100%"></div>
+</div>
+<p class="text-xs text-right mt-1 text-on-surface-variant font-data-label">Pronta para iniciar</p>
+</div>
+<div class="p-md rounded-xl border border-outline-variant/30 hover:border-teacher-primary/50 transition-colors opacity-70">
+<div class="flex justify-between items-start mb-sm">
+<h4 class="font-body-lg text-body-lg font-semibold text-on-surface">Violão Intermediário</h4>
+<span class="bg-surface-container-high px-2 py-1 rounded text-xs font-data-label">16:30</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Sala 1 • 8 alunos</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</body></html>

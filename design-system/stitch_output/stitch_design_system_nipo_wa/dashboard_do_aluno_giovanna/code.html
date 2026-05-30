@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard do Aluno - Nipo School</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        /* Subtle Asanoha Pattern Overlay */
+        .bg-asanoha {
+            background-color: #fdf9f2;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0l20 11.5v23L20 40 0 34.5v-23L20 0zm0 2.3L2 12.7v20.6L20 37.7l18-10.4V12.7L20 2.3z' fill='%23dc2626' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        /* Sumi-e Brush Stroke Backgrounds */
+        .sumie-brush-1 {
+            position: relative;
+        }
+        .sumie-brush-1::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -40px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(220,38,38,0.08) 0%, rgba(220,38,38,0) 70%);
+            z-index: 0;
+            pointer-events: none;
+            border-radius: 50%;
+            filter: blur(10px);
+        }
+
+        /* Hide scrollbar for horizontal scrolling areas */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#dc2626",
+                        "background": "#fdf9f2",
+                        "on-secondary-container": "#00476e",
+                        "primary-fixed": "#ffdad6",
+                        "on-surface": "#1c1c18",
+                        "inverse-surface": "#31302c",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#dddad3",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#bf0715",
+                        "surface-container": "#f1ede6",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#ffb4ab",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#410002",
+                        "surface-container-highest": "#e6e2db",
+                        "inverse-on-surface": "#f4f0e9",
+                        "on-tertiary-fixed": "#2f1500",
+                        "on-primary-fixed-variant": "#93000b",
+                        "on-primary-container": "#fff6f5",
+                        "on-tertiary-container": "#fff6f2",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "surface-container-high": "#ebe8e1",
+                        "on-background": "#1c1c18",
+                        "outline-variant": "#e6bdb8",
+                        "secondary-container": "#5bb8fe",
+                        "tertiary-fixed": "#ffdcc3",
+                        "secondary-fixed": "#cce5ff",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "surface": "#fdf9f2",
+                        "secondary-fixed-dim": "#93ccff",
+                        "on-surface-variant": "#5c403c",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "tertiary": "#894900",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#ad5d00",
+                        "secondary": "#006398",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#001d31",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#fdf9f2",
+                        "primary": "#dc2626", /* Adjusted to match prompt #dc2626 */
+                        "outline": "#916f6b",
+                        "surface-container-low": "#f7f3ec",
+                        "surface-variant": "#e6e2db",
+                        "inverse-primary": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "16px", /* 16px radius requested */
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "container-margin": "16px", /* Mobile optimized */
+                        "unit": "4px",
+                        "md": "16px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "headline-md": ["Inter", "sans-serif"],
+                        "data-label": ["JetBrains Mono", "monospace"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "data-display": ["JetBrains Mono", "monospace"],
+                        "headline-xl-mobile": ["Inter", "sans-serif"],
+                        "headline-xl": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "data-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "data-display": ["24px", {"lineHeight": "32px", "fontWeight": "600"}], /* Increased for emphasis */
+                        "headline-xl-mobile": ["32px", {"lineHeight": "38px", "fontWeight": "800"}],
+                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    },
+                    "boxShadow": {
+                        "soft": "0px 4px 20px rgba(0,0,0,0.04)",
+                        "interactive": "0px 8px 24px rgba(220,38,38,0.15)"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-asanoha text-on-surface min-h-screen pb-24 md:hidden font-body-md">
+<!-- Header Section -->
+<header class="px-container-margin pt-xl pb-md flex justify-between items-start sumie-brush-1">
+<div class="z-10">
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface">Olá, Giovanna! 🎵</h1>
+<p class="text-on-surface-variant font-body-md mt-xs">Pronta para a próxima melodia?</p>
+</div>
+<div class="flex flex-col items-center bg-surface-container-lowest shadow-soft rounded-xl p-sm z-10 border border-outline-variant/30">
+<span class="material-symbols-outlined text-primary fill">local_fire_department</span>
+<span class="font-data-display text-data-display text-primary">12</span>
+<span class="font-data-label text-data-label text-on-surface-variant uppercase text-[10px]">Dias</span>
+</div>
+</header>
+<main class="px-container-margin space-y-xl z-10 relative">
+<!-- KPI Grid -->
+<section class="grid grid-cols-2 gap-sm">
+<!-- Pts -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-soft flex flex-col justify-between border border-outline-variant/10 hover:-translate-y-1 transition-transform duration-200 cursor-default">
+<div class="flex justify-between items-start mb-sm">
+<span class="material-symbols-outlined text-secondary">stars</span>
+</div>
+<div>
+<div class="font-data-display text-data-display text-on-surface">840</div>
+<div class="font-body-md text-sm text-on-surface-variant">Pontos</div>
+</div>
+</div>
+<!-- Aulas -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-soft flex flex-col justify-between border border-outline-variant/10 hover:-translate-y-1 transition-transform duration-200 cursor-default">
+<div class="flex justify-between items-start mb-sm">
+<span class="material-symbols-outlined text-secondary-container text-secondary">check_circle</span>
+</div>
+<div>
+<div class="font-data-display text-data-display text-on-surface">24</div>
+<div class="font-body-md text-sm text-on-surface-variant">Aulas concluídas</div>
+</div>
+</div>
+<!-- Conquistas -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-soft flex flex-col justify-between border border-outline-variant/10 hover:-translate-y-1 transition-transform duration-200 cursor-default">
+<div class="flex justify-between items-start mb-sm">
+<span class="material-symbols-outlined text-tertiary">workspace_premium</span>
+</div>
+<div>
+<div class="font-data-display text-data-display text-on-surface">5</div>
+<div class="font-body-md text-sm text-on-surface-variant">Conquistas</div>
+</div>
+</div>
+<!-- Minutos -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-soft flex flex-col justify-between border border-outline-variant/10 hover:-translate-y-1 transition-transform duration-200 cursor-default">
+<div class="flex justify-between items-start mb-sm">
+<span class="material-symbols-outlined text-tertiary-container">timer</span>
+</div>
+<div>
+<div class="font-data-display text-data-display text-on-surface">320</div>
+<div class="font-body-md text-sm text-on-surface-variant">Minutos praticados</div>
+</div>
+</div>
+</section>
+<!-- Próximo Passo CTA -->
+<section>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-md">Próximo passo</h2>
+<div class="bg-surface-container-lowest rounded-xl shadow-soft p-md border border-outline-variant/20 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-xl -mr-10 -mt-10"></div>
+<div class="flex items-start gap-md relative z-10">
+<div class="bg-primary/10 p-sm rounded-lg flex-shrink-0">
+<span class="material-symbols-outlined text-primary fill text-3xl">music_note</span>
+</div>
+<div>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface">Escalas Maiores</h3>
+<p class="font-body-md text-sm text-on-surface-variant mt-xs mb-md">Prática sugerida pela IA para fortalecer sua técnica de dedilhado.</p>
+<button class="bg-primary text-on-primary font-body-md font-medium py-2 px-xl rounded-xl shadow-interactive hover:bg-surface-tint focus:ring-4 focus:ring-primary/30 transition-all active:scale-95 w-full md:w-auto">
+                            Começar
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Minhas Aulas Hoje -->
+<section>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-md">Minhas aulas de hoje</h2>
+<div class="space-y-md">
+<!-- Aula Card 1 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant/10">
+<div class="flex justify-between items-center mb-sm">
+<h4 class="font-body-md font-bold text-on-surface">Ritmo Japonês Tradicional</h4>
+<span class="font-data-label text-data-label text-secondary">14:00</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 75%;"></div>
+</div>
+<div class="mt-xs text-right font-data-label text-[10px] text-on-surface-variant">75% Concluído</div>
+</div>
+<!-- Aula Card 2 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant/10">
+<div class="flex justify-between items-center mb-sm">
+<h4 class="font-body-md font-bold text-on-surface">Leitura Dinâmica</h4>
+<span class="font-data-label text-data-label text-on-surface-variant">16:30</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-outline h-full rounded-full" style="width: 0%;"></div>
+</div>
+<div class="mt-xs text-right font-data-label text-[10px] text-on-surface-variant">Não iniciado</div>
+</div>
+</div>
+</section>
+<!-- Desafios -->
+<section>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-md">Desafios</h2>
+<div class="flex gap-md overflow-x-auto no-scrollbar pb-sm -mx-container-margin px-container-margin">
+<!-- Desafio 1 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant/10 min-w-[200px] flex-shrink-0">
+<h4 class="font-body-md font-bold text-on-surface mb-xs">Toque de Mestre</h4>
+<p class="font-body-md text-sm text-on-surface-variant mb-sm">Acertar 100 notas sem errar.</p>
+<div class="flex gap-1 text-tertiary">
+<span class="material-symbols-outlined fill text-sm">star</span>
+<span class="material-symbols-outlined fill text-sm">star</span>
+<span class="material-symbols-outlined fill text-sm">star</span>
+</div>
+</div>
+<!-- Desafio 2 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant/10 min-w-[200px] flex-shrink-0">
+<h4 class="font-body-md font-bold text-on-surface mb-xs">Semana Perfeita</h4>
+<p class="font-body-md text-sm text-on-surface-variant mb-sm">Praticar 7 dias seguidos.</p>
+<div class="flex gap-1 text-tertiary">
+<span class="material-symbols-outlined fill text-sm">star</span>
+<span class="material-symbols-outlined fill text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+</div>
+<!-- Desafio 3 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-soft border border-outline-variant/10 min-w-[200px] flex-shrink-0">
+<h4 class="font-body-md font-bold text-on-surface mb-xs">Explorador</h4>
+<p class="font-body-md text-sm text-on-surface-variant mb-sm">Testar um novo instrumento.</p>
+<div class="flex gap-1 text-tertiary">
+<span class="material-symbols-outlined fill text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full bg-surface/90 backdrop-blur-md pb-safe pt-sm border-t border-outline-variant/20 z-50">
+<div class="flex justify-around items-center px-container-margin py-xs max-w-md mx-auto">
+<!-- Dashboard (Active) -->
+<button class="flex flex-col items-center p-2 group text-primary">
+<div class="px-4 py-1 rounded-full bg-primary-container/20 mb-1">
+<span class="material-symbols-outlined fill">dashboard</span>
+</div>
+<span class="font-data-label text-[10px] font-bold">Painel</span>
+</button>
+<!-- Aulas -->
+<button class="flex flex-col items-center p-2 group text-on-surface-variant hover:text-primary transition-colors">
+<div class="px-4 py-1 rounded-full group-hover:bg-surface-variant transition-colors mb-1">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<span class="font-data-label text-[10px]">Aulas</span>
+</button>
+<!-- Prática (Enso Badge Style Trigger) -->
+<div class="relative -top-5">
+<button aria-label="Iniciar Prática" class="bg-primary text-on-primary p-3 rounded-full shadow-interactive flex items-center justify-center hover:scale-105 transition-transform border-4 border-surface">
+<span class="material-symbols-outlined fill text-2xl">play_arrow</span>
+</button>
+</div>
+<!-- Prática Nav Item -->
+<button class="flex flex-col items-center p-2 group text-on-surface-variant hover:text-primary transition-colors">
+<div class="px-4 py-1 rounded-full group-hover:bg-surface-variant transition-colors mb-1">
+<span class="material-symbols-outlined">music_note</span>
+</div>
+<span class="font-data-label text-[10px]">Prática</span>
+</button>
+<!-- Perfil -->
+<button class="flex flex-col items-center p-2 group text-on-surface-variant hover:text-primary transition-colors">
+<div class="px-4 py-1 rounded-full group-hover:bg-surface-variant transition-colors mb-1">
+<span class="material-symbols-outlined">person</span>
+</div>
+<span class="font-data-label text-[10px]">Perfil</span>
+</button>
+</div>
+</nav>
+<!-- Safe area padding for newer iOS devices -->
+<style>
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 16px); }
+    </style>
+</body></html>

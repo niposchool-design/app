@@ -615,7 +615,7 @@ export default function LessonDetailPage() {
       <div className={`bg-gradient-to-br ${levelColors.gradient} rounded-2xl p-8 text-white shadow-xl`}>
         <div className="flex items-center gap-3 mb-3 flex-wrap">
           {lesson.number !== null && (
-            <span className="bg-white/20 px-3 py-1 rounded-full text-xs font-bold">Aula {lesson.number}</span>
+            <span className="bg-white/20 px-3 py-1 rounded-full text-xs font-bold nw-tabular">Aula {lesson.number}</span>
           )}
           <span className={`px-3 py-1 rounded-full text-xs font-bold ${STATUS_COLORS[lesson.status] || 'bg-white/20'}`}>
             {STATUS_LABELS[lesson.status] || lesson.status}
@@ -634,7 +634,7 @@ export default function LessonDetailPage() {
             <span className="flex items-center gap-1"><User className="w-4 h-4" />{lesson.teacher_name}</span>
           )}
           {lesson.duration_minutes && (
-            <span className="flex items-center gap-1"><Clock className="w-4 h-4" />{lesson.duration_minutes} min</span>
+            <span className="flex items-center gap-1 nw-tabular"><Clock className="w-4 h-4" />{lesson.duration_minutes} min</span>
           )}
           {lesson.scheduled_date && (
             <span className="flex items-center gap-1">
@@ -931,13 +931,13 @@ export default function LessonDetailPage() {
               <div className="space-y-2">
                 {criteria.map((crit, i) => (
                   <div key={crit.id} className="flex items-start gap-3 p-3 rounded-lg bg-purple-50/50 border border-purple-100">
-                    <span className="w-6 h-6 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                    <span className="w-6 h-6 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 nw-tabular">
                       {i + 1}
                     </span>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-gray-900">{crit.name}</p>
                       {crit.description && <p className="text-xs text-gray-500 mt-0.5">{crit.description}</p>}
-                      {crit.weight > 0 && <p className="text-xs text-purple-600 mt-0.5">Peso: {crit.weight}</p>}
+                      {crit.weight > 0 && <p className="text-xs text-purple-600 mt-0.5">Peso: <span className="nw-tabular">{crit.weight}</span></p>}
                     </div>
                     <PermissionGate permission="lessons.create">
                       <button onClick={() => { setEditingCriteria(crit); setShowCriteriaForm(false) }} className="text-gray-400 hover:text-purple-600 p-1" title="Editar">
@@ -1005,7 +1005,7 @@ export default function LessonDetailPage() {
                             <p className="text-sm font-medium text-gray-900">{act.title}</p>
                             <div className="flex items-center gap-2">
                               {act.duration_minutes && (
-                                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full flex-shrink-0">
+                                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full flex-shrink-0 nw-tabular">
                                   {act.duration_minutes} min
                                 </span>
                               )}
@@ -1105,7 +1105,7 @@ export default function LessonDetailPage() {
                       <ClipboardCheck className="w-5 h-5 text-indigo-500" />
                       Checklist
                     </h2>
-                    <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                    <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full nw-tabular">
                       {checklistDone}/{checklistTotal}
                     </span>
                   </div>
@@ -1167,7 +1167,7 @@ export default function LessonDetailPage() {
                 <div className="bg-white rounded-xl border border-gray-100 p-6">
                   <h2 className="font-bold text-gray-900 flex items-center gap-2 mb-3">
                     <ClipboardCheck className="w-5 h-5 text-indigo-500" />
-                    Checklist ({checklistDone}/{checklistTotal})
+                    Checklist (<span className="nw-tabular">{checklistDone}/{checklistTotal}</span>)
                   </h2>
                   <div className="space-y-1">
                     {checklists.map(cl => (

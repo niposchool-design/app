@@ -66,7 +66,7 @@ export default function CoursesPage() {
                   <span>{course.teacher_name || 'Sem professor'}</span>
                   <span className="flex items-center gap-1">
                     <Users className="w-3 h-3" />
-                    {course.active_students} alunos
+                    <span className="nw-tabular">{course.active_students}</span> alunos
                   </span>
                 </div>
               </div>
