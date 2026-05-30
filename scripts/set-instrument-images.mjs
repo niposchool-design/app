@@ -18,14 +18,6 @@ const MAP = [
   ['Saxofone Soprano', 'saxofone-soprano'],
   ['Saxofone Barítono', 'saxofone-baritono'],
   ['Clarinete', 'clarinete'],
-  ['Clarinete Baixo', 'clarinete-baixo'],
-  ['Oboé', 'oboe'],
-  ['Corne Inglês', 'corne-ingles'],
-  ['Fagote', 'fagote'],
-  ['Contrafagote', 'contrafagote'],
-  ['Flauta', 'flauta'],
-  ['Flauta Doce (Recorder)', 'flauta-doce'],
-  ['Piccolo', 'piccolo'],
 ]
 
 const esc = s => s.replace(/'/g, "''")
