@@ -1,0 +1,29 @@
+﻿ordem,instrumento,slug,variacao,detalhe,arquivo,origem
+1,Saxofone,saxofone,instrumento_completo,a brass alto saxophone,imagens/01_saxofone_instrumento_completo.png,recorte_da_collage_gerada
+2,Saxofone,saxofone,macro_detalhe,the keys and curved bell of a saxophone,imagens/02_saxofone_macro_detalhe.png,recorte_da_collage_gerada
+3,Saxofone Alto,saxofone-alto,instrumento_completo,a brass alto saxophone,imagens/03_saxofone-alto_instrumento_completo.png,recorte_da_collage_gerada
+4,Saxofone Alto,saxofone-alto,macro_detalhe,the pearl key buttons of an alto saxophone,imagens/04_saxofone-alto_macro_detalhe.png,recorte_da_collage_gerada
+5,Saxofone Tenor,saxofone-tenor,instrumento_completo,a brass tenor saxophone with wide bow,imagens/05_saxofone-tenor_instrumento_completo.png,recorte_da_collage_gerada
+6,Saxofone Tenor,saxofone-tenor,macro_detalhe,the bell and keys of a tenor saxophone,imagens/06_saxofone-tenor_macro_detalhe.png,recorte_da_collage_gerada
+7,Saxofone Soprano,saxofone-soprano,instrumento_completo,a straight brass soprano saxophone,imagens/07_saxofone-soprano_instrumento_completo.png,recorte_da_collage_gerada
+8,Saxofone Soprano,saxofone-soprano,macro_detalhe,the upper keys of a straight soprano saxophone,imagens/08_saxofone-soprano_macro_detalhe.png,recorte_da_collage_gerada
+9,Saxofone Barítono,saxofone-baritono,instrumento_completo,a large brass baritone saxophone with tall curved neck,imagens/09_saxofone-baritono_instrumento_completo.png,recorte_da_collage_gerada
+10,Saxofone Barítono,saxofone-baritono,macro_detalhe,the large bow and bell of a baritone saxophone,imagens/10_saxofone-baritono_macro_detalhe.png,recorte_da_collage_gerada
+11,Clarinete,clarinete,instrumento_completo,a black grenadilla-wood clarinet with silver keys,imagens/11_clarinete_instrumento_completo.png,recorte_da_collage_gerada
+12,Clarinete,clarinete,macro_detalhe,the silver keys and tone holes of a clarinet,imagens/12_clarinete_macro_detalhe.png,recorte_da_collage_gerada
+13,Clarinete Baixo,clarinete-baixo,instrumento_completo,a bass clarinet with curved metal neck and upturned bell,imagens/13_clarinete-baixo_instrumento_completo.png,recorte_da_collage_gerada
+14,Clarinete Baixo,clarinete-baixo,macro_detalhe,the upturned metal bell of a bass clarinet,imagens/14_clarinete-baixo_macro_detalhe.png,recorte_da_collage_gerada
+15,Oboé,oboe,instrumento_completo,a black wooden oboe with silver keys,imagens/15_oboe_instrumento_completo.png,recorte_da_collage_gerada
+16,Oboé,oboe,macro_detalhe,the silver keys and reed of an oboe,imagens/16_oboe_macro_detalhe.png,recorte_da_collage_gerada
+17,Corne Inglês,corne-ingles,instrumento_completo,a cor anglais English horn with bulbous bell,imagens/17_corne-ingles_instrumento_completo.png,recorte_da_collage_gerada
+18,Corne Inglês,corne-ingles,macro_detalhe,the bulbous bell of a cor anglais,imagens/18_corne-ingles_macro_detalhe.png,recorte_da_collage_gerada
+19,Fagote,fagote,instrumento_completo,a tall wooden bassoon with metal bocal,imagens/19_fagote_instrumento_completo.png,recorte_da_collage_gerada
+20,Fagote,fagote,macro_detalhe,the bocal and wooden body of a bassoon,imagens/20_fagote_macro_detalhe.png,recorte_da_collage_gerada
+21,Contrafagote,contrafagote,instrumento_completo,a large folded wooden contrabassoon,imagens/21_contrafagote_instrumento_completo.png,recorte_da_collage_gerada
+22,Contrafagote,contrafagote,macro_detalhe,the folded tubing of a contrabassoon,imagens/22_contrafagote_macro_detalhe.png,recorte_da_collage_gerada
+23,Flauta,flauta,instrumento_completo,a silver transverse concert flute,imagens/23_flauta_instrumento_completo.png,recorte_da_collage_gerada
+24,Flauta,flauta,macro_detalhe,the keys and embouchure hole of a silver flute,imagens/24_flauta_macro_detalhe.png,recorte_da_collage_gerada
+25,Flauta Doce,flauta-doce,instrumento_completo,"a wooden soprano recorder, vertical with finger holes",imagens/25_flauta-doce_instrumento_completo.png,recorte_da_collage_gerada
+26,Flauta Doce,flauta-doce,macro_detalhe,the finger holes of a wooden recorder,imagens/26_flauta-doce_macro_detalhe.png,recorte_da_collage_gerada
+27,Piccolo,piccolo,instrumento_completo,a small silver piccolo flute,imagens/27_piccolo_instrumento_completo.png,recorte_da_collage_gerada
+28,Piccolo,piccolo,macro_detalhe,the head joint of a silver piccolo,imagens/28_piccolo_macro_detalhe.png,recorte_da_collage_gerada
