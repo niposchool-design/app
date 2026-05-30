@@ -72,8 +72,8 @@ export default function InstrumentsPage() {
                   <Link key={instrument.id} href={`/instruments/${instrument.id}`} className="group">
                     <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg hover:border-purple-200 transition-all">
                       <div className="aspect-square bg-gradient-to-br from-purple-50 to-indigo-50 flex items-center justify-center">
-                        {instrument.image_url ? (
-                          <img src={instrument.image_url} alt={instrument.name} className="w-full h-full object-cover" />
+                        {((instrument as any).thumbnail_url || instrument.image_url) ? (
+                          <img src={(instrument as any).thumbnail_url || instrument.image_url} alt={instrument.name} className="w-full h-full object-cover" />
                         ) : (
                           <Music className="w-12 h-12 text-purple-300" />
                         )}
