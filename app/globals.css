@@ -1,3 +1,9 @@
+/* === PILOTO design system DIGIAI (ADR-0034 Fase 3) ===
+   Cópia local de Cockpit/design_system em ./design-system/ (artefato de piloto).
+   Em produção: pacote de tokens / build step, não cópia manual. */
+@import './design-system/foundation.css';
+@import './design-system/nipo.theme.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

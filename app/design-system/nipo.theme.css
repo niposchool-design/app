@@ -1,0 +1,226 @@
+/**
+ * Tema de marca: NIPO WA  (Camada 2)  —  ADNIPO / nipo_school
+ *
+ * STATUS v1.0 — APROVADO pelo dono (Gilberto) em 2026-05-31.
+ *   • REAL (extraído de nipo_school/app/globals.css + tailwind.config.ts):
+ *     âncora de marca = VERMELHO #DC2626 (ADNIPO); acentos por público
+ *     (aluno=vermelho, professor=azul, admin=roxo/violeta); neutros cool
+ *     (slate/gray) — diferente do zinc-warm do Clearix.
+ *   • Formalizado e aprovado: mapeamento completo de papéis semânticos + dark
+ *     mode (o app não tinha dark). APLICAÇÃO no nipo_school = Fase 3 da
+ *     ADR-0034 (validar visualmente no app, R-005, antes de mergear).
+ *     Ver ADR-0033 (re-enquadrada: Nipo Wa = tema de marca, não exceção).
+ *
+ * Re-enquadramento: prova o modelo multi-marca — mesmo contrato da fundação,
+ * identidade totalmente distinta do Clearix, sem fork e sem exceção solta.
+ *
+ * Consumo:  foundation.css  +  ESTE arquivo.
+ *
+ * @layer brand/nipo · @owner DIGIAI · @version 0.1.0 · @see ADR-0034, ADR-0033
+ */
+
+:root {
+  /* ============================================================
+     HUES DE MARCA — Nipo Wa (neutro = slate da fundação, cool)
+     ============================================================ */
+  /* Vermelho ADNIPO = primário de marca. Usa o ramp red da fundação. */
+  /* Acento ALUNO = vermelho (já é o primário). */
+  /* Acento PROFESSOR = azul. */
+  --nipo-blue-50:  #EFF6FF;
+  --nipo-blue-200: #BFDBFE;
+  --nipo-blue-300: #93C5FD;
+  --nipo-blue-600: #2563EB;
+  --nipo-blue-700: #1D4ED8;
+  --nipo-blue-800: #1E3A8A;
+  --nipo-blue-950: #172554;
+  /* Acento ADMIN = violeta (paleta executiva). */
+  --nipo-violet-50:  #F5F3FF;
+  --nipo-violet-200: #DDD6FE;
+  --nipo-violet-300: #C4B5FD;
+  --nipo-violet-600: #7C3AED;
+  --nipo-violet-700: #6D28D9;
+  --nipo-violet-800: #5B21B6;
+  --nipo-violet-950: #2E1065;
+
+  /* Fontes — não formalizadas no app (usa default). Inter como base segura. */
+  --nipo-font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --nipo-font-mono: ui-monospace, SFMono-Regular, monospace;
+
+  /* ============================================================
+     PAPÉIS SEMÂNTICOS — LIGHT
+     ============================================================ */
+  --nipo-text-primary:    var(--digiai-neutral-900);
+  --nipo-text-secondary:  var(--digiai-neutral-600);
+  --nipo-text-muted:      var(--digiai-neutral-500);
+  --nipo-text-disabled:   var(--digiai-neutral-400);
+  --nipo-text-inverse:    var(--digiai-neutral-50);
+  --nipo-text-on-primary: #FFFFFF;
+  --nipo-text-on-danger:  #FFFFFF;
+  --nipo-text-link:       var(--digiai-red-600);
+  --nipo-text-link-hover: var(--digiai-red-700);
+
+  --nipo-surface-base:    var(--digiai-neutral-50);
+  --nipo-surface-raised:  #FFFFFF;
+  --nipo-surface-overlay: #FFFFFF;
+  --nipo-surface-sunken:  var(--digiai-neutral-100);
+  --nipo-surface-inverse: var(--digiai-neutral-900);
+
+  --nipo-border-subtle:  var(--digiai-neutral-200);
+  --nipo-border-default: var(--digiai-neutral-300);
+  --nipo-border-strong:  var(--digiai-neutral-400);
+  --nipo-border-focus:   var(--digiai-red-500);
+  --nipo-border-danger:  var(--digiai-red-500);
+
+  --nipo-action-primary:         var(--digiai-red-600);
+  --nipo-action-primary-hover:   var(--digiai-red-700);
+  --nipo-action-primary-active:  var(--digiai-red-800);
+  --nipo-action-secondary:       var(--digiai-neutral-200);
+  --nipo-action-secondary-hover: var(--digiai-neutral-300);
+  --nipo-action-danger:          var(--digiai-red-600);
+  --nipo-action-danger-hover:    var(--digiai-red-700);
+  --nipo-action-ghost-hover:     var(--digiai-neutral-100);
+
+  --nipo-status-success-bg:     var(--digiai-green-50);
+  --nipo-status-success-text:   var(--digiai-green-700);
+  --nipo-status-success-border: var(--digiai-green-200);
+  --nipo-status-warning-bg:     var(--digiai-amber-50);
+  --nipo-status-warning-text:   var(--digiai-amber-700);
+  --nipo-status-warning-border: var(--digiai-amber-200);
+  --nipo-status-info-bg:        var(--nipo-blue-50);
+  --nipo-status-info-text:      var(--nipo-blue-700);
+  --nipo-status-info-border:    var(--nipo-blue-200);
+  --nipo-status-danger-bg:      var(--digiai-red-50);
+  --nipo-status-danger-text:    var(--digiai-red-700);
+  --nipo-status-danger-border:  var(--digiai-red-200);
+
+  /* Accent = violeta executivo (admin) */
+  --nipo-accent-bg:     var(--nipo-violet-50);
+  --nipo-accent-text:   var(--nipo-violet-700);
+  --nipo-accent-border: var(--nipo-violet-200);
+
+  --nipo-brand-mark-primary: var(--digiai-red-600);
+  --nipo-brand-mark-accent:  var(--digiai-red-800);
+
+  /* ============================================================
+     BIND — contrato da fundação
+     ============================================================ */
+  --digiai-role-text-primary:      var(--nipo-text-primary);
+  --digiai-role-text-secondary:    var(--nipo-text-secondary);
+  --digiai-role-text-muted:        var(--nipo-text-muted);
+  --digiai-role-text-disabled:     var(--nipo-text-disabled);
+  --digiai-role-text-inverse:      var(--nipo-text-inverse);
+  --digiai-role-text-on-primary:   var(--nipo-text-on-primary);
+  --digiai-role-text-on-danger:    var(--nipo-text-on-danger);
+  --digiai-role-text-link:         var(--nipo-text-link);
+  --digiai-role-text-link-hover:   var(--nipo-text-link-hover);
+  --digiai-role-surface-base:      var(--nipo-surface-base);
+  --digiai-role-surface-raised:    var(--nipo-surface-raised);
+  --digiai-role-surface-overlay:   var(--nipo-surface-overlay);
+  --digiai-role-surface-sunken:    var(--nipo-surface-sunken);
+  --digiai-role-surface-inverse:   var(--nipo-surface-inverse);
+  --digiai-role-border-subtle:     var(--nipo-border-subtle);
+  --digiai-role-border-default:    var(--nipo-border-default);
+  --digiai-role-border-strong:     var(--nipo-border-strong);
+  --digiai-role-border-focus:      var(--nipo-border-focus);
+  --digiai-role-border-danger:     var(--nipo-border-danger);
+  --digiai-role-action-primary:        var(--nipo-action-primary);
+  --digiai-role-action-primary-hover:  var(--nipo-action-primary-hover);
+  --digiai-role-action-primary-active: var(--nipo-action-primary-active);
+  --digiai-role-action-secondary:       var(--nipo-action-secondary);
+  --digiai-role-action-secondary-hover: var(--nipo-action-secondary-hover);
+  --digiai-role-action-danger:          var(--nipo-action-danger);
+  --digiai-role-action-danger-hover:    var(--nipo-action-danger-hover);
+  --digiai-role-action-ghost-hover:     var(--nipo-action-ghost-hover);
+  --digiai-role-status-success-bg:     var(--nipo-status-success-bg);
+  --digiai-role-status-success-text:   var(--nipo-status-success-text);
+  --digiai-role-status-success-border: var(--nipo-status-success-border);
+  --digiai-role-status-warning-bg:     var(--nipo-status-warning-bg);
+  --digiai-role-status-warning-text:   var(--nipo-status-warning-text);
+  --digiai-role-status-warning-border: var(--nipo-status-warning-border);
+  --digiai-role-status-info-bg:        var(--nipo-status-info-bg);
+  --digiai-role-status-info-text:      var(--nipo-status-info-text);
+  --digiai-role-status-info-border:    var(--nipo-status-info-border);
+  --digiai-role-status-danger-bg:      var(--nipo-status-danger-bg);
+  --digiai-role-status-danger-text:    var(--nipo-status-danger-text);
+  --digiai-role-status-danger-border:  var(--nipo-status-danger-border);
+  --digiai-role-accent-bg:     var(--nipo-accent-bg);
+  --digiai-role-accent-text:   var(--nipo-accent-text);
+  --digiai-role-accent-border: var(--nipo-accent-border);
+  --digiai-role-font-sans: var(--nipo-font-sans);
+  --digiai-role-font-mono: var(--nipo-font-mono);
+}
+
+/* ============================================================
+   DARK — v0.1 formalizado (o app não tem dark hoje). A VALIDAR.
+   action-primary dark = red-400 (WCAG 4.5:1 contra surface dark).
+   ============================================================ */
+.dark,
+[data-theme="dark"] {
+  --nipo-text-primary:    var(--digiai-neutral-100);
+  --nipo-text-secondary:  var(--digiai-neutral-400);
+  --nipo-text-muted:      var(--digiai-neutral-500);
+  --nipo-text-disabled:   var(--digiai-neutral-600);
+  --nipo-text-inverse:    var(--digiai-neutral-900);
+  --nipo-text-on-primary: var(--digiai-neutral-900);
+  --nipo-text-on-danger:  var(--digiai-neutral-900);
+  --nipo-text-link:       var(--digiai-red-400);
+  --nipo-text-link-hover: var(--digiai-red-300);
+
+  --nipo-surface-base:    var(--digiai-neutral-900);
+  --nipo-surface-raised:  var(--digiai-neutral-800);
+  --nipo-surface-overlay: var(--digiai-neutral-800);
+  --nipo-surface-sunken:  var(--digiai-neutral-950);
+  --nipo-surface-inverse: var(--digiai-neutral-50);
+
+  --nipo-border-subtle:  var(--digiai-neutral-800);
+  --nipo-border-default: var(--digiai-neutral-700);
+  --nipo-border-strong:  var(--digiai-neutral-600);
+  --nipo-border-focus:   var(--digiai-red-400);
+  --nipo-border-danger:  var(--digiai-red-400);
+
+  --nipo-action-primary:         var(--digiai-red-400);
+  --nipo-action-primary-hover:   var(--digiai-red-300);
+  --nipo-action-primary-active:  var(--digiai-red-200);
+  --nipo-action-secondary:       var(--digiai-neutral-700);
+  --nipo-action-secondary-hover: var(--digiai-neutral-600);
+  --nipo-action-danger:          var(--digiai-red-400);
+  --nipo-action-danger-hover:    var(--digiai-red-300);
+  --nipo-action-ghost-hover:     var(--digiai-neutral-800);
+
+  --nipo-status-success-bg:     var(--digiai-green-950);
+  --nipo-status-success-text:   var(--digiai-green-300);
+  --nipo-status-success-border: var(--digiai-green-800);
+  --nipo-status-warning-bg:     var(--digiai-amber-950);
+  --nipo-status-warning-text:   var(--digiai-amber-300);
+  --nipo-status-warning-border: var(--digiai-amber-800);
+  --nipo-status-info-bg:        var(--nipo-blue-950);
+  --nipo-status-info-text:      var(--nipo-blue-300);
+  --nipo-status-info-border:    var(--nipo-blue-800);
+  --nipo-status-danger-bg:      var(--digiai-red-950);
+  --nipo-status-danger-text:    var(--digiai-red-300);
+  --nipo-status-danger-border:  var(--digiai-red-800);
+
+  --nipo-accent-bg:     var(--nipo-violet-950);
+  --nipo-accent-text:   var(--nipo-violet-300);
+  --nipo-accent-border: var(--nipo-violet-800);
+
+  --nipo-brand-mark-primary: var(--digiai-red-400);
+  --nipo-brand-mark-accent:  var(--digiai-red-300);
+}
+
+body {
+  font-family: var(--nipo-font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--nipo-text-primary);
+  background: var(--nipo-surface-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.focus-ring:focus-visible,
+button:focus-visible, a:focus-visible,
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--nipo-border-focus);
+  outline-offset: 2px;
+}

@@ -1,0 +1,242 @@
+/**
+ * DIGIAI Design System — FUNDAÇÃO (Camada 1)
+ *
+ * Base agnóstica de marca. É a AUTORIDADE estrutural do design system DIGIAI.
+ * Namespace: --digiai-*
+ *
+ * Contém o que NÃO é identidade de marca:
+ *   - primitivos de cor de sistema (neutros + funcionais de status)
+ *   - escala de espaçamento, raio, tipografia (tamanhos), motion, elevação, z-index, grid
+ *   - o CONTRATO de papéis semânticos (os "slots" que todo tema de marca preenche)
+ *
+ * O que é identidade (hue da marca, fontes, mapeamento papel→valor light/dark) mora
+ * na Camada 2 (brands/<marca>/*.theme.css). Ver ADR-0034.
+ *
+ * Consumo: carregue ESTE arquivo + um tema de marca:
+ *   <link rel="stylesheet" href="../foundation/foundation.css">
+ *   <link rel="stylesheet" href="../brands/clearix/clearix.theme.css">
+ *
+ * @layer  foundation
+ * @owner  DIGIAI
+ * @version 1.0.0
+ * @see    ADR-0034 (design system em dois níveis)
+ */
+
+:root {
+  /* ============================================================
+     PRIMITIVOS DE COR — SISTEMA (agnóstico de marca)
+     Ramps universais. Um tema de marca pode sobrescrever o neutro
+     (ex.: Clearix usa zinc-warm) mas estes são o default DIGIAI.
+     ============================================================ */
+
+  /* Neutro default — slate (cool). Marca pode sobrescrever. */
+  --digiai-neutral-50:  #F8FAFC;
+  --digiai-neutral-100: #F1F5F9;
+  --digiai-neutral-200: #E2E8F0;
+  --digiai-neutral-300: #CBD5E1;
+  --digiai-neutral-400: #94A3B8;
+  --digiai-neutral-500: #64748B;
+  --digiai-neutral-600: #475569;
+  --digiai-neutral-700: #334155;
+  --digiai-neutral-800: #1E293B;
+  --digiai-neutral-900: #0F172A;
+  --digiai-neutral-950: #020617;
+
+  /* Funcional — success (emerald) */
+  --digiai-green-50:  #ECFDF5;
+  --digiai-green-100: #D1FAE5;
+  --digiai-green-200: #A7F3D0;
+  --digiai-green-300: #6EE7B7;
+  --digiai-green-400: #34D399;
+  --digiai-green-500: #10B981;
+  --digiai-green-600: #059669;
+  --digiai-green-700: #047857;
+  --digiai-green-800: #065F46;
+  --digiai-green-900: #064E3B;
+  --digiai-green-950: #022C22;
+
+  /* Funcional — warning (amber) */
+  --digiai-amber-50:  #FFFBEB;
+  --digiai-amber-100: #FEF3C7;
+  --digiai-amber-200: #FDE68A;
+  --digiai-amber-300: #FCD34D;
+  --digiai-amber-400: #FBBF24;
+  --digiai-amber-500: #F59E0B;
+  --digiai-amber-600: #D97706;
+  --digiai-amber-700: #B45309;
+  --digiai-amber-800: #92400E;
+  --digiai-amber-900: #78350F;
+  --digiai-amber-950: #451A03;
+
+  /* Funcional — danger (red). Também serve de hue de marca p/ temas que usam vermelho. */
+  --digiai-red-50:  #FEF2F2;
+  --digiai-red-100: #FEE2E2;
+  --digiai-red-200: #FECACA;
+  --digiai-red-300: #FCA5A5;
+  --digiai-red-400: #F87171;
+  --digiai-red-500: #EF4444;
+  --digiai-red-600: #DC2626;
+  --digiai-red-700: #B91C1C;
+  --digiai-red-800: #991B1B;
+  --digiai-red-900: #7F1D1D;
+  --digiai-red-950: #450A0A;
+
+  /* ============================================================
+     ESPAÇAMENTO — base 4px (estrutural, universal)
+     ============================================================ */
+  --digiai-space-0:    0px;
+  --digiai-space-px:   1px;
+  --digiai-space-0\.5: 2px;
+  --digiai-space-1:    4px;
+  --digiai-space-1\.5: 6px;
+  --digiai-space-2:    8px;
+  --digiai-space-2\.5: 10px;
+  --digiai-space-3:    12px;
+  --digiai-space-3\.5: 14px;
+  --digiai-space-4:    16px;
+  --digiai-space-5:    20px;
+  --digiai-space-6:    24px;
+  --digiai-space-7:    28px;
+  --digiai-space-8:    32px;
+  --digiai-space-10:   40px;
+  --digiai-space-12:   48px;
+  --digiai-space-14:   56px;
+  --digiai-space-16:   64px;
+  --digiai-space-20:   80px;
+  --digiai-space-24:   96px;
+  --digiai-space-32:   128px;
+
+  /* ============================================================
+     RAIO (estrutural)
+     ============================================================ */
+  --digiai-radius-none: 0px;
+  --digiai-radius-xs:   2px;
+  --digiai-radius-sm:   4px;
+  --digiai-radius-md:   6px;
+  --digiai-radius-lg:   8px;
+  --digiai-radius-xl:   12px;
+  --digiai-radius-2xl:  16px;
+  --digiai-radius-3xl:  20px;
+  --digiai-radius-full: 9999px;
+
+  /* ============================================================
+     TIPOGRAFIA — tamanhos/line-height (estrutural).
+     A FAMÍLIA da fonte é marca → vem do tema (--<marca>-font-*).
+     ============================================================ */
+  --digiai-font-size-display-2xl: 72px;
+  --digiai-font-size-display-xl:  60px;
+  --digiai-font-size-display-lg:  48px;
+  --digiai-font-size-heading-xl:  36px;
+  --digiai-font-size-heading-lg:  30px;
+  --digiai-font-size-heading-md:  24px;
+  --digiai-font-size-heading-sm:  20px;
+  --digiai-font-size-heading-xs:  18px;
+  --digiai-font-size-body-xl:     20px;
+  --digiai-font-size-body-lg:     18px;
+  --digiai-font-size-body-md:     16px;
+  --digiai-font-size-body-sm:     14px;
+  --digiai-font-size-body-xs:     12px;
+  --digiai-font-size-caption:     11px;
+
+  --digiai-font-weight-regular:  400;
+  --digiai-font-weight-medium:   500;
+  --digiai-font-weight-semibold: 600;
+  --digiai-font-weight-bold:     700;
+
+  --digiai-leading-tight:   1.1;
+  --digiai-leading-snug:    1.3;
+  --digiai-leading-normal:  1.55;
+  --digiai-leading-relaxed: 1.6;
+
+  /* ============================================================
+     MOTION (estrutural — durações + curvas)
+     ============================================================ */
+  --digiai-duration-instant:    75ms;
+  --digiai-duration-fast:       150ms;
+  --digiai-duration-base:       200ms;
+  --digiai-duration-slow:       300ms;
+  --digiai-duration-slower:     500ms;
+  --digiai-duration-deliberate: 750ms;
+
+  --digiai-ease-linear:     cubic-bezier(0, 0, 1, 1);
+  --digiai-ease-out:        cubic-bezier(0.0, 0.0, 0.2, 1); /* ENTRADAS */
+  --digiai-ease-in:         cubic-bezier(0.4, 0.0, 1, 1);   /* SAÍDAS */
+  --digiai-ease-in-out:     cubic-bezier(0.4, 0.0, 0.2, 1);
+  --digiai-spring-soft:     cubic-bezier(0.34, 1.20, 0.64, 1);
+  --digiai-spring-bouncy:   cubic-bezier(0.34, 1.50, 0.64, 1);
+  --digiai-spring-rigid:    cubic-bezier(0.5, 1.0, 0.3, 1);
+
+  /* ============================================================
+     ELEVAÇÃO — sombras neutras (sem hue). Marca pode adicionar glow.
+     ============================================================ */
+  --digiai-elevation-0: none;
+  --digiai-elevation-1: 0 1px 2px rgba(0,0,0,0.04), 0 1px 1px rgba(0,0,0,0.03);
+  --digiai-elevation-2: 0 2px 4px rgba(0,0,0,0.06), 0 4px 8px rgba(0,0,0,0.04);
+  --digiai-elevation-3: 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.06);
+  --digiai-elevation-4: 0 8px 16px rgba(0,0,0,0.10), 0 16px 32px rgba(0,0,0,0.08);
+  --digiai-elevation-5: 0 16px 32px rgba(0,0,0,0.12), 0 24px 48px rgba(0,0,0,0.10);
+
+  /* ============================================================
+     Z-INDEX (estrutural)
+     ============================================================ */
+  --digiai-z-base:     0;
+  --digiai-z-dropdown: 100;
+  --digiai-z-sticky:   200;
+  --digiai-z-drawer:   300;
+  --digiai-z-modal:    400;
+  --digiai-z-popover:  500;
+  --digiai-z-toast:    600;
+  --digiai-z-tooltip:  700;
+
+  /* ============================================================
+     GRID / BREAKPOINTS (estrutural)
+     ============================================================ */
+  --digiai-container-max: 1440px;
+  --digiai-bp-mobile:  375px;
+  --digiai-bp-tablet:  768px;
+  --digiai-bp-laptop:  1024px;
+  --digiai-bp-desktop: 1440px;
+}
+
+/* ================================================================
+   CONTRATO DE PAPÉIS SEMÂNTICOS (slots que TODO tema preenche)
+   ----------------------------------------------------------------
+   A fundação NÃO atribui valores aqui — só define o contrato.
+   Cada marca (Camada 2) declara as variáveis abaixo, em light e dark:
+
+     text:    primary · secondary · muted · disabled · inverse ·
+              on-primary · on-danger · link · link-hover
+     surface: base · raised · overlay · sunken · inverse
+     border:  subtle · default · strong · focus · danger
+     action:  primary · primary-hover · primary-active ·
+              secondary · secondary-hover · danger · danger-hover · ghost-hover
+     status:  {success|warning|info|danger} × {bg|text|border}
+     accent:  bg · text · border
+     brand:   mark-primary · mark-accent   (logo/assinatura — NÃO é UI funcional)
+
+   Regra de ouro do contrato (R-014): action-primary no DARK precisa de
+   contraste WCAG 4.5:1 contra surface dark — escolher o tom claro do hue.
+   ================================================================ */
+
+/* ============================================================
+   UTILITIES ESTRUTURAIS (agnósticas de marca)
+   ============================================================ */
+
+/* Tabular nums — valor monetário/dioptria/datas/IDs */
+.digiai-tabular-nums,
+[data-tabular] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Reduced motion — respeitado por padrão */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: calc(var(--digiai-duration-fast) / 2) !important;
+    scroll-behavior: auto !important;
+  }
+}
