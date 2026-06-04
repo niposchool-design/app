@@ -1,0 +1,4 @@
+# Imagens dos instrumentos migradas para o Supabase Storage (bucket "instruments").
+# Esta pasta e apenas staging local; nada de imagem entra no git.
+*
+!.gitignore

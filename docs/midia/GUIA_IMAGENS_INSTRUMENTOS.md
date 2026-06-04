@@ -10,14 +10,17 @@ status: em-andamento
 Geração de imagens próprias (estilo coeso "Nipo Wa") para os 69 instrumentos.
 Trabalho **família por família**, com **foto principal** + **galeria de detalhes**.
 
-## Convenções
+## Convenções (imagens vivem no Supabase Storage, NÃO no public/)
 
-- **Pasta de salvamento:** `D:\projetos\nipo_school\app\public\instrumentos\`
-- **Foto principal:** `<slug>.webp` → vai para `core.instruments.image_url = /instrumentos/<slug>.webp`
-- **Detalhes (2–3):** `<slug>-detalhe-1.webp`, `-detalhe-2.webp`, `-detalhe-3.webp`
-  → cada um vira uma linha em `core.instrument_media` (media_type='image', url, thumbnail_url, order_index).
-- **Formato:** WebP ou PNG, ~1500×1000 (3:2), < 400 KB.
-- A mesma foto principal é recortada em **quadrado** (lista) e **3:1** (detalhe) → instrumento **centralizado com margem**.
+- **Onde moram de verdade:** bucket público **`instruments`** do Supabase Storage.
+  `image_url`/`thumbnail_url` apontam para `https://<ref>.supabase.co/storage/v1/object/public/instruments/<arquivo>`.
+- **Staging local:** `public/instrumentos/` é só área temporária (gitignorada) — você salva o PNG ali, eu otimizo, subo pro Storage e apago o local.
+- **Foto principal (header do detalhe):** `<slug>.webp` → `image_url`.
+- **Macro (card da lista):** `<slug>-lista.webp` → `thumbnail_url`.
+- **Formato:** PNG do gerador → eu converto pra WebP (~1500px, q82, dezenas de KB).
+- **Pipeline:** salvar PNG (nome da coluna 3 serve) → `optimize-instrumentos.mjs` → `migrate-instruments-to-storage.mjs` (sobe + atualiza banco) → limpa local.
+- **Gerar 1 instrumento por vez** (nunca colagem — colagem embaralha anatomia).
+- A foto principal (colorida) é recortada em quadrado e 3:1 nas telas; o macro é a thumbnail da lista.
 
 ## Prompt mestre — FOTO PRINCIPAL (trocar `{INSTRUMENTO}`)
 ```
