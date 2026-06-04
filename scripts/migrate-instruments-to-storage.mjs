@@ -33,12 +33,7 @@ console.log(`service_role obtida (len=${serviceRole.length}, oculta).`)
 // 2) instrumentos prontos (flauta-doce fica de fora: principal veio quebrada)
 // Lista do que já foi migrado (edite/expanda por família ao subir novas levas)
 const DONE = [
-  ['Trompete', 'trompete'], ['Trombone', 'trombone'], ['Tuba', 'tuba'], ['Eufônio', 'eufonio'],
-  ['Saxofone', 'saxofone'], ['Saxofone Alto', 'saxofone-alto'], ['Saxofone Tenor', 'saxofone-tenor'],
-  ['Saxofone Soprano', 'saxofone-soprano'], ['Saxofone Barítono', 'saxofone-baritono'],
-  ['Clarinete', 'clarinete'], ['Clarinete Baixo', 'clarinete-baixo'], ['Oboé', 'oboe'],
-  ['Corne Inglês', 'corne-ingles'], ['Fagote', 'fagote'], ['Contrafagote', 'contrafagote'],
-  ['Flauta', 'flauta'], ['Flauta Doce (Recorder)', 'flauta-doce'], ['Piccolo', 'piccolo'],
+  ['Sitar', 'sitar'],
 ]
 
 const pub = f => `${URL}/storage/v1/object/public/${BUCKET}/${f}`

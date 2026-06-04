@@ -2,103 +2,171 @@
 
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase/client'
-import { BookOpen, Library, GraduationCap, ChevronRight, Loader2 } from 'lucide-react'
+import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 
+const db = supabase as any
+
+/* Cartões editoriais do hub — cada domínio com kanji, cor própria e rota. */
+const CARDS = [
+  {
+    key: 'history',
+    href: '/history',
+    kanji: '史',
+    eyebrow: '史 · História',
+    title: 'História da Música',
+    desc: 'Períodos, compositores, obras, gêneros e movimentos numa linha do tempo viva.',
+    color: '#b45309',
+    countLabel: 'períodos',
+  },
+  {
+    key: 'library',
+    href: '/academic/library',
+    kanji: '書',
+    eyebrow: '書 · Biblioteca',
+    title: 'Biblioteca',
+    desc: 'Artigos, guias, teoria musical e capítulos do método — todo o acervo pedagógico.',
+    color: '#7c3aed',
+    countLabel: 'materiais',
+  },
+  {
+    key: 'curriculum',
+    href: '/academic/curriculum',
+    kanji: '道',
+    eyebrow: '道 · Currículo',
+    title: 'Currículo',
+    desc: 'Metodologias, competências, módulos e sequências didáticas do Método Alpha.',
+    color: '#4f46e5',
+    countLabel: 'metodologias',
+  },
+  {
+    key: 'repertoire',
+    href: '/repertoire',
+    kanji: '曲',
+    eyebrow: '曲 · Repertório',
+    title: 'Repertório',
+    desc: 'Partituras, cifras, playbacks e tutoriais das peças que a escola estuda e toca.',
+    color: '#0d9488',
+    countLabel: 'peças',
+  },
+  {
+    key: 'instruments',
+    href: '/instruments',
+    kanji: '楽器',
+    eyebrow: '楽器 · Instrumentos',
+    title: 'Instrumentos',
+    desc: 'Som, técnica, curiosidades e cultura de cada instrumento da galeria.',
+    color: '#dc2626',
+    countLabel: 'instrumentos',
+  },
+] as const
+
+type CardKey = (typeof CARDS)[number]['key']
+
 export default function AcademicPage() {
-  const [methodologyCount, setMethodologyCount] = useState<number | null>(null)
-  const [libraryCount, setLibraryCount] = useState<number | null>(null)
-  const [methodologyNames, setMethodologyNames] = useState<string[]>([])
+  const [counts, setCounts] = useState<Partial<Record<CardKey, number>>>({})
 
   useEffect(() => {
-    Promise.all([
-      supabase
-        .from('v_library_items')
-        .select('title', { count: 'exact', head: false })
-        .eq('category', 'methodology'),
-      supabase
-        .from('v_library_items')
-        .select('*', { count: 'exact', head: true })
-        .not('category', 'in', '(faq,experience,reference,strategy)'),
-    ]).then(([methodRes, libRes]) => {
-      if (methodRes.data) {
-        setMethodologyCount(methodRes.data.length)
-        // Show first 4 names + "+N" remaining badge
-        const names = (methodRes.data as { title: string }[]).map(m => m.title.split(' ')[0])
-        setMethodologyNames(names)
+    async function load() {
+      const head = (table: string) =>
+        db.from(table).select('id', { count: 'exact', head: true })
+      try {
+        const [history, library, curriculum, repertoire, instruments] = await Promise.all([
+          head('v_history_periods'),
+          head('v_library_items'),
+          head('v_methodologies'),
+          head('v_repertoire'),
+          head('v_instruments'),
+        ])
+        setCounts({
+          history: history.count ?? 0,
+          library: library.count ?? 0,
+          curriculum: curriculum.count ?? 0,
+          repertoire: repertoire.count ?? 0,
+          instruments: instruments.count ?? 0,
+        })
+      } catch (e) {
+        console.error('Erro ao carregar contagens do acadêmico:', e)
       }
-      if (libRes.count !== null) setLibraryCount(libRes.count)
-    })
+    }
+    load()
   }, [])
 
-  const methodBadges = methodologyNames.slice(0, 4)
-  const extra = (methodologyCount ?? 0) - methodBadges.length
-
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-        <BookOpen className="w-6 h-6 text-indigo-500" />
-        Acadêmico
-      </h1>
-      <p className="text-sm text-gray-500">
-        Acesse o currículo completo da Nipo School, metodologias de ensino e a biblioteca de materiais pedagógicos.
-      </p>
+    <div className="space-y-8 pb-12">
+      {/* ===== Masthead editorial ===== */}
+      <header className="relative overflow-hidden rounded-3xl bg-stone-950 text-white px-6 py-12 md:px-12 md:py-16">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-2 top-1/2 -translate-y-1/2 font-extrabold text-white/[0.05] select-none leading-none"
+          style={{ writingMode: 'vertical-rl', fontSize: '11rem' }}
+        >
+          学び
+        </span>
+        <div className="pointer-events-none absolute -left-16 -top-16 w-72 h-72 rounded-full bg-indigo-500/20 blur-3xl" />
+        <div className="relative z-10 max-w-2xl">
+          <p className="text-indigo-300 tracking-[0.35em] text-xs font-semibold uppercase mb-4">学び · Acadêmico</p>
+          <h1 className="text-4xl md:text-6xl font-extrabold leading-[1.05]">
+            O conhecimento
+            <br />
+            da Nipo School.
+          </h1>
+          <p className="mt-5 text-stone-400 text-lg">
+            História, biblioteca, currículo, repertório e instrumentos — todo o saber da escola num só lugar.
+          </p>
+        </div>
+      </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Curriculum card */}
-        <Link href="/academic/curriculum" className="group">
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-indigo-200 transition-all h-full">
-            <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 mb-4">
-              <GraduationCap className="w-6 h-6" />
-            </div>
-            <h3 className="font-bold text-gray-900 mb-2 group-hover:text-indigo-700 transition-colors flex items-center gap-2">
-              Currículo Completo
-              <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-indigo-500 transition-colors" />
-            </h3>
-            <p className="text-sm text-gray-500 mb-4">
-              {methodologyCount !== null
-                ? `${methodologyCount} metodologias ativas — 4 ciclos de aprendizagem e referencial pedagógico da escola.`
-                : 'Metodologias, ciclos de aprendizagem e referencial pedagógico da escola.'}
-            </p>
-            <div className="flex gap-2 flex-wrap">
-              {methodologyNames.length > 0 ? (
-                <>
-                  {methodBadges.map(m => (
-                    <span key={m} className="px-2 py-0.5 bg-indigo-50 text-indigo-600 text-xs rounded-full font-medium">{m}</span>
-                  ))}
-                  {extra > 0 && (
-                    <span className="px-2 py-0.5 bg-indigo-50 text-indigo-600 text-xs rounded-full font-medium">+{extra}</span>
-                  )}
-                </>
-              ) : (
-                <Loader2 className="w-4 h-4 text-indigo-300 animate-spin" />
-              )}
-            </div>
-          </div>
-        </Link>
-
-        {/* Library card */}
-        <Link href="/academic/library" className="group">
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-purple-200 transition-all h-full">
-            <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600 mb-4">
-              <Library className="w-6 h-6" />
-            </div>
-            <h3 className="font-bold text-gray-900 mb-2 group-hover:text-purple-700 transition-colors flex items-center gap-2">
-              Biblioteca Metodológica
-              <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-purple-500 transition-colors" />
-            </h3>
-            <p className="text-sm text-gray-500 mb-4">
-              {libraryCount !== null
-                ? `${libraryCount} materiais disponíveis — artigos, guias, teoria musical e história.`
-                : 'Documentos, PDFs, vídeos, áudios e materiais de apoio para professores e alunos.'}
-            </p>
-            <div className="flex gap-2 flex-wrap">
-              {['Teoria', 'História', 'Guias', 'Artigos'].map(t => (
-                <span key={t} className="px-2 py-0.5 bg-purple-50 text-purple-600 text-xs rounded-full font-medium">{t}</span>
-              ))}
-            </div>
-          </div>
-        </Link>
+      {/* ===== Cartões dos domínios ===== */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {CARDS.map((card, i) => {
+          const count = counts[card.key]
+          return (
+            <Link key={card.key} href={card.href} className="group nw-rise">
+              <article
+                className="nw-card relative h-full overflow-hidden rounded-3xl border border-stone-100 bg-white p-7 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                style={{ borderTopWidth: 3, borderTopColor: card.color }}
+              >
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -right-3 -bottom-4 font-extrabold select-none leading-none opacity-[0.07]"
+                  style={{ color: card.color, fontSize: '7rem' }}
+                >
+                  {card.kanji}
+                </span>
+                <p
+                  className="tracking-[0.3em] text-[11px] font-semibold uppercase mb-4"
+                  style={{ color: card.color }}
+                >
+                  {card.eyebrow}
+                </p>
+                <h2 className="text-2xl font-extrabold text-stone-900 leading-tight">{card.title}</h2>
+                <p className="mt-3 text-sm text-stone-500 leading-relaxed relative z-10">{card.desc}</p>
+                <div className="mt-6 flex items-center justify-between relative z-10">
+                  <span className="text-sm text-stone-400">
+                    {count != null ? (
+                      <>
+                        <span className="nw-tabular text-lg font-bold text-stone-900">{count}</span>{' '}
+                        {card.countLabel}
+                      </>
+                    ) : (
+                      <span className="inline-block h-5 w-20 rounded bg-stone-100 animate-pulse align-middle" />
+                    )}
+                  </span>
+                  <span
+                    className="inline-flex items-center gap-1 text-sm font-semibold transition-transform group-hover:translate-x-0.5"
+                    style={{ color: card.color }}
+                  >
+                    Explorar <ChevronRight className="w-4 h-4" />
+                  </span>
+                </div>
+                <span className="nw-tabular absolute top-6 right-7 text-xs text-stone-300">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+              </article>
+            </Link>
+          )
+        })}
       </div>
     </div>
   )

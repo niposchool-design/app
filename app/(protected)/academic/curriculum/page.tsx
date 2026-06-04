@@ -1,305 +1,456 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import {
-  GraduationCap, ChevronLeft, ChevronDown, ChevronUp, BookOpen,
-  Music, Drum, Mic2, Move, Brain, Palette, Guitar, Users2,
-  Star, Loader2, Sparkles,
+  ArrowLeft, ChevronDown, ChevronUp, BookOpen, Loader2, Star,
+  Layers, Target, GitBranch, Route, CalendarDays, Clock, Users2,
+  Sparkles, ListChecks,
 } from 'lucide-react'
 import Link from 'next/link'
 
-// Methodology config with icons and colors
-const METHODOLOGIES = [
-  { key: 'orff', name: 'Orff Schulwerk', icon: Drum, color: 'bg-orange-50 text-orange-700 border-orange-200', gradient: 'from-orange-500 to-red-500',
-    summary: 'Musica como experiencia corporal. Improvisacao, instrumentos simples, coletividade e inclusao.', lessonRange: [0, 5] },
-  { key: 'suzuki', name: 'Metodo Suzuki', icon: Guitar, color: 'bg-blue-50 text-blue-700 border-blue-200', gradient: 'from-blue-500 to-cyan-500',
-    summary: 'Educacao do talento por imitacao e repeticao. Ouvir primeiro, tocar depois. Envolvimento familiar.', lessonRange: [8, 9] },
-  { key: 'kodaly', name: 'Metodo Kodaly', icon: Mic2, color: 'bg-green-50 text-green-700 border-green-200', gradient: 'from-green-500 to-emerald-500',
-    summary: 'Canto como base universal. Solfejo, do movel, sinais de Curwen. Literacia musical a partir do repertorio local.', lessonRange: [6, 7] },
-  { key: 'musical_futures', name: 'Musical Futures', icon: Music, color: 'bg-pink-50 text-pink-700 border-pink-200', gradient: 'from-pink-500 to-rose-500',
-    summary: 'Aprendizagem informal. Repertorio popular escolhido pelo aluno. Bandas colaborativas e autoria.', lessonRange: [62, 69] },
-  { key: 'dalcroze', name: 'Dalcroze Euritmia', icon: Move, color: 'bg-purple-50 text-purple-700 border-purple-200', gradient: 'from-purple-500 to-violet-500',
-    summary: 'Corpo como instrumento primario. Movimento e musica integrados. Internalizacao ritmica.', lessonRange: [17, 17] },
-  { key: 'gordon', name: 'Gordon MLT', icon: Brain, color: 'bg-teal-50 text-teal-700 border-teal-200', gradient: 'from-teal-500 to-cyan-500',
-    summary: 'Audiacao: pensar musica internamente. Aprendizagem sequencial, reconhecimento de padroes.', lessonRange: [10, 13] },
-  { key: 'waldorf', name: 'Waldorf / Steiner', icon: Palette, color: 'bg-amber-50 text-amber-700 border-amber-200', gradient: 'from-amber-500 to-yellow-500',
-    summary: 'Educacao integral e artistica. Experiencia antes da teoria. Instrumentos pentatonicos.', lessonRange: [48, 53] },
-  { key: 'berklee', name: 'Berklee Contemporanea', icon: Sparkles, color: 'bg-indigo-50 text-indigo-700 border-indigo-200', gradient: 'from-indigo-500 to-blue-500',
-    summary: 'Criatividade, composicao, producao digital e empreendedorismo musical.', lessonRange: [14, 16] },
-  { key: 'lincoln', name: 'Lincoln Center Education', icon: Users2, color: 'bg-rose-50 text-rose-700 border-rose-200', gradient: 'from-rose-500 to-pink-500',
-    summary: 'Multiculturalismo, artes integradas, pratica experimental e engajamento comunitario.', lessonRange: [48, 53] },
-]
+const db = supabase as any
+const ACCENT = '#4f46e5' // índigo — cor do domínio currículo
 
+/* ---------- tipos das views ---------- */
+interface Methodology {
+  id: string; code: string; name: string; description: string | null
+  philosophy: string | null; key_principles: any; icon_name: string | null
+}
+interface Competency {
+  id: string; methodology_id: string | null; name: string; description: string | null
+  order_index: number | null; methodology_name: string | null; methodology_code: string | null
+}
+interface Module {
+  id: string; name: string; description: string | null; order_index: number | null; is_active: boolean | null
+}
+interface TeachingSequence {
+  id: string; title: string; methodology_name: string | null; age_range: string | null
+  duration_weeks: number | null; objectives: string | null; week_number: number | null
+  main_activity: string | null; circle_activity: string | null; game_dynamic: string | null
+  required_materials: string | null; notes: string | null
+}
+interface LearningPath {
+  id: string; title: string; description: string | null; cycle: string | null
+  methodology_name: string | null; instrument_name: string | null
+  difficulty_min: number | null; difficulty_max: number | null; step_count: number | null
+}
+
+/* Os 8 pilares Alpha — DNA transversal (mantido). */
 const ALPHA_PILLARS = [
-  { num: 1, title: 'Desafios Continuos + Registro Digital', desc: 'O aluno nunca para. Sempre ha um proximo passo.' },
+  { num: 1, title: 'Desafios Contínuos + Registro Digital', desc: 'O aluno nunca para. Sempre há um próximo passo.' },
   { num: 2, title: 'Aprendizagem Ativa e Protagonismo', desc: 'O aluno lidera, sugere, cria.' },
-  { num: 3, title: 'Aprendizagem entre Pares', desc: 'Alunos avancados mentoram iniciantes.' },
-  { num: 4, title: 'Integracao App + Presencial', desc: 'Videos, feedback, comunidade entre as aulas.' },
-  { num: 5, title: 'Projetos Coletivos', desc: 'Gravacoes, festivais, bandas experimentais.' },
-  { num: 6, title: 'Acompanhamento Individualizado', desc: 'Professor acompanha evolucao via app.' },
-  { num: 7, title: 'Feedback e Celebracao Constante', desc: 'Reconhecimento publico, mural digital.' },
-  { num: 8, title: 'Espiritualidade, Valores e Cultura Nipo-Brasileira', desc: 'Uniao, respeito, disciplina, alegria.' },
+  { num: 3, title: 'Aprendizagem entre Pares', desc: 'Alunos avançados mentoram iniciantes.' },
+  { num: 4, title: 'Integração App + Presencial', desc: 'Vídeos, feedback, comunidade entre as aulas.' },
+  { num: 5, title: 'Projetos Coletivos', desc: 'Gravações, festivais, bandas experimentais.' },
+  { num: 6, title: 'Acompanhamento Individualizado', desc: 'Professor acompanha evolução via app.' },
+  { num: 7, title: 'Feedback e Celebração Constante', desc: 'Reconhecimento público, mural digital.' },
+  { num: 8, title: 'Espiritualidade, Valores e Cultura Nipo-Brasileira', desc: 'União, respeito, disciplina, alegria.' },
 ]
 
 const LEARNING_CYCLES = [
-  { name: 'Inicial', age: '6-7 anos', color: 'from-green-400 to-emerald-500', methods: ['Orff', 'Dalcroze', 'Waldorf'], desc: 'Exploracao sonora, corpo, jogos, ritmo.' },
-  { name: 'Fundamental', age: '8-11 anos', color: 'from-blue-400 to-indigo-500', methods: ['Kodaly', 'Suzuki', 'Gordon', 'Musical Futures'], desc: 'Instrumentos, literacia, improvisacao, grupos.' },
-  { name: 'Intermediario', age: '12-14 anos', color: 'from-purple-400 to-violet-500', methods: ['Berklee', 'Lincoln', 'PRESTO'], desc: 'Bandas, performance, digital, autoria.' },
-  { name: 'Avancado', age: '15+ anos', color: 'from-rose-400 to-red-500', methods: ['Berklee', 'Digital', 'Mentoria'], desc: 'Producao, empreendedorismo, especializacao.' },
+  { name: 'Inicial', age: '6-7 anos', color: '#16a34a', methods: ['Orff', 'Dalcroze', 'Waldorf'], desc: 'Exploração sonora, corpo, jogos, ritmo.' },
+  { name: 'Fundamental', age: '8-11 anos', color: '#2563eb', methods: ['Kodály', 'Suzuki', 'Gordon', 'Musical Futures'], desc: 'Instrumentos, literacia, improvisação, grupos.' },
+  { name: 'Intermediário', age: '12-14 anos', color: '#7c3aed', methods: ['Berklee', 'Lincoln', 'PRESTO'], desc: 'Bandas, performance, digital, autoria.' },
+  { name: 'Avançado', age: '15+ anos', color: '#dc2626', methods: ['Berklee', 'Digital', 'Mentoria'], desc: 'Produção, empreendedorismo, especialização.' },
 ]
 
-interface Lesson {
-  id: string
-  title: string
-  number: number
-  lesson_number: number
-  status: string
+/* Normaliza key_principles (jsonb pode vir como array, objeto ou string). */
+function toList(value: any): string[] {
+  if (!value) return []
+  if (Array.isArray(value)) return value.map(v => String(v))
+  if (typeof value === 'string') {
+    try {
+      const parsed = JSON.parse(value)
+      if (Array.isArray(parsed)) return parsed.map(v => String(v))
+    } catch { /* texto puro */ }
+    return value.split(/\n|;/).map(s => s.trim()).filter(Boolean)
+  }
+  if (typeof value === 'object') return Object.values(value).map(v => String(v))
+  return []
 }
 
+type TabKey = 'metodologias' | 'competencias' | 'modulos' | 'sequencias' | 'trilhas'
+
 export default function CurriculumPage() {
-  const [expandedMethod, setExpandedMethod] = useState<string | null>(null)
-  const [methodContent, setMethodContent] = useState<Record<string, string>>({})
-  const [loadingContent, setLoadingContent] = useState<string | null>(null)
-  const [showPillars, setShowPillars] = useState(false)
-  const [lessons, setLessons] = useState<Lesson[]>([])
+  const [methodologies, setMethodologies] = useState<Methodology[]>([])
+  const [competencies, setCompetencies] = useState<Competency[]>([])
+  const [modules, setModules] = useState<Module[]>([])
+  const [sequences, setSequences] = useState<TeachingSequence[]>([])
+  const [paths, setPaths] = useState<LearningPath[]>([])
+  const [loading, setLoading] = useState(true)
+  const [tab, setTab] = useState<TabKey>('metodologias')
 
   useEffect(() => {
-    supabase.from('v_lessons').select('id, title, number, lesson_number, status').order('lesson_number').then(({ data }) => {
-      if (data) setLessons(data as any[])
-    })
+    async function load() {
+      try {
+        const [m, c, mod, s, p] = await Promise.all([
+          db.from('v_methodologies').select('*').order('name'),
+          db.from('v_competencies').select('*').order('order_index'),
+          db.from('v_modules').select('*').order('order_index'),
+          db.from('v_teaching_sequences').select('*').order('week_number'),
+          db.from('v_learning_paths').select('*').order('cycle'),
+        ])
+        setMethodologies((m.data as Methodology[]) || [])
+        setCompetencies((c.data as Competency[]) || [])
+        setModules((mod.data as Module[]) || [])
+        setSequences((s.data as TeachingSequence[]) || [])
+        setPaths((p.data as LearningPath[]) || [])
+      } catch (e) {
+        console.error('Erro ao carregar currículo:', e)
+      } finally {
+        setLoading(false)
+      }
+    }
+    load()
   }, [])
 
-  async function toggleMethod(key: string) {
-    if (expandedMethod === key) {
-      setExpandedMethod(null)
-      return
-    }
-    setExpandedMethod(key)
-
-    if (!methodContent[key]) {
-      setLoadingContent(key)
-      // Load content from database (library_items where subcategory = key)
-      const { data } = await (supabase as any)
-        .from('v_library_items')
-        .select('content')
-        .eq('subcategory', key)
-        .eq('file_type', 'markdown')
-        .not('content', 'is', null)
-        .limit(1)
-        .single()
-      if (data?.content) {
-        setMethodContent(prev => ({ ...prev, [key]: data.content }))
-      }
-      setLoadingContent(null)
-    }
-  }
-
-  function getLessonsForMethod(m: typeof METHODOLOGIES[0]): Lesson[] {
-    const [min, max] = m.lessonRange
-    return lessons.filter(l => {
-      const num = l.lesson_number ?? l.number
-      return num >= min && num <= max
-    })
-  }
+  const tabs = useMemo(() => ([
+    { key: 'metodologias' as const, label: 'Metodologias', icon: Layers, n: methodologies.length },
+    { key: 'competencias' as const, label: 'Competências', icon: Target, n: competencies.length },
+    { key: 'modulos' as const, label: 'Módulos', icon: GitBranch, n: modules.length },
+    { key: 'sequencias' as const, label: 'Sequências Didáticas', icon: CalendarDays, n: sequences.length },
+    { key: 'trilhas' as const, label: 'Trilhas & Ciclos', icon: Route, n: paths.length },
+  ]), [methodologies, competencies, modules, sequences, paths])
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <Link href="/academic" className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-          <ChevronLeft className="w-5 h-5 text-gray-500" />
-        </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <GraduationCap className="w-6 h-6 text-indigo-500" />
-            Curriculo Completo
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">Metodo Alpha — 9 metodologias, 4 ciclos, 70 aulas</p>
-        </div>
-      </div>
-
-      {/* Hero Stats */}
-      <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl p-6 text-white">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="text-center">
-            <p className="text-3xl font-bold nw-tabular">9</p>
-            <p className="text-sm text-indigo-200">Metodologias</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold nw-tabular">4</p>
-            <p className="text-sm text-indigo-200">Ciclos</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold nw-tabular">70</p>
-            <p className="text-sm text-indigo-200">Aulas</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold nw-tabular">8</p>
-            <p className="text-sm text-indigo-200">Pilares Alpha</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Alpha Pillars */}
-      <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
-        <button
-          onClick={() => setShowPillars(!showPillars)}
-          className="w-full flex items-center justify-between p-5 hover:bg-gray-50 transition-colors"
+    <div className="space-y-8 pb-12">
+      {/* ===== Masthead editorial ===== */}
+      <header className="relative overflow-hidden rounded-3xl bg-stone-950 text-white px-6 py-12 md:px-12 md:py-14">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-2 top-1/2 -translate-y-1/2 font-extrabold text-white/[0.05] select-none leading-none"
+          style={{ writingMode: 'vertical-rl', fontSize: '11rem' }}
         >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-rose-600 rounded-xl flex items-center justify-center">
-              <Star className="w-5 h-5 text-white" />
+          教育
+        </span>
+        <div className="pointer-events-none absolute -left-16 -top-16 w-72 h-72 rounded-full bg-indigo-500/20 blur-3xl" />
+        <div className="relative z-10 max-w-2xl">
+          <Link href="/academic" className="inline-flex items-center gap-2 text-sm text-stone-400 hover:text-white mb-5">
+            <ArrowLeft className="w-4 h-4" /> Acadêmico
+          </Link>
+          <p className="text-indigo-300 tracking-[0.35em] text-xs font-semibold uppercase mb-4">道 · Currículo</p>
+          <h1 className="text-4xl md:text-5xl font-extrabold leading-[1.05]">O Método Alpha.</h1>
+          <p className="mt-5 text-stone-400 text-lg">
+            <span className="nw-tabular text-white font-semibold">{methodologies.length}</span> metodologias,{' '}
+            <span className="nw-tabular text-white font-semibold">{competencies.length}</span> competências e{' '}
+            <span className="nw-tabular text-white font-semibold">{modules.length}</span> módulos que estruturam o ensino.
+          </p>
+        </div>
+      </header>
+
+      {/* ===== Os 8 Pilares Alpha (DNA transversal) ===== */}
+      <PillarsBlock />
+
+      {/* ===== Abas ===== */}
+      <div className="flex gap-1 overflow-x-auto border-b border-stone-200">
+        {tabs.map(t => {
+          const Icon = t.icon
+          const on = tab === t.key
+          return (
+            <button
+              key={t.key}
+              onClick={() => setTab(t.key)}
+              className={`relative shrink-0 flex items-center gap-2 px-4 py-3.5 text-sm font-semibold transition-colors ${on ? 'text-stone-900' : 'text-stone-400 hover:text-stone-600'}`}
+            >
+              <Icon className="w-4 h-4" />
+              {t.label}
+              <span className="nw-tabular text-xs text-stone-400">{t.n}</span>
+              {on && <span className="absolute left-3 right-3 -bottom-px h-0.5 rounded-full" style={{ background: ACCENT }} />}
+            </button>
+          )
+        })}
+      </div>
+
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-32 bg-stone-100 rounded-2xl animate-pulse" />)}
+        </div>
+      ) : (
+        <>
+          {tab === 'metodologias' && <MethodologiesTab items={methodologies} />}
+          {tab === 'competencias' && <CompetenciesTab items={competencies} />}
+          {tab === 'modulos' && <ModulesTab items={modules} />}
+          {tab === 'sequencias' && <SequencesTab items={sequences} />}
+          {tab === 'trilhas' && <PathsTab paths={paths} />}
+        </>
+      )}
+    </div>
+  )
+}
+
+/* ---------- cabeçalho de seção (kanji + régua colorida) ---------- */
+function SectionHead({ kanji, title, count, color = ACCENT }: { kanji: string; title: string; count?: number; color?: string }) {
+  return (
+    <div className="flex items-baseline gap-4 mb-6 pb-3 border-b-2" style={{ borderColor: color }}>
+      <span className="font-extrabold leading-none select-none" style={{ color, fontSize: '2rem' }} aria-hidden>{kanji}</span>
+      <h2 className="text-2xl md:text-3xl font-extrabold text-stone-900">{title}</h2>
+      {count != null && <span className="nw-tabular ml-auto text-sm text-stone-400">{count}</span>}
+    </div>
+  )
+}
+
+function EmptyState({ text }: { text: string }) {
+  return <div className="text-center py-16 text-stone-400"><BookOpen className="w-10 h-10 mx-auto mb-3 opacity-40" /><p>{text}</p></div>
+}
+
+/* ---------- Pilares ---------- */
+function PillarsBlock() {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="bg-white rounded-3xl border border-stone-100 shadow-sm overflow-hidden">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between p-5 hover:bg-stone-50 transition-colors">
+        <div className="flex items-center gap-3 text-left">
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white" style={{ background: '#dc2626' }}>
+            <Star className="w-5 h-5" />
+          </div>
+          <div>
+            <h2 className="font-extrabold text-stone-900">Os 8 Pilares do Método Alpha</h2>
+            <p className="text-xs text-stone-500">DNA da Nipo School — eixo transversal de todo o currículo</p>
+          </div>
+        </div>
+        {open ? <ChevronUp className="w-5 h-5 text-stone-400" /> : <ChevronDown className="w-5 h-5 text-stone-400" />}
+      </button>
+      {open && (
+        <div className="px-5 pb-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+          {ALPHA_PILLARS.map(p => (
+            <div key={p.num} className="flex items-start gap-3 p-3 bg-red-50/50 rounded-xl border border-red-100">
+              <div className="nw-tabular w-7 h-7 bg-red-100 rounded-full flex items-center justify-center text-red-700 font-bold text-xs flex-shrink-0">{p.num}</div>
+              <div>
+                <p className="text-sm font-bold text-stone-900">{p.title}</p>
+                <p className="text-xs text-stone-500">{p.desc}</p>
+              </div>
             </div>
-            <div className="text-left">
-              <h2 className="font-bold text-gray-900">Os 8 Pilares do Metodo Alpha</h2>
-              <p className="text-xs text-gray-500">DNA da metodologia Nipo School — eixo transversal de todo o curriculo</p>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+/* ---------- Metodologias (mostra philosophy + key_principles) ---------- */
+function MethodologiesTab({ items }: { items: Methodology[] }) {
+  const [expanded, setExpanded] = useState<string | null>(null)
+  if (!items.length) return <EmptyState text="Nenhuma metodologia cadastrada." />
+  return (
+    <section>
+      <SectionHead kanji="法" title="Metodologias" count={items.length} />
+      <div className="space-y-3">
+        {items.map(m => {
+          const principles = toList(m.key_principles)
+          const open = expanded === m.id
+          return (
+            <div key={m.id} className="nw-card bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden" style={{ borderLeftWidth: 3, borderLeftColor: ACCENT }}>
+              <button onClick={() => setExpanded(open ? null : m.id)} className="w-full flex items-center gap-4 p-4 hover:bg-stone-50 transition-colors text-left">
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-sm" style={{ background: `${ACCENT}14`, color: ACCENT }}>
+                  {m.code?.slice(0, 3).toUpperCase() || <Layers className="w-5 h-5" />}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-bold text-stone-900 text-sm">{m.name}</h3>
+                  {m.description && <p className="text-xs text-stone-500 line-clamp-1">{m.description}</p>}
+                </div>
+                {principles.length > 0 && <span className="nw-tabular text-xs text-stone-400 shrink-0">{principles.length} princípios</span>}
+                {open ? <ChevronUp className="w-4 h-4 text-stone-400" /> : <ChevronDown className="w-4 h-4 text-stone-400" />}
+              </button>
+
+              {open && (
+                <div className="border-t border-stone-100 px-5 py-5 space-y-5 nw-rise">
+                  {m.description && (
+                    <p className="text-sm text-stone-600 leading-relaxed">{m.description}</p>
+                  )}
+                  {m.philosophy && (
+                    <div>
+                      <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-stone-400 mb-2">
+                        <Sparkles className="w-3.5 h-3.5" /> Filosofia
+                      </p>
+                      <p className="text-sm text-stone-700 leading-relaxed whitespace-pre-wrap rounded-xl p-4" style={{ background: `${ACCENT}08` }}>
+                        {m.philosophy}
+                      </p>
+                    </div>
+                  )}
+                  {principles.length > 0 && (
+                    <div>
+                      <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-stone-400 mb-2">
+                        <ListChecks className="w-3.5 h-3.5" /> Princípios-chave
+                      </p>
+                      <ul className="grid sm:grid-cols-2 gap-2">
+                        {principles.map((p, i) => (
+                          <li key={i} className="flex items-start gap-2 text-sm text-stone-700">
+                            <span className="nw-tabular mt-0.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0" style={{ background: `${ACCENT}14`, color: ACCENT }}>{i + 1}</span>
+                            <span>{p}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
+/* ---------- Competências (agrupadas por metodologia) ---------- */
+function CompetenciesTab({ items }: { items: Competency[] }) {
+  const groups = useMemo(() => {
+    const map = new Map<string, Competency[]>()
+    for (const c of items) {
+      const key = c.methodology_name || 'Sem metodologia'
+      if (!map.has(key)) map.set(key, [])
+      map.get(key)!.push(c)
+    }
+    return [...map.entries()]
+  }, [items])
+
+  if (!items.length) return <EmptyState text="Nenhuma competência cadastrada." />
+  return (
+    <section>
+      <SectionHead kanji="能" title="Competências" count={items.length} />
+      <div className="space-y-8">
+        {groups.map(([methodology, comps]) => (
+          <div key={methodology}>
+            <h3 className="text-sm font-bold uppercase tracking-wide text-stone-400 mb-3">{methodology}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {comps.map(c => (
+                <div key={c.id} className="nw-card bg-white rounded-2xl border border-stone-100 shadow-sm p-4" style={{ borderLeftWidth: 3, borderLeftColor: ACCENT }}>
+                  <p className="font-bold text-stone-900 text-sm">{c.name}</p>
+                  {c.description && <p className="text-sm text-stone-500 mt-1 leading-relaxed">{c.description}</p>}
+                </div>
+              ))}
             </div>
           </div>
-          {showPillars ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
-        </button>
-        {showPillars && (
-          <div className="px-5 pb-5 grid grid-cols-1 md:grid-cols-2 gap-3">
-            {ALPHA_PILLARS.map(p => (
-              <div key={p.num} className="flex items-start gap-3 p-3 bg-red-50/50 rounded-lg border border-red-100">
-                <div className="w-7 h-7 bg-red-100 rounded-full flex items-center justify-center text-red-700 font-bold text-xs flex-shrink-0 nw-tabular">
-                  {p.num}
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-gray-900">{p.title}</p>
-                  <p className="text-xs text-gray-500">{p.desc}</p>
-                </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+/* ---------- Módulos ---------- */
+function ModulesTab({ items }: { items: Module[] }) {
+  if (!items.length) return <EmptyState text="Nenhum módulo cadastrado." />
+  return (
+    <section>
+      <SectionHead kanji="課" title="Módulos" count={items.length} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {items.map((m, i) => (
+          <div key={m.id} className="nw-card relative bg-white rounded-2xl border border-stone-100 shadow-sm p-5 overflow-hidden" style={{ borderTopWidth: 3, borderTopColor: ACCENT }}>
+            <span className="nw-tabular absolute top-4 right-5 text-2xl font-extrabold text-stone-100">{String(i + 1).padStart(2, '0')}</span>
+            <p className="font-bold text-stone-900 relative z-10">{m.name}</p>
+            {m.description && <p className="text-sm text-stone-500 mt-2 leading-relaxed relative z-10">{m.description}</p>}
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+/* ---------- Sequências Didáticas ---------- */
+function SequencesTab({ items }: { items: TeachingSequence[] }) {
+  if (!items.length) return <EmptyState text="Nenhuma sequência didática cadastrada." />
+  return (
+    <section>
+      <SectionHead kanji="序" title="Sequências Didáticas" count={items.length} />
+      <div className="space-y-4">
+        {items.map(s => (
+          <article key={s.id} className="nw-card bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden" style={{ borderLeftWidth: 3, borderLeftColor: ACCENT }}>
+            <div className="p-5">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                {s.week_number != null && (
+                  <span className="nw-tabular inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full text-white" style={{ background: ACCENT }}>
+                    Semana {s.week_number}
+                  </span>
+                )}
+                {s.methodology_name && <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full" style={{ background: `${ACCENT}14`, color: ACCENT }}>{s.methodology_name}</span>}
+                {s.age_range && <Meta icon={Users2} text={s.age_range} />}
+                {s.duration_weeks != null && <Meta icon={Clock} text={`${s.duration_weeks} semanas`} />}
               </div>
+              <h3 className="font-extrabold text-stone-900 text-lg leading-tight">{s.title}</h3>
+              {s.objectives && <p className="text-sm text-stone-600 mt-2 leading-relaxed">{s.objectives}</p>}
+
+              <div className="grid sm:grid-cols-3 gap-3 mt-4">
+                {s.main_activity && <Block label="Atividade principal" text={s.main_activity} />}
+                {s.circle_activity && <Block label="Roda / círculo" text={s.circle_activity} />}
+                {s.game_dynamic && <Block label="Dinâmica de jogo" text={s.game_dynamic} />}
+              </div>
+
+              {(s.required_materials || s.notes) && (
+                <div className="mt-4 pt-4 border-t border-stone-100 space-y-1.5">
+                  {s.required_materials && <p className="text-xs text-stone-500"><span className="font-semibold text-stone-600">Materiais:</span> {s.required_materials}</p>}
+                  {s.notes && <p className="text-xs text-stone-500"><span className="font-semibold text-stone-600">Notas:</span> {s.notes}</p>}
+                </div>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function Meta({ icon: Icon, text }: { icon: any; text: string }) {
+  return <span className="inline-flex items-center gap-1 text-[11px] text-stone-500"><Icon className="w-3.5 h-3.5" />{text}</span>
+}
+function Block({ label, text }: { label: string; text: string }) {
+  return (
+    <div className="rounded-xl p-3" style={{ background: `${ACCENT}08` }}>
+      <p className="text-[10px] font-bold uppercase tracking-wide text-stone-400 mb-1">{label}</p>
+      <p className="text-sm text-stone-700 leading-relaxed">{text}</p>
+    </div>
+  )
+}
+
+/* ---------- Trilhas & Ciclos (learning paths + ciclos didáticos) ---------- */
+function PathsTab({ paths }: { paths: LearningPath[] }) {
+  return (
+    <div className="space-y-12">
+      {/* Ciclos de aprendizagem */}
+      <section>
+        <SectionHead kanji="期" title="Ciclos de Aprendizagem" count={LEARNING_CYCLES.length} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {LEARNING_CYCLES.map(cycle => (
+            <div key={cycle.name} className="nw-card relative bg-white rounded-2xl border border-stone-100 shadow-sm p-4 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1" style={{ background: cycle.color }} />
+              <h3 className="font-bold text-stone-900 text-sm mt-1">{cycle.name}</h3>
+              <p className="text-xs text-stone-400 mb-2">{cycle.age}</p>
+              <p className="text-xs text-stone-600 mb-3">{cycle.desc}</p>
+              <div className="flex flex-wrap gap-1">
+                {cycle.methods.map(m => <span key={m} className="px-1.5 py-0.5 bg-stone-100 text-stone-600 text-[10px] rounded font-medium">{m}</span>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Trilhas (learning paths do banco) */}
+      <section>
+        <SectionHead kanji="路" title="Trilhas de Aprendizagem" count={paths.length} />
+        {paths.length === 0 ? (
+          <EmptyState text="Nenhuma trilha cadastrada ainda." />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {paths.map(p => (
+              <Link key={p.id} href="/paths" className="group nw-card relative bg-white rounded-2xl border border-stone-100 shadow-sm p-5 overflow-hidden hover:-translate-y-0.5 hover:shadow-md transition-all" style={{ borderLeftWidth: 3, borderLeftColor: ACCENT }}>
+                <div className="flex flex-wrap items-center gap-2 mb-2">
+                  {p.cycle && <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full" style={{ background: `${ACCENT}14`, color: ACCENT }}>{p.cycle}</span>}
+                  {p.methodology_name && <span className="text-[11px] text-stone-500">{p.methodology_name}</span>}
+                  {p.instrument_name && <span className="text-[11px] text-stone-500">· {p.instrument_name}</span>}
+                </div>
+                <h3 className="font-extrabold text-stone-900 leading-tight">{p.title}</h3>
+                {p.description && <p className="text-sm text-stone-500 mt-1 line-clamp-2 leading-relaxed">{p.description}</p>}
+                <div className="mt-3 flex items-center gap-4 text-xs text-stone-400">
+                  {p.step_count != null && <span className="inline-flex items-center gap-1"><Route className="w-3.5 h-3.5" /><span className="nw-tabular">{p.step_count}</span> etapas</span>}
+                  {(p.difficulty_min != null || p.difficulty_max != null) && (
+                    <span className="nw-tabular">Nível {p.difficulty_min ?? 1}–{p.difficulty_max ?? 5}</span>
+                  )}
+                </div>
+              </Link>
             ))}
           </div>
         )}
-      </div>
-
-      {/* Learning Cycles */}
-      <div>
-        <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-indigo-500" />
-          Ciclos de Aprendizagem
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {LEARNING_CYCLES.map(cycle => (
-            <div key={cycle.name} className="bg-white rounded-xl border border-gray-100 p-4 overflow-hidden relative">
-              <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${cycle.color}`} />
-              <h3 className="font-bold text-gray-900 text-sm mt-1">{cycle.name}</h3>
-              <p className="text-xs text-gray-400 mb-2">{cycle.age}</p>
-              <p className="text-xs text-gray-600 mb-3">{cycle.desc}</p>
-              <div className="flex flex-wrap gap-1">
-                {cycle.methods.map(m => (
-                  <span key={m} className="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] rounded font-medium">{m}</span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Methodologies */}
-      <div>
-        <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <Music className="w-5 h-5 text-indigo-500" />
-          9 Metodologias
-        </h2>
-        <div className="space-y-3">
-          {METHODOLOGIES.map(m => {
-            const Icon = m.icon
-            const isExpanded = expandedMethod === m.key
-            const methodLessons = getLessonsForMethod(m)
-            const isLoading = loadingContent === m.key
-
-            return (
-              <div key={m.key} className="bg-white rounded-xl border border-gray-100 overflow-hidden">
-                <button
-                  onClick={() => toggleMethod(m.key)}
-                  className="w-full flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors text-left"
-                >
-                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${m.color.split(' ').slice(0, 1).join('')} ${m.color.split(' ').slice(1, 2).join('')}`}>
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-gray-900 text-sm">{m.name}</h3>
-                    <p className="text-xs text-gray-500 truncate">{m.summary}</p>
-                  </div>
-                  <span className="text-xs text-gray-400 flex-shrink-0"><span className="nw-tabular">{methodLessons.length}</span> aulas</span>
-                  {isExpanded ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
-                </button>
-
-                {isExpanded && (
-                  <div className="border-t border-gray-100">
-                    {/* Linked lessons */}
-                    {methodLessons.length > 0 && (
-                      <div className="px-4 py-3 bg-gray-50/50">
-                        <p className="text-xs font-bold text-gray-500 mb-2">Aulas vinculadas:</p>
-                        <div className="flex flex-wrap gap-2">
-                          {methodLessons.map(l => (
-                            <Link
-                              key={l.id}
-                              href={`/lessons/${l.id}`}
-                              className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-gray-200 rounded-lg text-xs hover:border-indigo-300 hover:bg-indigo-50 transition-colors"
-                            >
-                              <span className="font-bold text-gray-400 nw-tabular">#{l.lesson_number ?? l.number}</span>
-                              <span className="text-gray-700 truncate max-w-[200px]">{l.title}</span>
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Full content */}
-                    <div className="px-4 py-4">
-                      {isLoading ? (
-                        <div className="flex items-center justify-center py-8">
-                          <Loader2 className="w-5 h-5 animate-spin text-indigo-500" />
-                        </div>
-                      ) : methodContent[m.key] ? (
-                        <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed whitespace-pre-wrap max-h-[500px] overflow-y-auto">
-                          {methodContent[m.key]}
-                        </div>
-                      ) : (
-                        <p className="text-sm text-gray-400 text-center py-4">Conteudo nao disponivel.</p>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )
-          })}
-        </div>
-      </div>
-
-      {/* Complementary chapters */}
-      <div className="bg-white rounded-xl border border-gray-100 p-6">
-        <h2 className="font-bold text-gray-900 mb-4">Capitulos Complementares</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-          {[
-            { label: 'PRESTO Project e Ensino Digital', num: 10 },
-            { label: 'Experiencias Brasileiras Inovadoras', num: 11 },
-            { label: 'Referenciais Internacionais', num: 12 },
-            { label: 'Proposta Curricular e Roadmap', num: 13 },
-            { label: 'Modelos de Sequencia Didatica', num: 14 },
-            { label: 'Avaliacao, Portfolio e Impacto', num: 15 },
-            { label: 'Documentos Institucionais', num: 16 },
-            { label: 'Capacitacao Docente', num: 17 },
-            { label: 'Guia de Adaptacao (ONGs, Igrejas)', num: 18 },
-            { label: 'Comunicacao e Engajamento', num: 19 },
-          ].map(ch => (
-            <Link
-              key={ch.num}
-              href="/academic/library"
-              className="flex items-center gap-3 p-3 rounded-lg hover:bg-indigo-50 transition-colors group"
-            >
-              <span className="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 text-xs font-bold group-hover:bg-indigo-100 group-hover:text-indigo-600 nw-tabular">
-                {ch.num}
-              </span>
-              <span className="text-sm text-gray-700 group-hover:text-indigo-700">{ch.label}</span>
-            </Link>
-          ))}
-        </div>
-      </div>
+      </section>
     </div>
   )
 }
