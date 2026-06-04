@@ -19,7 +19,7 @@ interface CulturalContext { id: string; title: string; context_type: string | nu
 interface TimelineEvent { id: string; year: number; title: string; event_type: string | null; category: string | null; description: string | null; importance: number | null; image_url: string | null; composer_name: string | null; work_title: string | null }
 interface Genre { id: string; name: string; slug: string | null; origin_decade: string | null; origin_country: string | null; description: string | null; musical_characteristics: string | null; image_url: string | null; theme_color: string | null }
 interface TheoryConcept { id: string; name: string; category: string | null; simple_definition: string | null; technical_definition: string | null; difficulty_level: number | null; diagram_url: string | null }
-interface InstrumentEvolution { id: string; instrument_name: string | null; instrument_family: string | null; historical_version: string | null; approximate_year: number | null; inventor: string | null; technical_description: string | null; differences_from_modern: string | null; curiosities: string | null; image_url: string | null }
+interface InstrumentEvolution { id: string; instrument_id: string | null; instrument_name: string | null; instrument_family: string | null; historical_version: string | null; approximate_year: number | null; inventor: string | null; technical_description: string | null; differences_from_modern: string | null; curiosities: string | null; image_url: string | null }
 interface Quiz { id: string; question: string; question_type: string | null; options: string[] | null; correct_answer: string; explanation: string | null; points: number | null }
 
 const db = supabase as any
@@ -421,6 +421,11 @@ function Evolution({ evolution, c }: { evolution: InstrumentEvolution[]; c: stri
               )}
               {e.inventor && <p className="text-xs text-stone-400 mt-1.5">Inventor: {e.inventor}</p>}
               {e.curiosities && <p className="text-xs text-stone-500 italic mt-1.5">{e.curiosities}</p>}
+              {e.instrument_id && (
+                <Link href={`/instruments/${e.instrument_id}`} className="inline-flex items-center gap-1 text-xs font-semibold mt-2 hover:underline" style={{ color: c }}>
+                  Ver instrumento <ChevronRight className="w-3 h-3" />
+                </Link>
+              )}
             </div>
           </div>
         </div>

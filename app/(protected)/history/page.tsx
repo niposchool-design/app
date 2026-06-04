@@ -2,13 +2,22 @@
 
 import { useEffect, useState, useMemo } from 'react'
 import { supabase } from '@/lib/supabase/client'
-import { Search, BookOpen, Users, Music, Sparkles, Layers, Clock, ScrollText, Lightbulb } from 'lucide-react'
+import { Search, BookOpen, Users, Music, Sparkles, Layers, Clock, ScrollText, Lightbulb, X, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import type { Tables } from '@/lib/supabase/database.types'
 
 type Period = Tables<'v_history_periods'>
+interface Movement { id: string; name: string; description: string | null; start_year: number | null; end_year: number | null; main_locations: any; manifesto: string | null; characteristics: any; composers: any; iconic_works: any; historical_context: string | null; legacy: string | null; image_url: string | null }
 
 const db = supabase as any
+
+/* normaliza jsonb/text -> array de strings */
+function toList(v: any): string[] {
+  if (!v) return []
+  if (Array.isArray(v)) return v.map(x => typeof x === 'string' ? x : (x?.name || x?.title || x?.label || String(x))).filter(Boolean)
+  if (typeof v === 'string') return v.split(/[;\n]+/).map(s => s.trim()).filter(Boolean)
+  return []
+}
 
 /* contadores globais — view + ícone + rótulo */
 const GLOBAL_VIEWS: { view: string; icon: any; label: string }[] = [
@@ -24,6 +33,8 @@ const GLOBAL_VIEWS: { view: string; icon: any; label: string }[] = [
 export default function HistoryPage() {
   const [periods, setPeriods] = useState<Period[]>([])
   const [counts, setCounts] = useState<Record<string, number>>({})
+  const [movements, setMovements] = useState<Movement[]>([])
+  const [openMov, setOpenMov] = useState<Movement | null>(null)
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
 
@@ -44,6 +55,9 @@ export default function HistoryPage() {
         const c: Record<string, number> = {}
         GLOBAL_VIEWS.forEach((g, i) => { c[g.view] = results[i]?.count ?? 0 })
         setCounts(c)
+
+        const { data: mv } = await db.from('v_history_movements').select('*').order('start_year')
+        if (mv) setMovements(mv as Movement[])
       } catch (error) {
         console.error('Error loading history:', error)
       } finally {
@@ -171,6 +185,88 @@ export default function HistoryPage() {
           </div>
         </div>
       )}
+
+      {/* ===== Movimentos (não pertencem a um período) ===== */}
+      {movements.length > 0 && (
+        <section>
+          <div className="flex items-baseline gap-4 mb-6 pb-3 border-b-2 border-amber-500">
+            <span className="font-extrabold leading-none select-none text-amber-600" style={{ fontSize: '2rem' }} aria-hidden>運動</span>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-stone-900">Movimentos</h2>
+            <span className="nw-tabular ml-auto text-sm text-stone-400">{movements.length}</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {movements.map(m => (
+              <button key={m.id} onClick={() => setOpenMov(m)} className="text-left nw-card overflow-hidden hover:shadow-lg transition-all">
+                {m.image_url && (
+                  <div className="aspect-[16/9] bg-stone-100 overflow-hidden">
+                    <img src={m.image_url} alt={m.name} className="w-full h-full object-cover" />
+                  </div>
+                )}
+                <div className="p-4">
+                  <h3 className="font-bold text-stone-900">{m.name}</h3>
+                  {(m.start_year || m.end_year) && (
+                    <p className="nw-tabular text-sm text-amber-600 mt-0.5">{m.start_year}{m.end_year ? ` – ${m.end_year}` : ''}</p>
+                  )}
+                  {toList(m.main_locations).length > 0 && (
+                    <p className="text-xs text-stone-400 mt-1 inline-flex items-center gap-1"><MapPin className="w-3 h-3" />{toList(m.main_locations).join(', ')}</p>
+                  )}
+                  {m.description && <p className="text-sm text-stone-500 mt-2 line-clamp-2">{m.description}</p>}
+                </div>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Modal de movimento */}
+      {openMov && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60" onClick={() => setOpenMov(null)}>
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl" onClick={e => e.stopPropagation()}>
+            {openMov.image_url && (
+              <div className="aspect-[16/7] bg-stone-100 overflow-hidden rounded-t-3xl">
+                <img src={openMov.image_url} alt={openMov.name} className="w-full h-full object-cover" />
+              </div>
+            )}
+            <div className="p-6 space-y-4">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h2 className="text-2xl font-extrabold text-stone-900">{openMov.name}</h2>
+                  {(openMov.start_year || openMov.end_year) && <p className="nw-tabular text-sm text-amber-600">{openMov.start_year}{openMov.end_year ? ` – ${openMov.end_year}` : ''}</p>}
+                </div>
+                <button onClick={() => setOpenMov(null)} className="p-2 rounded-full hover:bg-stone-100 text-stone-400 shrink-0"><X className="w-5 h-5" /></button>
+              </div>
+              {openMov.description && <p className="text-sm text-stone-600 leading-relaxed">{openMov.description}</p>}
+              {openMov.manifesto && <MovBlock title="Manifesto" text={openMov.manifesto} />}
+              {openMov.characteristics && <MovBlock title="Características" text={openMov.characteristics} />}
+              {openMov.historical_context && <MovBlock title="Contexto histórico" text={openMov.historical_context} />}
+              {openMov.legacy && <MovBlock title="Legado" text={openMov.legacy} />}
+              {toList(openMov.composers).length > 0 && <MovChips title="Compositores" items={toList(openMov.composers)} />}
+              {toList(openMov.iconic_works).length > 0 && <MovChips title="Obras icônicas" items={toList(openMov.iconic_works)} />}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function MovBlock({ title, text }: { title: string; text: any }) {
+  const t = typeof text === 'string' ? text : toList(text).join(', ')
+  if (!t) return null
+  return (
+    <div>
+      <h3 className="text-xs font-bold uppercase tracking-wider text-stone-400 mb-1">{title}</h3>
+      <p className="text-sm text-stone-600 leading-relaxed whitespace-pre-wrap">{t}</p>
+    </div>
+  )
+}
+function MovChips({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div>
+      <h3 className="text-xs font-bold uppercase tracking-wider text-stone-400 mb-1.5">{title}</h3>
+      <div className="flex flex-wrap gap-1.5">
+        {items.map((it, i) => <span key={i} className="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded-full">{it}</span>)}
+      </div>
     </div>
   )
 }
