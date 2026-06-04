@@ -9,6 +9,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import type { Tables } from '@/lib/supabase/database.types'
+import { playNote, realAudioUrl } from '@/lib/audio/note-synth'
 
 type Instrument = Tables<'v_instruments'>
 interface Fact { id: string; title: string; description: string; image_url: string | null; order_index: number }
@@ -184,24 +185,45 @@ function Facts({ facts, c }: { facts: Fact[]; c: string }) {
 }
 function Sounds({ sounds, c }: { sounds: Sound[]; c: string }) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [playing, setPlaying] = useState<string | null>(null)
-  function toggle(s: Sound) {
-    if (!s.audio_url || !audioRef.current) return
-    if (playing === s.id) { audioRef.current.pause(); setPlaying(null); return }
-    audioRef.current.src = s.audio_url
-    audioRef.current.play().then(() => setPlaying(s.id)).catch(() => setPlaying(null))
+
+  function stop() {
+    if (timer.current) { clearTimeout(timer.current); timer.current = null }
+    if (audioRef.current) audioRef.current.pause()
   }
+  useEffect(() => () => stop(), [])
+
+  function synth(s: Sound) {
+    const ms = playNote(s.title || s.sound_type || 'Lá')
+    if (!ms) { setPlaying(null); return }
+    setPlaying(s.id)
+    timer.current = setTimeout(() => setPlaying(null), ms)
+  }
+  function play(s: Sound) {
+    if (playing === s.id) { stop(); setPlaying(null); return }
+    stop()
+    const real = realAudioUrl(s.audio_url)
+    if (real && audioRef.current) {
+      audioRef.current.src = real
+      audioRef.current.play().then(() => setPlaying(s.id)).catch(() => synth(s))
+    } else { synth(s) }
+  }
+
   return (
     <>
       <audio ref={audioRef} onEnded={() => setPlaying(null)} className="hidden" />
+      <p className="text-xs text-gray-400 mb-3">Toque para ouvir a nota — sintetizada no seu navegador, sem download.</p>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
         {sounds.map(s => {
           const on = playing === s.id
           return (
-            <button key={s.id} onClick={() => toggle(s)} disabled={!s.audio_url}
-              className={`flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all ${!s.audio_url ? 'opacity-70' : 'hover:border-gray-300'}`}
+            <button key={s.id} onClick={() => play(s)}
+              className="flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all hover:border-gray-300"
               style={on ? { borderColor: c, background: `${c}10` } : { borderColor: '#f3f4f6' }}>
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-white" style={{ background: on ? c : `${c}cc` }}><Play className="w-4 h-4" /></div>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-white" style={{ background: on ? c : `${c}cc` }}>
+                {on ? <span className="nw-eq"><span /><span /><span /></span> : <Play className="w-4 h-4" />}
+              </div>
               <div className="min-w-0">
                 <p className="text-sm font-medium text-gray-900 truncate">{s.title}</p>
                 {s.sound_type && <p className="text-[11px] text-gray-400 truncate capitalize">{s.sound_type}</p>}
@@ -228,41 +250,75 @@ function Performances({ performances, c }: { performances: Performance[]; c: str
   )
 }
 function QuizPanel({ quizzes, c }: { quizzes: Quiz[]; c: string }) {
-  const [answers, setAnswers] = useState<Record<string, string>>({})
-  const answered = Object.keys(answers).length
-  const correct = quizzes.filter(q => answers[q.id] === q.correct_answer).length
+  const [i, setI] = useState(0)
+  const [chosen, setChosen] = useState<string | null>(null)
+  const [score, setScore] = useState(0)
+  const [done, setDone] = useState(false)
+
+  const q = quizzes[i]
+  const opts = useMemo(() => (q?.options && q.options.length ? q.options : ['Verdadeiro', 'Falso']), [q])
+
+  function pick(opt: string) {
+    if (chosen) return
+    setChosen(opt)
+    if (opt === q.correct_answer) setScore(s => s + 1)
+  }
+  function next() {
+    if (i + 1 >= quizzes.length) { setDone(true); return }
+    setI(i + 1); setChosen(null)
+  }
+  function restart() { setI(0); setChosen(null); setScore(0); setDone(false) }
+
+  if (done) {
+    const pct = Math.round((score / quizzes.length) * 100)
+    const stars = pct >= 80 ? 3 : pct >= 50 ? 2 : 1
+    return (
+      <div className="text-center py-8 nw-rise">
+        <div className="text-4xl mb-3 tracking-widest">
+          <span style={{ color: c }}>{'★'.repeat(stars)}</span><span className="text-gray-200">{'★'.repeat(3 - stars)}</span>
+        </div>
+        <p className="text-lg font-bold text-gray-900">Você acertou <span className="nw-tabular" style={{ color: c }}>{score}</span> de <span className="nw-tabular">{quizzes.length}</span></p>
+        <p className="text-sm text-gray-500 mt-1"><span className="nw-tabular">{pct}%</span> de acerto</p>
+        <button onClick={restart} className="mt-6 px-6 py-2.5 rounded-full text-white font-semibold text-sm hover:opacity-90 transition-opacity" style={{ background: c }}>Refazer quiz</button>
+      </div>
+    )
+  }
+
   return (
     <div>
-      {answered > 0 && <p className="text-sm text-gray-500 mb-4">Acertos: <span className="nw-tabular font-bold" style={{ color: c }}>{correct}</span> de <span className="nw-tabular">{answered}</span></p>}
-      <div className="space-y-5">
-        {quizzes.map((q, i) => {
-          const opts = q.options && q.options.length ? q.options : ['Verdadeiro', 'Falso']
-          const chosen = answers[q.id]
-          return (
-            <div key={q.id} className="p-4 rounded-2xl border border-gray-100">
-              <p className="font-semibold text-gray-900 mb-3"><span className="nw-tabular mr-1" style={{ color: c }}>{i + 1}.</span>{q.question}</p>
-              <div className="grid sm:grid-cols-2 gap-2">
-                {opts.map(opt => {
-                  const isChosen = chosen === opt, isCorrect = opt === q.correct_answer
-                  let cls = 'border-gray-200 hover:border-gray-300'
-                  if (chosen) {
-                    if (isCorrect) cls = 'border-emerald-300 bg-emerald-50 text-emerald-800'
-                    else if (isChosen) cls = 'border-red-300 bg-red-50 text-red-800'
-                    else cls = 'border-gray-100 text-gray-400'
-                  }
-                  return (
-                    <button key={opt} onClick={() => !chosen && setAnswers(p => ({ ...p, [q.id]: opt }))} disabled={!!chosen}
-                      className={`flex items-center justify-between gap-2 p-3 rounded-xl border text-sm text-left transition-all ${cls}`}>
-                      <span>{opt}</span>
-                      {chosen && isCorrect && <CheckCircle2 className="w-4 h-4 shrink-0" />}
-                      {chosen && isChosen && !isCorrect && <XCircle className="w-4 h-4 shrink-0" />}
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-          )
-        })}
+      <div className="flex items-center gap-3 mb-6">
+        <div className="nw-progress flex-1"><span style={{ width: `${(i / quizzes.length) * 100}%`, background: c }} /></div>
+        <span className="nw-tabular text-xs text-gray-400 shrink-0">{i + 1}/{quizzes.length}</span>
+      </div>
+      <div key={i} className="nw-rise">
+        <p className="font-semibold text-gray-900 text-lg mb-4">{q.question}</p>
+        <div className="grid sm:grid-cols-2 gap-2.5">
+          {opts.map(opt => {
+            const isChosen = chosen === opt, isCorrect = opt === q.correct_answer
+            let cls = 'border-gray-200 hover:border-gray-300', extra = ''
+            if (chosen) {
+              if (isCorrect) { cls = 'border-emerald-300 bg-emerald-50 text-emerald-800'; extra = 'nw-pop' }
+              else if (isChosen) { cls = 'border-red-300 bg-red-50 text-red-800'; extra = 'nw-shake' }
+              else cls = 'border-gray-100 text-gray-400'
+            }
+            return (
+              <button key={opt} onClick={() => pick(opt)} disabled={!!chosen}
+                className={`flex items-center justify-between gap-2 p-3.5 rounded-xl border text-sm text-left transition-all ${cls} ${extra}`}>
+                <span>{opt}</span>
+                {chosen && isCorrect && <CheckCircle2 className="w-4 h-4 shrink-0" />}
+                {chosen && isChosen && !isCorrect && <XCircle className="w-4 h-4 shrink-0" />}
+              </button>
+            )
+          })}
+        </div>
+        {chosen && (
+          <div className="mt-6 flex items-center justify-between nw-rise">
+            <span className="text-sm text-gray-500">Pontos: <span className="nw-tabular font-bold" style={{ color: c }}>{score}</span></span>
+            <button onClick={next} className="px-5 py-2.5 rounded-full text-white font-semibold text-sm inline-flex items-center gap-1.5 hover:opacity-90 transition-opacity" style={{ background: c }}>
+              {i + 1 >= quizzes.length ? 'Ver resultado' : 'Próxima'} <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

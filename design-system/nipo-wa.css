@@ -205,6 +205,19 @@
 .nw-input:focus { outline: none; border-color: var(--role-primary); }
 .nw-focusable:focus-visible { outline: 3px solid var(--role-primary); outline-offset: 2px; }
 
+/* Equalizer animado (player de sons) — CSS puro, leve */
+@keyframes nw-eq { 0%, 100% { transform: scaleY(0.3); } 50% { transform: scaleY(1); } }
+.nw-eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+.nw-eq span { width: 3px; height: 100%; background: currentColor; border-radius: 2px; transform-origin: bottom; animation: nw-eq 0.6s ease-in-out infinite; }
+.nw-eq span:nth-child(2) { animation-delay: 0.2s; }
+.nw-eq span:nth-child(3) { animation-delay: 0.4s; }
+
+/* Feedback do quiz */
+@keyframes nw-shake { 10%,90%{transform:translateX(-1px)} 20%,80%{transform:translateX(2px)} 30%,50%,70%{transform:translateX(-4px)} 40%,60%{transform:translateX(4px)} }
+.nw-shake { animation: nw-shake 0.4s; }
+@keyframes nw-pop { 0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)} }
+.nw-pop { animation: nw-pop 0.3s; }
+
 /* Divisor com padrão (faixa fina do padrão do papel ativo) */
 .nw-divider { height: 6px; border: none; opacity: 0.5; }
 .nw-divider[data-role-pattern="teacher"] { background-image: inherit; }
