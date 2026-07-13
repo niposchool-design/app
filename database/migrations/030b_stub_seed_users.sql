@@ -59,7 +59,15 @@ BEGIN
             created_at,
             updated_at,
             confirmation_token,
-            recovery_token
+            recovery_token,
+            -- Campos de token NÃO podem ficar NULL: o GoTrue falha no login com
+            -- "Database error querying schema" (bug corrigido em produção 2026-07-13)
+            email_change,
+            email_change_token_new,
+            email_change_token_current,
+            phone_change,
+            phone_change_token,
+            reauthentication_token
         ) VALUES (
             '00000000-0000-0000-0000-000000000000',
             _uid,
@@ -72,6 +80,12 @@ BEGIN
             ('{"full_name":"Aluno Seed ' || _n || '"}')::jsonb,
             now(),
             now(),
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
             '',
             ''
         ) ON CONFLICT (id) DO NOTHING;
